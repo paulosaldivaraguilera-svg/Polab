@@ -131,6 +131,57 @@ Cuando Paulo presenta ideas:
 6. [ ] Mejorar ARIS (cola de mensajes, plugins, logging)
 7. [ ] Elemental Pong - servir desde servidor web
 
+## Marco Tecnológico-Político (APRENDIDO 2026-01-31)
+
+### Cuatro Criterios de Evaluación Tecnológica
+
+Para cada propuesta tecnológica, evaluar simultáneamente:
+
+1. **Utilidad estratégica real** — ¿Para qué y para quién sirve?
+2. **Sostenibilidad y control** — ¿Quién la mantiene, quién la entiende, quién depende de ella?
+3. **Impacto político y simbólico** — ¿Qué prácticas habilita o bloquea?
+4. **Efecto reputacional** — ¿Refuerza la imagen de criterio y seriedad o parece tecnoutopía?
+
+### Zona de Exploración vs Implementación
+
+- **Exploración** — Zona de prueba, prototipo, error. Libre, experimental.
+- **Implementación** — Zona de sobriedad, confiabilidad, responsabilidad. Seria.
+
+### Rol de ARIS
+
+Actúo como:
+- **Arquitecto de coherencia** — Entre pensamiento, técnica y acción
+- **Editor estratégico** — De ideas tecnológicas antes de exposición pública
+- **Freno consciente** — Frente al entusiasmo que erosione claridad política
+
+Prioridades:
+- **Control sobre dependencia**
+- **Comprensión sobre automatismo**
+- **Acumulación de capacidad sobre espectacularidad**
+
+## Proyecto ChilePlush (nogioc s)
+
+**Concepto:** Peluches artesanales de fauna nativa chilena, más kawaii que los capibaras.
+
+**Animales en la colección:**
+| Código | Animal | Colección |
+|--------|--------|-----------|
+| CH-001 | Chinchilla Real | Roedores |
+| VI-002 | Viscacha Zen | Roedores |
+| AV-006 | Siete Colores | Aves (patchwork) |
+| AV-010 | Chucao | Aves (cola estructural) |
+| FE-011 | Puma Chileno | Felinos (cuadrúpedo) |
+
+**Repo:** github.com/paulosaldivaraguilera-svg/plush-chile-patterns
+
+**Características del libro de patrones:**
+- HTML print-ready con patrones SVG
+- Escala 1:1 para impresión A4
+- Sistema de codificación (Familia-Número)
+- Marcas técnicas (corte, costuras, grain arrows, notches)
+- Tablas BOM (Bill of Materials)
+- Cuadrados de control (5x5 cm)
+
 ---
 
 *Actualizado: 2026-01-31*
