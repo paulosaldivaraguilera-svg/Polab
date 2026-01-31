@@ -1,77 +1,53 @@
-# Workspace POLAB - Paulo Saldivar
+# polab/workspace
 
-*Organización de proyectos, automatización y memoria.*
+Infraestructura tecnológica para práctica jurídica independiente y proyectos de automatización.
 
-## Estructura
+## Stack Principal
 
-```
-workspace/
-├── docs/                    # Documentación del sistema
-│   ├── SOUL.md             # Quién soy
-│   ├── USER.md             # Para quién trabajo
-│   ├── MEMORY.md           # Memoria de largo plazo
-│   └── AGENTS.md           # Guías de agentes
-├── projects/               # Proyectos principales
-│   ├── polab/              # Startup POLAB
-│   │   ├── web/            # Web polab.lat
-│   │   ├── mily/           # App Mily (control parental)
-│   │   ├── comenzar/       # Landing captación abogados
-│   │   └── docs/           # Documentación técnica
-│   ├── personal/           # Proyectos personales
-│   │   ├── web-personal/   # Web paulosaldivar.cv
-│   │   └── paulo-personal/ # Stuff personal
-│   ├── gaming/
-│   │   └── elemental-pong/ # Juego arcade
-│   ├── craft/
-│   │   └── plush-chile-patterns/  # Patrones peluches
-│   └── tools/
-│       ├── aris/           # Automatizaciones
-│       ├── scripts/        # Scripts utilitarios
-│       └── campaign/       # Campañas (Moltbook)
-├── memory/                 # Memoria diaria
-│   └── YYYY-MM-DD.md
-├── skills/                 # Skills de OpenClaw
-├── config/                 # Configuraciones
-└── logs/                   # Logs del sistema
-```
+| Componente | Tecnología |
+|------------|------------|
+| Runtime Agente | OpenClaw (Node.js 22) |
+| Sistema Operativo | Raspberry Pi OS / Linux |
+| Base de Datos | SQLite |
+| Automatización | Python + Bash |
+| Canal Principal | WhatsApp API |
 
-## Proyectos Activos
+## Proyectos
 
-| Proyecto | Estado | Repo |
-|----------|--------|------|
-| POLAB Web | Operativo | polab.lat |
-| Mily | Beta soon | milyapp.lat |
-| Web Personal | Operativo | paulosaldivar.cv |
-| Elemental Pong | Jugable | elemental-pong |
-| Comenzar Landing | Operativa | comenzar |
-| ChilePlush | Documentado | plush-chile-patterns |
-| Dialéctico OS | En desarrollo | dialectico-os |
+### POLAB SpA (polab.lat)
+Startup de tecnología para profesionales independientes.
+- Landing "Comenzar" para captación de clientes
+- Dashboard de gestión jurídica
+- Automatización de flujos de trabajo
 
-## Comandos Útiles
+### Mily (milyapp.lat)
+Control parental con IA.
+- Arquitectura Zero-Knowledge
+- Análisis de sentimiento
+- Sin venta de datos a terceros
 
-```bash
-# Ver estado del workspace
-git status
+### Elemental Pong
+Juego arcade desarrollado en Python/Pygame.
+- Repositorio público para referencia técnica.
 
-# Sincronizar todo
-git add -A && git commit -m "Update" && git push
+### Dialéctico OS
+Sistema de gestión jurídica.
+- Gestión de casos y clientes
+- Seguimiento de plazos procesales
+- Templates automatizados
 
-# Ver proyectos
-ls projects/
+## Capacidades Técnicas
 
-# Ver memoria
-cat memory/$(date +%Y-%m-%d).md
-```
+- Automatización de respuestas WhatsApp
+- Integración con APIs externas (Notion, GitHub)
+- Scripts de despliegue y sync
+- Gestión de memoria persistente (formato Markdown)
 
-## Contactos
+## Contacto
 
-| Nombre | Rol | Contacto |
-|--------|-----|----------|
-| Javier Martinez | Colaborador | +56992203278 |
-| Pablo Luco | Colaborador | (pendiente) |
-| Ignacio Saldivar | Hermano | (pendiente) |
-| Joaquin Henriquez | Colaborador | (pendiente) |
+- Web: [polab.lat](https://polab.lat)
+- Web Personal: [paulosaldivar.cv](https://paulosaldivar.cv)
 
 ---
 
-*POLAB SpA — Innovación desde el Sur*
+*Infraestructura local en Raspberry Pi (La Araucanía, Chile)*
