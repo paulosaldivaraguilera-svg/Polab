@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elemental Pong: Chrono & Chaos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-red: #ff0055;
+            --neon-green: #00ff9d;
+            --neon-yellow: #ffcc00;
+            --neon-purple: #bc13fe;
+            --bg-dark: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e0e0e0;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            position: absolute;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--neon-blue);
+        }
+
+        .score-display {
+            display: flex;
+            gap: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .player1 .score-value { color: var(--neon-blue); }
+        .player2 .score-value { color: var(--neon-red); }
+
+        /* Game Container */
+        #game-container {
+            position: relative;
+            margin-top: 80px;
+        }
+
+        #gameCanvas {
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%);
+        }
+
+        /* HUD */
+        .hud {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        /* Chrono Bar */
+        .chrono-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chrono-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--neon-purple);
+        }
+
+        .chrono-bar {
+            width: 200px;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(188,19,254,0.3);
+        }
+
+        .chrono-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        /* Element Indicator */
+        .element-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .current-element {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #666;
+            transition: all 0.3s;
+        }
+
+        /* Controls Hint */
+        .controls {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .controls kbd {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 0 4px;
+        }
+
+        /* Game Over Overlay */
+        #gameOver {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        #gameOver h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #gameOver p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        #restartBtn {
+            padding: 1rem 3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            background: var(--neon-blue);
+            border: none;
+            color: #000;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        #restartBtn:hover {
+            background: var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        /* Start Screen */
+        #startScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        #startScreen h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #startScreen h1 span {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #startScreen p {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        #startBtn {
+            padding: 1rem 3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        #startBtn:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* Element Effects Info */
+        .elements-preview {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .element-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">CHRONO<span>PONG</span></div>
+        <div class="score-display">
+            <div class="score player1">
+                <span class="score-label">JUGADOR</span>
+                <span class="score-value" id="scorePlayer">0</span>
+            </div>
+            <div class="score player2">
+                <span class="score-label">CPU</span>
+                <span class="score-value" id="scoreCPU">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+        
+        <div class="hud">
+            <div class="chrono-container">
+                <span class="chrono-label">CHRONO</span>
+                <div class="chrono-bar">
+                    <div class="chrono-fill" id="chronoFill"></div>
+                </div>
+            </div>
+            <div class="element-indicator">
+                <span>ELEMENTO:</span>
+                <div class="current-element" id="currentElement"></div>
+                <span id="elementName">NINGUNO</span>
+            </div>
+        </div>
+
+        <div id="startScreen">
+            <h1>ELEMENTAL <span>PONG</span></h1>
+            <p>Minimalismo visual • Caos elemental • Control del tiempo</p>
+            <button id="startBtn">COMENZAR</button>
+            <div class="elements-preview">
+                <div class="element-preview" style="background: var(--neon-red); color: #000;">🔥</div>
+                <div class="element-preview" style="background: var(--neon-blue); color: #000;">❄️</div>
+                <div class="element-preview" style="background: var(--neon-yellow); color: #000;">⚡</div>
+                <div class="element-preview" style="background: #8B4513; color: #fff;">🌍</div>
+            </div>
+        </div>
+
+        <div id="gameOver">
+            <h2 id="winnerText">GAME OVER</h2>
+            <p id="finalScore">5 - 3</p>
+            <button id="restartBtn">JUGAR DE NUEVO</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <kbd>↑</kbd><kbd>↓</kbd> Mover &nbsp;|&nbsp; 
+        <kbd>ESPACIO</kbd> Activar Elemento &nbsp;|&nbsp; 
+        <kbd>SHIFT</kbd> Chrono-Break (tiempo lento)
+    </div>
+
+    <script>
+        // ============ GAME CONFIG ============
+        const CONFIG = {
+            WIN_SCORE: 5,
+            PADDLE_WIDTH: 12,
+            PADDLE_HEIGHT: 80,
+            PADDLE_SPEED: 8,
+            BALL_SIZE: 14,
+            INITIAL_BALL_SPEED: 6,
+            MAX_BALL_SPEED: 15,
+            AI_SPEED: 4.5,
+            CHRONO_MAX: 100,
+            CHRONO_DRAIN: 0.5,
+            TIME_SLOW_FACTOR: 0.1,
+            TIME_SLOW_DURATION: 2000,
+        };
+
+        // Elementos
+        const ELEMENTS = {
+            NONE: { name: 'NINGUNO', color: '#ffffff', speedMod: 1, sizeMod: 1 },
+            FIRE: { name: 'FUEGO', color: '#ff0055', speedMod: 1.5, sizeMod: 1.2, effect: 'fire' },
+            ICE: { name: 'HIELO', color: '#00f3ff', speedMod: 0.8, sizeMod: 1, effect: 'ice' },
+            LIGHTNING: { name: 'RAYO', color: '#ffcc00', speedMod: 1.3, sizeMod: 0.9, effect: 'lightning' },
+            EARTH: { name: 'TIERRA', color: '#8B4513', speedMod: 0.7, sizeMod: 1.3, effect: 'earth' },
+        };
+
+        // ============ GAME STATE ============
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let gameRunning = false;
+        let gamePaused = false;
+        
+        let player1 = {
+            x: 30,
+            y: canvas.height / 2 - CONFIG.PADDLE_HEIGHT / 2,
+            score: 0,
+            chrono: 0,
+            element: 'NONE',
+            elementCharge: 0,
+        };
+        
+        let player2 = {
+            x: canvas.width - 30 - CONFIG.PADDLE_WIDTH,
+            y: canvas.height / 2 - CONFIG.PADDLE_HEIGHT / 2,
+            score: 0,
+            element: 'NONE',
+        };
+        
+        let ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            vx: CONFIG.INITIAL_BALL_SPEED,
+            vy: CONFIG.INITIAL_BALL_SPEED * (Math.random() > 0.5 ? 1 : -1),
+            speed: CONFIG.INITIAL_BALL_SPEED,
+            element: 'NONE',
+            size: CONFIG.BALL_SIZE,
+            trail: [],
+        };
+        
+        let keys = {};
+        let timeSlowActive = false;
+        let timeSlowEnd = 0;
+        let lastPerfectHit = 0;
+        let particleEffects = [];
+
+        // ============ INPUT ============
+        document.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+            if (e.code === 'Space' && gameRunning) {
+                activatePlayerElement();
+            }
+            if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+                activateChrono();
+            }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        // Touch controls
+        let touchStartY = null;
+        canvas.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            if (touchStartY !== null) {
+                const deltaY = e.touches[0].clientY - touchStartY;
+                player1.y = Math.max(0, Math.min(canvas.height - CONFIG.PADDLE_HEIGHT, 
+                    player1.y + deltaY * 0.5));
+                touchStartY = e.touches[0].clientY;
+            }
+        });
+
+        // ============ GAME FUNCTIONS ============
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            resetGame();
+            gameRunning = true;
+            gameLoop();
+        }
+
+        function resetGame() {
+            player1.score = 0;
+            player1.chrono = 0;
+            player1.element = 'NONE';
+            player1.elementCharge = 0;
+            
+            player2.score = 0;
+            player2.element = 'NONE';
+            
+            resetBall();
+            updateUI();
+            document.getElementById('gameOver').style.display = 'none';
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.speed = CONFIG.INITIAL_BALL_SPEED;
+            ball.element = 'NONE';
+            ball.size = CONFIG.BALL_SIZE;
+            ball.trail = [];
+            
+            const angle = (Math.random() * Math.PI / 4) - Math.PI / 8;
+            const direction = Math.random() > 0.5 ? 1 : -1;
+            ball.vx = ball.speed * Math.cos(angle) * direction;
+            ball.vy = ball.speed * Math.sin(angle);
+        }
+
+        function activateChrono() {
+            if (player1.chrono >= 100 && !timeSlowActive && gameRunning) {
+                timeSlowActive = true;
+                timeSlowEnd = Date.now() + CONFIG.TIME_SLOW_DURATION;
+                player1.chrono = 0;
+                createParticles(player1.x + CONFIG.PADDLE_WIDTH, player1.y + CONFIG.PADDLE_HEIGHT/2, '#bc13fe', 20);
+            }
+        }
+
+        function activatePlayerElement() {
+            if (player1.elementCharge >= 100 && player1.element !== 'NONE') {
+                // Activar elemento en la pelota
+                if (Math.random() > 0.5) {
+                    ball.element = player1.element;
+                    createParticles(ball.x, ball.y, ELEMENTS[player1.element].color, 30);
+                }
+                player1.elementCharge = 0;
+            }
+        }
+
+        function updatePlayerElement() {
+            // Cargar elemento lentamente
+            if (player1.element !== 'NONE') {
+                player1.elementCharge = Math.min(100, player1.elementCharge + 0.3);
+            }
+        }
+
+        function update() {
+            if (!gameRunning || gamePaused) return;
+
+            // Time slow effect
+            if (timeSlowActive) {
+                if (Date.now() > timeSlowEnd) {
+                    timeSlowActive = false;
+                }
+            }
+
+            const timeScale = timeSlowActive ? CONFIG.TIME_SLOW_FACTOR : 1;
+            const effectivePaddleSpeed = CONFIG.PADDLE_SPEED * timeScale;
+            const effectiveBallSpeed = ball.speed * timeScale;
+
+            // Player 1 movement
+            if (keys['ArrowUp'] || keys['KeyW']) {
+                player1.y = Math.max(0, player1.y - effectivePaddleSpeed);
+            }
+            if (keys['ArrowDown'] || keys['KeyS']) {
+                player1.y = Math.min(canvas.height - CONFIG.PADDLE_HEIGHT, player1.y + effectivePaddleSpeed);
+            }
+
+            // AI Player 2
+            const targetY = ball.y - CONFIG.PADDLE_HEIGHT / 2;
+            if (player2.y < targetY - 10) {
+                player2.y += CONFIG.AI_SPEED * timeScale;
+            } else if (player2.y > targetY + 10) {
+                player2.y -= CONFIG.AI_SPEED * timeScale;
+            }
+            player2.y = Math.max(0, Math.min(canvas.height - CONFIG.PADDLE_HEIGHT, player2.y));
+
+            // Ball movement
+            ball.x += ball.vx * timeScale;
+            ball.y += ball.vy * timeScale;
+
+            // Ball trail
+            ball.trail.push({ x: ball.x, y: ball.y, alpha: 1 });
+            if (ball.trail.length > 15) ball.trail.shift();
+            ball.trail.forEach(t => t.alpha -= 0.07);
+
+            // Wall collisions (top/bottom)
+            if (ball.y - ball.size/2 <= 0 || ball.y + ball.size/2 >= canvas.height) {
+                ball.vy = -ball.vy;
+                ball.y = ball.y - ball.size/2 <= 0 ? ball.size/2 : canvas.height - ball.size/2;
+                createParticles(ball.x, ball.y, '#ffffff', 10);
+            }
+
+            // Paddle collisions
+            // Player 1 (left)
+            if (ball.x - ball.size/2 <= player1.x + CONFIG.PADDLE_WIDTH &&
+                ball.x + ball.size/2 >= player1.x &&
+                ball.y >= player1.y &&
+                ball.y <= player1.y + CONFIG.PADDLE_HEIGHT) {
+                
+                const hitPos = (ball.y - player1.y) / CONFIG.PADDLE_HEIGHT;
+                const angle = (hitPos - 0.5) * Math.PI / 3;
+                
+                // Perfect hit bonus (center of paddle)
+                const isPerfectHit = Math.abs(hitPos - 0.5) < 0.2;
+                if (isPerfectHit) {
+                    player1.chrono = Math.min(CONFIG.CHRONO_MAX, player1.chrono + 20);
+                    lastPerfectHit = Date.now();
+                }
+
+                // Element effect on hit
+                let speedMod = 1;
+                if (ball.element === 'FIRE') speedMod = 1.3;
+                else if (ball.element === 'ICE') speedMod = 0.9;
+                else if (ball.element === 'EARTH') speedMod = 0.7;
+
+                ball.speed = Math.min(CONFIG.MAX_BALL_SPEED, ball.speed * 1.05 * speedMod);
+                
+                ball.vx = Math.abs(ball.speed * Math.cos(angle));
+                ball.vy = ball.speed * Math.sin(angle);
+                
+                ball.x = player1.x + CONFIG.PADDLE_WIDTH + ball.size/2;
+                
+                createParticles(ball.x, ball.y, player1.element !== 'NONE' ? ELEMENTS[player1.element].color : '#00f3ff', 15);
+            }
+
+            // Player 2 (right)
+            if (ball.x + ball.size/2 >= player2.x &&
+                ball.x - ball.size/2 <= player2.x + CONFIG.PADDLE_WIDTH &&
+                ball.y >= player2.y &&
+                ball.y <= player2.y + CONFIG.PADDLE_HEIGHT) {
+                
+                const hitPos = (ball.y - player2.y) / CONFIG.PADDLE_HEIGHT;
+                const angle = (hitPos - 0.5) * Math.PI / 3;
+                
+                ball.speed = Math.min(CONFIG.MAX_BALL_SPEED, ball.speed * 1.05);
+                ball.vx = -Math.abs(ball.speed * Math.cos(angle));
+                ball.vy = ball.speed * Math.sin(angle);
+                
+                ball.x = player2.x - ball.size/2;
+                
+                createParticles(ball.x, ball.y, ELEMENTS[player2.element].color || '#ff0055', 15);
+            }
+
+            // Scoring
+            if (ball.x < 0) {
+                player2.score++;
+                checkWin();
+                resetBall();
+            }
+            if (ball.x > canvas.width) {
+                player1.score++;
+                checkWin();
+                resetBall();
+            }
+
+            // Update player element charge
+            updatePlayerElement();
+
+            // Update particles
+            particleEffects = particleEffects.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.02;
+                return p.life > 0;
+            });
+
+            updateUI();
+        }
+
+        function createParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                particleEffects.push({
+                    x, y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    color,
+                    life: 1,
+                    size: Math.random() * 4 + 2
+                });
+            }
+        }
+
+        function checkWin() {
+            if (player1.score >= CONFIG.WIN_SCORE) {
+                endGame('¡GANASTE!');
+            } else if (player2.score >= CONFIG.WIN_SCORE) {
+                endGame('PERDISTE');
+            }
+        }
+
+        function endGame(message) {
+            gameRunning = false;
+            document.getElementById('winnerText').textContent = message;
+            document.getElementById('finalScore').textContent = `${player1.score} - ${player2.score}`;
+            document.getElementById('gameOver').style.display = 'flex';
+        }
+
+        function updateUI() {
+            document.getElementById('scorePlayer').textContent = player1.score;
+            document.getElementById('scoreCPU').textContent = player2.score;
+            document.getElementById('chronoFill').style.width = player1.chrono + '%';
+            
+            const currentEl = ELEMENTS[ball.element];
+            document.getElementById('currentElement').style.background = currentEl.color;
+            document.getElementById('currentElement').style.boxShadow = `0 0 15px ${currentEl.color}`;
+            document.getElementById('elementName').textContent = currentEl.name;
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw center line
+            ctx.setLineDash([10, 10]);
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw ball trail
+            ball.trail.forEach((t, i) => {
+                const el = ELEMENTS[ball.element];
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, ball.size/2 * t.alpha, 0, Math.PI * 2);
+                ctx.fillStyle = el.color + Math.floor(t.alpha * 99).toString(16).padStart(2, '0');
+                ctx.fill();
+            });
+
+            // Draw ball with element effect
+            const el = ELEMENTS[ball.element];
+            
+            // Glow effect
+            const glowSize = timeSlowActive ? 30 : 20;
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, glowSize, 0, Math.PI * 2);
+            const gradient = ctx.createRadialGradient(ball.x, ball.y, 0, ball.x, ball.y, glowSize);
+            gradient.addColorStop(0, el.color + 'aa');
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Ball core
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.size/2, 0, Math.PI * 2);
+            ctx.fillStyle = el.color;
+            ctx.fill();
+
+            // Draw paddles
+            // Player 1
+            ctx.fillStyle = '#00f3ff';
+            ctx.shadowColor = '#00f3ff';
+            ctx.shadowBlur = 10;
+            ctx.fillRect(player1.x, player1.y, CONFIG.PADDLE_WIDTH, CONFIG.PADDLE_HEIGHT);
+            ctx.shadowBlur = 0;
+
+            // Player 2
+            ctx.fillStyle = '#ff0055';
+            ctx.shadowColor = '#ff0055';
+            ctx.shadowBlur = 10;
+            ctx.fillRect(player2.x, player2.y, CONFIG.PADDLE_WIDTH, CONFIG.PADDLE_HEIGHT);
+            ctx.shadowBlur = 0;
+
+            // Draw particles
+            particleEffects.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + Math.floor(p.life * 255).toString(16).padStart(2, '0');
+                ctx.fill();
+            });
+
+            // Time slow indicator
+            if (timeSlowActive) {
+                ctx.fillStyle = 'rgba(188,19,254,0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.font = '24px Orbitron';
+                ctx.fillStyle = '#bc13fe';
+                ctx.textAlign = 'center';
+                ctx.fillText('CHRONO-BREAK', canvas.width/2, 50);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            if (gameRunning) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // ============ INITIALIZE ============
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            resetGame();
+            gameRunning = true;
+            gameLoop();
+        });
+
+        // Initial draw
+        draw();
+    </script>
+</body>
+</html>
