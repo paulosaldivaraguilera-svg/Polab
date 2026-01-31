@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Caso - Dialéctico OS{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <a href="/casos" class="text-blue-400 hover:underline">← Volver a casos</a>
+</div>
+
+<div class="glass p-6 rounded-xl border border-slate-700 max-w-2xl">
+    <h1 class="text-2xl font-bold mb-6">Nuevo Caso</h1>
+    
+    <form method="POST" class="space-y-6">
+        <!-- Cliente -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-2">Cliente *</label>
+            <select name="cliente_id" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                <option value="">Seleccionar cliente...</option>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nombre }} ({{ cliente.rut }})</option>
+                {% endfor %}
+            </select>
+            <p class="text-xs text-slate-500 mt-1">
+                <a href="/cliente/nuevo" class="text-blue-400 hover:underline">+ Crear nuevo cliente</a>
+            </p>
+        </div>
+        
+        <!-- Expediente -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Número de Expediente</label>
+            <input type="text" name="numero_expediente" placeholder="Ej: C-12345-2026" 
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- Materia -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Materia *</label>
+            <select name="materia" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                <option value="">Seleccionar materia...</option>
+                <option value="Civil">Civil</option>
+                <option value="Familia">Familia</option>
+                <option value="Laboral">Laboral</option>
+                <option value="Penal">Penal</option>
+                <option value="Consumidor">Consumidor</option>
+                <option value="Administrativo">Administrativo</option>
+                <option value="Constitucional">Constitucional</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Sucesiones">Sucesiones</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+        
+        <!-- Tipo Proceso -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Tipo de Proceso</label>
+            <input type="text" name="tipo_proceso" placeholder="Ej: Juicio ejecutivo, Recurso de apelación..." 
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- Tribunal -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Tribunal / Institución</label>
+            <input type="text" name="tribunal" placeholder="Ej: Juzgado de Familia de Temuco" 
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- Prioridad -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Prioridad</label>
+            <select name="prioridad" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
+            </select>
+        </div>
+        
+        <!-- Submit -->
+        <div class="flex gap-4 pt-4">
+            <a href="/casos" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded font-bold">
+                Cancelar
+            </a>
+            <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold">
+                Crear Caso
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

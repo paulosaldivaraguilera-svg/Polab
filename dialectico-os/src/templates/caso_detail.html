@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}Caso {{ caso.numero_expediente or caso.id }} - Dialéctico OS{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <a href="/casos" class="text-blue-400 hover:underline">← Volver a casos</a>
+</div>
+
+<!-- Header del Caso -->
+<div class="glass p-6 rounded-xl border border-slate-700 mb-6">
+    <div class="flex justify-between items-start">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">
+                {% if caso.numero_expediente %}
+                    Exp. {{ caso.numero_expediente }}
+                {% else %}
+                    Caso #{{ caso.id }}
+                {% endif %}
+            </h1>
+            <p class="text-xl text-slate-300">{{ caso.materia }}</p>
+            {% if caso.tribunal %}
+                <p class="text-slate-400">{{ caso.tribunal }}</p>
+            {% endif %}
+        </div>
+        <div class="text-right">
+            <span class="px-3 py-1 rounded text-sm font-bold
+                {% if caso.estado.value == 'activo' %}bg-green-900/50 text-green-400
+                {% elif caso.estado.value == 'en_curso' %}bg-blue-900/50 text-blue-400
+                {% elif caso.estado.value == 'pausado' %}bg-yellow-900/50 text-yellow-400
+                {% elif caso.estado.value == 'terminado' %}bg-purple-900/50 text-purple-400
+                {% else %}bg-slate-700 text-slate-400{% endif %}">
+                {{ caso.estado.value }}
+            </span>
+            <div class="mt-2 text-sm text-slate-400">
+                {{ caso.prioridad.value }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información Principal -->
+<div class="grid grid-cols-3 gap-6 mb-6">
+    <!-- Cliente -->
+    <div class="glass p-5 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-sm text-slate-400 uppercase mb-3">Cliente</h3>
+        <p class="font-bold text-lg">{{ caso.cliente.nombre }}</p>
+        <p class="text-sm text-slate-400">{{ caso.cliente.rut }}</p>
+        {% if caso.cliente.telefono %}
+            <p class="text-sm text-slate-400">📱 {{ caso.cliente.telefono }}</p>
+        {% endif %}
+        {% if caso.cliente.email %}
+            <p class="text-sm text-slate-400">📧 {{ caso.cliente.email }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Fechas -->
+    <div class="glass p-5 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-sm text-slate-400 uppercase mb-3">Fechas</h3>
+        <p class="text-sm"><span class="text-slate-400">Inicio:</span> {{ caso.fecha_inicio.strftime('%d/%m/%Y') }}</p>
+        {% if caso.fecha_termino %}
+            <p class="text-sm"><span class="text-slate-400">Término:</span> {{ caso.fecha_termino.strftime('%d/%m/%Y') }}</p>
+        {% endif %}
+        <p class="text-sm mt-2">
+            {% set dias_activo = (date.today() - caso.fecha_inicio).days %}
+            <span class="text-slate-400">Activo:</span> {{ dias_activo }} días
+        </p>
+    </div>
+
+    <!-- Tipo -->
+    <div class="glass p-5 rounded-xl border border-slate-700">
+        <h3 class="font-bold text-sm text-slate-400 uppercase mb-3">Detalles</h3>
+        {% if caso.tipo_proceso %}
+            <p class="text-sm"><span class="text-slate-400">Tipo:</span> {{ caso.tipo_proceso }}</p>
+        {% endif %}
+        <p class="text-sm"><span class="text-slate-400">Creado:</span> {{ caso.creado.strftime('%d/%m/%Y') }}</p>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="mb-6">
+    <div class="flex border-b border-slate-700">
+        <button class="px-4 py-2 text-blue-400 border-b-2 border-blue-400" onclick="showTab('plazos')">Plazos</button>
+        <button class="px-4 py-2 text-slate-400 hover:text-white" onclick="showTab('tareas')">Tareas</button>
+        <button class="px-4 py-2 text-slate-400 hover:text-white" onclick="showTab('documentos')">Documentos</button>
+        <button class="px-4 py-2 text-slate-400 hover:text-white" onclick="showTab('notas')">Notas</button>
+    </div>
+</div>
+
+<!-- Contenido de Tabs -->
+<div id="plazos" class="tab-content">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Plazos del Caso</h2>
+        <button onclick="document.getElementById('plazo-modal').classList.remove('hidden')" 
+                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-bold">
+            + Agregar Plazo
+        </button>
+    </div>
+    
+    {% if caso.plazos %}
+        <div class="space-y-3">
+            {% for plazo in caso.plazos %}
+                <div class="glass p-4 rounded-lg border-l-4 
+                    {% if plazo.estado_plazo() == 'vencido' %}border-red-500
+                    {% elif plazo.estado_plazo() == 'critico' %}border-red-500
+                    {% elif plazo.estado_plazo() == 'alerta' %}border-yellow-500
+                    {% else %}border-green-500{% endif %}">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold">{{ plazo.titulo }}</h4>
+                            <p class="text-sm text-slate-400">{{ plazo.descripcion }}</p>
+                        </div>
+                        <div class="text-right">
+                            {% set dias = plazo.dias_pendientes() %}
+                            <p class="mono font-bold {% if dias < 0 %}text-red-400{% elif dias <= 3 %}text-red-400{% elif dias <= 7 %}text-yellow-400{% else %}text-green-400{% endif %}">
+                                {% if dias < 0 %}Vencido ({{ dias }} días)
+                                {% elif dias == 0 %}Vence hoy
+                                {% else %}{{ dias }} días{% endif %}
+                            </p>
+                            <p class="text-xs text-slate-500">{{ plazo.fecha_vencimiento.strftime('%d/%m/%Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-slate-400">No hay plazos registrados</p>
+    {% endif %}
+</div>
+
+<div id="tareas" class="tab-content hidden">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Tareas</h2>
+        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-bold">
+            + Agregar Tarea
+        </button>
+    </div>
+    
+    {% if caso.tareas %}
+        <div class="space-y-3">
+            {% for tarea in caso.tareas %}
+                <div class="glass p-4 rounded-lg border border-slate-700 
+                    {% if tarea.completado %}opacity-50{% endif %}">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-start gap-3">
+                            <form action="/tarea/{{ tarea.id }}/completar" method="POST">
+                                <input type="checkbox" {% if tarea.completado %}checked{% endif %} 
+                                       onchange="this.form.submit()" class="mt-1">
+                            </form>
+                            <div>
+                                <h4 class="font-bold {% if tarea.completado %}line-through text-slate-500{% endif %}">
+                                    {{ tarea.titulo }}
+                                </h4>
+                                <p class="text-sm text-slate-400">{{ tarea.descripcion }}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded
+                            {% if tarea.prioridad.value == 'urgente' %}bg-red-900/50 text-red-400
+                            {% elif tarea.prioridad.value == 'alta' %}bg-orange-900/50 text-orange-400
+                            {% elif tarea.prioridad.value == 'media' %}bg-yellow-900/50 text-yellow-400
+                            {% else %}bg-slate-700 text-slate-400{% endif %}">
+                            {{ tarea.prioridad.value }}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-slate-400">No hay tareas registradas</p>
+    {% endif %}
+</div>
+
+<div id="documentos" class="tab-content hidden">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Documentos</h2>
+        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-bold">
+            + Subir Documento
+        </button>
+    </div>
+    <p class="text-slate-400">Próximamente: Gestión de documentos</p>
+</div>
+
+<div id="notas" class="tab-content hidden">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Notas</h2>
+        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-bold">
+            + Agregar Nota
+        </button>
+    </div>
+    {% if caso.observaciones %}
+        <div class="glass p-4 rounded-lg border border-slate-700">
+            <p class="whitespace-pre-wrap">{{ caso.observaciones }}</p>
+        </div>
+    {% else %}
+        <p class="text-slate-400">Sin notas</p>
+    {% endif %}
+</div>
+
+<!-- Modal Agregar Plazo -->
+<div id="plazo-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="glass p-6 rounded-xl border border-slate-700 max-w-md w-full mx-4">
+        <h3 class="text-xl font-bold mb-4">Agregar Plazo</h3>
+        <form action="/caso/{{ caso.id }}/plazo" method="POST">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Título</label>
+                    <input type="text" name="titulo" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Descripción</label>
+                    <textarea name="descripcion" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Fecha Inicio</label>
+                        <input type="date" name="fecha_inicio" value="{{ hoy }}" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Días</label>
+                        <input type="number" name="dias" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Tipo</label>
+                    <select name="tipo" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                        <option value="habil">Días Hábiles</option>
+                        <option value="corrido">Días Corridos</option>
+                        <option value="judicial">Días Judiciales</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button type="button" onclick="document.getElementById('plazo-modal').classList.add('hidden')" 
+                        class="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded font-bold">
+                    Cancelar
+                </button>
+                <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById(tabId).classList.remove('hidden');
+    
+    document.querySelectorAll('[onclick^="showTab"]').forEach(btn => {
+        btn.classList.remove('text-blue-400', 'border-b-2', 'border-blue-400');
+        btn.classList.add('text-slate-400', 'hover:text-white');
+    });
+    event.target.classList.remove('text-slate-400', 'hover:text-white');
+    event.target.classList.add('text-blue-400', 'border-b-2', 'border-blue-400');
+}
+</script>
+
+{% endblock %}

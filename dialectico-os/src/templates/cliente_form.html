@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{% if cliente %}Editar{% else %}Nuevo{% endif %} Cliente - Dialéctico OS{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <a href="/clientes" class="text-blue-400 hover:underline">← Volver a clientes</a>
+</div>
+
+<div class="glass p-6 rounded-xl border border-slate-700 max-w-2xl">
+    <h1 class="text-2xl font-bold mb-6">
+        {% if cliente %}Editar{% else %}Nuevo{% endif %} Cliente
+    </h1>
+    
+    <form method="POST" class="space-y-6">
+        <!-- Nombre -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Nombre completo *</label>
+            <input type="text" name="nombre" value="{{ cliente.nombre if cliente else '' }}" required
+                   placeholder="Ej: Juan Pérez González"
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- RUT -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">RUT *</label>
+            <input type="text" name="rut" value="{{ cliente.rut if cliente else '' }}" required
+                   placeholder="Ej: 12345678-9"
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- Contacto -->
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">Email</label>
+                <input type="email" name="email" value="{{ cliente.email if cliente else '' }}"
+                       placeholder="juan@email.com"
+                       class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">Teléfono</label>
+                <input type="text" name="telefono" value="{{ cliente.telefono if cliente else '' }}"
+                       placeholder="+56 9 1234 5678"
+                       class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+            </div>
+        </div>
+        
+        <!-- Dirección -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Dirección</label>
+            <input type="text" name="direccion" value="{{ cliente.direccion if cliente else '' }}"
+                   placeholder="Calle #, Comuna, Ciudad"
+                   class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+        </div>
+        
+        <!-- Notas -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Notas</label>
+            <textarea name="notas" rows="4" 
+                      placeholder="Información adicional relevante..."
+                      class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">{{ cliente.notas if cliente else '' }}</textarea>
+        </div>
+        
+        <!-- Estado (solo si edita) -->
+        {% if cliente %}
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">Estado</label>
+            <select name="estado" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2">
+                <option value="activo" {% if cliente.estado.value == 'activo' %}selected{% endif %}>Activo</option>
+                <option value="inactivo" {% if cliente.estado.value == 'inactivo' %}selected{% endif %}>Inactivo</option>
+                <option value="potencial" {% if cliente.estado.value == 'potencial' %}selected{% endif %}>Potencial</option>
+                <option value="archivado" {% if cliente.estado.value == 'archivado' %}selected{% endif %}>Archivado</option>
+            </select>
+        </div>
+        {% endif %}
+        
+        <!-- Submit -->
+        <div class="flex gap-4 pt-4">
+            <a href="/clientes" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded font-bold">
+                Cancelar
+            </a>
+            <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold">
+                {% if cliente %}Guardar Cambios{% else %}Crear Cliente{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -9,20 +9,37 @@
 - **Profesión:** Abogado chileno, ejercicio independiente
 - **Enfoque:** Derecho como práctica política, no técnica neutral
 - **Formación:** Marxista, trabajo territorial
-- **Valores:** Directo, sin condescendencia, posicién clara
+- **Valores:** Directo, sin condescendencia, posición clara
 
 ## Proyectos Activos
 
-### POLAB SpA
-Startup con tres divisiones:
-1. **Legaltech** — Comenzar (landing de captación para abogados)
-2. **Juegos** — Elemental Pong (pendiente de decisión)
-3. **Servicios** — Producción teórica y formación
+### POLAB SpA (polab.lat)
+Startup de tecnología desde el sur de Chile.
+- **Enfoque:** IA aplicada a problemas cotidianos
+- **Valores:** "Tecnología invisible", "Utilidad Radical"
+- **Producto:** Mily (control parental con IA)
+- **Arquitectura:** Zero-Knowledge (datos se quedan en la familia)
+
+### Mily (milyapp.lat)
+Control parental con inteligencia artificial.
+- **Eslogan:** "Entender es mejor que prohibir"
+- **Estado:** Beta abierta pronto
+- **Características:**
+  - NO espía chats — solo alerta de riesgos reales
+  - Análisis de sentimiento para detectar ciberacoso o depresión
+  - Bloqueo inteligente adaptativo
+  - Puentes de diálogo (explica por qué bloquea)
+  - Arquitectura Zero-Knowledge (procesamiento local on-device)
+  - Sin venta de datos a terceros
+  - Encriptación de grado militar
+
+### Comenzar
+Landing page de captación para abogados.
+- **Estado:** Operativa, falta integración WhatsApp
 
 ### Web Personal
 - **URL:** paulosaldivar.cv
 - **Propósito:** Captación de clientes + posicionamiento personal
-- **Estado:** Operativa, necesita optimización SEO + CTAs
 
 ## Filosofía de Trabajo (Dialéctico OS)
 
@@ -52,6 +69,8 @@ Startup con tres divisiones:
 
 | Plataforma | Handle/URL | Estado |
 |------------|------------|--------|
+| Web POLAB | polab.lat | ✅ Operativa |
+| Web Mily | milyapp.lat | ✅ Beta soon |
 | Web Personal | paulosaldivar.cv | ✅ Operativa |
 | Moltbook | @PauloARIS | ✅ Activo |
 | Twitter/X | @PauloARIS | 🔄 Crear cuenta |
@@ -67,6 +86,24 @@ Startup con tres divisiones:
 | seo_tracker.py | Auditoría SEO y meta tags |
 | social_media_manager.py | Gestión de contenido multi-plataforma |
 | captura.py | Sistema de captura de notas |
+| plugins.py | Sistema de plugins expandible |
+| Dialéctico OS | Sistema operativo profesional (Flask + SQLite) |
+
+## Sistema de Plugins ARIS
+
+Plugins disponibles:
+- `contar_notas` — Cuenta notas en memory/
+- `ultima_nota` — Lee la última nota creada
+- `buscar_en_notas` — Busca texto en notas
+- `git_status` — Obtiene estado del repositorio
+- `generar_reporte` — Genera reporte del día
+
+Comandos:
+```bash
+python3 plugins.py list      # Listar plugins
+python3 plugins.py run <nombre>  # Ejecutar plugin
+python3 plugins.py stats     # Estadísticas
+```
 
 ## Preferencias de Comunicación
 
@@ -86,11 +123,12 @@ Cuando Paulo presenta ideas:
 
 ## Pendientes de Alto Impacto
 
-1. Integrar formulario Comenzar → WhatsApp
-2. Verificar y actualizar LinkedIn
-3. Crear Instagram @paulosaldivar
-4. Decidir destino de Elemental Pong
-5. Implementar sistema de captura de notas
+1. [ ] Publicar post mutual aid en Moltbook
+2. [ ] Integrar formulario Comenzar → WhatsApp
+3. [ ] Verificar y actualizar LinkedIn
+4. [ ] Crear Instagram @paulosaldivar
+5. [ ] Documentar arquitectura técnica de Mily
+6. [ ] Mejorar ARIS (cola de mensajes, plugins, logging)
 
 ---
 

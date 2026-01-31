@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Tareas - Dialéctico OS{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <div>
+        <h1 class="text-3xl font-bold mb-2">Tareas</h1>
+        <p class="text-slate-400">Gestión de tareas del estudio</p>
+    </div>
+    <div class="flex gap-2">
+        <a href="/tareas?estado=pendiente" class="px-3 py-1 rounded {% if estado == 'pendiente' %}bg-blue-600{% else %}bg-slate-700{% endif %} text-sm">
+            Pendientes ({{ pending_count }})
+        </a>
+        <a href="/tareas?estado=completada" class="px-3 py-1 rounded {% if estado == 'completada' %}bg-blue-600{% else %}bg-slate-700{% endif %} text-sm">
+            Completadas ({{ completed_count }})
+        </a>
+        <a href="/tareas" class="px-3 py-1 rounded {% if not estado %}bg-blue-600{% else %}bg-slate-700{% endif %} text-sm">
+            Todas
+        </a>
+    </div>
+</div>
+
+{% if tareas %}
+    <div class="space-y-3">
+        {% for tarea in tareas %}
+            <div class="glass p-5 rounded-xl border border-slate-700 hover:border-blue-500 transition
+                {% if tarea.completado %}opacity-60{% endif %}">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-start gap-4">
+                        <form action="/tarea/{{ tarea.id }}/completar" method="POST">
+                            <input type="checkbox" {% if tarea.completado %}checked{% endif %} 
+                                   onchange="this.form.submit()" 
+                                   class="w-5 h-5 mt-1 rounded border-slate-600 bg-slate-800 text-blue-600">
+                        </form>
+                        <div>
+                            <h3 class="font-bold text-lg {% if tarea.completado %}line-through text-slate-500{% endif %}">
+                                {{ tarea.titulo }}
+                            </h3>
+                            {% if tarea.descripcion %}
+                                <p class="text-slate-400 mt-1">{{ tarea.descripcion }}</p>
+                            {% endif %}
+                            <div class="flex gap-4 mt-2 text-sm">
+                                {% if tarea.caso %}
+                                    <span class="text-blue-400">📁 {{ tarea.caso.materia }}</span>
+                                {% endif %}
+                                <span class="text-slate-500">👤 {{ tarea.caso.cliente.nombre if tarea.caso else 'General' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="px-2 py-1 rounded text-xs font-bold
+                            {% if tarea.prioridad.value == 'urgente' %}bg-red-900/50 text-red-400
+                            {% elif tarea.prioridad.value == 'alta' %}bg-orange-900/50 text-orange-400
+                            {% elif tarea.prioridad.value == 'media' %}bg-yellow-900/50 text-yellow-400
+                            {% else %}bg-slate-700 text-slate-400{% endif %}">
+                            {{ tarea.prioridad.value }}
+                        </span>
+                        {% if tarea.fecha_vencimiento %}
+                            {% set dias = (tarea.fecha_vencimiento - hoy).days %}
+                            <p class="text-xs mt-2 {% if dias < 0 %}text-red-400{% elif dias == 0 %}text-yellow-400{% else %}text-slate-500{% endif %}">
+                                {% if dias < 0 %}Vencido{% elif dias == 0 %}Hoy{% else %}{{ dias }} días{% endif %}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="glass p-12 rounded-xl border border-slate-700 text-center">
+        <p class="text-4xl mb-4">📋</p>
+        <p class="text-slate-400 mb-4">
+            {% if estado == 'pendiente' %}
+                No hay tareas pendientes 🎉
+            {% elif estado == 'completada' %}
+                No hay tareas completadas
+            {% else %}
+                No hay tareas registradas
+            {% endif %}
+        </p>
+        <p class="text-sm text-slate-500">Las tareas se crean desde cada caso</p>
+    </div>
+{% endif %}
+{% endblock %}
