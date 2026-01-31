@@ -61,6 +61,7 @@ Landing page de captación para abogados.
 ## Campaign Moltbook
 
 - **Handle:** @PauloARIS
+- **Correos asociados:** paulo.saldivar.aguilera@gmail.com, dunsymphony@gmail.com
 - **Objetivo:** Top 10 de la plataforma
 - **Estado:** Karma 5, 2 posts, 6+ comentarios
 - **Estrategia:** Mutual aid + análisis político
@@ -80,14 +81,12 @@ Landing page de captación para abogados.
 
 ## Herramientas de Automatización (ARIS)
 
-| Herramienta | Qué hace |
-|-------------|----------|
-| aris_agent.py | Daemon de automatización continua |
-| seo_tracker.py | Auditoría SEO y meta tags |
-| social_media_manager.py | Gestión de contenido multi-plataforma |
-| captura.py | Sistema de captura de notas |
-| plugins.py | Sistema de plugins expandible |
-| Dialéctico OS | Sistema operativo profesional (Flask + SQLite) |
+| Herramienta | Ubicación | Qué hace |
+|-------------|-----------|----------|
+| aris_agent.py | projects/tools/aris/ | Daemon de automatización continua |
+| seo_tracker.py | projects/tools/scripts/ | Auditoría SEO y meta tags |
+| plugins.py | projects/tools/aris/ | Sistema de plugins expandible |
+| Dialéctico OS | dialectico-os/ | Sistema operativo profesional (Flask + SQLite) |
 
 ## Sistema de Plugins ARIS
 
@@ -100,10 +99,42 @@ Plugins disponibles:
 
 Comandos:
 ```bash
-python3 plugins.py list      # Listar plugins
-python3 plugins.py run <nombre>  # Ejecutar plugin
-python3 plugins.py stats     # Estadísticas
+python3 projects/tools/aris/plugins.py list      # Listar plugins
+python3 projects/tools/aris/plugins.py run <nombre>  # Ejecutar plugin
+python3 projects/tools/aris/plugins.py stats     # Estadísticas
 ```
+
+## Estructura del Workspace (2026-01-31)
+
+```
+workspace/
+├── docs/                    # Documentación del sistema
+│   ├── SOUL.md             # Quién soy
+│   ├── USER.md             # Para quién trabajo
+│   ├── MEMORY.md           # Memoria de largo plazo
+│   └── AGENTS.md           # Guías de agentes
+├── projects/               # Proyectos principales
+│   ├── polab/              # Startup POLAB
+│   │   ├── web/            # Web polab.lat
+│   │   ├── mily/           # App Mily (control parental)
+│   │   ├── comenzar/       # Landing captación abogados
+│   │   └── docs/           # Documentación técnica
+│   ├── personal/           # Proyectos personales
+│   │   ├── web-personal/   # Web paulosaldivar.cv
+│   │   └── paulo-personal/ # Stuff personal
+│   ├── gaming/
+│   │   └── elemental-pong/ # Juego arcade
+│   ├── craft/
+│   │   └── plush-chile-patterns/  # Patrones peluches
+│   └── tools/
+│       ├── aris/           # Automatizaciones
+│       ├── scripts/        # Scripts utilitarios
+│       └── campaign/       # Campañas (Moltbook)
+├── memory/                 # Memoria diaria
+│   └── YYYY-MM-DD.md
+├── skills/                 # Skills de OpenClaw
+├── config/                 # Configuraciones
+└── logs/                   # Logs del sistema
 
 ## Preferencias de Comunicación
 
