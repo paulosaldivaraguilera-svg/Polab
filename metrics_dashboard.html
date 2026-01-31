@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIS Dashboard de Métricas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen p-6">
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 flex items-center justify-between border-b border-slate-800 pb-6">
+        <div>
+            <h1 class="text-3xl font-bold">ARIS Dashboard</h1>
+            <p class="text-slate-400">Métricas y análisis del sistema</p>
+        </div>
+        <div class="text-right">
+            <p class="mono text-sm text-slate-500" id="datetime"></p>
+            <p class="text-xs text-slate-600">v1.0</p>
+        </div>
+    </header>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-5 gap-4 mb-8">
+        <div class="glass p-4 rounded-xl border border-green-500/50">
+            <p class="text-xs text-slate-400 uppercase">Logs Totales</p>
+            <p class="text-2xl font-bold text-green-400 mono" id="log-total">--</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-blue-500/50">
+            <p class="text-xs text-slate-400 uppercase">Plugins</p>
+            <p class="text-2xl font-bold text-blue-400 mono" id="plugin-count">--</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-purple-500/50">
+            <p class="text-xs text-slate-400 uppercase">Notas</p>
+            <p class="text-2xl font-bold text-purple-400 mono" id="nota-count">--</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-yellow-500/50">
+            <p class="text-xs text-slate-400 uppercase">Git Changes</p>
+            <p class="text-2xl font-bold text-yellow-400 mono" id="git-changes">--</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-pink-500/50">
+            <p class="text-xs text-slate-400 uppercase">Uptime</p>
+            <p class="text-2xl font-bold text-pink-400 mono" id="uptime">--</p>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <!-- Logs by Level -->
+        <div class="glass p-6 rounded-xl border border-slate-700">
+            <h2 class="text-xl font-bold mb-4">Logs por Nivel</h2>
+            <canvas id="logsChart" height="200"></canvas>
+        </div>
+        
+        <!-- Activity Over Time -->
+        <div class="glass p-6 rounded-xl border border-slate-700">
+            <h2 class="text-xl font-bold mb-4">Actividad Reciente</h2>
+            <canvas id="activityChart" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Plugins & Recent Logs -->
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <!-- Plugins -->
+        <div class="glass p-6 rounded-xl border border-slate-700">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-blue-500 rounded"></span>
+                Plugins Activos
+            </h2>
+            <div class="space-y-2" id="plugin-list">
+                <p class="text-slate-400">Cargando...</p>
+            </div>
+        </div>
+        
+        <!-- Recent Logs -->
+        <div class="glass p-6 rounded-xl border border-slate-700">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-green-500 rounded"></span>
+                Logs Recientes
+            </h2>
+            <div class="space-y-2 mono text-xs" id="recent-logs">
+                <p class="text-slate-400">Cargando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Status -->
+    <div class="glass p-6 rounded-xl border border-slate-700 mb-8">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <span class="w-2 h-6 bg-purple-500 rounded"></span>
+            Estado de Proyectos
+        </h2>
+        <div class="grid grid-cols-3 gap-4">
+            <!-- Dialéctico OS -->
+            <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold">Dialéctico OS</h3>
+                    <span class="text-xs bg-green-900/50 text-green-400 px-2 py-1 rounded">Activo</span>
+                </div>
+                <p class="text-sm text-slate-400 mt-1">Sistema operativo profesional</p>
+                <div class="mt-2 text-xs text-slate-500">
+                    Templates: 7 | Tests: 45
+                </div>
+            </div>
+            
+            <!-- POLAB -->
+            <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold">POLAB SpA</h3>
+                    <span class="text-xs bg-yellow-900/50 text-yellow-400 px-2 py-1 rounded">Beta</span>
+                </div>
+                <p class="text-sm text-slate-400 mt-1">Legaltech + Mily</p>
+                <div class="mt-2 text-xs text-slate-500">
+                    polab.lat | milyapp.lat
+                </div>
+            </div>
+            
+            <!-- ARIS -->
+            <div class="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold">ARIS</h3>
+                    <span class="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded">Creciendo</span>
+                </div>
+                <p class="text-sm text-slate-400 mt-1">Agente personal</p>
+                <div class="mt-2 text-xs text-slate-500">
+                    Plugins: 5 | Logging: OK
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="glass p-6 rounded-xl border border-slate-700">
+        <h2 class="text-xl font-bold mb-4">Acciones Rápidas</h2>
+        <div class="grid grid-cols-4 gap-4">
+            <button onclick="runCommand('plugins.py list')" 
+                    class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg text-center transition">
+                <span class="text-2xl">📦</span>
+                <p class="text-sm mt-1">Listar Plugins</p>
+            </button>
+            <button onclick="runCommand('logs.py stats')" 
+                    class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg text-center transition">
+                <span class="text-2xl">📊</span>
+                <p class="text-sm mt-1">Stats Logs</p>
+            </button>
+            <button onclick="runCommand('git status')" 
+                    class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg text-center transition">
+                <span class="text-2xl">🔀</span>
+                <p class="text-sm mt-1">Git Status</p>
+            </button>
+            <button onclick="runCommand('python3 captura.py --stats')" 
+                    class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg text-center transition">
+                <span class="text-2xl">📝</span>
+                <p class="text-sm mt-1">Contar Notas</p>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // DateTime
+    const now = new Date();
+    document.getElementById('datetime').textContent = now.toLocaleDateString('es-CL', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    // Simulated data (in production, fetch from APIs)
+    const logStats = { total: 1247, DEBUG: 456, INFO: 623, WARNING: 123, ERROR: 45 };
+    
+    // Logs Chart
+    new Chart(document.getElementById('logsChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['DEBUG', 'INFO', 'WARNING', 'ERROR'],
+            datasets: [{
+                data: [logStats.DEBUG, logStats.INFO, logStats.WARNING, logStats.ERROR],
+                backgroundColor: ['#3b82f6', '#22c55e', '#eab308', '#ef4444'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Activity Chart (simulated)
+    new Chart(document.getElementById('activityChart'), {
+        type: 'line',
+        data: {
+            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            datasets: [{
+                label: 'Actividad',
+                data: [65, 72, 86, 81, 90, 45, 30],
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { ticks: { color: '#64748b' }, grid: { color: '#334155' } },
+                y: { ticks: { color: '#64748b' }, grid: { color: '#334155' } }
+            }
+        }
+    });
+
+    // Update stats
+    document.getElementById('log-total').textContent = logStats.total;
+    document.getElementById('plugin-count').textContent = '5';
+    document.getElementById('nota-count').textContent = '12';
+    document.getElementById('git-changes').textContent = '0';
+    document.getElementById('uptime').textContent = '2.3d';
+
+    // Plugins list
+    const plugins = [
+        { name: 'contar_notas', version: '1.0.0', enabled: true },
+        { name: 'ultima_nota', version: '1.0.0', enabled: true },
+        { name: 'buscar_en_notas', version: '1.0.0', enabled: true },
+        { name: 'git_status', version: '1.0.0', enabled: true },
+        { name: 'generar_reporte', version: '1.0.0', enabled: false },
+    ];
+
+    document.getElementById('plugin-list').innerHTML = plugins.map(p => `
+        <div class="flex justify-between items-center p-2 bg-slate-800/50 rounded">
+            <span class="mono text-sm">${p.name}</span>
+            <span class="text-xs ${p.enabled ? 'text-green-400' : 'text-slate-500'}">
+                ${p.enabled ? '✅' : '❌'} v${p.version}
+            </span>
+        </div>
+    `).join('');
+
+    // Recent logs (simulated)
+    const recentLogs = [
+        { level: 'INFO', message: 'Plugin ejecutado: buscar_en_notas', time: '10:45' },
+        { level: 'DEBUG', message: 'Git status: 0 cambios', time: '10:44' },
+        { level: 'INFO', message: 'Memoria actualizada', time: '10:43' },
+        { level: 'WARNING', message: 'Configuración incompleta', time: '10:42' },
+        { level: 'INFO', message: 'Sistema inicializado', time: '10:41' },
+    ];
+
+    document.getElementById('recent-logs').innerHTML = recentLogs.map(l => {
+        const colors = { DEBUG: 'text-blue-400', INFO: 'text-green-400', WARNING: 'text-yellow-400', ERROR: 'text-red-400' };
+        return `<div class="flex gap-2">
+            <span class="${colors[l.level]}">[${l.level}]</span>
+            <span class="text-slate-400">${l.message}</span>
+            <span class="text-slate-600 ml-auto">${l.time}</span>
+        </div>`;
+    }).join('');
+
+    function runCommand(cmd) {
+        alert('Ejecutando: ' + cmd + '\n(En producción, esto ejecutaría el comando)');
+    }
+</script>
+
+</body>
+</html>

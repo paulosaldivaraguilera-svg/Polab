@@ -26,6 +26,10 @@ from pathlib import Path
 from datetime import datetime
 from typing import Callable, Any, Dict, List, Optional
 
+# Importar sistema de logging
+sys.path.insert(0, '/home/pi/.openclaw/workspace')
+from logs import log_info, log_warning, log_error, logged_function
+
 # Paths
 WORKSPACE = '/home/pi/.openclaw/workspace'
 PLUGINS_DIR = f'{WORKSPACE}/plugins'
