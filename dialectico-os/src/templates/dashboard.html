@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Dialéctico OS{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">Dashboard</h1>
+    <p class="text-slate-400">Visión general del sistema</p>
+</div>
+
+<!-- Stats Row -->
+<div class="grid grid-cols-4 gap-4 mb-8">
+    <div class="glass p-6 rounded-xl border border-blue-500/50">
+        <p class="text-xs text-slate-400 uppercase">Clientes</p>
+        <p class="text-4xl font-bold text-blue-400">{{ total_clientes }}</p>
+    </div>
+    <div class="glass p-6 rounded-xl border border-green-500/50">
+        <p class="text-xs text-slate-400 uppercase">Casos Activos</p>
+        <p class="text-4xl font-bold text-green-400">{{ casos_activos }}</p>
+    </div>
+    <div class="glass p-6 rounded-xl border border-purple-500/50">
+        <p class="text-xs text-slate-400 uppercase">Tareas Pendientes</p>
+        <p class="text-4xl font-bold text-purple-400">{{ tareas_pendientes }}</p>
+    </div>
+    <div class="glass p-6 rounded-xl border border-yellow-500/50">
+        <p class="text-xs text-slate-400 uppercase">Plazos Críticos</p>
+        <p class="text-4xl font-bold text-yellow-400">{{ plazos_criticos|length }}</p>
+    </div>
+</div>
+
+<!-- Main Grid -->
+<div class="grid grid-cols-2 gap-6">
+    
+    <!-- Plazos Críticos -->
+    <div class="glass p-6 rounded-xl border border-slate-700">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <span class="w-2 h-6 bg-yellow-500 rounded"></span>
+            Plazos Críticos (Próximos 7 días)
+        </h2>
+        
+        {% if plazos_criticos %}
+            <div class="space-y-3">
+                {% for plazo in plazos_criticos %}
+                    <div class="p-4 bg-slate-800/50 rounded-lg border-l-4 
+                        {% if (plazo.fecha_vencimiento - hoy).days <= 3 %}border-red-500
+                        {% elif (plazo.fecha_vencimiento - hoy).days <= 5 %}border-yellow-500
+                        {% else %}border-green-500{% endif %}">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold">{{ plazo.titulo }}</h4>
+                                <p class="text-sm text-slate-400">{{ plazo.caso.materia }} - {{ plazo.caso.cliente.nombre }}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="mono text-sm {% if (plazo.fecha_vencimiento - hoy).days <= 3 %}text-red-400{% elif (plazo.fecha_vencimiento - hoy).days <= 5 %}text-yellow-400{% else %}text-green-400{% endif %}">
+                                    {{ (plazo.fecha_vencimiento - hoy).days }} días
+                                </p>
+                                <p class="text-xs text-slate-500">{{ plazo.fecha_vencimiento.strftime('%d/%m') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-slate-400">No hay plazos críticos 📅</p>
+        {% endif %}
+    </div>
+    
+    <!-- Acciones Rápidas -->
+    <div class="glass p-6 rounded-xl border border-slate-700">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <span class="w-2 h-6 bg-blue-500 rounded"></span>
+            Acciones Rápidas
+        </h2>
+        
+        <div class="space-y-3">
+            <a href="/cliente/nuevo" class="block p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition">
+                <span class="text-2xl">👤</span>
+                <span class="ml-2 font-bold">Nuevo Cliente</span>
+            </a>
+            <a href="/caso/nuevo" class="block p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition">
+                <span class="text-2xl">📁</span>
+                <span class="ml-2 font-bold">Nuevo Caso</span>
+            </a>
+            <a href="/tareas" class="block p-4 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition">
+                <span class="text-2xl">✓</span>
+                <span class="ml-2 font-bold">Ver Tareas</span>
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<!-- Calendario Mini -->
+<div class="glass p-6 rounded-xl border border-slate-700 mt-6">
+    <h2 class="text-xl font-bold mb-4">Calendario - {{ hoy.strftime('%B %Y')|title }}</h2>
+    
+    <div class="grid grid-cols-7 gap-1 text-center text-sm">
+        {% set dias_semana = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'] %}
+        {% for d in dias_semana %}
+            <div class="p-2 text-slate-500 font-bold">{{ d }}</div>
+        {% endfor %}
+        
+        {% set primer_dia = hoy.replace(day=1) %}
+        {% set dia_inicio = (primer_dia.weekday()) % 7 %}
+        {% set dias_mes = primer_dia.replace(month=hoy.month + 1, day=1) - primer_dia if hoy.month < 12 else primer_dia.replace(year=hoy.year + 1, month=1, day=1) - primer_dia %}
+        
+        <!-- Días vacíos antes del primer día -->
+        {% for i in range(dia_inicio) %}
+            <div class="p-2"></div>
+        {% endfor %}
+        
+        <!-- Días del mes -->
+        {% for dia in range(1, dias_mes.days + 1) %}
+            {% set fecha = hoy.replace(day=dia) %}
+            <div class="p-2 rounded {% if fecha == hoy %}bg-blue-600 text-white{% elif fecha.weekday() >= 5 %}text-slate-600{% endif %}">
+                {{ dia }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

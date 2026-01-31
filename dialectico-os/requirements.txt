@@ -1,0 +1,20 @@
+# Dialéctico OS - Requisitos
+# ===========================
+
+# Framework web
+flask>=2.3.0
+flask-sqlalchemy>=3.0.0
+flask-login>=0.6.0
+
+# Base de datos
+sqlalchemy>=2.0.0
+
+# Utilidades
+python-dateutil>=2.8.0
+
+# Desarrollo
+pytest>=7.0.0
+pytest-flask>=1.2.0
+
+# Producción (opcional)
+gunicorn>=21.0.0
