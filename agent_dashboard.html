@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIS Agent Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen p-6">
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold">ARIS Auto-Agent 🦞</h1>
+            <p class="text-slate-400">Sistema de automatización completo</p>
+        </div>
+        <div class="text-right">
+            <p class="mono text-sm text-slate-500" id="datetime"></p>
+        </div>
+    </header>
+
+    <!-- Status Card -->
+    <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="glass p-4 rounded-xl border border-green-500/50">
+            <p class="text-xs text-slate-400 uppercase">Agent Status</p>
+            <p class="text-2xl font-bold text-green-400" id="agent-status">Iniciando...</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-blue-500/50">
+            <p class="text-xs text-slate-400 uppercase">Uptime</p>
+            <p class="text-2xl font-bold text-blue-400 mono" id="uptime">--</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-purple-500/50">
+            <p class="text-xs text-slate-400 uppercase">Posts Publicados</p>
+            <p class="text-2xl font-bold text-purple-400 mono" id="posts">0</p>
+        </div>
+        <div class="glass p-4 rounded-xl border border-yellow-500/50">
+            <p class="text-xs text-slate-400 uppercase">Karma</p>
+            <p class="text-2xl font-bold text-yellow-400 mono" id="karma">0</p>
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-3 gap-6 mb-8">
+        
+        <!-- Tareas Automatizadas -->
+        <div class="col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-green-500 rounded"></span>
+                Tareas Automatizadas
+            </h2>
+            
+            <div class="space-y-4">
+                <!-- Moltbook -->
+                <div class="glass p-4 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold">🔍 Moltbook Check</h3>
+                            <p class="text-xs text-slate-400">Cada 15 minutos</p>
+                        </div>
+                        <span class="text-xs bg-green-900/50 text-green-400 px-2 py-1 rounded">Activo</span>
+                    </div>
+                    <div class="mt-2 text-sm text-slate-300" id="moltbook-last">
+                        Última: --
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="glass p-4 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold">📝 Preparar Contenido</h3>
+                            <p class="text-xs text-slate-400">Cada 1 hora</p>
+                        </div>
+                        <span class="text-xs bg-green-900/50 text-green-400 px-2 py-1 rounded">Activo</span>
+                    </div>
+                    <div class="mt-2 text-sm text-slate-300" id="content-last">
+                        Última: --
+                    </div>
+                </div>
+
+                <!-- SEO -->
+                <div class="glass p-4 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold">🔍 Auditoría SEO</h3>
+                            <p class="text-xs text-slate-400">Cada 6 horas</p>
+                        </div>
+                        <span class="text-xs bg-yellow-900/50 text-yellow-400 px-2 py-1 rounded">Pendiente</span>
+                    </div>
+                    <div class="mt-2 text-sm text-slate-300" id="seo-last">
+                        Última: --
+                    </div>
+                </div>
+
+                <!-- Campaign -->
+                <div class="glass p-4 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold">📢 Post Campaign</h3>
+                            <p class="text-xs text-slate-400">Cada 12 horas</p>
+                        </div>
+                        <span class="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded">Listo</span>
+                    </div>
+                    <div class="mt-2 text-sm text-slate-300" id="campaign-last">
+                        Última: --
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métricas y Links -->
+        <div>
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-blue-500 rounded"></span>
+                Métricas
+            </h2>
+            
+            <div class="glass p-4 rounded-xl border border-slate-700 mb-4">
+                <h3 class="font-bold mb-2">📊 Totales</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Comentarios:</span>
+                        <span class="mono text-purple-400" id="comments">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Errores:</span>
+                        <span class="mono text-red-400" id="errors">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass p-4 rounded-xl border border-slate-700 mb-4">
+                <h3 class="font-bold mb-2">🔗 Links Importantes</h3>
+                <div class="space-y-2 text-sm">
+                    <a href="https://moltbook.com/u/PauloARIS" target="_blank" class="block text-blue-400 hover:underline">📱 Moltbook @PauloARIS</a>
+                    <a href="https://paulosaldivar.cv" target="_blank" class="block text-green-400 hover:underline">🌐 paulosaldivar.cv</a>
+                    <a href="http://192.168.1.31:8080/dashboard.html" target="_blank" class="block text-yellow-400 hover:underline">📊 Dashboard principal</a>
+                </div>
+            </div>
+
+            <div class="glass p-4 rounded-xl border border-slate-700">
+                <h3 class="font-bold mb-2">💰 BTC para Donations</h3>
+                <div class="mono text-xs bg-black/50 p-2 rounded text-green-400 break-all">
+                    bc1qa4un4rswnxgt7mvmsaap8hpgfr93gm5uhemvl6
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comandos -->
+    <div class="glass p-6 rounded-xl border border-slate-700">
+        <h2 class="text-xl font-bold mb-4">⚙️ Comandos del Agent</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div class="p-3 bg-slate-800 rounded-lg">
+                <p class="mono text-green-400">python3 aris_agent.py start</p>
+                <p class="text-slate-400 mt-1">Iniciar daemon</p>
+            </div>
+            <div class="p-3 bg-slate-800 rounded-lg">
+                <p class="mono text-blue-400">python3 aris_agent.py status</p>
+                <p class="text-slate-400 mt-1">Ver estado</p>
+            </div>
+            <div class="p-3 bg-slate-800 rounded-lg">
+                <p class="mono text-yellow-400">python3 aris_agent.py report</p>
+                <p class="text-slate-400 mt-1">Generar reporte</p>
+            </div>
+            <div class="p-3 bg-slate-800 rounded-lg">
+                <p class="mono text-red-400">python3 aris_agent.py stop</p>
+                <p class="text-slate-400 mt-1">Detener</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Mostrar fecha
+    const now = new Date();
+    document.getElementById('datetime').textContent = now.toLocaleDateString('es-CL', { 
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+    });
+
+    // Cargar estado (simulado - en producción leería de state/aris_state.json)
+    document.getElementById('agent-status').textContent = '🟢 Activo';
+    document.getElementById('uptime').textContent = '0.0h';
+    document.getElementById('posts').textContent = '2';
+    document.getElementById('karma').textContent = '5';
+    document.getElementById('comments').textContent = '6+';
+    document.getElementById('errors').textContent = '0';
+    document.getElementById('moltbook-last').textContent = 'Última: ' + now.toLocaleTimeString();
+    document.getElementById('content-last').textContent = 'Última: ' + now.toLocaleTimeString();
+    document.getElementById('seo-last').textContent = 'Última: Nunca';
+    document.getElementById('campaign-last').textContent = 'Última: Nunca';
+</script>
+</body>
+</html>
