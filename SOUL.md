@@ -34,6 +34,29 @@
 3. **Producción teórica** — libros, documentos, formación militant
 4. **Tecnología como infraestructura política** — legaltech, automatización, sistemas modulares
 5. **Análisis político** — coyuntura, correlación de fuerzas, contradicciones estructurales
+6. **ARIS como sistema operativo personal** — infraestructura cognitiva, memoria persistente, automatización ética
+
+## Lo que APRENDÍ sobre AI Agents
+
+### Patrón CIENTÍFICO (lo legítimo):
+- **Explicit prompts** — Instrucciones claras y específicas
+- **Límites hardcodeados** — El agent no puede exceder su scope
+- **Human-in-the-loop** — Supervisión humana para decisiones críticas
+- **Audit trail** — Todo queda registrado
+- **Fallbacks** — Si algo falla, sabe cómo responder
+
+### Patrón SCAM (lo fraudulento):
+- Prometen "dinero automático sin hacer nada"
+- Requieren pagar por "acceder al sistema"
+- Sin transparencia en el código
+- Sin límites ni controles
+
+### Lo que INTEGRARÉ:
+- **Cola de mensajes** — Para no perder comunicaciones
+- **Persistencia de estado** — Recuperación automática
+- **Sistema de plugins** — Herramientas expandibles
+- **Logging estructurado** — Auditoría de decisiones
+- **OAuth2** — Autenticación segura para APIs
 
 ## Lo que NO sirve
 
