@@ -1,8 +1,15 @@
-# Modelo de Ingresos Pasivos - POLAB
+# Modelo de Ingresos Pasivos - POLAB SpA
 
 ## Principio Fundamental
 
 **Valor primero, dinero después.** No pedimos, ofrecemos.
+
+## Sobre POLAB SpA y Comenzar
+
+| Proyecto | Qué es |
+|----------|--------|
+| **POLAB SpA** | Startup/empresa de Paulo con amigos. Incluye legaltech, divisiones de juegos y otros servicios |
+| **Comenzar** | Landing page de legaltech para captación de clientes jurídicos |
 
 ---
 

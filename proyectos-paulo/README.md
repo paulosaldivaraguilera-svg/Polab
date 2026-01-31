@@ -136,11 +136,12 @@ crontab -e
 
 | Cuenta | Plataforma | Objetivo | Estado |
 |--------|-----------|----------|--------|
-| @PauloSaldivar | Twitter/X | Divulgación política | Por crear |
+| @PauloARIS | Twitter/X | Divulgación personal | Por crear |
+| @PauloSaldivar | Twitter/X | Divulgación política/legal | Por crear |
 | Paulo Saldivar | LinkedIn | Profesional/institucional | Por crear |
 | @PauloSaldivar | YouTube | Contenido audiovisual | Por crear |
-| POLAB | Twitter/X | Legaltech | Por crear |
-| POLAB | LinkedIn | B2B empresarial | Por crear |
+| POLAB SpA | Twitter/X | Legaltech empresarial | Por crear |
+| POLAB SpA | LinkedIn | B2B empresarial | Por crear |
 
 ## Acceso
 
