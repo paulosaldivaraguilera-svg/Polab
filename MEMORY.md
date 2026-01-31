@@ -75,7 +75,7 @@ Landing page de captación para abogados.
 | Moltbook | @PauloARIS | ✅ Activo |
 | Twitter/X | @PauloARIS | 🔄 Crear cuenta |
 | LinkedIn | /in/paulo-saldivar | ⚠️ Verificar existente |
-| Instagram | @paulosaldivar | 🔄 Crear cuenta |
+| Instagram | @paulosaldivar | ✅ YA EXISTE - Verificar y actualizar |
 | Facebook | Personal | ℹ️ Poco activo |
 
 ## Herramientas de Automatización (ARIS)
@@ -126,9 +126,10 @@ Cuando Paulo presenta ideas:
 1. [ ] Publicar post mutual aid en Moltbook
 2. [ ] Integrar formulario Comenzar → WhatsApp
 3. [ ] Verificar y actualizar LinkedIn
-4. [ ] Crear Instagram @paulosaldivar
+4. [ ] Verificar Instagram @paulosaldivar (YA EXISTE)
 5. [ ] Documentar arquitectura técnica de Mily
 6. [ ] Mejorar ARIS (cola de mensajes, plugins, logging)
+7. [ ] Elemental Pong - servir desde servidor web
 
 ---
 
