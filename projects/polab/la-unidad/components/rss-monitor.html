@@ -1,0 +1,219 @@
+<?php
+/**
+ * RSS Monitor Dashboard - La Unidad
+ * Panel de monitoreo de fuentes en tiempo real
+ */
+
+$fuentes = [
+    [
+        'nombre' => 'El Siglo (PCCh)',
+        'url' => 'https://elsiglo.cl/feed',
+        'pais' => 'Chile',
+        'color' => '#A83232',
+        'intervalo' => 15
+    ],
+    [
+        'nombre' => 'Radio U. Chile',
+        'url' => 'https://radio.uchile.cl/feed/',
+        'pais' => 'Chile',
+        'color' => '#1E293B',
+        'intervalo' => 30
+    ],
+    [
+        'nombre' => 'Agencia Prensa Latina',
+        'url' => 'https://aprpress.com/feed',
+        'pais' => 'Latam',
+        'color' => '#C41E3A',
+        'intervalo' => 15
+    ],
+    [
+        'nombre' => 'Telesur',
+        'url' => 'https://www.telesurenglish.net/rss',
+        'pais' => 'Venezuela',
+        'color' => '#006400',
+        'intervalo' => 20
+    ],
+    [
+        'nombre' => 'CGTN',
+        'url' => 'https://news.cgtn.com/news/2024-01-01/rss.xml',
+        'pais' => 'China',
+        'color' => '#FF0000',
+        'intervalo' => 30
+    ]
+];
+
+// Simulación de noticias (en producción, usar feedparser)
+$noticias = [
+    [
+        'titulo' => 'Conflicto docente se intensifica con nueva movilización nacional',
+        'fuente' => 'El Siglo',
+        'hora' => '08:45',
+        'prioridad' => 'urgente',
+        'categoria' => 'Educación',
+        'contradiccion' => 'Trabajo vs Capital'
+    ],
+    [
+        'titulo' => 'Mesa de diálogo social aborda crisis habitacional en regiones',
+        'fuente' => 'Radio U. Chile',
+        'hora' => '08:30',
+        'prioridad' => 'alta',
+        'categoria' => 'Housing',
+        'contradiccion' => 'Derecho vs Mercado'
+    ],
+    [
+        'titulo' => 'Foro de Sao Paulo analiza estrategias de unidad de izquierda',
+        'fuente' => 'Agencia Prensa Latina',
+        'hora' => '08:15',
+        'prioridad' => 'media',
+        'categoria' => 'Política',
+        'contradiccion' => 'Democracia vs Hegemonía'
+    ],
+    [
+        'titulo' => 'China y países del BRICS presentan alternativa al FMI',
+        'fuente' => 'CGTN',
+        'hora' => '07:55',
+        'prioridad' => 'alta',
+        'categoria' => 'Internacional',
+        'contradiccion' => 'Nación vs Imperialismo'
+    ]
+];
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Monitor - La Unidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .priority-urgente { border-left: 4px solid #DC2626; }
+        .priority-alta { border-left: 4px solid #F59E0B; }
+        .priority-media { border-left: 4px solid #3B82F6; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+
+    <div class="max-w-7xl mx-auto p-6">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-bold">📡 RSS Monitor</h1>
+                <p class="text-gray-400 text-sm mono">La Unidad | Pauta Diaria</p>
+            </div>
+            <div class="text-right">
+                <div class="mono text-green-400" id="estado-sistema">● Sistema activo</div>
+                <div class="text-gray-500 text-sm mono" id="ultima-actualizacion">Última: --:--</div>
+            </div>
+        </div>
+
+        <!-- Fuentes -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <?php foreach ($fuentes as $fuente): ?>
+            <div class="bg-gray-800 p-4 rounded-lg border-l-4" style="border-left-color: <?= $fuente['color'] ?>">
+                <div class="text-xs text-gray-400"><?= $fuente['pais'] ?></div>
+                <div class="font-bold text-sm"><?= $fuente['nombre'] ?></div>
+                <div class="text-xs text-gray-500 mono mt-1">Cada <?= $fuente['intervalo'] ?> min</div>
+                <div class="mt-2 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs text-green-400 mono">Online</span>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Noticias -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Columna Izquierda: Noticias Urgentes -->
+            <div class="lg:col-span-2">
+                <h2 class="font-bold mb-4 flex items-center gap-2">
+                    <span class="text-red-500">●</span> Recientes
+                </h2>
+                <div class="space-y-4">
+                    <?php foreach ($noticias as $noticia): ?>
+                    <div class="bg-gray-800 p-4 rounded-lg priority-<?= $noticia['prioridad'] ?>">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold text-<?= 
+                                $noticia['prioridad'] === 'urgente' ? 'red-500' : 
+                                ($noticia['prioridad'] === 'alta' ? 'yellow-500' : 'blue-400')
+                            ?> mono"><?= $noticia['fuente'] ?> • <?= $noticia['hora'] ?></span>
+                            <span class="bg-gray-700 text-xs px-2 py-1 rounded"><?= $noticia['categoria'] ?></span>
+                        </div>
+                        <h3 class="font-bold mb-2 hover:text-red-400 cursor-pointer transition">
+                            <?= $noticia['titulo'] ?>
+                        </h3>
+                        <div class="text-xs text-gray-500 mono">
+                            Contradicción: <?= $noticia['contradiccion'] ?>
+                        </div>
+                        <div class="mt-3 flex gap-2">
+                            <button class="bg-brand-red text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition">
+                                Asignar
+                            </button>
+                            <button class="bg-gray-700 text-white text-xs px-3 py-1 rounded hover:bg-gray-600 transition">
+                                Archivar
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Stats -->
+            <div>
+                <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                    <h3 class="font-bold mb-4">Estadísticas del Día</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Noticias procesadas</span>
+                            <span class="font-bold text-white">127</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Urgentes</span>
+                            <span class="font-bold text-red-500">3</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Alta prioridad</span>
+                            <span class="font-bold text-yellow-500">12</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Asignadas</span>
+                            <span class="font-bold text-green-500">8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="font-bold mb-4">Fuentes Activas</h3>
+                    <div class="space-y-2 mono text-sm">
+                        <div class="flex justify-between text-green-400">
+                            <span>El Siglo</span><span>12/12</span>
+                        </div>
+                        <div class="flex justify-between text-green-400">
+                            <span>Radio U. Chile</span><span>8/8</span>
+                        </div>
+                        <div class="flex justify-between text-yellow-400">
+                            <span>APL</span><span>6/6</span>
+                        </div>
+                        <div class="flex justify-between text-green-400">
+                            <span>Telesur</span><span>10/10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh cada 60 segundos
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('ultima-actualizacion').textContent = 
+                'Última: ' + now.toLocaleTimeString('es-CL');
+        }, 60000);
+    </script>
+</body>
+</html>

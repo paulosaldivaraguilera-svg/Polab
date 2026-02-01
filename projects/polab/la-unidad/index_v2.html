@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Unidad | Análisis y Opinión desde la Izquierda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#111111',
+                            gray: '#F4F4F4',
+                            red: '#A83232',
+                            blue: '#1E293B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FAFAFA; color: #111111; }
+        .prose-dropcap::first-letter { font-size: 3.5rem; font-weight: 700; float: left; margin-right: 0.5rem; line-height: 1; margin-top: 0.2rem; }
+        .separator-double { border-top: 1px solid #111; border-bottom: 3px solid #111; height: 6px; margin: 1.5rem 0; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .news-card { transition: all 0.3s ease; }
+        .news-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .section-tag { background: #A83232; color: white; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased selection:bg-brand-red selection:text-white">
+
+    <!-- HEADER -->
+    <header class="border-b border-gray-300 bg-white sticky top-0 z-50">
+        <div class="bg-brand-black text-white text-xs py-1 px-4 flex justify-between items-center font-mono">
+            <span>Santiago de Chile | <?php echo date('d.m.Y'); ?></span>
+            <span>La Unidad | Marxist-Leninist Analysis</span>
+        </div>
+        <nav class="px-4 py-3 flex items-center justify-between border-b border-gray-200">
+            <a href="#" onclick="switchView('inicio')" class="text-2xl font-serif font-black tracking-tighter">LA UNIDAD<span class="text-brand-red">.</span></a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                <a href="#" onclick="switchView('inicio')" class="hover:text-brand-red transition">Inicio</a>
+                <a href="#" onclick="switchView('politica')" class="hover:text-brand-red transition">Política</a>
+                <a href="#" onclick="switchView('economia')" class="hover:text-brand-red transition">Economía</a>
+                <a href="#" onclick="switchView('internacional')" class="hover:text-brand-red transition">Internacional</a>
+                <a href="#" onclick="switchView('derecho')" class="hover:text-brand-red transition">Derecho</a>
+                <a href="#" onclick="switchView('sociedad')" class="hover:text-brand-red transition">Sociedad</a>
+                <a href="#" onclick="switchView('cultura')" class="hover:text-brand-red transition">Cultura</a>
+                <a href="#" onclick="switchView('analisis')" class="hover:text-brand-red transition flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Análisis
+                </a>
+                <a href="#" onclick="switchView('pauta')" class="bg-brand-red text-white px-4 py-2 rounded hover:bg-red-700 transition">Pauta</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- VISTA: ANÁLIS (NUEVA) -->
+    <div id="view-analisis" class="hidden fade-in">
+        <div class="max-w-7xl mx-auto px-4 py-12">
+            <div class="mb-8">
+                <span class="section-tag">Análisis de Coyuntura</span>
+                <h1 class="text-4xl font-serif font-black mt-4">Indicadores de Lucha de Clases</h1>
+                <p class="text-gray-600 mt-2">Visualización de contradicciones principales en la sociedad chilena</p>
+            </div>
+
+            <!-- Métricas -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow border-l-4 border-red-600">
+                    <div class="text-xs text-gray-500 uppercase tracking-widest">Conflictos Activos</div>
+                    <div class="text-3xl font-bold text-red-600">847</div>
+                    <div class="text-xs text-green-600 mt-1">↑ 12% vs mes anterior</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow border-l-4 border-red-800">
+                    <div class="text-xs text-gray-500 uppercase tracking-widest">Huelgas (2024)</div>
+                    <div class="text-3xl font-bold">156</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow border-l-4 border-yellow-500">
+                    <div class="text-xs text-gray-500 uppercase tracking-widest">Índice Gini</div>
+                    <div class="text-3xl font-bold">0.47</div>
+                    <div class="text-xs text-red-600 mt-1">Alta desigualdad</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow border-l-4 border-gray-800">
+                    <div class="text-xs text-gray-500 uppercase tracking-widest">Casos Represión</div>
+                    <div class="text-3xl font-bold text-gray-800">23</div>
+                    <div class="text-xs text-gray-500 mt-1">Documentados</div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="font-bold mb-4">Timeline de Conflictos (2024-2025)</h3>
+                    <canvas id="timelineChart" height="250"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="font-bold mb-4">Sectores en Lucha</h3>
+                    <canvas id="sectoresChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- Contradicción Principal -->
+            <div class="bg-brand-black text-white p-8 rounded-lg">
+                <h3 class="font-bold text-brand-red mb-4 uppercase tracking-widest">Contradicción Principal</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-serif text-xl font-bold mb-2">Tesis</h4>
+                        <p class="text-gray-400 text-sm">El modelo neoliberal concentra riqueza en pequeño grupo de familias y capitales extranjeros.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-xl font-bold mb-2 text-red-500">Antítesis</h4>
+                        <p class="text-gray-400 text-sm">La clase trabajadora exige redistribución, nacionalización y democracia real.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-xl font-bold mb-2 text-yellow-500">Síntesis (Aufhebung)</h4>
+                        <p class="text-gray-400 text-sm">Transición hacia economía planificada con participación popular y soberanía.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL (INICIO) -->
+    <div id="view-inicio" class="fade-in">
+        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- PRINCIPAL -->
+            <div class="lg:col-span-8">
+                <!-- Destacado -->
+                <article class="mb-12 cursor-pointer group">
+                    <div class="relative overflow-hidden mb-4 border border-gray-200">
+                        <div class="bg-gray-200 aspect-video w-full object-cover flex items-center justify-center text-gray-400">
+                            <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        </div>
+                        <span class="absolute top-0 left-0 bg-brand-black text-white px-3 py-1 text-xs font-bold uppercase tracking-widest">Política</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-3 group-hover:text-brand-red transition">El Nuevo Pacto Constitucional: Entre la técnica jurídica y la viabilidad política</h2>
+                    <p class="text-lg text-gray-600 font-serif leading-relaxed mb-4">Un análisis exhaustivo sobre las tensiones dogmáticas del anteproyecto y sus repercusiones en la administración del Estado.</p>
+                    <div class="flex items-center text-sm font-semibold border-t border-gray-200 pt-3">
+                        <span class="text-brand-red mr-2">Por Dr. Francisco Varela</span>
+                        <span class="text-gray-400">|</span>
+                        <span class="ml-2 text-gray-500">Lectura: 12 min</span>
+                    </div>
+                </article>
+
+                <div class="separator-double"></div>
+
+                <!-- Secundarias -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <article>
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-widest mb-2 block">Economía</span>
+                        <h3 class="text-2xl font-serif font-bold leading-tight mb-2 hover:underline cursor-pointer">Desaceleración y Mercado Laboral: La trampa de los ingresos medios</h3>
+                        <p class="text-gray-600 font-serif text-sm mb-3">Las cifras del último trimestre revelan una debilidad estructural.</p>
+                        <span class="text-xs font-bold text-gray-500">Por Ana María Luksic</span>
+                    </article>
+                    <article>
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-widest mb-2 block">Sociedad</span>
+                        <h3 class="text-2xl font-serif font-bold leading-tight mb-2 hover:underline cursor-pointer">La crisis habitacional y el derecho a la ciudad</h3>
+                        <p class="text-gray-600 font-serif text-sm mb-3">El urbanismo táctico como respuesta a la emergencia.</p>
+                        <span class="text-xs font-bold text-gray-500">Por Colectivo Urbano</span>
+                    </article>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="lg:col-span-4 space-y-8 pl-0 lg:pl-8 border-l border-gray-200">
+                <div class="bg-gray-100 p-6 border-l-4 border-brand-black">
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-2">Editorial</h4>
+                    <h3 class="text-xl font-serif font-bold mb-3 italic">"La responsabilidad de la palabra pública"</h3>
+                    <p class="text-sm text-gray-700 font-serif mb-4 leading-relaxed">En tiempos de posverdad, el retorno al rigor conceptual es una urgencia democrática.</p>
+                    <span class="text-xs font-bold block text-right">— El Comité Editorial</span>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-4 border-b border-black pb-2">
+                        <h4 class="text-lg font-bold uppercase tracking-tight">Opinión</h4>
+                        <a href="#" class="text-xs text-brand-red font-bold hover:underline">Ver todas</a>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex gap-4 group cursor-pointer">
+                            <div class="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0 grayscale group-hover:grayscale-0 transition duration-500 overflow-hidden">
+                                <img src="https://api.dicebear.com/7.x/personas/svg?seed=Felix" alt="Autor" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-brand-red">Marta Lagos</h5>
+                                <h4 class="text-md font-serif font-bold leading-tight group-hover:underline">La crisis de confianza y el voto obligatorio</h4>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 group cursor-pointer">
+                            <div class="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0 grayscale group-hover:grayscale-0 transition duration-500 overflow-hidden">
+                                <img src="https://api.dicebear.com/7.x/personas/svg?seed=George" alt="Autor" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-brand-red">José Rodríguez</h5>
+                                <h4 class="text-md font-serif font-bold leading-tight group-hover:underline">Urbanismo táctico: ¿Solución o maquillaje?</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Internacional -->
+                <div class="bg-brand-black text-white p-6 rounded-lg">
+                    <h4 class="font-bold mb-4 text-brand-red">Internacional</h4>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-700 pb-3">
+                            <span class="text-xs text-gray-500">China / BRICS</span>
+                            <h5 class="font-bold mt-1">BRICS presentan alternativa al FMI en cumbre de Kazán</h5>
+                        </div>
+                        <div class="border-b border-gray-700 pb-3">
+                            <span class="text-xs text-gray-500">Palestina</span>
+                            <h5 class="font-bold mt-1">Comunidad internacional exige cese del fuego inmediato</h5>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-500">Latinoamérica</span>
+                            <h5 class="font-bold mt-1">Venezuela llama a fortalecer integración regional</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-serif font-bold text-xl mb-4">LA UNIDAD<span class="text-brand-red">.</span></h4>
+                <p class="text-gray-400 text-sm">Medio de comunicación desde perspectiva marxista-leninista.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 text-sm uppercase tracking-widest">Secciones</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-white">Política</a></li>
+                    <li><a href="#" class="hover:text-white">Economía</a></li>
+                    <li><a href="#" class="hover:text-white">Internacional</a></li>
+                    <li><a href="#" class="hover:text-white">Análisis</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 text-sm uppercase tracking-widest">Fuentes</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>El Siglo (PCCh)</li>
+                    <li>Radio U. Chile</li>
+                    <li>Agencia Prensa Latina</li>
+                    <li>Telesur</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 text-sm uppercase tracking-widest">Contacto</h4>
+                <p class="text-gray-400 text-sm">redaccion@launidad.cl</p>
+                <p class="text-gray-400 text-sm mt-2">Santiago de Chile</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            © 2024-2026 La Unidad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Navegación entre vistas
+        function switchView(view) {
+            document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + view).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Gráfico Timeline
+        const ctx1 = document.getElementById('timelineChart');
+        if (ctx1) {
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    datasets: [{
+                        label: 'Conflictos Sociales',
+                        data: [12, 19, 15, 25, 22, 30, 28, 35, 42, 38, 45, 50],
+                        borderColor: '#A83232',
+                        backgroundColor: 'rgba(168, 50, 50, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Huelgas',
+                        data: [3, 5, 4, 8, 6, 12, 10, 15, 18, 14, 20, 22],
+                        borderColor: '#111111',
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // Gráfico Sectores
+        const ctx2 = document.getElementById('sectoresChart');
+        if (ctx2) {
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Educación', 'Salud', 'Trabajo', 'Housing', 'Medioambiente', 'Derechos'],
+                    datasets: [{
+                        data: [25, 20, 30, 15, 5, 5],
+                        backgroundColor: ['#A83232', '#1E293B', '#FFC107', '#64748B', '#22c55e', '#8B5CF6']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        console.log('La Unidad v2.0 cargada');
+    </script>
+</body>
+</html>

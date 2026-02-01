@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Componente de Análisis - La Unidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .chart-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border-left: 4px solid #A83232;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8 font-sans">
+
+    <!-- PANEL DE ANÁLISIS DE COYUNTURA -->
+    <div class="max-w-6xl mx-auto">
+        
+        <!-- Header -->
+        <div class="mb-8">
+            <span class="text-brand-red font-bold uppercase tracking-widest text-sm">Análisis de Coyuntura</span>
+            <h1 class="text-4xl font-serif font-black mt-2">Indicadores de Lucha de Clases</h1>
+            <p class="text-gray-600 mt-2">Visualización de contradicciones principales en la sociedad chilena</p>
+        </div>
+
+        <!-- Grids de Métricas -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="chart-card">
+                <div class="text-xs text-gray-500 uppercase tracking-widest">Conflicto Social</div>
+                <div class="text-3xl font-bold text-red-600" id="metric-conflicto">--</div>
+                <div class="text-xs text-green-600 mt-1">↑ 12% vs mes anterior</div>
+            </div>
+            <div class="chart-card">
+                <div class="text-xs text-gray-500 uppercase tracking-widest">Desigualdad</div>
+                <div class="text-3xl font-bold" id="metric-desigualdad">--</div>
+                <div class="text-xs text-red-600 mt-1">Gini: 0.47</div>
+            </div>
+            <div class="chart-card">
+                <div class="text-xs text-gray-500 uppercase tracking-widest">Huelgas</div>
+                <div class="text-3xl font-bold text-brand-red" id="metric-huelgas">--</div>
+                <div class="text-xs text-gray-500 mt-1">Este año</div>
+            </div>
+            <div class="chart-card">
+                <div class="text-xs text-gray-500 uppercase tracking-widest">Represión</div>
+                <div class="text-3xl font-bold text-red-700" id="metric-represion">--</div>
+                <div class="text-xs text-gray-500 mt-1">Casos documentados</div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Timeline de Conflictos -->
+            <div class="chart-card">
+                <h3 class="font-bold mb-4">Timeline de Conflictos (2024-2025)</h3>
+                <canvas id="timelineChart" height="250"></canvas>
+            </div>
+
+            <!-- Sectores en Lucha -->
+            <div class="chart-card">
+                <h3 class="font-bold mb-4">Sectores en Lucha</h3>
+                <canvas id="sectoresChart" height="250"></canvas>
+            </div>
+        </div>
+
+        <!-- Contradicción Principal -->
+        <div class="bg-brand-black text-white p-8 rounded-lg mb-8">
+            <h3 class="font-bold text-brand-red mb-4 uppercase tracking-widest">Contradicción Principal</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="font-serif text-xl font-bold mb-2">Tesis</h4>
+                    <p class="text-gray-400 text-sm">El modelo económico neoliberal concentra riqueza en pequeño grupo de familias y capitales extranjeros.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl font-bold mb-2 text-brand-red">Antítesis</h4>
+                    <p class="text-gray-400 text-sm">La clase trabajadora organizada exige redistribución, nacionalización de recursos estratégicos y democracia real.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl font-bold mb-2 text-yellow-500">Síntesis (Aufhebung)</h4>
+                    <p class="text-gray-400 text-sm">Transición hacia economía planificada con participación popular y soberanía nacional.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mapa de Conflictos -->
+        <div class="chart-card">
+            <h3 class="font-bold mb-4">Mapa de Conflictos Activos por Región</h3>
+            <div id="mapa-conflictos" class="h-64 bg-gray-200 rounded flex items-center justify-center text-gray-500">
+                [Mapa de Chile - Conflictos activos]
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Colores La Unidad
+        const COLOR_RED = '#A83232';
+        const COLOR_BLACK = '#111111';
+        const COLORS = ['#A83232', '#1E293B', '#FFC107', '#64748B', '#EF4444'];
+
+        // Chart: Timeline de Conflictos
+        new Chart(document.getElementById('timelineChart'), {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                datasets: [{
+                    label: 'Conflictos Sociales',
+                    data: [12, 19, 15, 25, 22, 30, 28, 35, 42, 38, 45, 50],
+                    borderColor: COLOR_RED,
+                    backgroundColor: 'rgba(168, 50, 50, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Huelgas',
+                    data: [3, 5, 4, 8, 6, 12, 10, 15, 18, 14, 20, 22],
+                    borderColor: COLOR_BLACK,
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Chart: Sectores en Lucha
+        new Chart(document.getElementById('sectoresChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Educación', 'Salud', 'Trabajo', 'Housing', 'Medioambiente', 'Derechos'],
+                datasets: [{
+                    data: [25, 20, 30, 15, 5, 5],
+                    backgroundColor: COLORS
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Métricas simuladas
+        document.getElementById('metric-conflicto').textContent = '847';
+        document.getElementById('metric-huelgas').textContent = '156';
+        document.getElementById('metric-represion').textContent = '23';
+    </script>
+</body>
+</html>
