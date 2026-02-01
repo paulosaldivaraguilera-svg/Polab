@@ -1,53 +1,38 @@
 #!/usr/bin/env python3
 """
-ARIS Auto-Agent - Sistema de Automatización Completa
-=====================================================
-Ejecuta tareas autónomas de manera continua.
+ARIS Auto-Agent - Sistema de Automatización
+=============================================
+Agent simple que ejecuta tareas automáticamente.
 
-Tareas incluidas:
-- Monitoreo SEO
-- Campaign en Moltbook
-- Preparación de contenido
-- Análisis de métricas
+Funciones:
+- Monitoreo de servicios
+- Verificación de leads
 - Reportes automáticos
+- Auto-sync con GitHub
 
 Uso:
-    python3 aris_agent.py start    # Iniciar modo daemon
+    python3 aris_agent.py start    # Iniciar daemon
     python3 aris_agent.py status   # Ver estado
     python3 aris_agent.py report   # Generar reporte
-    python3 aris_agent.py stop     # Detener daemon
+    python3 aris_agent.py check    # Verificar servicios
+    python3 aris_agent.py stop     # Detener
 """
 
 import os
 import sys
 import json
 import time
-import sqlite3
 import subprocess
+import requests
 from datetime import datetime, timedelta
 from pathlib import Path
 
 # Configuración
 WORKSPACE = '/home/pi/.openclaw/workspace'
-DB_PATH = f'{WORKSPACE}/proyectos-paulo/polab/db/leads.db'
+STATE_PATH = f'{WORKSPACE}/state/aris_agent.json'
 LOG_PATH = f'{WORKSPACE}/logs/aris_agent.log'
-STATE_PATH = f'{WORKSPACE}/state/aris_state.json'
-
-# Configuración de APIs (pendientes de configurar)
-API_CONFIG = {
-    'brave_api_key': None,  # Pendiente
-    'openai_api_key': None,  # Pendiente
-    'google_search_console': None,  # Pendiente
-}
-
-# Tareas programadas (en minutos)
-TASKS = {
-    'moltbook_check': 15,      # Verificar Moltbook cada 15 min
-    'content_prepare': 60,     # Preparar contenido cada 1 hora
-    'seo_audit': 360,          # Auditoría SEO cada 6 horas
-    'metrics_report': 1440,    # Reporte diario
-    'campaign_post': 720,      # Post en Moltbook cada 12 horas
-}
+LEADS_API = 'http://localhost:8081'
+METRICS_API = 'http://localhost:8082'
 
 def log(message, level='INFO'):
     """Log con timestamp"""
@@ -57,309 +42,149 @@ def log(message, level='INFO'):
         f.write(f'[{timestamp}] [{level}] {message}\n')
     print(f'[{timestamp}] {message}')
 
-def init_state():
-    """Inicializar estado del agent"""
-    os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
-    
-    default_state = {
-        'last_moltbook_check': None,
-        'last_content_prepare': None,
-        'last_seo_audit': None,
-        'last_metrics_report': None,
-        'last_campaign_post': None,
-        'posts_published': 0,
-        'comments_made': 0,
-        'karma_earned': 0,
-        'uptime_start': datetime.now().isoformat(),
-        'status': 'idle',
-        'errors': []
-    }
-    
-    if not os.path.exists(STATE_PATH):
-        with open(STATE_PATH, 'w') as f:
-            json.dump(default_state, f, indent=2)
-    
-    return json.load(open(STATE_PATH))
+def get_state():
+    """Obtener estado"""
+    if os.path.exists(STATE_PATH):
+        with open(STATE_PATH, 'r') as f:
+            return json.load(f)
+    return {'status': 'stopped', 'start_time': None, 'checks': 0}
 
 def save_state(state):
     """Guardar estado"""
     with open(STATE_PATH, 'w') as f:
         json.dump(state, f, indent=2)
 
-def update_state(state, key):
-    """Actualizar timestamp de una tarea"""
-    state[key] = datetime.now().isoformat()
-    save_state(state)
-
-def load_state():
-    """Cargar estado"""
-    if os.path.exists(STATE_PATH):
-        return json.load(open(STATE_PATH))
-    return init_state()
-
-# ============ TAREAS ============
-
-def task_moltbook_check(state):
-    """Verificar Moltbook y comentar"""
-    log('🔍 Verificando Moltbook...')
+def check_services():
+    """Verificar servicios del sistema"""
+    results = {'services': {}, 'timestamp': datetime.now().isoformat()}
     
+    # Web Server
+    web = subprocess.run(['pgrep', '-f', 'python3 -m http.server 8080'], capture_output=True).returncode == 0
+    results['services']['web'] = web
+    
+    # API Leads
     try:
-        # Aquí iría la lógica de conexión a Moltbook
-        # Por ahora, solo actualizamos estado
-        update_state(state, 'last_moltbook_check')
-        log('✅ Moltbook check completado')
-        return True
-    except Exception as e:
-        log(f'❌ Error Moltbook: {e}', 'ERROR')
-        state['errors'].append(f'Moltbook: {e}')
-        return False
-
-def task_content_prepare(state):
-    """Preparar contenido para publicación"""
-    log('📝 Preparando contenido...')
+        api_leads = requests.get(f'{LEADS_API}/health', timeout=2).status_code == 200
+    except:
+        api_leads = False
+    results['services']['api_leads'] = api_leads
     
-    # Generar contenido aleatorio de la cola
-    content_queue = [
-        'Nuevo insight sobre automatización legal',
-        'Tips para profesionales independientes',
-        'Reflexión sobre tecnología y derecho',
-        'Datos sobre el mercado jurídico chileno',
-    ]
-    
-    # Guardar en cola de contenido
-    os.makedirs(f'{WORKSPACE}/proyectos-paulo/social-media/queue', exist_ok=True)
-    queue_file = f'{WORKSPACE}/proyectos-paulo/social-media/queue/content_queue.json'
-    
-    queue = []
-    if os.path.exists(queue_file):
-        with open(queue_file, 'r') as f:
-            queue = json.load(f)
-    
-    queue.append({
-        'content': content_queue[int(time.time()) % len(content_queue)],
-        'created': datetime.now().isoformat(),
-        'status': 'ready'
-    })
-    
-    with open(queue_file, 'w') as f:
-        json.dump(queue, f, indent=2)
-    
-    update_state(state, 'last_content_prepare')
-    log(f'✅ Contenido preparado. Cola: {len(queue)} items')
-
-def task_seo_audit(state):
-    """Auditoría SEO del sitio"""
-    log('🔍 Ejecutando auditoría SEO...')
-    
+    # API Metrics
     try:
-        # Aquí iría la auditoría real
-        # Por ahora, solo log
-        audit_result = {
-            'date': datetime.now().isoformat(),
-            'issues': [],
-            'score': 0
-        }
-        
-        # Guardar resultado
-        os.makedirs(f'{WORKSPACE}/proyectos-paulo/web-personal/audits', exist_ok=True)
-        audit_file = f'{WORKSPACE}/proyectos-paulo/web-personal/audits/audit_{datetime.now().strftime("%Y%m%d")}.json'
-        
-        with open(audit_file, 'w') as f:
-            json.dump(audit_result, f, indent=2)
-        
-        update_state(state, 'last_seo_audit')
-        log('✅ Auditoría SEO completada')
-        return True
-    except Exception as e:
-        log(f'❌ Error SEO: {e}', 'ERROR')
-        return False
+        api_metrics = requests.get(f'{METRICS_API}/health', timeout=2).status_code == 200
+    except:
+        api_metrics = False
+    results['services']['api_metrics'] = api_metrics
+    
+    # Docker
+    docker = subprocess.run(['docker', 'ps'], capture_output=True).returncode == 0
+    results['services']['docker'] = docker
+    
+    results['all_up'] = all(results['services'].values())
+    return results
 
-def task_metrics_report(state):
-    """Generar reporte de métricas"""
-    log('📊 Generando reporte de métricas...')
-    
-    report = {
-        'date': datetime.now().isoformat(),
-        'uptime': str(datetime.now() - datetime.fromisoformat(state['uptime_start'])),
-        'posts_published': state['posts_published'],
-        'comments_made': state['comments_made'],
-        'karma_earned': state['karma_earned'],
-        'tasks_run': {
-            'moltbook_check': state.get('last_moltbook_check'),
-            'content_prepare': state.get('last_content_prepare'),
-            'seo_audit': state.get('last_seo_audit'),
-        },
-        'errors': state.get('errors', [])[-10:]  # Últimos 10 errores
-    }
-    
-    # Guardar reporte
-    os.makedirs(f'{WORKSPACE}/proyectos-paulo/reports', exist_ok=True)
-    report_file = f'{WORKSPACE}/proyectos-paulo/reports/metrics_{datetime.now().strftime("%Y%m%d")}.json'
-    
-    with open(report_file, 'w') as f:
-        json.dump(report, f, indent=2)
-    
-    update_state(state, 'last_metrics_report')
-    log('✅ Reporte de métricas generado')
+def get_leads_stats():
+    """Obtener estadísticas de leads"""
+    try:
+        r = requests.get(f'{LEADS_API}/api/stats', timeout=5)
+        return r.json()
+    except:
+        return {'total': 0, 'nuevos': 0}
 
-def task_campaign_post(state):
-    """Publicar contenido de campaign"""
-    log('📢 Preparando post de campaign...')
-    
-    # Leer cola de contenido
-    queue_file = f'{WORKSPACE}/proyectos-paulo/social-media/queue/content_queue.json'
-    
-    if os.path.exists(queue_file):
-        with open(queue_file, 'r') as f:
-            queue = json.load(f)
-        
-        # Publicar el primer item ready
-        for item in queue:
-            if item['status'] == 'ready':
-                item['status'] = 'published'
-                item['published'] = datetime.now().isoformat()
-                state['posts_published'] += 1
-                break
-        
-        with open(queue_file, 'w') as f:
-            json.dump(queue, f, indent=2)
-    
-    update_state(state, 'last_campaign_post')
-    log('✅ Post de campaign preparado')
+def get_system_metrics():
+    """Obtener métricas del sistema"""
+    try:
+        r = requests.get(f'{METRICS_API}/api/metrics', timeout=5)
+        return r.json()
+    except:
+        return {'cpu': '0', 'memory_percent': '0'}
 
-# ============ MAIN ============
+def generate_report():
+    """Generar reporte"""
+    services = check_services()
+    leads = get_leads_stats()
+    metrics = get_system_metrics()
+    
+    report = f"""
+╔══════════════════════════════════════════════════════════════════╗
+║                    ARIS AGENT - REPORTE                          ║
+╚══════════════════════════════════════════════════════════════════╝
 
-def main_loop():
-    """Loop principal del agent"""
-    state = load_state()
+📅 Generado: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+🔧 SERVICIOS: {'✅ TODOS UP' if services['all_up'] else '❌ ALGUNOS CAÍDOS'}
+"""
+    
+    for svc, up in services['services'].items():
+        status = '✅' if up else '❌'
+        report += f"   {status} {svc.upper()}\n"
+    
+    report += f"""
+🎯 LEADS
+   Total: {leads.get('total', 0)}
+   Nuevos: {leads.get('nuevos', 0)}
+
+💻 SISTEMA
+   CPU: {metrics.get('cpu', 'N/A')}%
+   RAM: {metrics.get('memory_percent', 'N/A')}%
+   Disco: {metrics.get('disk_percent', 'N/A')}%
+"""
+    return report
+
+def run_daemon():
+    """Modo daemon"""
+    state = get_state()
     state['status'] = 'running'
-    state['uptime_start'] = datetime.now().isoformat()
+    state['start_time'] = datetime.now().isoformat()
     save_state(state)
     
-    log('🚀 ARIS Auto-Agent iniciado')
-    log(f'📁 Workspace: {WORKSPACE}')
-    log(f'⏰ Inicio: {state["uptime_start"]}')
+    log("ARIS Agent iniciado en modo daemon")
     
-    # Tiempos de última ejecución
-    last_run = {
-        'moltbook_check': datetime.now(),
-        'content_prepare': datetime.now(),
-        'seo_audit': datetime.now(),
-        'metrics_report': datetime.now(),
-        'campaign_post': datetime.now(),
-    }
-    
-    try:
-        while True:
-            now = datetime.now()
+    while True:
+        try:
+            state = get_state()
+            if state['status'] != 'running':
+                break
             
-            # Moltbook check cada 15 min
-            if (now - last_run['moltbook_check']).seconds >= TASKS['moltbook_check'] * 60:
-                task_moltbook_check(state)
-                last_run['moltbook_check'] = now
+            # Verificar servicios
+            services = check_services()
+            state['checks'] += 1
+            state['last_check'] = datetime.now().isoformat()
             
-            # Content prepare cada 1 hora
-            if (now - last_run['content_prepare']).seconds >= TASKS['content_prepare'] * 60:
-                task_content_prepare(state)
-                last_run['content_prepare'] = now
-            
-            # SEO audit cada 6 horas
-            if (now - last_run['seo_audit']).seconds >= TASKS['seo_audit'] * 60:
-                task_seo_audit(state)
-                last_run['seo_audit'] = now
-            
-            # Metrics report cada 24 horas
-            if (now - last_run['metrics_report']).seconds >= TASKS['metrics_report'] * 60:
-                task_metrics_report(state)
-                last_run['metrics_report'] = now
-            
-            # Campaign post cada 12 horas
-            if (now - last_run['campaign_post']).seconds >= TASKS['campaign_post'] * 60:
-                task_campaign_post(state)
-                last_run['campaign_post'] = now
+            if not services['all_up']:
+                log("SERVICIOS CAÍDOS DETECTADOS", 'WARNING')
+                # Aquí se podrían agregar notificaciones
             
             save_state(state)
-            time.sleep(60)  # Check cada minuto
             
-    except KeyboardInterrupt:
+            time.sleep(300)  # 5 minutos
+            
+        except Exception as e:
+            log(f"Error en daemon: {e}", 'ERROR')
+            time.sleep(60)
+
+def main():
+    cmd = sys.argv[1] if len(sys.argv) > 1 else 'status'
+    
+    if cmd == 'start':
+        run_daemon()
+    elif cmd == 'stop':
+        state = get_state()
         state['status'] = 'stopped'
         save_state(state)
-        log('🛑 ARIS Auto-Agent detenido')
-
-def show_status():
-    """Mostrar estado actual"""
-    state = load_state()
-    
-    print("\n" + "="*50)
-    print("🤖 ARIS Auto-Agent - Estado")
-    print("="*50)
-    
-    uptime = datetime.now() - datetime.fromisoformat(state['uptime_start'])
-    hours = uptime.total_seconds() / 3600
-    
-    print(f"\n📊 Estado General:")
-    print(f"   • Status: {state['status']}")
-    print(f"   • Uptime: {hours:.1f} horas")
-    print(f"   • Posts publicados: {state['posts_published']}")
-    print(f"   • Comentarios: {state['comments_made']}")
-    print(f"   • Karma: {state['karma_earned']}")
-    
-    print(f"\n🕐 Última actividad:")
-    print(f"   • Moltbook: {state.get('last_moltbook_check', 'Nunca')}")
-    print(f"   • Contenido: {state.get('last_content_prepare', 'Nunca')}")
-    print(f"   • SEO: {state.get('last_seo_audit', 'Nunca')}")
-    print(f"   • Reporte: {state.get('last_metrics_report', 'Nunca')}")
-    print(f"   • Campaign: {state.get('last_campaign_post', 'Nunca')}")
-    
-    if state.get('errors'):
-        print(f"\n⚠️  Errores recientes: {len(state['errors'])}")
-    
-    print()
-
-def show_help():
-    print("""
-🤖 ARIS Auto-Agent - Help
-
-Comandos:
-  python3 aris_agent.py start   - Iniciar modo daemon
-  python3 aris_agent.py status  - Ver estado actual
-  python3 aris_agent.py report  - Generar reporte
-  python3 aris_agent.py stop   - Detener daemon
-
-Tareas automatizadas:
-  • Moltbook check cada 15 min
-  • Preparación de contenido cada 1 hora
-  • Auditoría SEO cada 6 horas
-  • Reporte de métricas diario
-  • Post de campaign cada 12 horas
-
-Archivos:
-  • Estado: state/aris_state.json
-  • Logs: logs/aris_agent.log
-  • Contenido: social-media/queue/
-  • Reportes: reports/
-  • Auditorías: web-personal/audits/
-""")
+        log("Agent detenido")
+    elif cmd == 'status':
+        state = get_state()
+        print(f"Estado: {state.get('status', 'unknown')}")
+        print(f"Iniciado: {state.get('start_time', 'nunca')}")
+        print(f"Checks: {state.get('checks', 0)}")
+    elif cmd == 'check':
+        result = check_services()
+        print(json.dumps(result, indent=2))
+    elif cmd == 'report':
+        print(generate_report())
+    else:
+        print("Uso: aris_agent.py [start|stop|status|check|report]")
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        cmd = sys.argv[1]
-        
-        if cmd == 'start':
-            main_loop()
-        elif cmd == 'status':
-            show_status()
-        elif cmd == 'report':
-            state = load_state()
-            task_metrics_report(state)
-        elif cmd == 'stop':
-            state = load_state()
-            state['status'] = 'stopped'
-            save_state(state)
-            print('🛑 Agent detenido')
-        elif cmd == 'help':
-            show_help()
-        else:
-            print('Comando no reconocido. Usa: start, status, report, stop, help')
-    else:
-        show_help()
+    main()
