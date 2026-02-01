@@ -750,6 +750,49 @@
     
     // Hook into main game loop
     const originalUpdate = typeof update === 'function' ? update : () => {};
+
+    // Leaderboard - LocalStorage
+    const LEADERBOARD_KEY = 'elemental_pong_leaderboard';
+    
+    function getLeaderboard() {
+        try {
+            return JSON.parse(localStorage.getItem(LEADERBOARD_KEY) || '[]');
+        } catch { return []; }
+    }
+    
+    function saveScore(name, score, mode) {
+        const board = getLeaderboard();
+        board.push({ name, score, mode, date: Date.now() });
+        board.sort((a, b) => b.score - a.score);
+        board.splice(10); // Keep top 10
+        localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(board));
+    }
+    
+    function showLeaderboard() {
+        const board = getLeaderboard();
+        const list = document.getElementById('leaderboardList');
+        if (board.length === 0) {
+            list.innerHTML = '<p style="text-align: center; color: #888;">Sin puntuaciones aún</p>';
+        } else {
+            list.innerHTML = board.map((entry, i) => 
+                `<div style="padding: 8px; border-bottom: 1px solid #333; display: flex; justify-content: space-between;">
+                    <span>${i+1}. ${entry.name}</span>
+                    <span style="color: #ffd700;">${entry.score}</span>
+                </div>`
+            ).join('');
+        }
+        document.getElementById('leaderboardPanel').classList.remove('hidden');
+    }
+    
+    function closeLeaderboard() {
+        document.getElementById('leaderboardPanel').classList.add('hidden');
+    }
+    
+    function gameOver(score) {
+        const name = prompt(`Game Over! Puntuación: ${score}
+Tu nombre:`) || 'Anónimo';
+        saveScore(name, score, gameMode);
+    }
 </script>
 
     <!-- Sistema de Logros -->
@@ -777,5 +820,14 @@
         <button onclick="startMultiplayer()" style="padding: 15px 40px; background: #00ff88; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer; font-size: 16px;">INICIAR PARTIDA</button>
         <button onclick="closeMultiplayer()" style="margin-top: 15px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
     </div>
+
+    <!-- Leaderboard Panel -->
+    <div id="leaderboardPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 25px; border-radius: 15px; border: 2px solid #ffd700; z-index: 1000; min-width: 350px;">
+        <h2 style="color: #ffd700; margin-bottom: 20px; text-align: center;">🏆 Tabla de Posiciones</h2>
+        <div id="leaderboardList" style="color: #fff; text-align: left;"></div>
+        <button onclick="closeLeaderboard()" style="margin-top: 20px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
+    </div>
+    
+    <button class="mode-btn" onclick="showLeaderboard()" style="margin-top: 10px;">🏆 Leaderboard</button>
 </body>
 </html>

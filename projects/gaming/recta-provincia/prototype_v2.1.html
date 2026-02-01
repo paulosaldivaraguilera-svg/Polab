@@ -654,6 +654,23 @@
         else state.karmaShadow += amount + bonus;
         updateStats();
     }
+
+    // Nuevas locaciones v2.2
+    const locations_v2 = ["ruinas", "cascada"];
+    
+    function visitLocationV2(id) {
+        const location = locations.find(l => l.id === id);
+        if (!location) return;
+        
+        if (id === "ruinas") {
+            state.karmaShadow += 25;
+            message("Has encontrado secretos ancestrales en las ruinas...");
+        } else if (id === "cascada") {
+            state.karmaLight += 20;
+            message("El agua de la cascada te revela la verdad...");
+        }
+        updateStats();
+    }
 </script>
 
     <!-- Panel de Combate -->
