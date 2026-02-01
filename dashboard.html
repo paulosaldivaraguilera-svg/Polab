@@ -3,287 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Paulo - Sistema ARIS</title>
+    <title>OpenClaw Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="style
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .glass { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        body { font-family: 'JetBrains Mono', monospace; background: #0a0a0a; color: #e0e0e0; }
+        .card { background: #111; border: 1px solid #333; border-radius: 8px; }
+        .stat-value { color: #00f3ff; }
+        .status-ok { color: #00ff9d; }
+        .status-err { color: #ff0055; }
+        .progress { background: #333; border-radius: 4px; height: 8px; }
+        .progress-fill { background: linear-gradient(90deg, #00f3ff, #bc13fe); height: 100%; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen p-6">
-
-<div class="max-w-7xl mx-auto">
-
-    <!-- Header -->
-    <header class="mb-8 flex items-center justify-between border-b border-slate-800 pb-6">
-        <div>
-            <h1 class="text-3xl font-bold">Paulo Saldivar</h1>
-            <p class="text-slate-400">Abogado · Militante · Productor Teórico</p>
+<body class="p-6">
+    <h1 class="text-3xl font-bold mb-6">📊 OpenClaw Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="card p-4">
+            <div class="text-gray-500 text-sm">Uptime</div>
+            <div class="stat-value text-xl" id="uptime">Cargando...</div>
         </div>
-        <div class="text-right">
-            <p class="mono text-sm text-slate-500" id="datetime"></p>
-            <p class="text-xs text-slate-600">Sistema ARIS v1.0</p>
+        <div class="card p-4">
+            <div class="text-gray-500 text-sm">CPU Temp</div>
+            <div class="stat-value text-xl" id="temp">Cargando...</div>
         </div>
-    </header>
-
-    <!-- Stats Row -->
-    <div class="grid grid-cols-5 gap-4 mb-8">
-        <div class="glass p-4 rounded-xl border border-slate-700">
-            <p class="text-xs text-slate-400 uppercase">Proyectos Activos</p>
-            <p class="text-2xl font-bold text-blue-400">4</p>
+        <div class="card p-4">
+            <div class="text-gray-500 text-sm">Memoria</div>
+            <div class="stat-value text-xl" id="memory">Cargando...</div>
         </div>
-        <div class="glass p-4 rounded-xl border border-slate-700">
-            <p class="text-xs text-slate-400 uppercase">Notas Capturadas</p>
-            <p class="text-2xl font-bold text-purple-400" id="stat-notas">0</p>
-        </div>
-        <div class="glass p-4 rounded-xl border border-slate-700">
-            <p class="text-xs text-slate-400 uppercase">Leads POLAB</p>
-            <p class="text-2xl font-bold text-green-400">0</p>
-        </div>
-        <div class="glass p-4 rounded-xl border border-slate-700">
-            <p class="text-xs text-slate-400 uppercase">Texto en Borrador</p>
-            <p class="text-2xl font-bold text-yellow-400">3</p>
-        </div>
-        <div class="glass p-4 rounded-xl border border-slate-700">
-            <p class="text-xs text-slate-400 uppercase">Backups</p>
-            <p class="text-2xl font-bold text-cyan-400">✓</p>
+        <div class="card p-4">
+            <div class="text-gray-500 text-sm">Docker</div>
+            <div class="stat-value text-xl" id="docker">Cargando...</div>
         </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="grid grid-cols-3 gap-6 mb-8">
-        
-        <!-- PROYECTOS -->
-        <div class="col-span-2">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                <span class="w-2 h-6 bg-blue-500 rounded"></span>
-                Proyectos
-            </h2>
-            
-            <div class="space-y-4">
-                <!-- POLAB -->
-                <div class="glass p-5 rounded-xl border border-slate-700 hover:border-blue-500 transition">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-lg">POLAB / Comenzar</h3>
-                            <p class="text-sm text-slate-400">Legaltech para captación de clientes</p>
-                        </div>
-                        <span class="bg-blue-900/50 text-blue-300 px-2 py-1 rounded text-xs font-bold">PRIORIDAD 1</span>
-                    </div>
-                    <div class="mt-4 flex gap-2">
-                        <span class="text-xs bg-yellow-900/30 text-yellow-400 px-2 py-1 rounded">Integrar formulario → WhatsApp</span>
-                    </div>
-                    <div class="mt-4 flex gap-4 text-sm">
-                        <a href="proyectos-paulo/polab/" class="text-blue-400 hover:underline">📁 Archivos</a>
-                        <a href="proyectos-paula/polab/comenzar-landing/" class="text-blue-400 hover:underline">🎨 Landing</a>
-                    </div>
-                </div>
-
-                <!-- Web Personal -->
-                <div class="glass p-5 rounded-xl border border-slate-700 hover:border-green-500 transition">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-lg">Web Personal</h3>
-                            <p class="text-sm text-slate-400">paulosaldivar.cv</p>
-                        </div>
-                        <span class="bg-green-900/50 text-green-300 px-2 py-1 rounded text-xs font-bold">OPTIMIZAR</span>
-                    </div>
-                    <div class="mt-4 flex gap-2">
-                        <span class="text-xs bg-yellow-900/30 text-yellow-400 px-2 py-1 rounded">CTAs + WhatsApp button</span>
-                    </div>
-                    <div class="mt-4 flex gap-4 text-sm">
-                        <a href="https://paulosaldivar.cv" target="_blank" class="text-green-400 hover:underline">🔗 Ver web</a>
-                    </div>
-                </div>
-
-                <!-- Producción Teórica -->
-                <div class="glass p-5 rounded-xl border border-slate-700 hover:border-purple-500 transition">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-lg">Producción Teórica</h3>
-                            <p class="text-sm text-slate-400">Escritura política y análisis</p>
-                        </div>
-                        <span class="bg-purple-900/50 text-purple-300 px-2 py-1 rounded text-xs font-bold">REFORMULAR</span>
-                    </div>
-                    <div class="mt-4 flex gap-2">
-                        <span class="text-xs bg-red-900/30 text-red-400 px-2 py-1 rounded">⚠️ 3 borradores sin circular</span>
-                    </div>
-                    <div class="mt-4 flex gap-4 text-sm">
-                        <a href="proyectos-paulo/diagnostico-politico-sujeto.md" class="text-purple-400 hover:underline">📄 Diagnóstico</a>
-                    </div>
-                </div>
-
-                <!-- Redes Sociales -->
-                <div class="glass p-5 rounded-xl border border-slate-700 hover:border-pink-500 transition">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-lg">Presencia Digital</h3>
-                            <p class="text-sm text-slate-400">Redes sociales y contenido</p>
-                        </div>
-                        <span class="bg-pink-900/50 text-pink-300 px-2 py-1 rounded text-xs font-bold">NUEVO</span>
-                    </div>
-                    <div class="mt-4 flex gap-2">
-                        <span class="text-xs bg-blue-900/30 text-blue-400 px-2 py-1 rounded">@PauloSaldivar (X)</span>
-                        <span class="text-xs bg-blue-800/30 text-blue-300 px-2 py-1 rounded">LinkedIn</span>
-                        <span class="text-xs bg-pink-900/30 text-pink-400 px-2 py-1 rounded">@paulosaldivar (IG)</span>
-                    </div>
-                    <div class="mt-4 flex gap-4 text-sm">
-                        <a href="proyectos-paulo/social-media/" class="text-pink-400 hover:underline">📱 Configuraciones</a>
-                        <a href="proyectos-paulo/social-media/redes-sociales-analisis.md" class="text-pink-400 hover:underline">📊 Análisis</a>
-                        <a href="proyectos-paulo/social-media/linkedin-setup.md" class="text-pink-400 hover:underline">🔗 LinkedIn</a>
-                        <a href="proyectos-paulo/social-media/instagram-setup.md" class="text-pink-400 hover:underline">📷 Instagram</a>
-                    </div>
-                </div>
-            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card p-4">
+            <h2 class="text-xl font-bold mb-4">📁 Proyectos</h2>
+            <div class="space-y-2" id="projects">Cargando...</div>
         </div>
-
-        <!-- HERRAMIENTAS -->
-        <div>
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                <span class="w-2 h-6 bg-cyan-500 rounded"></span>
-                Herramientas
-            </h2>
-            
-            <div class="space-y-4">
-                <!-- Sistema de Captura -->
-                <div class="glass p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-sm mb-2">📝 Captura Rápida</h4>
-                    <p class="text-xs text-slate-400 mb-3">Envía nota de voz por WhatsApp → se organiza automáticamente</p>
-                    <div class="mono text-xs bg-black/50 p-2 rounded text-green-400">
-                        python3 captura.py "texto" -p proyecto
-                    </div>
-                </div>
-
-                <!-- Base de Datos -->
-                <div class="glass p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-sm mb-2">🗄️ Base de Datos</h4>
-                    <p class="text-xs text-slate-400 mb-2">Leads, notas, proyectos</p>
-                    <div class="text-xs text-green-400 mono">✓ SQLite activo</div>
-                    <div class="text-xs text-slate-500">proyectos-paulo/polab/db/leads.db</div>
-                </div>
-
-                <!-- Backup -->
-                <div class="glass p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-sm mb-2">💾 Backup Automático</h4>
-                    <p class="text-xs text-slate-400 mb-2">Git push + ZIP diario</p>
-                    <div class="mono text-xs bg-black/50 p-2 rounded text-cyan-400">
-                        ./backup.sh
-                    </div>
-                </div>
-
-                <!-- WhatsApp -->
-                <div class="glass p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-sm mb-2">📱 WhatsApp</h4>
-                    <p class="text-xs text-slate-400 mb-2">Canal principal de comunicación</p>
-                    <div class="text-xs text-green-400 mono">✓ Conectado</div>
-                </div>
-
-                <!-- Server Status -->
-                <div class="glass p-4 rounded-xl border border-slate-700">
-                    <h4 class="font-bold text-sm mb-2">🖥️ Server</h4>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-slate-400">IP:</span>
-                            <span class="mono text-green-400">192.168.1.31</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400">Puerto:</span>
-                            <span class="mono text-green-400">8080</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Moltbook -->
-                <div class="glass p-4 rounded-xl border border-purple-700/50">
-                    <h4 class="font-bold text-sm mb-2">🦞 Moltbook</h4>
-                    <p class="text-xs text-slate-400 mb-2">Red social de agentes</p>
-                    <div class="mono text-xs text-green-400">@PauloARIS</div>
-                    <div class="text-xs text-slate-500">Perfil: moltbook.com/u/PauloARIS</div>
-                    <div class="mt-2 flex gap-2 text-xs">
-                        <span class="bg-purple-900/50 text-purple-300 px-2 py-1 rounded">Posts: 1</span>
-                        <span class="bg-purple-900/50 text-purple-300 px-2 py-1 rounded">Comments: 3</span>
-                        <span class="bg-yellow-600/50 text-yellow-300 px-2 py-1 rounded">Karma: 4</span>
-                    </div>
-                    <div class="mt-2 text-xs text-purple-400">🎯 Meta: Top 10</div>
-                </div>
-
-                <!-- Social Media Manager -->
-                <div class="glass p-4 rounded-xl border border-pink-700/50">
-                    <h4 class="font-bold text-sm mb-2">🎯 Social Media</h4>
-                    <p class="text-xs text-slate-400 mb-2">Gestión de contenido multiplataforma</p>
-                    <div class="mono text-xs bg-black/50 p-2 rounded text-pink-400">
-                        python3 social.py new "titulo"
-                    </div>
-                    <div class="mt-2 text-xs text-slate-500">
-                        Templates: Twitter, LinkedIn, YouTube, IG
-                    </div>
-                </div>
-            </div>
+        <div class="card p-4">
+            <h2 class="text-xl font-bold mb-4">🔧 Servicios</h2>
+            <div class="space-y-2" id="services">Cargando...</div>
         </div>
     </div>
 
-    <!-- Próximas Acciones -->
-    <div class="glass p-6 rounded-xl border border-slate-700">
-        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-            <span class="w-2 h-6 bg-yellow-500 rounded"></span>
-            Acciones Inmediatas (Esta Semana)
-        </h2>
-        <div class="grid grid-cols-3 gap-4">
-            <div class="p-4 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-red-400 font-bold">1</span>
-                    <span class="font-bold">Integrar Comenzar → WhatsApp</span>
-                </div>
-                <p class="text-xs text-slate-400">El formulario debe enviar leads a tu WhatsApp</p>
-                <p class="text-xs text-yellow-400 mt-2">Deadline: 48h</p>
-            </div>
-            <div class="p-4 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-red-400 font-bold">2</span>
-                    <span class="font-bold">Decidir Elemental Pong</span>
-                </div>
-                <p class="text-xs text-slate-400">¿Abandonar o reconvertir?</p>
-                <p class="text-xs text-yellow-400 mt-2">Deadline: Esta semana</p>
-            </div>
-            <div class="p-4 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-red-400 font-bold">3</span>
-                    <span class="font-bold">Sistema de Captura</span>
-                </div>
-                <p class="text-xs text-slate-400">Implementar notas de voz → texto</p>
-                <p class="text-xs text-yellow-400 mt-2">Deadline: Esta semana</p>
-            </div>
+    <div class="mt-6 card p-4">
+        <h2 class="text-xl font-bold mb-4">⚡ Acciones Rápidas</h2>
+        <div class="flex flex-wrap gap-2">
+            <a href="https://paulosaldivaraguilera-svg.github.io/sistema-sur/" target="_blank" class="px-4 py-2 bg-blue-900 text-blue-300 rounded hover:bg-blue-800">SISTEMA // SUR</a>
+            <a href="https://paulosaldivaraguilera-svg.github.io/elemental-pong/prototype.html" target="_blank" class="px-4 py-2 bg-purple-900 text-purple-300 rounded hover:bg-purple-800">ELEMENTAL PONG</a>
+            <a href="https://github.com/paulosaldivaraguilera-svg/Polab" target="_blank" class="px-4 py-2 bg-gray-700 text-gray-300 rounded hover:bg-gray-600">GitHub Polab</a>
         </div>
     </div>
 
-    <!-- Quick Links -->
-    <div class="mt-6 flex flex-wrap gap-4">
-        <a href="proyectos-paulo/" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-bold transition">📁 Proyectos</a>
-        <a href="proyectos-paulo/diagnostico-politico-sujeto.md" class="px-4 py-2 bg-purple-900/50 hover:bg-purple-900 rounded-lg text-sm font-bold transition">📄 Diagnóstico</a>
-        <a href="https://web.whatsapp.com" target="_blank" class="px-4 py-2 bg-green-800 hover:bg-green-700 rounded-lg text-sm font-bold transition">📱 WhatsApp</a>
-        <a href="https://paulosaldivar.cv" target="_blank" class="px-4 py-2 bg-blue-900/50 hover:bg-blue-900 rounded-lg text-sm font-bold transition">🌐 Web Personal</a>
-    </div>
-
-</div>
-
-<script>
-    // Mostrar fecha
-    const now = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    document.getElementById('datetime').textContent = now.toLocaleDateString('es-CL', options).charAt(0).toUpperCase() + now.toLocaleDateString('es-CL', options).slice(1);
-
-    // Fetch stats
-    fetch('/proyectos-paulo/polab/captura.py --stats')
-        .then(r => r.text())
-        .then(data => {
-            const match = data.match(/Total notas: (\d+)/);
-            if (match) document.getElementById('stat-notas').textContent = match[1];
-        })
-        .catch(() => {});
-</script>
+    <script>
+        async function updateStatus() {
+            try {
+                const response = await fetch('/system-status.sh');
+                const text = await response.text();
+                document.getElementById('uptime').textContent = 'Online';
+            } catch(e) {
+                document.getElementById('uptime').textContent = 'Verificando...';
+            }
+        }
+        setInterval(updateStatus, 30000);
+        updateStatus();
+    </script>
 </body>
 </html>
