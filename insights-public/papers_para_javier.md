@@ -9,10 +9,10 @@
 
 ## 🧠 V2 - EXO-CEREBRO (5 docs)
 **Ubicación:** ~/.openclaw/.foundry/insights/v2/
-- arquitectura_exocerebro_*.md
+- arquitectura_Polab Core_*.md
 - optimizaciones_tecnicas_*.md
 - seguridad_trillada_*.md
-- habilidades_exocerebro_*.md
+- habilidades_Polab Core_*.md
 
 ## 📈 V3 - TRADING ALGORITMICO (5 docs)
 **Ubicación:** ~/.openclaw/.foundry/insights/v3/

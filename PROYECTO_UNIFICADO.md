@@ -7,7 +7,7 @@
 **Prioridades Personales de Paulo (Orden de importancia):**
 1. **paulosaldivar.cv** - Página web personal/profesional
 2. **Comenzar** - Proyecto de landing page
-3. Exo-Cerebro + Trading (en segundo plano)
+3. Polab Core + Trading (en segundo plano)
 
 ---
 
@@ -83,9 +83,9 @@ sudo /home/pi/.openclaw/scripts/optimize-pi-v2.sh
 # Backup de configuración actual
 cp ~/.docker/config.json ~/.docker/config.json.backup
 
-# Deploy del Exo-Cerebro
+# Deploy del Polab Core
 cd /home/pi/.openclaw
-docker-compose -f docker-compose-exocerebro.yml up -d
+docker-compose -f docker-compose-Polab Core.yml up -d
 
 # Verificar servicios
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
@@ -112,7 +112,7 @@ curl http://127.0.0.1:18789/health
 netstat -tlnp | grep -E "18789|8080|11434"
 ```
 
-### Checklist Exo-Cerebro
+### Checklist Polab Core
 - [ ] ZRAM activo
 - [ ] Governor en performance
 - [ ] Docker compose deployado
@@ -256,7 +256,7 @@ foundry_evolve --fitnessThreshold 0.7
 ### SESIÓN 1: Fundamentos (Hoy/Mañana)
 1. [ ] Revisar estado actual del sistema
 2. [ ] Backup de config existente
-3. [ ] Deploy Exo-Cerebro Docker compose
+3. [ ] Deploy Polab Core Docker compose
 4. [ ] Instalar Trading environment
 
 ### SESIÓN 2: Conexión (Esta semana)
@@ -325,7 +325,7 @@ echo "  3. tail -f /var/log/polybot.log"
 ## ═══════════════════════════════════════════════════════════════════
 
 ### Actualizado: 2026-02-01
-### Por: Equipo Exo-Cerebro
+### Por: Equipo Polab Core
 
 ### Pendiente de decisión:
 - ¿Qué mercado(s) priorizar para paper trading?
@@ -339,6 +339,6 @@ echo "  3. tail -f /var/log/polybot.log"
 - Cuenta Tailscale
 
 ### Documentación relacionada:
-- /home/pi/.openclaw/.foundry/insights/v2/ (Exo-Cerebro)
+- /home/pi/.openclaw/.foundry/insights/v2/ (Polab Core)
 - /home/pi/.openclaw/.foundry/insights/v3/ (Trading)
 - /home/pi/.openclaw/workspace/memory/2026-02-01-mega.md

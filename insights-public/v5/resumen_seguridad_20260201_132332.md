@@ -45,7 +45,7 @@
 - [ ] 2029: Interpretabilidad en LLMs
 - [ ] 2030: CoSAI global
 
-## Para el Exo-Cerebro
+## Para el Polab Core
 
 **Acciones inmediatas:**
 1. Implementar AgentCard para skills
