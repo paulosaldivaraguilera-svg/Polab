@@ -793,6 +793,54 @@
 Tu nombre:`) || 'Anónimo';
         saveScore(name, score, gameMode);
     }
+
+    // Power-ups system
+    const powerups = [
+        { name: "🔥 Bola de Fuego", desc: "La bola atraviesa todo", duration: 10, color: "#ff4500" },
+        { name: "❄️ Congelacion", desc: "Rival congelado 3 segundos", duration: 10, color: "#00bfff" },
+        { name: "📏 Alarga Pala", desc: "Tu pala dobla su tamano", duration: 8, color: "#9400d3" },
+        { name: "💨 Velocidad", desc: "Bola mas rapida", duration: 5, color: "#ffd700" }
+    ];
+    
+    let activePowerup = null;
+    
+    function showPowerups() {
+        const list = document.getElementById('powerupList');
+        list.innerHTML = powerups.map((p, i) => 
+            `<div style="padding: 10px; border-bottom: 1px solid #333; cursor: pointer;" onclick="activatePowerup(${i})">
+                <span style="color: ${p.color}">${p.name}</span>
+                <div style="font-size: 12px; color: #888;">${p.desc}</div>
+            </div>`
+        ).join('');
+        document.getElementById('powerupsPanel').classList.remove('hidden');
+    }
+    
+    function closePowerups() {
+        document.getElementById('powerupsPanel').classList.add('hidden');
+    }
+    
+    function activatePowerup(index) {
+        const p = powerups[index];
+        activePowerup = { ...p, startTime: Date.now() };
+        closePowerups();
+        showNotification(`⚡ ${p.name} activado!`);
+    }
+    
+    function applyPowerup() {
+        if (!activePowerup) return;
+        
+        const elapsed = (Date.now() - activePowerup.startTime) / 1000;
+        if (elapsed > activePowerup.duration) {
+            activePowerup = null;
+            return;
+        }
+        
+        if (activePowerup.name.includes("Alarga")) {
+            paddleHeight = 120;
+        } else if (activePowerup.name.includes("Fuego")) {
+            ballRadius = 15;
+        }
+    }
 </script>
 
     <!-- Sistema de Logros -->
@@ -829,5 +877,12 @@ Tu nombre:`) || 'Anónimo';
     </div>
     
     <button class="mode-btn" onclick="showLeaderboard()" style="margin-top: 10px;">🏆 Leaderboard</button>
+
+    <!-- Power-ups Panel -->
+    <div id="powerupsPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 25px; border-radius: 15px; border: 2px solid #00ff88; z-index: 1000; min-width: 300px;">
+        <h2 style="color: #00ff88; margin-bottom: 20px; text-align: center;">⚡ Power-ups Disponibles</h2>
+        <div id="powerupList" style="color: #fff;"></div>
+        <button onclick="closePowerups()" style="margin-top: 20px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
+    </div>
 </body>
 </html>
