@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELITOS: Filtro de Sombras</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+        #game {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            border-bottom: 2px solid #ff0055;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 28px;
+            color: #ff0055;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .hud {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat {
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-label { color: #666; font-size: 10px; text-transform: uppercase; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #00f3ff; }
+        
+        .main-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .scene {
+            background: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            min-height: 400px;
+        }
+        .scene-title {
+            color: #ff0055;
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .dialogue {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-left: 3px solid #00f3ff;
+        }
+        .dialogue.npc { border-left-color: #ff0055; }
+        .speaker { font-weight: bold; color: #00f3ff; font-size: 12px; }
+        .npc .speaker { color: #ff0055; }
+        .text { margin-top: 8px; line-height: 1.6; }
+        
+        .choices {
+            margin-top: 20px;
+        }
+        .choice {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #e0e0e0;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .choice:hover {
+            background: #222;
+            border-color: #00f3ff;
+        }
+        .choice.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .party-panel {
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+        }
+        .party-title {
+            color: #ff0055;
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .member {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .member-info { flex: 1; }
+        .member-name { font-weight: bold; font-size: 12px; }
+        .member-role { color: #666; font-size: 10px; }
+        .member-hp {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            margin-top: 5px;
+        }
+        .member-hp-fill {
+            height: 100%;
+            background: #00f3ff;
+            width: 100%;
+        }
+        
+        .inventory {
+            margin-top: 20px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+        }
+        .inventory-title {
+            color: #ff0055;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #1a1a1a;
+            margin-bottom: 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .item:hover { background: #222; }
+        
+        .clues {
+            margin-top: 20px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+        }
+        .clue {
+            padding: 8px;
+            background: #1a1a1a;
+            margin-bottom: 5px;
+            font-size: 11px;
+            border-left: 2px solid #ffcc00;
+        }
+        .clue.solved { border-color: #00ff9d; opacity: 0.5; }
+        
+        #caseSelect {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .case-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .case-card:hover {
+            border-color: #ff0055;
+            transform: translateY(-2px);
+        }
+        .case-title { color: #ff0055; font-weight: bold; margin-bottom: 5px; }
+        .case-desc { color: #666; font-size: 11px; }
+        .case-status {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #333;
+            font-size: 10px;
+            display: inline-block;
+        }
+        .case-status.active { background: #ff0055; }
+        .case-status.solved { background: #00ff9d; color: #000; }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    <div id="game">
+        <header>
+            <h1>☠️ DELITOS</h1>
+            <div class="subtitle">FILTRO DE SOMBRAS • Santiago de Chile, 2024</div>
+        </header>
+        
+        <div class="hud">
+            <div class="stat">
+                <div class="stat-label">Caso Actual</div>
+                <div class="stat-value" id="currentCase">-</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Evidencias</div>
+                <div class="stat-value" id="cluesFound">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Días Restantes</div>
+                <div class="stat-value" id="daysLeft">7</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Reputación</div>
+                <div class="stat-value" id="reputation">★★★★☆</div>
+            </div>
+        </div>
+        
+        <div class="main-area">
+            <div class="scene" id="scene">
+                <!-- Game content here -->
+            </div>
+            
+            <div>
+                <div class="party-panel">
+                    <div class="party-title">⚔️ EQUIPO</div>
+                    <div id="partyList"></div>
+                </div>
+                
+                <div class="inventory">
+                    <div class="inventory-title">🎒 INVENTARIO</div>
+                    <div id="inventoryList"></div>
+                </div>
+                
+                <div class="clues">
+                    <div class="inventory-title">📋 PISTAS</div>
+                    <div id="cluesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GAME = {
+            currentCase: null,
+            currentScene: 'intro',
+            cluesFound: 0,
+            daysLeft: 7,
+            reputation: 4,
+            inventory: ['Badge', 'Linterna'],
+            party: [
+                { id: 'lead', name: 'Tú', role: 'Líder', hp: 100, icon: '🕵️', ability: 'Intuición' },
+                { id: 'maya', name: 'Maya', role: 'Hacker', hp: 80, icon: '👩‍💻', ability: 'Hackear' },
+                { id: 'carlos', name: 'Carlos', role: 'Ex-Militar', hp: 100, icon: '👮', ability: 'Combate' }
+            ],
+            cases: {
+                'c1': {
+                    title: 'EL ASESINO DE PLAZA ITALIA',
+                    description: 'Cuerpo encontrado en Plaza Italia. Firma del modus operandi sugiere un asesino en serie.',
+                    status: 'active',
+                    solved: false,
+                    clues: ['c1_c1', 'c1_c2', 'c1_c3'],
+                    requiredClues: 3,
+                    scenes: {
+                        intro: {
+                            text: '08:00 AM. Tu teléfono suena. Es la comisaría.',
+                            npc: { name: 'COMANDANTE', text: 'Tú again. Plaza Italia. Te va a gustar... o no.' },
+                            choices: [
+                                { text: 'Voy en camino.', next: 'crimeScene' },
+                                { text: 'Necesito más información.', next: 'briefing' }
+                            ]
+                        },
+                        briefing: {
+                            text: 'Un trabajador municipal encontró el cuerpo a las 6 AM. Sin identificación. La prensa aún no sabe.',
+                            npc: { name: 'COMANDANTE', text: 'Solo tienes una semana antes de que los medios se enteren y el caso se politice.' },
+                            choices: [
+                                { text: 'Entendido. Voy para allá.', next: 'crimeScene' }
+                            ]
+                        },
+                        crimeScene: {
+                            text: 'Plaza Italia está acordonada. Un bulto bajo la manta blanca. El olor a sangre mezclado con café de la mañana.',
+                            npc: { name: 'OFICIAL', text: 'Inspector. El cuerpo. Algo strange... tiene un símbolo grabado en la mano.' },
+                            choices: [
+                                { text: 'Examinar el cuerpo.', next: 'examineBody', clue: 'c1_c1' },
+                                { text: 'Buscar testigos.', next: 'witnesses' },
+                                { text: 'Revisar cámaras cercanas.', next: 'cameras', requires: 'maya' }
+                            ]
+                        },
+                        examineBody: {
+                            text: 'Varón, 35-40 años. Vestimenta barata. El símbolo en su mano: un triángulo invertido con un ojo.',
+                            npc: { name: 'TUYO', text: 'Esto no es un robo. Esto es mensaje.' },
+                            choices: [
+                                { text: 'Tomar foto del símbolo.', next: 'crimeScene' },
+                                { text: 'Revisar el bolsillo.', next: 'pocket', clue: 'c1_c2' }
+                            ]
+                        },
+                        pocket: {
+                            text: 'Un ticket de metro. Estación Los Héroes. Ayer a las 11 PM.',
+                            npc: { name: 'TUYO', text: 'Nuestro amigo llegó en metro. Vivía o trabajaba en el centro.' },
+                            choices: [
+                                { text: 'Ir a estación Los Héroes.', next: 'metroStation' },
+                                { text: 'Buscar en钱包 (cartera).', next: 'wallet', clue: 'c1_c3' }
+                            ]
+                        },
+                        wallet: {
+                            text: 'Credencial de una empresa de seguridad: "VIGILANCIA 2000". Nombre: Ricardo Salinas.',
+                            npc: { name: 'TUYO', text: 'Ricardo Salinas. Seguridad privada. Esto se pone interesante.' },
+                            choices: [
+                                { text: 'Ir a oficinas de Vigilancia 2000.', next: 'office' }
+                            ]
+                        },
+                        office: {
+                            text: 'Oficinas en Providencia.前台 está nervioso cuando pregunta por Salinas.',
+                            npc: { name: 'RECEPCIONISTA', text: 'Ricardo... sí, trabajaba aquí. Fue despedido la semana pasada.' },
+                            choices: [
+                                { text: '¿Por qué lo despidieron?', next: 'firedReason' },
+                                { text: '¿Tenía enemigos?', next: 'enemies' }
+                            ]
+                        },
+                        firedReason: {
+                            text: 'Robo de equipamiento. Cámaras. No se probó pero... todos sospechaban.',
+                            npc: { name: 'RECEPCIONISTA', text: 'Y esos símbolos raros que dibujaba. Decía que eran "protegidos".' },
+                            choices: [
+                                { text: '¿Dónde vivía?', next: 'address' }
+                            ]
+                        },
+                        address: {
+                            text: ' apartment en San Miguel. Cuando llegan, la puerta está abierta. Huertos récents.',
+                            npc: { name: 'MAYA', text: 'Alguien llegó primero. Mira esto en la pared.' },
+                            choices: [
+                                { text: 'Excribir mensaje en la pared.', next: 'wallMessage', clue: 'c1_c3' }
+                            ]
+                        },
+                        wallMessage: {
+                            text: '"EL QUE MIRA ATRAVÉS DE LAS SOMBRAS ES CASTIGADO". En sangre.',
+                            npc: { name: 'CARLOS', text: 'Esto es una trampa. El asesino quería que vinieran.' },
+                            choices: [
+                                { text: 'Analizar el mensaje.', next: 'analyzeMessage' }
+                            ]
+                        }
+                    }
+                },
+                'c2': {
+                    title: 'LA RED DE PEDOFILIA',
+                    description: 'Denuncia anónima menciona una red de tráfico infantil. Los datos encriptados necesitan descifrarse.',
+                    status: 'locked',
+                    solved: false,
+                    clues: [],
+                    requiredClues: 4
+                },
+                'c3': {
+                    title: 'EL SECUESTRO DEL HIJO DEL SENADOR',
+                    description: 'Hijo de político desaparecido. Rescate en 48 horas. La familia sospecha de竞争对手 políticas.',
+                    status: 'locked',
+                    solved: false,
+                    clues: [],
+                    requiredClues: 5
+                }
+            },
+            gameState: {}
+        };
+        
+        function init() {
+            renderCaseSelect();
+            renderParty();
+            renderInventory();
+        }
+        
+        function renderCaseSelect() {
+            const scene = document.getElementById('scene');
+            let html = '<div class="scene-title">📁 CASOS DISPONIBLES</div>';
+            html += '<div id="caseSelect">';
+            
+            for (const [id, caso] of Object.entries(GAME.cases)) {
+                const statusClass = caso.status === 'active' ? 'active' : (caso.solved ? 'solved' : '');
+                html += `
+                    <div class="case-card" onclick="startCase('${id}')">
+                        <div class="case-title">${caso.title}</div>
+                        <div class="case-desc">${caso.description}</div>
+                        <div class="case-status ${statusClass}">
+                            ${caso.status === 'active' ? '🔴 ACTIVO' : (caso.solved ? '✅ RESUELTO' : '🔒 BLOQUEADO')}
+                        </div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            scene.innerHTML = html;
+        }
+        
+        function startCase(caseId) {
+            GAME.currentCase = caseId;
+            GAME.gameState = {};
+            GAME.cluesFound = 0;
+            GAME.daysLeft = 7;
+            
+            document.getElementById('currentCase').textContent = GAME.cases[caseId].title.substring(0, 15) + '...';
+            document.getElementById('cluesFound').textContent = '0';
+            document.getElementById('daysLeft').textContent = '7';
+            
+            showScene('intro');
+        }
+        
+        function showScene(sceneId) {
+            const caso = GAME.cases[GAME.currentCase];
+            const sceneData = caso.scenes[sceneId];
+            GAME.currentScene = sceneId;
+            
+            if (!sceneData) {
+                renderCaseSelect();
+                return;
+            }
+            
+            let html = `<div class="scene-title">📍 ${sceneId.toUpperCase()}</div>`;
+            
+            if (sceneData.text) {
+                html += `<div class="dialogue"><div class="text">${sceneData.text}</div></div>`;
+            }
+            
+            if (sceneData.npc) {
+                html += `
+                    <div class="dialogue npc">
+                        <div class="speaker">${sceneData.npc.name}</div>
+                        <div class="text">${sceneData.npc.text}</div>
+                    </div>
+                `;
+            }
+            
+            html += '<div class="choices">';
+            sceneData.choices.forEach((choice, i) => {
+                const hasClue = choice.clue && !GAME.gameState[choice.clue];
+                const requiresMember = choice.requires && !GAME.party.find(p => p.id === choice.requires);
+                
+                let disabled = false;
+                if (hasClue) disabled = true;
+                if (requiresMember) disabled = true;
+                
+                const clueMark = hasClue ? ' 🔒(necesitas pista)' : '';
+                const memberMark = requiresMember ? ' 🔒(necesitas ' + choice.requires + ')' : '';
+                
+                html += `<button class="choice ${disabled ? 'disabled' : ''}" 
+                    onclick="makeChoice(${i})">${choice.text}${clueMark}${memberMark}</button>`;
+            });
+            html += '</div>';
+            
+            document.getElementById('scene').innerHTML = html;
+            
+            if (sceneData.clue && !GAME.gameState[sceneData.clue]) {
+                GAME.gameState[sceneData.clue] = true;
+                GAME.cluesFound++;
+                document.getElementById('cluesFound').textContent = GAME.cluesFound;
+                renderClues();
+            }
+        }
+        
+        function makeChoice(index) {
+            const caso = GAME.cases[GAME.currentCase];
+            const sceneData = caso.scenes[GAME.currentScene];
+            const choice = sceneData.choices[index];
+            
+            if (choice.clue && !GAME.gameState[choice.clue]) return;
+            if (choice.requires && !GAME.party.find(p => p.id === choice.requires)) return;
+            
+            showScene(choice.next);
+        }
+        
+        function renderParty() {
+            const html = GAME.party.map(m => `
+                <div class="member">
+                    <div class="member-avatar">${m.icon}</div>
+                    <div class="member-info">
+                        <div class="member-name">${m.name}</div>
+                        <div class="member-role">${m.role} • ${m.ability}</div>
+                        <div class="member-hp"><div class="member-hp-fill" style="width:${m.hp}%"></div></div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('partyList').innerHTML = html;
+        }
+        
+        function renderInventory() {
+            const html = GAME.inventory.map(item => `
+                <div class="item">📦 ${item}</div>
+            `).join('');
+            document.getElementById('inventoryList').innerHTML = html;
+        }
+        
+        function renderClues() {
+            const caso = GAME.cases[GAME.currentCase];
+            if (!caso.clues) return;
+            
+            const html = caso.clues
+                .filter(c => GAME.gameState[c])
+                .map((c, i) => `<div class="clue">${getClueText(caso.id, c)}</div>`)
+                .join('');
+            document.getElementById('cluesList').innerHTML = html;
+        }
+        
+        function getClueText(caseId, clueId) {
+            const clues = {
+                'c1_c1': 'Símbolo: Triángulo con ojo en la mano',
+                'c1_c2': 'Ticket: Metro Los Héroes, 11 PM',
+                'c1_c3': 'Dirección: Depto en San Miguel'
+            };
+            return clues[clueId] || `Pista ${clueId}`;
+        }
+        
+        init();
+    </script>
+</body>
+</html>
