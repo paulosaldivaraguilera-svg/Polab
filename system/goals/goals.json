@@ -1,0 +1,73 @@
+[
+  {
+    "id": "goal_20260201_192238",
+    "goal": "Configurar Foundry",
+    "category": "system",
+    "deadline": "2026-02-02",
+    "status": "completed",
+    "progress": 90,
+    "created_at": "2026-02-01T19:22:38.107799",
+    "completed_at": "2026-02-01T19:22:50.718065",
+    "checkpoints": [
+      {
+        "checkpoint": "Feedback registrado",
+        "progress": 100,
+        "at": "2026-02-01T19:22:50.718104"
+      },
+      {
+        "checkpoint": "Sincronizado",
+        "progress": 80,
+        "at": "2026-02-01T19:22:50.718932"
+      },
+      {
+        "checkpoint": "Post preparado, esperando rate limit",
+        "progress": 90,
+        "at": "2026-02-01T19:22:50.720318"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_192238",
+    "goal": "Publicar post en Moltbook",
+    "category": "content",
+    "deadline": "2026-02-01",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T19:22:38.108391",
+    "completed_at": null,
+    "checkpoints": []
+  },
+  {
+    "id": "goal_20260201_192238",
+    "goal": "Mejorar juegos existentes",
+    "category": "games",
+    "deadline": "2026-02-03",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T19:22:38.108968",
+    "completed_at": null,
+    "checkpoints": []
+  },
+  {
+    "id": "goal_20260201_192238",
+    "goal": "Sincronizar con GitHub",
+    "category": "devops",
+    "deadline": null,
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T19:22:38.110336",
+    "completed_at": null,
+    "checkpoints": []
+  },
+  {
+    "id": "goal_20260201_192238",
+    "goal": "Registrar feedback de outcomes",
+    "category": "learning",
+    "deadline": "2026-02-01",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T19:22:38.111455",
+    "completed_at": null,
+    "checkpoints": []
+  }
+]

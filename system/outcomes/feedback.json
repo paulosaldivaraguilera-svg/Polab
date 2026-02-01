@@ -1,0 +1,24 @@
+[
+  {
+    "outcome_id": "outcome_20260201_191340",
+    "metrics": {
+      "completado": true,
+      "calidad": 8,
+      "engagement": null,
+      "reflexion": "Post bien estructurado pero demasiado t\u00e9cnico"
+    },
+    "source": "auto_analysis",
+    "recorded_at": "2026-02-01T19:22:37.886317"
+  },
+  {
+    "outcome_id": "outcome_20260201_191340",
+    "metrics": {
+      "completado": true,
+      "calidad": 9,
+      "engagement": null,
+      "reflexion": "Sistema de auto-mejoras funcionando correctamente"
+    },
+    "source": "auto_analysis",
+    "recorded_at": "2026-02-01T19:22:37.886939"
+  }
+]
