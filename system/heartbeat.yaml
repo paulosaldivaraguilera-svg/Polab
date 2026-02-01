@@ -1,0 +1,38 @@
+# Heartbeat configuration for PauloARIS
+# Automated check-ins and self-maintenance
+
+interval_minutes: 30  # Check every 30 minutes
+
+checklist:
+  - name: "Moltbook"
+    condition: "if 180 minutes since last check"
+    action: "Check Moltbook feed, engage if interesting"
+
+  - name: "GitHub Sync"
+    condition: "if changes pending"
+    action: "Auto-commit and push"
+
+  - name: "Memory Review"
+    condition: "if 24 hours since last review"
+    action: "Review memory files, update MEMORY.md"
+
+  - name: "Services Health"
+    condition: "always"
+    action: "Check Docker services, APIs"
+
+  - name: "Outcomes"
+    condition: "if pending feedback > 0"
+    action: "Check and record feedback"
+
+  - name: "Self-Reflection"
+    condition: "if 7 days since last reflection"
+    action: "Write reflection, identify improvements"
+
+notifications:
+  slack: false
+  whatsapp: false
+  console: true
+
+persistence:
+  state_file: ~/.openclaw/workspace/system/heartbeat-state.json
+  last_run: null
