@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLAB Dashboard v2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto p-6">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-green-400">POLAB Dashboard v2.0</h1>
+            <p class="text-gray-400">Sistema de gestion integral</p>
+        </header>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="card rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Leads Totales</div>
+                <div class="text-4xl font-bold text-green-400" id="totalLeads">0</div>
+            </div>
+            <div class="card rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Conversion Rate</div>
+                <div class="text-4xl font-bold text-blue-400" id="conversionRate">0%</div>
+            </div>
+            <div class="card rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Ingresos Estimados</div>
+                <div class="text-4xl font-bold text-yellow-400" id="revenue">$0</div>
+            </div>
+            <div class="card rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Servicios Activos</div>
+                <div class="text-4xl font-bold text-purple-400" id="services">7</div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-xl p-6">
+                <h3 class="text-xl font-bold mb-4">Leads por Mes</h3>
+                <div class="h-48 bg-gray-800 rounded flex items-center justify-center text-gray-500">
+                    Grafico en desarrollo...
+                </div>
+            </div>
+            <div class="card rounded-xl p-6">
+                <h3 class="text-xl font-bold mb-4">Servicios</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between"><span>API Leads</span><span class="text-green-400">Online</span></div>
+                    <div class="flex justify-between"><span>API Metrics</span><span class="text-green-400">Online</span></div>
+                    <div class="flex justify-between"><span>Docker</span><span class="text-green-400">Online</span></div>
+                    <div class="flex justify-between"><span>WhatsApp</span><span class="text-green-400">Online</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
