@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elemental Pong v2.2 - WebGPU Edition</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            border: 3px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(100, 100, 255, 0.2);
+        }
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 60px;
+            z-index: 10;
+        }
+        .score-box {
+            text-align: center;
+            background: rgba(20, 20, 30, 0.9);
+            padding: 15px 30px;
+            border-radius: 12px;
+            border: 2px solid #333;
+            backdrop-filter: blur(10px);
+        }
+        .score-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .score-value {
+            font-size: 42px;
+            font-weight: 800;
+            text-shadow: 0 0 20px currentColor;
+        }
+        #playerScore { color: #00ff88; }
+        #aiScore { color: #ff4466; }
+        
+        #centerInfo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 20;
+        }
+        .menu {
+            background: rgba(15, 15, 25, 0.95);
+            padding: 40px 50px;
+            border-radius: 20px;
+            border: 2px solid #444;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .menu h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00ff88, #0088ff, #ff4466);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .menu h2 {
+            font-size: 24px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .mode-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .mode-btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #444;
+            background: rgba(30, 30, 45, 0.8);
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .mode-btn:hover {
+            background: rgba(50, 50, 80, 1);
+            border-color: #00ff88;
+            transform: translateX(5px);
+        }
+        .mode-btn.primary {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #000;
+            border: none;
+        }
+        .mode-btn.primary:hover {
+            background: linear-gradient(135deg, #00ff99, #00dd77);
+            transform: scale(1.02);
+        }
+        .controls-info {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #333;
+            font-size: 13px;
+            color: #666;
+        }
+        .controls-info kbd {
+            background: #222;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin: 0 3px;
+        }
+        
+        #timer {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #888;
+            background: rgba(20, 20, 30, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        #powerups {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .powerup-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        .powerup-indicator.active {
+            opacity: 1;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .hidden { display: none !important; }
+        
+        #progressBar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff88, #0088ff, #ff4466);
+            transition: width 0.1s;
+        }
+        
+        #combo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: 900;
+            color: #ffcc00;
+            text-shadow: 0 0 30px #ffcc00;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        #combo.show { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="canvas"></canvas>
+        
+        <div id="hud">
+            <div class="score-box">
+                <div class="score-label">Player</div>
+                <div class="score-value" id="playerScore">0</div>
+            </div>
+            <div class="score-box">
+                <div class="score-label">AI</div>
+                <div class="score-value" id="aiScore">0</div>
+            </div>
+        </div>
+        
+        <div id="timer" class="hidden">00:00</div>
+        
+        <div id="powerups" class="hidden"></div>
+        
+        <div id="centerInfo">
+            <div class="menu" id="mainMenu">
+                <h1>🏓 Elemental Pong</h1>
+                <h2>WebGPU Edition v2.2</h2>
+                
+                <div class="mode-buttons">
+                    <button class="mode-btn primary" onclick="startGame('classic')">
+                        🎮 Classic Mode
+                    </button>
+                    <button class="mode-btn" onclick="startGame('time')">
+                        ⏱️ Time Attack (2 min)
+                    </button>
+                    <button class="mode-btn" onclick="startGame('survival')">
+                        💀 Survival Mode
+                    </button>
+                    <button class="mode-btn" onclick="startGame('elemental')">
+                        ⚡ Elemental Chaos
+                    </button>
+                </div>
+                
+                <div class="controls-info">
+                    <p><kbd>W</kbd><kbd>S</kbd> or <kbd>↑</kbd><kbd>↓</kbd> Move paddle</p>
+                    <p><kbd>Space</kbd> Start/Pause • <kbd>Esc</kbd> Menu</p>
+                </div>
+            </div>
+            
+            <div class="menu hidden" id="pauseMenu">
+                <h1>⏸️ Paused</h1>
+                <div class="mode-buttons">
+                    <button class="mode-btn primary" onclick="resumeGame()">Resume</button>
+                    <button class="mode-btn" onclick="restartGame()">Restart</button>
+                    <button class="mode-btn" onclick="showMainMenu()">Main Menu</button>
+                </div>
+            </div>
+            
+            <div class="menu hidden" id="gameOverMenu">
+                <h1 id="winnerText">Game Over</h1>
+                <h2 id="finalScore">0 - 0</h2>
+                <div class="mode-buttons">
+                    <button class="mode-btn primary" onclick="restartGame()">Play Again</button>
+                    <button class="mode-btn" onclick="showMainMenu()">Main Menu</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="combo">x1</div>
+        <div id="progressBar"></div>
+    </div>
+
+    <script>
+        // Canvas setup
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Responsive canvas
+        function resizeCanvas() {
+            const maxWidth = Math.min(window.innerWidth - 40, 1200);
+            const maxHeight = Math.min(window.innerHeight - 40, 700);
+            const ratio = 16/9;
+            
+            if (maxWidth / maxHeight > ratio) {
+                canvas.height = maxHeight;
+                canvas.width = maxHeight * ratio;
+            } else {
+                canvas.width = maxWidth;
+                canvas.height = maxWidth / ratio;
+            }
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Game state
+        const state = {
+            running: false,
+            paused: false,
+            mode: 'classic',
+            timeLeft: 120,
+            combo: 0,
+            maxCombo: 0
+        };
+        
+        // Game objects
+        const paddleHeight = 100;
+        const paddleWidth = 15;
+        const ballRadius = 10;
+        
+        let player = { y: 0, score: 0, speed: 8 };
+        let ai = { y: 0, score: 0, speed: 5, error: 0 };
+        let ball = { x: 0, y: 0, vx: 0, vy: 0, speed: 7 };
+        let particles = [];
+        let powerups = [];
+        
+        // Input
+        const keys = {};
+        document.addEventListener('keydown', e => {
+            keys[e.key.toLowerCase()] = true;
+            if (e.key === ' ' && state.running) {
+                e.preventDefault();
+                togglePause();
+            }
+            if (e.key === 'Escape' && state.running) {
+                togglePause();
+            }
+        });
+        document.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+        
+        // Initialize game
+        function initGame() {
+            player.y = canvas.height / 2 - paddleHeight / 2;
+            ai.y = canvas.height / 2 - paddleHeight / 2;
+            player.score = 0;
+            ai.score = 0;
+            state.combo = 0;
+            state.maxCombo = 0;
+            particles = [];
+            powerups = [];
+            resetBall();
+            updateUI();
+        }
+        
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            const angle = (Math.random() - 0.5) * Math.PI / 2;
+            ball.vx = Math.cos(angle) * ball.speed * (Math.random() > 0.5 ? 1 : -1);
+            ball.vy = Math.sin(angle) * ball.speed;
+        }
+        
+        function startGame(mode) {
+            state.mode = mode;
+            state.running = true;
+            state.paused = false;
+            state.timeLeft = mode === 'time' ? 120 : 0;
+            
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('gameOverMenu').classList.add('hidden');
+            document.getElementById('timer').classList.toggle('hidden', mode !== 'time');
+            
+            initGame();
+            gameLoop();
+        }
+        
+        function togglePause() {
+            state.paused = !state.paused;
+            document.getElementById('pauseMenu').classList.toggle('hidden', !state.paused);
+        }
+        
+        function resumeGame() {
+            state.paused = false;
+            document.getElementById('pauseMenu').classList.add('hidden');
+        }
+        
+        function restartGame() {
+            initGame();
+            state.running = true;
+            state.paused = false;
+            document.getElementById('pauseMenu').classList.add('hidden');
+            document.getElementById('gameOverMenu').classList.add('hidden');
+            gameLoop();
+        }
+        
+        function showMainMenu() {
+            state.running = false;
+            document.getElementById('pauseMenu').classList.add('hidden');
+            document.getElementById('gameOverMenu').classList.add('hidden');
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+        
+        function gameOver(winner) {
+            state.running = false;
+            document.getElementById('winnerText').textContent = winner + ' Wins!';
+            document.getElementById('finalScore').textContent = player.score + ' - ' + ai.score;
+            document.getElementById('gameOverMenu').classList.remove('hidden');
+        }
+        
+        // Update
+        function update() {
+            if (state.paused) return;
+            
+            // Player movement
+            if (keys['w'] || keys['arrowup']) player.y -= player.speed;
+            if (keys['s'] || keys['arrowdown']) player.y += player.speed;
+            
+            // Clamp player
+            player.y = Math.max(0, Math.min(canvas.height - paddleHeight, player.y));
+            
+            // AI with error
+            const targetY = ball.y + (Math.random() - 0.5) * 50;
+            ai.y += (targetY - ai.y - paddleHeight/2) * 0.08;
+            ai.y = Math.max(0, Math.min(canvas.height - paddleHeight, ai.y));
+            
+            // Ball movement
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            
+            // Wall collision
+            if (ball.y - ballRadius < 0 || ball.y + ballRadius > canvas.height) {
+                ball.vy *= -1;
+                createParticles(ball.x, ball.y, '#888');
+            }
+            
+            // Paddle collision
+            if (ball.x - ballRadius < paddleWidth + 20 && 
+                ball.y > player.y && ball.y < player.y + paddleHeight) {
+                ball.vx = Math.abs(ball.vx) * 1.05;
+                state.combo++;
+                if (state.combo > state.maxCombo) state.maxCombo = state.combo;
+                updateCombo();
+                createParticles(ball.x, ball.y, '#00ff88', 15);
+                ball.x = paddleWidth + 20 + ballRadius;
+            }
+            
+            if (ball.x + ballRadius > canvas.width - paddleWidth - 20 && 
+                ball.y > ai.y && ball.y < ai.y + paddleHeight) {
+                ball.vx = -Math.abs(ball.vx) * 1.05;
+                createParticles(ball.x, ball.y, '#ff4466', 15);
+                ball.x = canvas.width - paddleWidth - 20 - ballRadius;
+            }
+            
+            // Score
+            if (ball.x < 0) {
+                ai.score++;
+                state.combo = 0;
+                resetBall();
+                updateUI();
+            }
+            if (ball.x > canvas.width) {
+                player.score++;
+                state.combo = 0;
+                resetBall();
+                updateUI();
+            }
+            
+            // Win conditions
+            if (state.mode === 'classic' && player.score >= 7) {
+                gameOver('Player');
+            }
+            if (state.mode === 'classic' && ai.score >= 7) {
+                gameOver('AI');
+            }
+            
+            // Time attack
+            if (state.mode === 'time') {
+                state.timeLeft -= 1/60;
+                document.getElementById('timer').textContent = formatTime(state.timeLeft);
+                if (state.timeLeft <= 0) {
+                    gameOver(player.score > ai.score ? 'Player' : player.score < ai.score ? 'AI' : 'Tie');
+                }
+            }
+            
+            // Update particles
+            particles = particles.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.02;
+                return p.life > 0;
+            });
+        }
+        
+        function createParticles(x, y, color, count = 8) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x, y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    color,
+                    life: 1
+                });
+            }
+        }
+        
+        function updateCombo() {
+            const combo = document.getElementById('combo');
+            if (state.combo > 1) {
+                combo.textContent = 'x' + state.combo;
+                combo.classList.add('show');
+                setTimeout(() => combo.classList.remove('show'), 500);
+            }
+        }
+        
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+        
+        function updateUI() {
+            document.getElementById('playerScore').textContent = player.score;
+            document.getElementById('aiScore').textContent = ai.score;
+        }
+        
+        // Draw
+        function draw() {
+            // Clear
+            ctx.fillStyle = '#0a0a0f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid
+            ctx.strokeStyle = '#1a1a2e';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+            
+            // Center line
+            ctx.setLineDash([15, 15]);
+            ctx.strokeStyle = '#333';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw paddles with glow
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 20;
+            ctx.fillStyle = '#00ff88';
+            ctx.fillRect(10, player.y, paddleWidth, paddleHeight);
+            
+            ctx.shadowColor = '#ff4466';
+            ctx.fillStyle = '#ff4466';
+            ctx.fillRect(canvas.width - paddleWidth - 10, ai.y, paddleWidth, paddleHeight);
+            
+            // Reset shadow
+            ctx.shadowBlur = 0;
+            
+            // Draw ball with trail
+            ctx.shadowColor = '#fff';
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            // Draw particles
+            particles.forEach(p => {
+                ctx.globalAlpha = p.life;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+        }
+        
+        // Game loop
+        function gameLoop() {
+            if (!state.running) return;
+            
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Start
+        draw();
+    </script>
+</body>
+</html>

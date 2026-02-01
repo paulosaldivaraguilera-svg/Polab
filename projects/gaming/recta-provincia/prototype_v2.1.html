@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recta Provincia v2.1 - RPG Táctico</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0d0d0d;
+            font-family: 'Georgia', serif;
+            color: #e8e0d5;
+            overflow: hidden;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #0a1628 0%, #1a0a1a 50%, #0a0a0a 100%);
+        }
+        
+        /* Niebla animada */
+        .fog {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(100,80,120,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(80,100,120,0.1) 0%, transparent 50%);
+            pointer-events: none;
+            animation: fogMove 20s ease-in-out infinite;
+        }
+        @keyframes fogMove {
+            0%, 100% { opacity: 0.5; transform: translateX(0); }
+            50% { opacity: 0.8; transform: translateX(-20px); }
+        }
+        
+        #gameArea {
+            position: relative;
+            width: 900px;
+            height: 600px;
+            background: 
+                radial-gradient(ellipse at center, rgba(40,30,50,0.8) 0%, transparent 70%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%231a1a2e" width="100" height="100"/><circle fill="%232a2a4e" cx="25" cy="25" r="2"/><circle fill="%232a2a4e" cx="75" cy="75" r="3"/><circle fill="%232a2a4e" cx="50" cy="10" r="1"/></svg>');
+            border: 3px solid #3a3a5a;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(100,80,120,0.3), inset 0 0 100px rgba(0,0,0,0.5);
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .location {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .location:hover {
+            transform: scale(1.1);
+        }
+        .location-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #6a5a7a;
+            background: rgba(30, 20, 40, 0.9);
+            box-shadow: 0 0 20px rgba(100,80,120,0.4);
+        }
+        .location.visited .location-icon {
+            border-color: #8a7aaa;
+            background: rgba(50, 40, 80, 0.9);
+        }
+        .location.active .location-icon {
+            border-color: #ffcc00;
+            box-shadow: 0 0 30px rgba(255,200,0,0.6);
+        }
+        .location-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 11px;
+            color: #a0a0b0;
+            text-shadow: 0 1px 3px #000;
+        }
+        
+        /* Paths between locations */
+        .path {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4a4a6a, transparent);
+            transform-origin: left center;
+        }
+        
+        #ui {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        
+        #stats {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 20px;
+        }
+        .stat {
+            background: rgba(20, 15, 30, 0.9);
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid #4a4a6a;
+        }
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #7a7a9a;
+            margin-bottom: 3px;
+        }
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .karma-light { color: #ffd700; }
+        .karma-shadow { color: #6a5acd; }
+        .rituals { color: #50c878; }
+        
+        #dialogue {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            background: rgba(15, 10, 25, 0.95);
+            border: 2px solid #5a4a6a;
+            border-radius: 12px;
+            padding: 20px 25px;
+            min-height: 100px;
+            pointer-events: auto;
+        }
+        #speaker {
+            font-size: 14px;
+            color: #ffcc00;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        #text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d0d0e0;
+        }
+        
+        #choices {
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: auto;
+        }
+        .choice {
+            background: rgba(25, 20, 40, 0.95);
+            border: 1px solid #5a4a6a;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #c0b0d0;
+        }
+        .choice:hover {
+            background: rgba(40, 30, 60, 0.95);
+            border-color: #8a7aaa;
+            transform: translateX(5px);
+        }
+        .choice.shadow { border-left: 3px solid #6a5acd; }
+        .choice.light { border-left: 3px solid #ffd700; }
+        
+        #menus {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 5, 10, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+        .menu {
+            background: linear-gradient(135deg, rgba(25,20,40,0.98) 0%, rgba(15,10,25,0.98) 100%);
+            border: 2px solid #5a4a6a;
+            border-radius: 16px;
+            padding: 40px 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .menu h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #d0c0e0, #a080c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .menu h2 {
+            font-size: 16px;
+            color: #7a7a9a;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .menu-btn {
+            display: block;
+            width: 250px;
+            margin: 12px auto;
+            padding: 14px 20px;
+            font-size: 15px;
+            border: 1px solid #5a4a6a;
+            background: rgba(30, 25, 45, 0.9);
+            color: #c0b0d0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .menu-btn:hover {
+            background: rgba(50, 40, 80, 0.95);
+            border-color: #8a7aaa;
+        }
+        .menu-btn.primary {
+            background: linear-gradient(135deg, #6a5acd, #5a4abd);
+            border: none;
+            color: #fff;
+        }
+        .menu-btn.primary:hover {
+            background: linear-gradient(135deg, #7a6add, #6a5bcd);
+        }
+        
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div class="fog"></div>
+        
+        <div id="gameArea">
+            <div id="map">
+                <!-- Paths -->
+                <svg style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;">
+                    <line x1="150" y1="150" x2="450" y2="200" stroke="#4a4a6a" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="450" y1="200" x2="750" y2="150" stroke="#4a4a6a" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="450" y1="200" x2="450" y2="400" stroke="#4a4a6a" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="450" y1="400" x2="750" y2="450" stroke="#4a4a6a" stroke-width="2" stroke-dasharray="5,5"/>
+                </svg>
+                
+                <!-- Locations -->
+                <div class="location active" data-id="casa" style="left: 125px; top: 125px;" onclick="visit('casa')">
+                    <div class="location-icon">🏠</div>
+                    <div class="location-label">Tu Casa</div>
+                </div>
+                
+                <div class="location" data-id="bosque" style="left: 425px; top: 175px;" onclick="visit('bosque')">
+                    <div class="location-icon">🌲</div>
+                    <div class="location-label">Bosque</div>
+                </div>
+                
+                <div class="location" data-id="pueblo" style="left: 725px; top: 125px;" onclick="visit('pueblo')">
+                    <div class="location-icon">🏘️</div>
+                    <div class="location-label">Pueblo</div>
+                </div>
+                
+                <div class="location" data-id="templo" style="left: 425px; top: 375px;" onclick="visit('templo')">
+                    <div class="location-icon">🔮</div>
+                    <div class="location-label">Templo</div>
+                </div>
+                
+                <div class="location" data-id="cueva" style="left: 725px; top: 425px;" onclick="visit('cueva')">
+                    <div class="location-icon">🕳️</div>
+                    <div class="location-label">Cueva</div>
+                </div>
+            </div>
+            
+            <div id="ui">
+                <div id="stats">
+                    <div class="stat">
+                        <div class="stat-label">Karma Luz</div>
+                        <div class="stat-value karma-light" id="karmaLight">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Karma Sombra</div>
+                        <div class="stat-value karma-shadow" id="karmaShadow">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Rituales</div>
+                        <div class="stat-value rituals" id="rituals">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="dialogue" class="hidden">
+            <div id="speaker">Someone</div>
+            <div id="text">...</div>
+        </div>
+        
+        <div id="choices" class="hidden"></div>
+        
+        <div id="menus">
+            <div class="menu" id="mainMenu">
+                <h1>🌙 Recta Provincia</h1>
+                <h2>El camino de la sombra o la luz</h2>
+                <button class="menu-btn primary" onclick="startGame()">Iniciar Viaje</button>
+                <button class="menu-btn" onclick="showHelp()">Ayuda</button>
+            </div>
+            
+            <div class="menu hidden" id="helpMenu">
+                <h1>📖 Guía</h1>
+                <h2>Aprende los caminos de La Recta Provincia</h2>
+                <div style="text-align: left; margin: 20px 0; font-size: 14px; color: #a0a0b0;">
+                    <p>🎯 <strong>Explora</strong> locaciones haciendo click</p>
+                    <p>⚡ <strong>Rituales</strong> requieren karma de sombra o luz</p>
+                    <p>🌑 <strong>Karma Sombra</strong> - path de poder oscuro</p>
+                    <p>☀️ <strong>Karma Luz</strong> - path de protección</p>
+                    <p>🔮 <strong>Objetivo</strong> - Alcanza la maestría</p>
+                </div>
+                <button class="menu-btn" onclick="hideHelp()">Entendido</button>
+            </div>
+            
+            <div class="menu hidden" id="ritualMenu">
+                <h1>🔮 Ritual</h1>
+                <h2 id="ritualName">Nombre del Ritual</h2>
+                <div id="ritualDesc" style="margin: 20px 0; color: #a0a0b0;"></div>
+                <button class="menu-btn shadow" onclick="doRitual('shadow')">Sombra (Karma Oscuro)</button>
+                <button class="menu-btn light" onclick="doRitual('light')">Luz (Karma Dorado)</button>
+                <button class="menu-btn" onclick="closeRitualMenu()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            karmaLight: 10,
+            karmaShadow: 10,
+            rituals: 0,
+            visited: ['casa'],
+            currentLocation: 'casa'
+        };
+        
+        const locations = {
+            casa: {
+                name: 'Tu Casa',
+                speaker: 'Tú mismo',
+                text: 'La niebla cubre el pueblo. Es hora de comenzar tu camino hacia La Recta Provincia. Los antiguos rituales esperan.',
+                choices: [
+                    { text: 'Ir al Bosque', action: () => visit('bosque') },
+                    { text: 'Practicar ritual básico', action: () => showRitual('basico') }
+                ]
+            },
+            bosque: {
+                name: 'Bosque de Niebla',
+                speaker: 'Voz en la niebla',
+                text: 'Los árboles susurran secretos antiguos. Puedes sentir la energía del lugar fluyendo a tu alrededor.',
+                choices: [
+                    { text: 'Escuchar los susurros (Sombra)', action: () => addKarma('shadow', 5) },
+                    { text: 'Meditar bajo la luna (Luz)', action: () => addKarma('light', 5) },
+                    { text: 'Ir al Templo', action: () => visit('templo') },
+                    { text: 'Volver', action: () => visit('casa') }
+                ]
+            },
+            pueblo: {
+                name: 'Pueblo de Dalcahue',
+                speaker: 'Anciano',
+                text: 'Los caminos son peligrosos para los que buscan lo oculto. Pero tú ya has elegido tu destino.',
+                choices: [
+                    { text: 'Buscar información', action: () => addKarma('light', 3) },
+                    { text: 'Ofertar a los espíritus (Sombra)', action: () => addKarma('shadow', 5) },
+                    { text: 'Ir al Templo', action: () => visit('templo') },
+                    { text: 'Explorar la Cueva', action: () => visit('cueva') }
+                ]
+            },
+            templo: {
+                name: 'Templo Ancestral',
+                speaker: 'La Guardiana',
+                text: 'Aquí vinieron muchos. Pocos regresaron. Los que lo hicieron... ya no eran los mismos.',
+                choices: [
+                    { text: 'Realizar ritual de iniciación', action: () => showRitual('iniciacion') },
+                    { text: 'Pedir guía (Luz)', action: () => addKarma('light', 3) },
+                    { text: 'Tomar el libro prohibido (Sombra)', action: () => addKarma('shadow', 10) },
+                    { text: 'Ir al Bosque', action: () => visit('bosque') },
+                    { text: 'Ir a la Cueva', action: () => visit('cueva') }
+                ]
+            },
+            cueva: {
+                name: 'Cueva del Trauco',
+                speaker: 'Eco',
+                text: 'La oscuridad aquí es diferente. Algo te observa desde las sombras. El Trauco menunggu.',
+                choices: [
+                    { text: 'Enfrentar la oscuridad (Sombra)', action: () => addKarma('shadow', 10) },
+                    { text: 'Encender una antorcha (Luz)', action: () => addKarma('light', 5) },
+                    { text: 'Ir al Pueblo', action: () => visit('pueblo') },
+                    { text: 'Ir al Templo', action: () => visit('templo') }
+                ]
+            }
+        };
+        
+        const rituals = {
+            basico: {
+                name: 'Ritual Básico',
+                desc: 'Aprende los fundamentos. Requiere 5 de karma.',
+                cost: 5,
+                effect: 'Ganas acceso a rituales avanzados.'
+            },
+            iniciacion: {
+                name: 'Ritual de Iniciación',
+                desc: 'El primer paso hacia La Recta Provincia. Requiere 15 de karma.',
+                cost: 15,
+                effect: 'Te conviertes en iniciado formally.'
+            }
+        };
+        
+        function startGame() {
+            document.getElementById('mainMenu').classList.add('hidden');
+            visit('casa');
+        }
+        
+        function visit(locId) {
+            state.currentLocation = locId;
+            if (!state.visited.includes(locId)) {
+                state.visited.push(locId);
+            }
+            
+            // Update map
+            document.querySelectorAll('.location').forEach(el => {
+                el.classList.remove('active');
+                if (state.visited.includes(el.dataset.id)) {
+                    el.classList.add('visited');
+                }
+            });
+            document.querySelector(`[data-id="${locId}"]`).classList.add('active');
+            
+            // Show dialogue
+            const loc = locations[locId];
+            document.getElementById('speaker').textContent = loc.speaker;
+            document.getElementById('text').textContent = loc.text;
+            document.getElementById('dialogue').classList.remove('hidden');
+            
+            // Show choices
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            loc.choices.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = 'choice';
+                btn.textContent = c.text;
+                btn.onclick = c.action;
+                choicesDiv.appendChild(btn);
+            });
+            choicesDiv.classList.remove('hidden');
+        }
+        
+        function addKarma(type, amount) {
+            if (type === 'light') {
+                state.karmaLight += amount;
+                document.getElementById('karmaLight').textContent = state.karmaLight;
+                showText('Has ganado ' + amount + ' de Karma de Luz.');
+            } else {
+                state.karmaShadow += amount;
+                document.getElementById('karmaShadow').textContent = state.karmaShadow;
+                showText('Has ganado ' + amount + ' de Karma de Sombra.');
+            }
+        }
+        
+        function showText(text) {
+            document.getElementById('text').textContent = text;
+            document.getElementById('choices').classList.add('hidden');
+        }
+        
+        function showRitual(ritualId) {
+            const r = rituals[ritualId];
+            document.getElementById('ritualName').textContent = r.name;
+            document.getElementById('ritualDesc').innerHTML = r.desc + '<br><br><em>Efecto: ' + r.effect + '</em>';
+            document.getElementById('menus').classList.remove('hidden');
+            document.querySelector('#ritualMenu').classList.remove('hidden');
+            document.querySelector('#mainMenu').classList.add('hidden');
+        }
+        
+        function doRitual(type) {
+            const cost = 15; // Simplified
+            if ((type === 'light' ? state.karmaLight : state.karmaShadow) < cost) {
+                showText('No tienes suficiente karma para este ritual.');
+                return;
+            }
+            
+            if (type === 'light') state.karmaLight -= cost;
+            else state.karmaShadow -= cost;
+            
+            state.rituals++;
+            document.getElementById('rituals').textContent = state.rituals;
+            document.getElementById('karmaLight').textContent = state.karmaLight;
+            document.getElementById('karmaShadow').textContent = state.karmaShadow;
+            
+            showText('Ritual completado. Has ganado poder.');
+            closeRitualMenu();
+        }
+        
+        function closeRitualMenu() {
+            document.getElementById('menus').classList.add('hidden');
+            document.querySelector('#ritualMenu').classList.add('hidden');
+        }
+        
+        function showHelp() {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('helpMenu').classList.remove('hidden');
+        }
+        
+        function hideHelp() {
+            document.getElementById('helpMenu').classList.add('hidden');
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+        
+        // Init
+        updateStats();
+    </script>
+</body>
+</html>

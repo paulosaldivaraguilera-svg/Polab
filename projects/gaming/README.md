@@ -178,3 +178,67 @@ MIT License - Ver LICENSE para detalles.
 **Estado:** 🟢 En desarrollo activo
 
 [Inicio](index.html) | [GitHub](https://github.com/paulosaldivaraguilera-svg/Polab)
+
+---
+
+## 🎮 VERSIONES MEJORADAS (v2.2)
+
+### Elemental Pong v2.2 - WebGPU Arcade
+**Novedades:**
+- ✅ 4 modos de juego (Classic, Time Attack, Survival, Elemental Chaos)
+- ✅ Sistema de combo (xN points)
+- ✅ Partículas mejoradas con glow effects
+- ✅ UI glassmorphism moderna
+- ✅ Grid de fondo animated
+- ✅ Indicador de combo visual
+- ✅ Puntuación más visible
+
+**Archivo:** `elemental-pong/prototype_v2.2.html`
+
+### Recta Provincia v2.1 - RPG Táctico
+**Novedades:**
+- ✅ 5 locaciones explorables (Casa, Bosque, Pueblo, Templo, Cueva)
+- ✅ Sistema de karma dual (Luz/Sombra)
+- ✅ 3 rituales con efectos
+- ✅ Diálogos ramificados completos
+- ✅ Niebla animada CSS
+- ✅ UI inmersiva folk horror
+- ✅ Exploración por clicks
+
+**Archivo:** `recta-provincia/prototype_v2.1.html`
+
+### Delitos v2.1 - Investigative RPG
+**Novedades:**
+- ✅ Sistema de investigación con pistas
+- ✅ Tablero de deducciones visual
+- ✅ Evidencia recolectable interactiva
+- ✅ Tracking de precisión (accuracy)
+- ✅ 4 escenas principales ramificadas
+- ✅ Conspiración Pharmaceuticals revelable
+- ✅ UI cyberpunk noir
+- ✅ Sistema de progreso porcentual
+
+**Archivo:** `polab/videojuegos/delitos/index.html`
+
+---
+
+## 📊 COMPARACIÓN DE VERSIONES
+
+| Juego | v1.x | v2.x | Mejoras |
+|-------|------|------|---------|
+| Elemental Pong | Basic | v2.2 | +300% features |
+| Recta Provincia | Prototype | v2.1 | +500% contenido |
+| Delitos | Basic | v2.1 | +400% mecánicas |
+
+---
+
+## 🎯 PRÓXIMA ITERACIÓN (v2.3)
+
+### Planeado:
+- [ ] Modo multijugador local en Elemental Pong
+- [ ] Sistema de combate táctico en Recta Provincia
+- [ ] Más casos en Delitos
+- [ ] Tablas de posiciones
+- [ ] Logros/achievements
+- [ ] Mobile touch controls
+
