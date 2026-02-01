@@ -5,113 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comenzar - Dashboard Leads</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>* { font-family: 'Inter', sans-serif; }</style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen p-8">
-    <div class="max-w-6xl mx-auto">
-        <h1 class="text-4xl font-black mb-8">🎯 Dashboard Comenzar</h1>
-        
-        <!-- Stats -->
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gray-800 p-6 rounded-xl">
-                <p class="text-gray-400 text-sm">Total Leads</p>
-                <p class="text-4xl font-bold text-green-400" id="total">-</p>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-xl">
-                <p class="text-gray-400 text-sm">Nuevos (sin contactar)</p>
-                <p class="text-4xl font-bold text-yellow-400" id="nuevos">-</p>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-xl">
-                <p class="text-gray-400 text-sm">Último lead</p>
-                <p class="text-xl font-bold text-blue-400" id="ultimo">-</p>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center gap-2">
+                <span class="text-2xl">🎯</span> Comenzar Dashboard
+            </h1>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-400 text-sm" id="lastUpdate">Actualizando...</span>
+                <button onclick="loadLeads()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-sm font-bold transition">
+                    🔄 Refresh
+                </button>
             </div>
         </div>
-        
+    </header>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Stats Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gradient-to-br from-green-500 to-green-700 p-6 rounded-xl">
+                <p class="text-green-100 text-sm">Total Leads</p>
+                <p class="text-4xl font-black" id="totalLeads">-</p>
+            </div>
+            <div class="bg-gradient-to-br from-yellow-500 to-yellow-700 p-6 rounded-xl">
+                <p class="text-yellow-100 text-sm">Nuevos</p>
+                <p class="text-4xl font-black" id="nuevosLeads">-</p>
+            </div>
+            <div class="bg-gradient-to-br from-blue-500 to-blue-700 p-6 rounded-xl">
+                <p class="text-blue-100 text-sm">Contactados</p>
+                <p class="text-4xl font-black" id="contactados">-</p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-500 to-purple-700 p-6 rounded-xl">
+                <p class="text-purple-100 text-sm">Tasa Conversión</p>
+                <p class="text-4xl font-black" id="conversion">-</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-gray-800 rounded-xl p-4 mb-6">
+            <div class="flex flex-wrap gap-3">
+                <a href="/" target="_blank" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition">
+                    🌐 Ver Landing
+                </a>
+                <a href="/analytics.html" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition">
+                    📊 Analytics
+                </a>
+                <a href="/metrics.html" class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition">
+                    💻 Sistema
+                </a>
+                <button onclick="exportLeads()" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition">
+                    📥 Exportar CSV
+                </button>
+                <button onclick="deleteLeads()" class="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition">
+                    🗑️ Limpiar DB
+                </button>
+            </div>
+        </div>
+
         <!-- Leads Table -->
         <div class="bg-gray-800 rounded-xl overflow-hidden">
-            <div class="p-6 border-b border-gray-700">
-                <h2 class="text-xl font-bold">📋 Leads Recientes</h2>
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h2 class="text-lg font-bold">📋 Leads Recientes</h2>
+                <span class="text-gray-400 text-sm" id="leadCount">Cargando...</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-700">
                         <tr>
-                            <th class="p-4 text-left">Nombre</th>
-                            <th class="p-4 text-left">Teléfono</th>
-                            <th class="p-4 text-left">Email</th>
-                            <th class="p-4 text-left">Servicio</th>
-                            <th class="p-4 text-left">Fecha</th>
-                            <th class="p-4 text-left">Estado</th>
+                            <th class="p-4 text-left text-sm font-bold">#</th>
+                            <th class="p-4 text-left text-sm font-bold">Nombre</th>
+                            <th class="p-4 text-left text-sm font-bold">Teléfono</th>
+                            <th class="p-4 text-left text-sm font-bold">Email</th>
+                            <th class="p-4 text-left text-sm font-bold">Servicio</th>
+                            <th class="p-4 text-left text-sm font-bold">Fecha</th>
+                            <th class="p-4 text-left text-sm font-bold">Estado</th>
+                            <th class="p-4 text-left text-sm font-bold">Acción</th>
                         </tr>
                     </thead>
-                    <tbody id="leadsTable">
-                        <tr><td colspan="6" class="p-4 text-center">Cargando...</td></tr>
+                    <tbody id="leadsTable" class="divide-y divide-gray-700">
+                        <tr><td colspan="8" class="p-8 text-center text-gray-400">Cargando leads...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
-        <div class="mt-8 text-center text-gray-500 text-sm">
-            <a href="/" class="text-green-400 hover:underline">← Volver a la página</a>
+
+        <!-- Footer -->
+        <div class="mt-6 text-center text-gray-500 text-sm">
+            <p>🔗 <a href="http://localhost:9000" target="_blank" class="text-blue-400 hover:underline">Portainer</a> | 
+               <a href="http://localhost:19999" target="_blank" class="text-green-400 hover:underline">Netdata</a> | 
+               <a href="http://localhost:3001" target="_blank" class="text-yellow-400 hover:underline">Uptime Kuma</a></p>
         </div>
     </div>
-    
+
     <script>
-        async function loadStats() {
-            try {
-                const res = await fetch('/api/stats');
-                const data = await res.json();
-                document.getElementById('total').textContent = data.total;
-                document.getElementById('nuevos').textContent = data.nuevos;
-            } catch (e) {
-                console.error('Error loading stats:', e);
-            }
-        }
+        const API = 'http://localhost:8081';
         
         async function loadLeads() {
             try {
-                const res = await fetch('/api/leads');
-                const data = await res.json();
+                const [statsRes, leadsRes] = await Promise.all([
+                    fetch(`${API}/api/stats`),
+                    fetch(`${API}/api/leads`)
+                ]);
                 
-                if (data.leads.length === 0) {
-                    document.getElementById('leadsTable').innerHTML = 
-                        '<tr><td colspan="6" class="p-4 text-center text-gray-400">Sin leads aún</td></tr>';
+                const stats = await statsRes.json();
+                const data = await leadsRes.json();
+                
+                // Update stats
+                document.getElementById('totalLeads').textContent = stats.total || 0;
+                document.getElementById('nuevosLeads').textContent = stats.nuevos || 0;
+                document.getElementById('contactados').textContent = (stats.total - stats.nuevos) || 0;
+                document.getElementById('conversion').textContent = stats.total > 0 ? '100%' : '0%';
+                
+                // Update table
+                const tbody = document.getElementById('leadsTable');
+                document.getElementById('leadCount').textContent = `${data.leads?.length || 0} leads`;
+                
+                if (!data.leads || data.leads.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-gray-400">Sin leads aún</td></tr>';
                     return;
                 }
                 
-                const html = data.leads.map(lead => `
-                    <tr class="border-b border-gray-700 hover:bg-gray-700">
+                tbody.innerHTML = data.leads.map((lead, i) => `
+                    <tr class="hover:bg-gray-700 transition">
+                        <td class="p-4 text-gray-400">${i + 1}</td>
                         <td class="p-4 font-bold">${lead.nombre}</td>
-                        <td class="p-4"><a href="https://wa.me/${lead.telefono.replace('+','').replace(' ','')}" target="_blank" class="text-green-400 hover:underline">${lead.telefono}</a></td>
-                        <td class="p-4"><a href="mailto:${lead.email}" class="text-blue-400 hover:underline">${lead.email}</a></td>
-                        <td class="p-4 capitalize">${lead.servicio}</td>
-                        <td class="p-4 text-gray-400">${new Date(lead.fecha).toLocaleString('es-CL')}</td>
-                        <td class="p-4"><span class="bg-${lead.estado==='nuevo'?'yellow':'gray'}-600 px-3 py-1 rounded-full text-xs">${lead.estado}</span></td>
+                        <td class="p-4">
+                            <a href="https://wa.me/${lead.telefono.replace(/[^0-9]/g, '')}" target="_blank" 
+                               class="text-green-400 hover:underline flex items-center gap-1">
+                                📱 ${lead.telefono}
+                            </a>
+                        </td>
+                        <td class="p-4">
+                            <a href="mailto:${lead.email}" class="text-blue-400 hover:underline">
+                                ✉️ ${lead.email}
+                            </a>
+                        </td>
+                        <td class="p-4 capitalize">
+                            <span class="bg-gray-600 px-2 py-1 rounded text-xs">${lead.servicio}</span>
+                        </td>
+                        <td class="p-4 text-gray-400 text-sm">
+                            ${new Date(lead.fecha).toLocaleString('es-CL')}
+                        </td>
+                        <td class="p-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${
+                                lead.estado === 'nuevo' ? 'bg-yellow-600' : 'bg-green-600'
+                            }">
+                                ${lead.estado}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            <button onclick="markContacted(${lead.id})" class="text-xs bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded transition">
+                                ✓ Contactado
+                            </button>
+                        </td>
                     </tr>
                 `).join('');
                 
-                document.getElementById('leadsTable').innerHTML = html;
-                
-                // Update ultimo
-                const ultimo = data.leads[0];
-                document.getElementById('ultimo').textContent = ultimo.nombre.split(' ')[0];
+                document.getElementById('lastUpdate').textContent = `Última actualización: ${new Date().toLocaleTimeString()}`;
                 
             } catch (e) {
-                console.error('Error loading leads:', e);
+                console.error('Error:', e);
+                document.getElementById('leadsTable').innerHTML = 
+                    '<tr><td colspan="8" class="p-8 text-center text-red-400">Error cargando datos</td></tr>';
             }
         }
         
-        // Load on start
-        loadStats();
-        loadLeads();
+        async function markContacted(id) {
+            alert(`Funcionalidad de marcar contacto para lead #${id} - En desarrollo`);
+        }
         
-        // Auto refresh every 30 seconds
-        setInterval(() => {
-            loadStats();
-            loadLeads();
-        }, 30000);
+        function exportLeads() {
+            alert('Export CSV - En desarrollo');
+        }
+        
+        function deleteLeads() {
+            if(confirm('¿Limpiar todos los leads? Esta acción no se puede deshacer.')) {
+                alert('Función en desarrollo');
+            }
+        }
+        
+        // Init
+        loadLeads();
+        setInterval(loadLeads, 30000); // Auto refresh cada 30s
     </script>
 </body>
 </html>
