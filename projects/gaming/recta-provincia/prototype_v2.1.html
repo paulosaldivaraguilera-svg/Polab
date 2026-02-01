@@ -527,6 +527,115 @@
         
         // Init
         updateStats();
-    </script>
+    
+    // Sistema de Combate Simple
+    let combatActive = false;
+    let playerHP = 100;
+    let enemyHP = 80;
+    
+    function startCombat() {
+        combatActive = true;
+        playerHP = 100;
+        enemyHP = 80;
+        document.getElementById('combatPanel').classList.remove('hidden');
+        updateCombatStats();
+        combatLog("¡Un enemigo aparece en el camino!");
+    }
+    
+    function combatAction(action) {
+        if (!combatActive) return;
+        
+        const playerDmg = Math.floor(Math.random() * 20) + 10;
+        const enemyDmg = Math.floor(Math.random() * 15) + 5;
+        
+        switch(action) {
+            case 'attack':
+                enemyHP -= playerDmg;
+                combatLog(`Atacas por ${playerDmg} de daño!`);
+                break;
+            case 'defend':
+                combatLog(`Te defienden. Daño reducido.`);
+                break;
+            case 'magic':
+                if (state.karmaShadow >= 10) {
+                    state.karmaShadow -= 10;
+                    enemyHP -= playerDmg * 2;
+                    combatLog(`Hechizo oscuro! ${playerDmg * 2} daño!`);
+                    updateStats();
+                } else {
+                    combatLog("No tienes suficiente Karma de Sombra!");
+                }
+                break;
+            case 'flee':
+                combatLog("Escapas del combate...");
+                closeCombat();
+                return;
+        }
+        
+        // Enemy turn
+        if (enemyHP > 0 && combatActive) {
+            playerHP -= enemyDmg;
+            combatLog(`El enemigo ataca por ${enemyDmg} de daño.`);
+        }
+        
+        updateCombatStats();
+        
+        if (enemyHP <= 0) {
+            combatLog("¡Has vencido al enemigo!");
+            addKarma('shadow', 15);
+            setTimeout(closeCombat, 1500);
+        } else if (playerHP <= 0) {
+            combatLog("Has sido derrotado...");
+            setTimeout(closeCombat, 1500);
+        }
+    }
+    
+    function updateCombatStats() {
+        document.getElementById('playerHP').textContent = `HP: ${playerHP}`;
+        document.getElementById('enemyHP').textContent = `HP: ${enemyHP}`;
+    }
+    
+    function combatLog(msg) {
+        const log = document.getElementById('combatLog');
+        log.innerHTML = msg + '<br>' + log.innerHTML;
+    }
+    
+    function closeCombat() {
+        combatActive = false;
+        document.getElementById('combatPanel').classList.add('hidden');
+    }
+    
+    function updateStats() {
+        document.getElementById('karmaLight').textContent = state.karmaLight;
+        document.getElementById('karmaShadow').textContent = state.karmaShadow;
+        document.getElementById('rituals').textContent = state.rituals;
+    }
+</script>
+
+    <!-- Panel de Combate -->
+    <div id="combatPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #1a0a1a 0%, #0a0a1a 100%); padding: 30px; border-radius: 15px; border: 2px solid #6a5acd; z-index: 1000; min-width: 400px;">
+        <h2 style="color: #ffcc00; margin-bottom: 20px; text-align: center;">⚔️ Encuentro!</h2>
+        <div id="combatStats" style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+            <div style="text-align: center;">
+                <div style="font-size: 40px;">🧙</div>
+                <div style="color: #00ff88;">Tú</div>
+                <div id="playerHP" style="color: #00ff88;">HP: 100</div>
+            </div>
+            <div style="font-size: 30px; align-self: center;">VS</div>
+            <div style="text-align: center;">
+                <div style="font-size: 40px;">👺</div>
+                <div style="color: #ff4466;">Enemigo</div>
+                <div id="enemyHP" style="color: #ff4466;">HP: 80</div>
+            </div>
+        </div>
+        <div id="combatActions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button onclick="combatAction('attack')" style="padding: 15px; background: #c53030; border: none; border-radius: 8px; color: white; cursor: pointer;">🗡️ Atacar</button>
+            <button onclick="combatAction('defend')" style="padding: 15px; background: #2c5282; border: none; border-radius: 8px; color: white; cursor: pointer;">🛡️ Defender</button>
+            <button onclick="combatAction('magic')" style="padding: 15px; background: #6a5acd; border: none; border-radius: 8px; color: white; cursor: pointer;">✨ Hechizo</button>
+            <button onclick="combatAction('flee')" style="padding: 15px; background: #4a5568; border: none; border-radius: 8px; color: white; cursor: pointer;">🏃 Huir</button>
+        </div>
+        <div id="combatLog" style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; font-size: 12px; color: #888; max-height: 100px; overflow-y: auto;"></div>
+        <button onclick="closeCombat()" style="margin-top: 15px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">Cerrar</button>
+    </div>
 </body>
 </html>

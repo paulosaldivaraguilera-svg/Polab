@@ -583,6 +583,58 @@
         
         // Start
         draw();
-    </script>
+    
+    // Sistema de Logros
+    const achievements = {
+        firstWin: { name: "Primer Paso", desc: "Gana tu primer partido", unlocked: false },
+        combo5: { name: "En Racha", desc: "Consigue 5 puntos seguidos", unlocked: false },
+        survival: { name: "Superviviente", desc: "Juega 5 minutos seguidos", unlocked: false },
+        perfect: { name: "Partido Perfecto", desc: "Gana sin recibir puntos", unlocked: false },
+        speed: { name: "Velocidad", desc: "Alcanza velocidad 15", unlocked: false }
+    };
+    
+    function unlockAchievement(id) {
+        if (achievements[id] && !achievements[id].unlocked) {
+            achievements[id].unlocked = true;
+            document.getElementById('achievementName').textContent = achievements[id].name;
+            document.getElementById('achievementDesc').textContent = achievements[id].desc;
+            document.getElementById('achievements').classList.remove('hidden');
+            updateAchievementsMenu();
+        }
+    }
+    
+    function closeAchievement() {
+        document.getElementById('achievements').classList.add('hidden');
+    }
+    
+    function updateAchievementsMenu() {
+        const list = document.getElementById('achievementsList');
+        list.innerHTML = Object.values(achievements).map(a => 
+            `<div style="color: ${a.unlocked ? '#00ff88' : '#444'}; margin: 5px 0;">${a.unlocked ? '✓' : '○'} ${a.name}</div>`
+        ).join('');
+    }
+    
+    // Unlock en eventos del juego
+    const originalUpdate = typeof update === 'function' ? update : () => {};
+    
+    function checkAchievements() {
+        if (state.combo >= 5) unlockAchievement('combo5');
+        if (ball.speed >= 15) unlockAchievement('speed');
+    }
+</script>
+
+    <!-- Sistema de Logros -->
+    <div id="achievements" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.9); padding: 30px; border-radius: 15px; z-index: 1000; text-align: center;">
+        <h2 style="color: #ffcc00; margin-bottom: 20px;">🏆 Logro Desbloqueado!</h2>
+        <p id="achievementName" style="font-size: 24px; color: white;"></p>
+        <p id="achievementDesc" style="color: #888; margin-top: 10px;"></p>
+        <button onclick="closeAchievement()" style="margin-top: 20px; padding: 10px 30px; background: #00ff88; border: none; border-radius: 5px; cursor: pointer;">Continuar</button>
+    </div>
+    
+    <!-- Menú de Logros -->
+    <div id="achievementsMenu" class="hidden" style="position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9); padding: 20px; border-radius: 10px; z-index: 100;">
+        <h3 style="color: #ffcc00; margin-bottom: 10px;">🏆 Logros</h3>
+        <div id="achievementsList" style="color: #888; font-size: 14px;"></div>
+    </div>
 </body>
 </html>
