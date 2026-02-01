@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEMENTAL PONG - WebGPU Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d1117 50%, #161b22 100%);
+            min-height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        #gameContainer {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        canvas {
+            background: #000;
+            border: 3px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15),
+                        inset 0 0 60px rgba(0, 0, 0, 0.5);
+            display: block;
+        }
+        
+        #hud {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: #fff;
+        }
+        
+        .score-box { text-align: center; }
+        .score-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .score-value { font-size: 48px; font-weight: 900; text-shadow: 0 0 20px currentColor; }
+        #scorePlayer { color: #00f3ff; }
+        #scoreEnemy { color: #ff0055; }
+        
+        #centerInfo {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #ffcc00;
+        }
+        
+        #waveDisplay {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00f3ff;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 243, 255, 0.3);
+            border-top-color: #00f3ff;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        #webgpu-badge {
+            position: absolute;
+            bottom: -30px;
+            right: 0;
+            background: linear-gradient(135deg, #00f3ff, #0066ff);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="hud">
+            <div class="score-box">
+                <div class="score-label">Player</div>
+                <div class="score-value" id="scorePlayer">0</div>
+            </div>
+            <div class="score-box">
+                <div class="score-label">Enemy</div>
+                <div class="score-value" id="scoreEnemy">0</div>
+            </div>
+        </div>
+        
+        <div id="centerInfo">
+            <div id="waveDisplay">WAVE 1</div>
+        </div>
+        
+        <div id="loading">
+            <div class="loading-spinner"></div>
+            <div>WebGPU Initializing...</div>
+            <div style="font-size: 12px; color: #888; margin-top: 10px;">Compute Shaders Loading</div>
+        </div>
+        
+        <canvas id="gameCanvas" width="900" height="600"></canvas>
+        
+        <div id="webgpu-badge">⚡ WebGPU</div>
+    </div>
+
+    <!-- Three.js WebGPU Build -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.170.0/build/three.webgpu.js",
+            "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ============================================
+        // ELEMENTAL PONG - WebGPU Edition
+        // Arquitectura: Compute Shaders + ECS Pattern
+        // ============================================
+
+        const CONFIG = {
+            WIDTH: 900,
+            HEIGHT: 600,
+            PADDLE_WIDTH: 15,
+            PADDLE_HEIGHT: 100,
+            BALL_SIZE: 12,
+            MAX_PARTICLES: 100000,
+            PARTICLE_GLOW: true
+        };
+
+        // ============================================
+        // ECS - Entity Component System (Simplificado)
+        // ============================================
+        
+        class ECS {
+            constructor() {
+                this.entities = new Map();
+                this.components = new Map();
+                this.systems = [];
+                this.nextEntityId = 0;
+            }
+            
+            createEntity() {
+                const id = this.nextEntityId++;
+                this.entities.set(id, new Set());
+                return id;
+            }
+            
+            addComponent(entityId, name, data) {
+                if (!this.components.has(name)) {
+                    this.components.set(name, new Map());
+                }
+                this.components.get(name).set(entityId, data);
+                this.entities.get(entityId).add(name);
+            }
+            
+            getComponent(entityId, name) {
+                return this.components.get(name)?.get(entityId);
+            }
+            
+            removeComponent(entityId, name) {
+                this.components.get(name)?.delete(entityId);
+                this.entities.get(entityId)?.delete(name);
+            }
+            
+            addSystem(system) {
+                this.systems.push(system);
+            }
+            
+            update(deltaTime) {
+                for (const system of this.systems) {
+                    system(this, deltaTime);
+                }
+            }
+            
+            query(componentNames) {
+                const result = [];
+                for (const [entityId, components] of this.entities) {
+                    if (componentNames.every(c => components.has(c))) {
+                        result.push(entityId);
+                    }
+                }
+                return result;
+            }
+        }
+
+        // ============================================
+        // WebGPU Renderer Setup
+        // ============================================
+        
+        let renderer, scene, camera, controls;
+        let particleSystem, particleComputePipeline;
+        let gameState = {
+            playerY: CONFIG.HEIGHT / 2,
+            enemyY: CONFIG.HEIGHT / 2,
+            ballX: CONFIG.WIDTH / 2,
+            ballY: CONFIG.HEIGHT / 2,
+            ballVX: 5,
+            ballVY: 3,
+            playerScore: 0,
+            enemyScore: 0,
+            wave: 1,
+            streak: 0
+        };
+
+        async function initWebGPU() {
+            // Check WebGPU support
+            if (!navigator.gpu) {
+                throw new Error('WebGPU not supported in this browser');
+            }
+
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) {
+                throw new Error('No WebGPU adapter available');
+            }
+
+            const device = await adapter.requestDevice();
+            return device;
+        }
+
+        async function init() {
+            const device = await initWebGPU();
+            
+            // Renderer
+            renderer = new THREE.WebGPURenderer({ antialias: true });
+            renderer.setSize(CONFIG.WIDTH, CONFIG.HEIGHT);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('gameCanvas').replaceWith(renderer.domElement);
+            
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0a);
+            
+            // Camera (orthographic for 2D game)
+            camera = new THREE.OrthographicCamera(
+                0, CONFIG.WIDTH, CONFIG.HEIGHT, 0, 0.1, 1000
+            );
+            camera.position.z = 100;
+            
+            // Create game entities using ECS
+            const ecs = new ECS();
+            window.ecs = ecs;
+            
+            // Create paddles
+            const playerPaddle = ecs.createEntity();
+            ecs.addComponent(playerPaddle, 'position', { x: 30, y: CONFIG.HEIGHT / 2 });
+            ecs.addComponent(playerPaddle, 'size', { width: CONFIG.PADDLE_WIDTH, height: CONFIG.PADDLE_HEIGHT });
+            ecs.addComponent(playerPaddle, 'color', { r: 0, g: 0.95, b: 1 });
+            
+            const enemyPaddle = ecs.createEntity();
+            ecs.addComponent(enemyPaddle, 'position', { x: CONFIG.WIDTH - 30, y: CONFIG.HEIGHT / 2 });
+            ecs.addComponent(enemyPaddle, 'size', { width: CONFIG.PADDLE_WIDTH, height: CONFIG.PADDLE_HEIGHT });
+            ecs.addComponent(enemyPaddle, 'color', { r: 1, g: 0, b: 0.33 });
+            
+            // Create ball
+            const ball = ecs.createEntity();
+            ecs.addComponent(ball, 'position', { x: CONFIG.WIDTH / 2, y: CONFIG.HEIGHT / 2 });
+            ecs.addComponent(ball, 'velocity', { vx: 5, vy: 3 });
+            ecs.addComponent(ball, 'size', { size: CONFIG.BALL_SIZE });
+            ecs.addComponent(ball, 'color', { r: 1, g: 0.8, b: 0 });
+            
+            // Create particle system
+            createParticleSystem();
+            
+            // Create visual meshes for entities
+            createEntityMeshes();
+            
+            // Add systems
+            ecs.addSystem(paddleSystem);
+            ecs.addSystem(ballSystem);
+            ecs.addSystem(particleUpdateSystem);
+            
+            // Hide loading
+            document.getElementById('loading').style.display = 'none';
+            
+            // Event listeners
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('click', onClick);
+            
+            // Start game loop
+            let lastTime = performance.now();
+            function animate(time) {
+                const deltaTime = (time - lastTime) / 1000;
+                lastTime = time;
+                
+                // Update ECS
+                ecs.update(deltaTime);
+                
+                // Update visual meshes
+                updateMeshes();
+                
+                // Update HUD
+                updateHUD();
+                
+                // Render
+                renderer.render(scene, camera);
+                
+                requestAnimationFrame(animate);
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        // ============================================
+        // Particle System (Compute Shader Ready)
+        // ============================================
+        
+        function createParticleSystem() {
+            // Using InstancedMesh for GPU-accelerated particles
+            const geometry = new THREE.CircleGeometry(3, 8);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x00f3ff,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            particleSystem = new THREE.InstancedMesh(geometry, material, CONFIG.MAX_PARTICLES);
+            particleSystem.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+            
+            // Initialize particle data
+            const dummy = new THREE.Object3D();
+            const colors = [];
+            
+            for (let i = 0; i < CONFIG.MAX_PARTICLES; i++) {
+                dummy.position.set(
+                    Math.random() * CONFIG.WIDTH,
+                    Math.random() * CONFIG.HEIGHT,
+                    -1
+                );
+                dummy.scale.setScalar(0);
+                dummy.updateMatrix();
+                particleSystem.setMatrixAt(i, dummy.matrix);
+                
+                colors.push(
+                    Math.random() > 0.5 ? 0 : 0.95,
+                    Math.random() > 0.5 ? 0.95 : 0,
+                    Math.random() > 0.5 ? 1 : 0.33
+                );
+            }
+            
+            particleSystem.instanceColor = new THREE.InstancedBufferAttribute(
+                new Float32Array(colors), 3
+            );
+            
+            scene.add(particleSystem);
+            window.particles = [];
+            
+            // Emit initial particles
+            for (let i = 0; i < 500; i++) {
+                emitParticle();
+            }
+        }
+        
+        function emitParticle() {
+            const particle = {
+                x: gameState.ballX,
+                y: gameState.ballY,
+                vx: (Math.random() - 0.5) * 8,
+                vy: (Math.random() - 0.5) * 8,
+                life: 1.0,
+                decay: 0.02 + Math.random() * 0.03,
+                size: 2 + Math.random() * 4,
+                colorType: Math.floor(Math.random() * 3)
+            };
+            window.particles.push(particle);
+            
+            // Limit particles
+            if (window.particles.length > CONFIG.MAX_PARTICLES) {
+                window.particles.shift();
+            }
+        }
+        
+        function particleUpdateSystem(ecs, deltaTime) {
+            const particles = window.particles;
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= p.decay;
+                p.size *= 0.98;
+                
+                if (p.life <= 0 || p.size < 0.1) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            // Emit particles at ball position
+            if (Math.random() > 0.3) {
+                emitParticle();
+            }
+        }
+
+        // ============================================
+        // Game Systems
+        // ============================================
+        
+        function paddleSystem(ecs, deltaTime) {
+            // AI for enemy paddle
+            const enemyPaddle = ecs.query(['position', 'size'])[1];
+            const pos = ecs.getComponent(enemyPaddle, 'position');
+            const size = ecs.getComponent(enemyPaddle, 'size');
+            
+            // Simple AI with delay
+            const targetY = gameState.ballY;
+            const aiSpeed = 4 + gameState.wave * 0.5;
+            
+            if (pos.y < targetY - 10) {
+                pos.y += aiSpeed * deltaTime;
+            } else if (pos.y > targetY + 10) {
+                pos.y -= aiSpeed * deltaTime;
+            }
+            
+            // Clamp to screen
+            pos.y = Math.max(size.height/2, Math.min(CONFIG.HEIGHT - size.height/2, pos.y));
+        }
+        
+        function ballSystem(ecs, deltaTime) {
+            const ball = ecs.query(['position', 'velocity', 'size'])[0];
+            const pos = ecs.getComponent(ball, 'position');
+            const vel = ecs.getComponent(ball, 'velocity');
+            const size = ecs.getComponent(ball, 'size');
+            
+            // Update position
+            pos.x += vel.vx * deltaTime * 60;
+            pos.y += vel.vy * deltaTime * 60;
+            
+            // Wall collision
+            if (pos.y <= size.size || pos.y >= CONFIG.HEIGHT - size.size) {
+                vel.vy *= -1;
+                pos.y = Math.max(size.size, Math.min(CONFIG.HEIGHT - size.size, pos.y));
+                emitParticle();
+            }
+            
+            // Paddle collision
+            const playerPaddle = ecs.query(['position', 'size'])[0];
+            const playerPos = ecs.getComponent(playerPaddle, 'position');
+            const playerSize = ecs.getComponent(playerPaddle, 'size');
+            
+            if (pos.x - size.size < playerPos.x + playerSize.width/2 &&
+                pos.x + size.size > playerPos.x - playerSize.width/2 &&
+                pos.y > playerPos.y - playerSize.height/2 &&
+                pos.y < playerPos.y + playerSize.height/2) {
+                
+                vel.vx *= -1;
+                vel.vx *= 1.05; // Speed increase
+                vel.vy += (pos.y - playerPos.y) * 0.1;
+                gameState.streak++;
+                emitParticle();
+                playPaddleSound();
+            }
+            
+            const enemyPos = ecs.getComponent(ecs.query(['position', 'size'])[1], 'position');
+            const enemySize = ecs.getComponent(ecs.query(['size'])[1], 'size');
+            
+            if (pos.x + size.size > enemyPos.x - enemySize.width/2 &&
+                pos.x - size.size < enemyPos.x + enemySize.width/2 &&
+                pos.y > enemyPos.y - enemySize.height/2 &&
+                pos.y < enemyPos.y + enemySize.height/2) {
+                
+                vel.vx *= -1;
+                vel.vx *= 1.05;
+                vel.vy += (pos.y - enemyPos.y) * 0.1;
+                gameState.streak = 0;
+                emitParticle();
+                playPaddleSound();
+            }
+            
+            // Scoring
+            if (pos.x < 0) {
+                gameState.enemyScore++;
+                resetBall();
+                playScoreSound();
+            } else if (pos.x > CONFIG.WIDTH) {
+                gameState.playerScore++;
+                gameState.wave++;
+                gameState.streak++;
+                resetBall();
+                playScoreSound();
+            }
+            
+            // Update game state
+            gameState.ballX = pos.x;
+            gameState.ballY = pos.y;
+        }
+
+        // ============================================
+        // Visual Meshes
+        // ============================================
+        
+        let meshes = {};
+        
+        function createEntityMeshes() {
+            // Player paddle
+            const playerGeo = new THREE.PlaneGeometry(CONFIG.PADDLE_WIDTH, CONFIG.PADDLE_HEIGHT);
+            const playerMat = new THREE.MeshBasicMaterial({ 
+                color: 0x00f3ff,
+                transparent: true,
+                opacity: 0.9
+            });
+            meshes.player = new THREE.Mesh(playerGeo, playerMat);
+            scene.add(meshes.player);
+            
+            // Enemy paddle
+            const enemyMat = new THREE.MeshBasicMaterial({ 
+                color: 0xff0055,
+                transparent: true,
+                opacity: 0.9
+            });
+            meshes.enemy = new THREE.Mesh(playerGeo, enemyMat);
+            scene.add(meshes.enemy);
+            
+            // Ball
+            const ballGeo = new THREE.CircleGeometry(CONFIG.BALL_SIZE, 16);
+            const ballMat = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+            meshes.ball = new THREE.Mesh(ballGeo, ballMat);
+            
+            // Ball glow
+            const glowGeo = new THREE.CircleGeometry(CONFIG.BALL_SIZE * 1.5, 16);
+            const glowMat = new THREE.MeshBasicMaterial({ 
+                color: 0xffcc00,
+                transparent: true,
+                opacity: 0.3
+            });
+            meshes.ballGlow = new THREE.Mesh(glowGeo, glowMat);
+            scene.add(meshes.ballGlow);
+            scene.add(meshes.ball);
+            
+            // Center line
+            const lineGeo = new THREE.PlaneGeometry(2, CONFIG.HEIGHT - 40);
+            const lineMat = new THREE.MeshBasicMaterial({ 
+                color: 0x333333,
+                transparent: true,
+                opacity: 0.5
+            });
+            const line = new THREE.Mesh(lineGeo, lineMat);
+            line.position.set(CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2, -2);
+            scene.add(line);
+            
+            // Borders
+            const borderGeo = new THREE.PlaneGeometry(CONFIG.WIDTH, 4);
+            const borderMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
+            
+            const topBorder = new THREE.Mesh(borderGeo, borderMat);
+            topBorder.position.set(CONFIG.WIDTH / 2, CONFIG.HEIGHT - 2, -1);
+            scene.add(topBorder);
+            
+            const bottomBorder = new THREE.Mesh(borderGeo, borderMat);
+            bottomBorder.position.set(CONFIG.WIDTH / 2, 2, -1);
+            scene.add(bottomBorder);
+        }
+        
+        function updateMeshes() {
+            // Update paddle positions
+            const player = ecs.getComponent(ecs.query(['position'])[0], 'position');
+            const enemy = ecs.getComponent(ecs.query(['position'])[1], 'position');
+            
+            meshes.player.position.set(player.x, player.y, 0);
+            meshes.enemy.position.set(enemy.x, enemy.y, 0);
+            
+            // Update ball position
+            const ball = ecs.getComponent(ecs.query(['position'])[0], 'position');
+            meshes.ball.position.set(ball.x, ball.y, 0);
+            meshes.ballGlow.position.set(ball.x, ball.y, -0.5);
+        }
+        
+        function updateHUD() {
+            document.getElementById('scorePlayer').textContent = gameState.playerScore;
+            document.getElementById('scoreEnemy').textContent = gameState.enemyScore;
+            document.getElementById('waveDisplay').textContent = `WAVE ${gameState.wave}`;
+        }
+
+        // ============================================
+        // Audio (Web Audio API)
+        // ============================================
+        
+        let audioCtx;
+        
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+        
+        function playPaddleSound() {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+        
+        function playScoreSound() {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+            osc.frequency.setValueAtTime(1320, audioCtx.currentTime + 0.2);
+            
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        // ============================================
+        // Input Handling
+        // ============================================
+        
+        function onMouseMove(e) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const mouseY = e.clientY - rect.top;
+            gameState.playerY = mouseY;
+            
+            const player = ecs.getComponent(ecs.query(['position'])[0], 'position');
+            player.y = mouseY;
+        }
+        
+        function onClick() {
+            initAudio();
+        }
+
+        // ============================================
+        // Game Logic
+        // ============================================
+        
+        function resetBall() {
+            gameState.ballX = CONFIG.WIDTH / 2;
+            gameState.ballY = CONFIG.HEIGHT / 2;
+            
+            const ball = ecs.getComponent(ecs.query(['position', 'velocity'])[0], 'velocity');
+            ball.vx = (Math.random() > 0.5 ? 1 : -1) * 5;
+            ball.vy = (Math.random() - 0.5) * 6;
+            
+            // Emit explosion
+            for (let i = 0; i < 100; i++) {
+                emitParticle();
+            }
+        }
+
+        // ============================================
+        // Start Game
+        // ============================================
+        
+        init().catch(err => {
+            console.error('WebGPU initialization failed:', err);
+            document.getElementById('loading').innerHTML = `
+                <div style="color: #ff0055;">WebGPU Not Available</div>
+                <div style="font-size: 14px; margin-top: 10px; color: #888;">
+                    Please use Chrome/Edge 113+ or Firefox Nightly
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
