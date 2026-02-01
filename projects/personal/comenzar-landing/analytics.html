@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comenzar - Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>* { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-black mb-6">📊 Analytics - Comenzar</h1>
+        
+        <!-- Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Visitantes</p>
+                <p class="text-4xl font-bold text-blue-400" id="visitors">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Vistas</p>
+                <p class="text-4xl font-bold text-green-400" id="views">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Formularios</p>
+                <p class="text-4xl font-bold text-yellow-400" id="forms">-</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Conversión</p>
+                <p class="text-4xl font-bold text-purple-400" id="conversion">-</p>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">📈 Visitantes por día</h2>
+                <div id="chartVisitors" class="h-64 flex items-center justify-center text-gray-500">
+                    Cargando...
+                </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">🌎 Procedencia</h2>
+                <div id="chartSource" class="h-64 flex items-center justify-center text-gray-500">
+                    Cargando...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="bg-gray-800 p-6 rounded-xl">
+            <h2 class="text-xl font-bold mb-4">🕐 Actividad Reciente</h2>
+            <div id="activity" class="space-y-2 text-gray-400">
+                Cargando...
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <a href="/" class="text-green-400 hover:underline">← Volver</a>
+        </div>
+    </div>
+    
+    <script>
+        // Simular analytics (en producción, conectar a API real)
+        const mockData = {
+            visitors: Math.floor(Math.random() * 50) + 10,
+            views: Math.floor(Math.random() * 200) + 50,
+            forms: 1,
+            conversion: '2.5%'
+        };
+        
+        document.getElementById('visitors').textContent = mockData.visitors;
+        document.getElementById('views').textContent = mockData.views;
+        document.getElementById('forms').textContent = mockData.forms;
+        document.getElementById('conversion').textContent = mockData.conversion;
+        
+        // Chart visitantes (simulado)
+        document.getElementById('chartVisitors').innerHTML = `
+            <div class="w-full flex items-end justify-around h-full px-4">
+                ${[...Array(7)].map((_, i) => 
+                    `<div class="w-8 bg-blue-500 rounded-t" style="height: ${Math.random() * 100}%"></div>`
+                ).join('')}
+            </div>
+            <div class="flex justify-around text-xs mt-2 text-gray-500">
+                ${['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d => `<span>${d}</span>`).join('')}
+            </div>
+        `;
+        
+        // Chart procedencia
+        document.getElementById('chartSource').innerHTML = `
+            <div class="space-y-3">
+                <div><div class="flex justify-between mb-1"><span>Directo</span><span>60%</span></div><div class="bg-gray-700 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full" style="width: 60%"></div></div></div>
+                <div><div class="flex justify-between mb-1"><span>Instagram</span><span>25%</span></div><div class="bg-gray-700 rounded-full h-2"><div class="bg-pink-500 h-2 rounded-full" style="width: 25%"></div></div></div>
+                <div><div class="flex justify-between mb-1"><span>Referido</span><span>15%</span></div><div class="bg-gray-700 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 15%"></div></div></div>
+            </div>
+        `;
+        
+        document.getElementById('activity').innerHTML = `
+            <p class="text-green-400">● Página cargada - ${new Date().toLocaleTimeString()}</p>
+            <p class="text-gray-500">● Sin actividad anterior</p>
+        `;
+    </script>
+</body>
+</html>
