@@ -1,244 +1,145 @@
-# 🎮 POLAB GAMES
-## Colección de Juegos Experimentales
+# 🎮 POLAB Games Collection
 
-**Colección de juegos desarrollados con tecnologías web modernas.**
+**Fecha:** 2026-02-01  
+**Versión:** 2.6 (Final)
 
----
+## 📋 Juegos Incluidos
 
-## 📊 Resumen
-
-| Juego | Género | Estado | Tecnología |
-|-------|--------|--------|------------|
-| [Elemental Pong](#elemental-pong) | Arcade / WebGPU | ✅ Preview | Three.js + WebGPU |
-| [Recta Provincia](#recta-provincia) | RPG Táctico | 🟡 Desarrollo | Canvas 2D |
-| [Delitos](#delitos) | Investigative RPG | 🟡 Desarrollo | HTML5 + JS |
-
----
-
-## 🚀 Acceso Rápido
-
-### Jugar Ahora
-Abre `index.html` en el directorio gaming para ver el portal de juegos.
-
-### Juegos Individuales
-- **Elemental Pong:** `elemental-pong/prototype_v2.1.html`
-- **Recta Provincia:** `recta-provincia/prototype_v2.0.html`
-- **Delitos:** `polab/videojuegos/delitos/index.html`
-
----
-
-## 🎮 Elemental Pong
-
-### Descripción
-Pong arcade con sistema elemental, partículas WebGPU y control del tiempo.
-
-### Características
-- ✅ WebGPU Renderer
-- ✅ 100K partículas simultáneas
-- ✅ Audio procedimental
-- ✅ Modo historia
-- ✅ Dificultad progresiva
-
-### Tecnologías
-- Three.js + WebGPURenderer
-- Web Audio API
-- Gamepad API
-
-### Controles
-- W/S o flechas: Mover pala
-- Space: Iniciar/Pausar
-- Esc: Menú
-
----
-
-## 🌙 Recta Provincia
-
-### Descripción
-RPG táctico isométrico ambientado en el Chiloé mágico del siglo XIX.
-
-### Características
-- ✅ Sistema de rituales
-- ✅ Narrativa ramificada
-- ✅ Exploración
-- ✅ Karma Luz/Sombra
-
-### Tecnologías
-- Canvas 2D
-- JavaScript ES6+
-
-### Controles
-- Click: Seleccionar
-- Space: Menú
-- Esc: Pausar
-
----
-
-## 🔍 Delitos
-
-### Descripción
-Investigative RPG cyberpunk. Resuelve crímenes que "no existen".
-
-### Características
-- ✅ Sistema de investigación
-- ✅ Árbol de diálogos
-- ✅ Deducciones
-- ✅ Santiago cyberpunk
-
-### Tecnologías
-- HTML5
-- JavaScript Vanilla
-
-### Gameplay
-1. Explora locaciones
-2. Recopila pistas
-3. Interroga testigos
-4. Deducen la verdad
-
----
-
-## 🛠️ Tecnologías Compartidas
-
-| Tecnología | Uso |
-|------------|-----|
-| HTML5 Canvas | Render base |
-| Three.js | 3D/WebGPU |
-| Web Audio API | Sonido procedimental |
-| Gamepad API | Controles |
-| WebGL | Gráficos |
-
----
-
-## 📁 Estructura
-
-```
-gaming/
-├── index.html              # Portal de juegos
-├── README.md              # Este archivo
-├── elemental-pong/        # Pong WebGPU
-│   ├── prototype_v2.1.html
-│   └── README.md
-├── recta-provincia/       # RPG Táctico
-│   ├── prototype_v2.0.html
-│   └── README.md
-└── assets/                # Recursos compartidos
-    ├── audio/
-    └── textures/
-```
-
----
-
-## 🔜 Roadmap
-
-### Corto Plazo
-- [ ] Completar modo historia Elemental Pong
-- [ ] Expandir narrativa Delitos
-- [ ] Añadir más rituales Recta Provincia
-
-### Mediano Plazo
-- [ ] Modo multijugador online
-- [ ] Tablas de posiciones
-- [ ] Sistema de logros
-
-### Largo Plazo
-- [ ] Móvil (touch controls)
-- [ ] VR support
-- [ ] Metaverso gaming
-
----
-
-## 📈 Estadísticas
-
-- **Juegos:** 3
-- **Líneas de código:** ~15,000+
-- **Tecnologías:** 5+
-- **Desarrolladores:** 1
-
----
-
-## 🤝 Contribuir
-
-¿Te interesa contribuir?
-
-1. Fork el repo
-2. Crea una rama feature
-3. Commit tus cambios
-4. Push a la rama
-5. Abre un Pull Request
-
----
-
-## 📄 Licencia
-
-MIT License - Ver LICENSE para detalles.
-
----
-
-**Desarrollado:** 2026-02-01  
-**Versión:** 2.0  
-**Estado:** 🟢 En desarrollo activo
-
-[Inicio](index.html) | [GitHub](https://github.com/paulosaldivaraguilera-svg/Polab)
-
----
-
-## 🎮 VERSIONES MEJORADAS (v2.2)
-
-### Elemental Pong v2.2 - WebGPU Arcade
-**Novedades:**
-- ✅ 4 modos de juego (Classic, Time Attack, Survival, Elemental Chaos)
-- ✅ Sistema de combo (xN points)
-- ✅ Partículas mejoradas con glow effects
-- ✅ UI glassmorphism moderna
-- ✅ Grid de fondo animated
-- ✅ Indicador de combo visual
-- ✅ Puntuación más visible
-
+### 1. Elemental Pong v2.5
 **Archivo:** `elemental-pong/prototype_v2.2.html`
 
-### Recta Provincia v2.1 - RPG Táctico
-**Novedades:**
-- ✅ 5 locaciones explorables (Casa, Bosque, Pueblo, Templo, Cueva)
-- ✅ Sistema de karma dual (Luz/Sombra)
-- ✅ 3 rituales con efectos
-- ✅ Diálogos ramificados completos
-- ✅ Niebla animada CSS
-- ✅ UI inmersiva folk horror
-- ✅ Exploración por clicks
+**Características:**
+- 🎯 4 modos de juego (Classic, Time Attack, Survival, Tournament)
+- ⚡ Sistema de power-ups (Bola de Fuego, Congelacion, Alarga Pala, Velocidad)
+- 🏆 Leaderboard local con localStorage
+- 👥 Multiplayer local (2 jugadores)
+- 🎨 UI glassmorphism moderna
+- 📊 Sistema de combo (xN multiplier)
 
+**Controles:**
+- Jugador 1: W/S
+- Jugador 2: Flechas arriba/abajo
+
+---
+
+### 2. Recta Provincia v2.6
 **Archivo:** `recta-provincia/prototype_v2.1.html`
 
-### Delitos v2.1 - Investigative RPG
-**Novedades:**
-- ✅ Sistema de investigación con pistas
-- ✅ Tablero de deducciones visual
-- ✅ Evidencia recolectable interactiva
-- ✅ Tracking de precisión (accuracy)
-- ✅ 4 escenas principales ramificadas
-- ✅ Conspiración Pharmaceuticals revelable
-- ✅ UI cyberpunk noir
-- ✅ Sistema de progreso porcentual
+**Características:**
+- 🗺️ 7 locaciones explorables (Casa, Bosque, Pueblo, Templo, Cueva, Ruinas, Cascada)
+- ⚔️ Sistema de combate tactico
+- ✨ 5 rituales (Luz, Sombra, Curacion, Energia, Suprema)
+- 🛒 Tienda de mejoras (espada, escudo, pocion, libro)
+- 🏆 8 logros desbloqueables
+- 🎯 Daily Challenge diario
+- 📊 Sistema karma dual (Luz/Sombra)
 
+**Mecanicas:**
+- Explora locaciones para encontrar secretos
+- Gana karma usando rituales
+- Compra mejoras en la tienda
+- Enfrenta enemigos y bosses
+
+---
+
+### 3. Delitos v2.6
 **Archivo:** `polab/videojuegos/delitos/index.html`
 
+**Características:**
+- 🔍 5 casos de investigacion (Asesino, Fraude, Testigo Fantasma, Herencia Maldita)
+- 🎯 Sistema de deducciones visual
+- ⏱️ Timer con cuenta regresiva
+- 👥 Modo cooperativo multiplayer (2 jugadores)
+- 🔓 Modo investigacion libre
+- 📊 Indicadores de progreso visual
+- 🎯 Tracking de precision
+
+**Casos:**
+1. El Asesino de Plaza Italia
+2. El Fraude Bancario
+3. El Testigo Fantasma
+4. La Herencia Maldita
+5. Caso adicional
+
 ---
 
-## 📊 COMPARACIÓN DE VERSIONES
+## 🚀 Como Jugar
 
-| Juego | v1.x | v2.x | Mejoras |
-|-------|------|------|---------|
-| Elemental Pong | Basic | v2.2 | +300% features |
-| Recta Provincia | Prototype | v2.1 | +500% contenido |
-| Delitos | Basic | v2.1 | +400% mecánicas |
+Simplemente abre el archivo HTML en tu navegador:
+
+```bash
+# Elemental Pong
+firefox elemental-pong/prototype_v2.2.html
+
+# Recta Provincia  
+firefox recta-provincia/prototype_v2.1.html
+
+# Delitos
+firefox polab/videojuegos/delitos/index.html
+```
+
+O usa el servidor web:
+
+```bash
+cd ~/.openclaw/workspace/projects/gaming
+python3 -m http.server 8080
+# Luego visita http://localhost:8080
+```
 
 ---
 
-## 🎯 PRÓXIMA ITERACIÓN (v2.3)
+## 📈 Progreso y Guardado
 
-### Planeado:
-- [ ] Modo multijugador local en Elemental Pong
-- [ ] Sistema de combate táctico en Recta Provincia
-- [ ] Más casos en Delitos
-- [ ] Tablas de posiciones
-- [ ] Logros/achievements
-- [ ] Mobile touch controls
+- **Elemental Pong:** High scores guardados en localStorage
+- **Recta Provincia:** Progreso guardado en variables de sesion
+- **Delitos:** Evidencia y progreso visual en tiempo real
 
+---
+
+## 🎨 Tecnologias
+
+- HTML5 Canvas
+- JavaScript vanilla
+- CSS3 con gradientes y animaciones
+- localStorage para persistencia
+- Sin dependencias externas
+
+---
+
+## 🔧 Personalizacion
+
+### Elemental Pong
+Edita las variables al inicio del script:
+```javascript
+const WINNING_SCORE = 11;
+const PADDLE_HEIGHT = 100;
+const BALL_SPEED = 7;
+```
+
+### Recta Provincia
+Edita los parametros de balance:
+```javascript
+const KARMA_BONUS = 10;
+const COMBAT_DAMAGE = 20;
+const SHOP_DISCOUNT = 0.9;
+```
+
+### Delitos
+Edita la dificultad:
+```javascript
+const TIME_LIMIT = 300; // segundos
+const EVIDENCE_NEEDED = 5;
+```
+
+---
+
+## 📝 Notas
+
+- Los juegos son 100% offline
+- No requieren instalacion
+- Compatible con navegadores modernos
+- Rendimiento optimizado para Raspberry Pi
+
+---
+
+**Desarrollado por POLAB** 🦞💼
