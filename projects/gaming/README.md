@@ -1,319 +1,180 @@
-# ELEMENTAL PONG: Chrono & Chaos
-## Game Design Document Técnico
+# 🎮 POLAB GAMES
+## Colección de Juegos Experimentales
 
-*Videojuego minimalista con mecánicas elementales y control del tiempo*
-
----
-
-## Plataformas
-
-| Plataforma | Target | Controles |
-|------------|--------|-----------|
-| **Mobile (iOS/Android)** | Casual gamers | Touch screen |
-| **Nintendo Switch** | Core gamers | Joy-Cons, Dock mode |
+**Colección de juegos desarrollados con tecnologías web modernas.**
 
 ---
 
-## Storyboard de Progresión
+## 📊 Resumen
 
-### Fase 1: "El Vació" (Tutorial)
-- **Visual:** Blanco y negro puro
-- **Mecánica:** Sin poderes, solo física Pong básica
-- **Objetivo:** Aprender ritmo, fills barra de Chrono con devoluciones precisas
-- **Duración:** Infinite (arcade mode)
-
-### Fase 2: "El Despertar Ígneo"
-- **Visual:** Tonos rojos y naranjas
-- **Mecánica:** IA empieza a usar Fuego
-- **Objetivo:** Sobrevivir 60 segundos O anotar 5 puntos
-- **Recompensa:** Desbloquear poder de Fuego
-
-### Fase 3: "Boss Elemental"
-- **Visual:** Transiciones de color según elemento activo
-- **Mecánica:** Enemigo "Barra Gigante" que ocupa mitad de pantalla
-- **Objetivo:** Usar Fuego (contraelemento) para derretir defensa
-- **Obstáculos:** Introducción de bloques en la cancha
+| Juego | Género | Estado | Tecnología |
+|-------|--------|--------|------------|
+| [Elemental Pong](#elemental-pong) | Arcade / WebGPU | ✅ Preview | Three.js + WebGPU |
+| [Recta Provincia](#recta-provincia) | RPG Táctico | 🟡 Desarrollo | Canvas 2D |
+| [Delitos](#delitos) | Investigative RPG | 🟡 Desarrollo | HTML5 + JS |
 
 ---
 
-## Controles
+## 🚀 Acceso Rápido
 
-### Mobile (Touch)
-| Gestos | Acción |
-|--------|--------|
-| **Pantalla dividida invisible** | Mover paleta (izquierda/derecha) |
-| **Deslizar hacia abajo** | Cargar poder elemental |
-| **Doble tap rápido** | Activar Chrono-Break (ralentizar tiempo) |
+### Jugar Ahora
+Abre `index.html` en el directorio gaming para ver el portal de juegos.
 
-### Nintendo Switch
-| Control | Acción |
-|---------|--------|
-| **Stick Izquierdo** | Movimiento de paleta |
-| **Gatillo R (ZR)** | Activar poder elemental cargado |
-| **Gatillo L (ZL)** | Chrono-Break |
-| **Botón A** | Golpe ofensivo (si hay carga) |
+### Juegos Individuales
+- **Elemental Pong:** `elemental-pong/prototype_v2.1.html`
+- **Recta Provincia:** `recta-provincia/prototype_v2.0.html`
+- **Delitos:** `polab/videojuegos/delitos/index.html`
 
 ---
 
-## Sistema Elemental
+## 🎮 Elemental Pong
 
-### Los 6 Elementos
+### Descripción
+Pong arcade con sistema elemental, partículas WebGPU y control del tiempo.
 
-| Elemento | Color | Efecto Principal | Contra-elemento | Estrategia |
-|----------|-------|------------------|-----------------|------------|
-| **Fuego (Ignis)** | Rojo | Velocidad +80%, rastro visual | Hielo | Tiros rápidos |
-| **Hielo (Glacies)** | Cyan | Fricción reducidas (oponente resbala) | Fuego | Descolocar rival |
-| **Rayo (Fulgur)** | Amarillo | Trayectoria Zig-Zag | Tierra | Impredecible |
-| **Tierra (Terra)** | Marrón | Peso extra, empuja paleta rival | Aire | Control territorial |
-| **Aire (Ventus)** | Celeste | Efecto curvo (Aftertouch) | - | Tiros con curva |
-| **Agua (Aqua)** | Azul | Rebote errático, ondas visuales | - | Desorientar |
+### Características
+- ✅ WebGPU Renderer
+- ✅ 100K partículas simultáneas
+- ✅ Audio procedimental
+- ✅ Modo historia
+- ✅ Dificultad progresiva
 
-### Carga de Poderes
-- **Perfect Parry (Timing exacto):** +25% carga
-- **Golpe ofensivo:** +50% carga
-- **Anotar punto:** +15% carga
-- **Recibir gol:** -20% carga (recupera con puntos)
+### Tecnologías
+- Three.js + WebGPURenderer
+- Web Audio API
+- Gamepad API
 
-### Chrono-Break
-- **Activación:** Doble tap / Gatillo L
-- **Efecto:** Time.timeScale = 0.1x por 2 segundos
-- **Costo:** Barra completa
-- **Usos estratégicos:** Reposicionar para saves imposibles / Preparar tiro elemental
+### Controles
+- W/S o flechas: Mover pala
+- Space: Iniciar/Pausar
+- Esc: Menú
 
 ---
 
-## Arquitectura Unity
+## 🌙 Recta Provincia
 
-### Estructura de Archivos
+### Descripción
+RPG táctico isométrico ambientado en el Chiloé mágico del siglo XIX.
+
+### Características
+- ✅ Sistema de rituales
+- ✅ Narrativa ramificada
+- ✅ Exploración
+- ✅ Karma Luz/Sombra
+
+### Tecnologías
+- Canvas 2D
+- JavaScript ES6+
+
+### Controles
+- Click: Seleccionar
+- Space: Menú
+- Esc: Pausar
+
+---
+
+## 🔍 Delitos
+
+### Descripción
+Investigative RPG cyberpunk. Resuelve crímenes que "no existen".
+
+### Características
+- ✅ Sistema de investigación
+- ✅ Árbol de diálogos
+- ✅ Deducciones
+- ✅ Santiago cyberpunk
+
+### Tecnologías
+- HTML5
+- JavaScript Vanilla
+
+### Gameplay
+1. Explora locaciones
+2. Recopila pistas
+3. Interroga testigos
+4. Deducen la verdad
+
+---
+
+## 🛠️ Tecnologías Compartidas
+
+| Tecnología | Uso |
+|------------|-----|
+| HTML5 Canvas | Render base |
+| Three.js | 3D/WebGPU |
+| Web Audio API | Sonido procedimental |
+| Gamepad API | Controles |
+| WebGL | Gráficos |
+
+---
+
+## 📁 Estructura
+
 ```
-Assets/
-├── _Core/
-│   ├── Scripts/
-│   │   ├── GameManager.cs
-│   │   ├── TimeManager.cs
-│   │   └── AudioManager.cs
-│   └── Prefabs/
-│       ├── Ball.prefab
-│       ├── Paddle.prefab
-│       └── Wall.prefab
-├── Entities/
-│   ├── Ball/
-│   │   ├── BallController.cs
-│   │   └── ElementEffects/
-│   │       ├── ElementData.cs (SO)
-│   │       ├── ElementalEffectBase.cs
-│   │       ├── FireEffect.cs
-│   │       ├── IceEffect.cs
-│   │       ├── ThunderEffect.cs
-│   │       ├── EarthEffect.cs
-│   │       ├── AirEffect.cs
-│   │       └── WaterEffect.cs
-│   └── Paddle/
-│       └── PaddleController.cs
-├── UI/
-│   ├── GameHUD.cs
-│   ├── ChargeBar.cs
-│   └── ScoreDisplay.cs
-└── Systems/
-    ├── Input/
-    │   ├── InputManager.cs
-    │   ├── TouchInput.cs
-    │   └── JoyconInput.cs
-    └── Physics/
-        ├── CollisionHandler.cs
-        └── ScreenShake.cs
-```
-
-### Scripts Clave
-
-#### GameManager.cs
-```csharp
-public class GameManager : MonoBehaviour {
-    public enum GameState { Menu, Playing, Paused, GameOver }
-    public GameState currentState;
-    public int playerScore, enemyScore;
-    
-    public event Action OnScore;
-    public event Action OnGameOver;
-    
-    public void AddPoint(bool isPlayer) {
-        if(isPlayer) playerScore++;
-        else enemyScore++;
-        OnScore?.Invoke();
-        CheckWinCondition();
-    }
-}
-```
-
-#### BallController.cs
-```csharp
-public class BallController : MonoBehaviour {
-    public Rigidbody2D rb;
-    public ElementData currentElement;
-    private float baseSpeed = 10f;
-    
-    public void ApplyEffect(ElementData element) {
-        currentElement = element;
-        // Trigger particle effect, modify physics
-        rb.velocity = rb.velocity.normalized * baseSpeed * element.speedMultiplier;
-    }
-    
-    void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.CompareTag("Paddle")) {
-            float hitPoint = CalculateHitPoint(collision.transform.position);
-            // Apply Aftertouch if Air element
-            if(currentElement.elementType == ElementType.Air) {
-                ApplyAftertouch();
-            }
-        }
-    }
-}
-```
-
-#### ElementData.cs (ScriptableObject)
-```csharp
-[CreateAssetMenu(fileName = "ElementData", menuName = "Elemental/Data")]
-public class ElementData : ScriptableObject {
-    public string elementName;
-    public ElementType elementType;
-    public Color color;
-    public float speedMultiplier = 1f;
-    public float frictionModifier = 1f;
-    public GameObject particlePrefab;
-    public AudioClip activationSound;
-}
-```
-
-#### TimeManager.cs
-```csharp
-public class TimeManager : MonoBehaviour {
-    private float originalTimeScale;
-    private Coroutine chronoRoutine;
-    
-    public void ActivateChronoBreak(float duration) {
-        if(chronoRoutine != null) StopCoroutine(chronoRoutine);
-        chronoRoutine = StartCoroutine(ChronoBreakRoutine(duration));
-    }
-    
-    private IEnumerator ChronoBreakRoutine(float duration) {
-        originalTimeScale = Time.timeScale;
-        Time.timeScale = 0.1f;
-        // Visual feedback: grayscale, slow particles
-        yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = Mathf.Lerp(0.1f, 1f, 1f); // Smooth return
-    }
-}
-```
-
-#### PaddleController.cs
-```csharp
-public class PaddleController : MonoBehaviour {
-    public float moveSpeed = 15f;
-    public float friction = 1f; // Modificado por Hielo
-    
-    void FixedUpdate() {
-        float input = GetInputAxis();
-        // Ice element reduces friction temporarily
-        float actualSpeed = moveSpeed * (1f / friction);
-        rb.MovePosition(rb.position + Vector2.right * input * actualSpeed * Time.fixedDeltaTime);
-        // Clamp to screen bounds
-    }
-}
+gaming/
+├── index.html              # Portal de juegos
+├── README.md              # Este archivo
+├── elemental-pong/        # Pong WebGPU
+│   ├── prototype_v2.1.html
+│   └── README.md
+├── recta-provincia/       # RPG Táctico
+│   ├── prototype_v2.0.html
+│   └── README.md
+└── assets/                # Recursos compartidos
+    ├── audio/
+    └── textures/
 ```
 
 ---
 
-## Assets Requeridos
+## 🔜 Roadmap
 
-### Gráficos
-| Asset | Descripción | Formato |
-|-------|-------------|---------|
-| **Ball** | Pelota circular con glow | PNG (32x32) |
-| **Paddle** | Paleta rectangular | PNG (8x64) |
-| **Particles** | 6 efectos elementales | PNG (16x16) loop |
-| **Background** | Grid minimalista | PNG (1920x1080) |
-| **UI Icons** | 6 iconos elementales | SVG → PNG |
+### Corto Plazo
+- [ ] Completar modo historia Elemental Pong
+- [ ] Expandir narrativa Delitos
+- [ ] Añadir más rituales Recta Provincia
 
-### Audio
-| Asset | Descripción | Formato |
-|-------|-------------|---------|
-| **Hit** | Sonido de impacto | WAV 44.1kHz |
-| **Element Activate** | 6 variaciones | WAV |
-| **Chrono** | Whoosh temporal | WAV |
-| **Music** | Loop ambiental minimalista | MP3 128kbps |
+### Mediano Plazo
+- [ ] Modo multijugador online
+- [ ] Tablas de posiciones
+- [ ] Sistema de logros
+
+### Largo Plazo
+- [ ] Móvil (touch controls)
+- [ ] VR support
+- [ ] Metaverso gaming
 
 ---
 
-## Fases de Desarrollo
+## 📈 Estadísticas
 
-### Phase 1: Core (MVP)
-- [ ] Movimiento de paleta básico
-- [ ] Rebote de pelota
-- [ ] Score system
-- [ ] Pantalla de Game Over
-- [ ] Menú principal
-
-### Phase 2: Elementos
-- [ ] Sistema de ScriptableObjects
-- [ ] Implementar Fuego (velocidad +)
-- [ ] Implementar Hielo (fricción -)
-- [ ] Implementar Rayo (Zig-Zag)
-- [ ] Implementar Tierra (peso +)
-- [ ] Implementar Aire (curva)
-- [ ] Implementar Agua (rebote errático)
-
-### Phase 3: Chrono
-- [ ] TimeManager
-- [ ] Barra de Chrono UI
-- [ ] Doble tap / Gatillo L input
-- [ ] Efectos visuales de slow-mo
-
-### Phase 4: Polish
-- [ ] Partículas elementales
-- [ ] Screen shake
-- [ ] Audio reactivo
-- [ ] Pantallas de carga
-- [ ] Transiciones de color
-
-### Phase 5: Contenido
-- [ ] Progresión tutorial
-- [ ] 3 Boss elementales
-- [ ] Modo Arcade infinito
+- **Juegos:** 3
+- **Líneas de código:** ~15,000+
+- **Tecnologías:** 5+
+- **Desarrolladores:** 1
 
 ---
 
-## Métricas de Éxito (KPIs)
+## 🤝 Contribuir
 
-| Métrica | Target | Medición |
-|---------|--------|-----------|
-| **Retention D1** | >30% | Usuarios que vuelven al día siguiente |
-| **Sessions/Day** | 2.5 | Promedio de sesiones por usuario |
-| **Session Length** | 8 min | Duración media de sesión |
-| **Chrono Uses** | 5/game | Frecuencia de uso del poder especial |
+¿Te interesa contribuir?
 
----
-
-## Deploy
-
-### Mobile
-- **iOS:** Apple App Store ($99/año)
-- **Android:** Google Play ($25 one-time)
-
-### Nintendo Switch
-- **Platform:** Nintendo eShop
-- **Engine:** Unity + Platform Extensions
-- **Certification:** ~2 semanas review
+1. Fork el repo
+2. Crea una rama feature
+3. Commit tus cambios
+4. Push a la rama
+5. Abre un Pull Request
 
 ---
 
-## Próximos Pasos
+## 📄 Licencia
 
-1. Crear repositorio GitHub
-2. Configurar proyecto Unity
-3. Implementar BallController básico
-4. Iterar elementos
-5. Playtest
+MIT License - Ver LICENSE para detalles.
 
 ---
 
-*Documento generado automáticamente*
+**Desarrollado:** 2026-02-01  
+**Versión:** 2.0  
+**Estado:** 🟢 En desarrollo activo
+
+[Inicio](index.html) | [GitHub](https://github.com/paulosaldivaraguilera-svg/Polab)

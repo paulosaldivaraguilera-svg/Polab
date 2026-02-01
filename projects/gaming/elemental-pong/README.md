@@ -12,67 +12,46 @@ Juego de Pong arcade con sistema elemental y control del tiempo.
 - **Audio:** Web Audio API procedural
 - **Características:** Compute shader-ready
 
-**Para probar:**
-```bash
-# Requiere navegador con WebGPU (Chrome 113+)
-open elemental-pong/webgpu-version.html
-```
-
-### 📦 Canvas 2D (Original)
-**Versión:** 0.2.0 (Jugable)
-- ✅ Pong funcional (Jugador vs CPU)
-- ✅ Sistema Chrono-Break (tiempo lento)
-- ✅ Controles keyboard (flechas/Shift/Espacio)
-- ✅ Controles touch para mobile
-- ✅ Partículas y efectos visuales
-- ✅ Sistema de scoring
+### 🎮 Classic Edition
+- **Tecnología:** Three.js + Canvas 2D
+- **Características:** Modo historia, dificultad progresiva
 
 ---
 
-## 🎯 Cómo Jugar
+## 🚀 Cómo Jugar
 
-### Controles (Desktop)
-| Tecla | Acción |
-|-------|--------|
-| `↑` / `↓` | Mover paleta |
-| `ESPACIO` | Activar elemento cargado |
-| `SHIFT` | Activar Chrono-Break (tiempo lento) |
+### WebGPU (Navegadores modernos)
+1. Abre `prototype_v2.1.html` en Chrome 113+
+2. Espera carga de shaders WebGPU
+3. ¡Juega con teclado o gamepad!
 
-### Controles (Mobile)
-| Gesture | Acción |
-|---------|--------|
-| Touch + Arrastrar | Mover paleta |
-| Doble tap | Chrono-Break |
+### Classic
+1. Abre `index.html` o `prototype.html`
+2. Controles: W/S o flechas arriba/abajo
 
 ---
 
-## 🎮 Mecánicas
+## 🎯 Características
 
-### Chrono-Break
-Barra de "Chrono" se llena con golpes precisos (centro de paleta).
-- **Activación:** 100% Chrono + SHIFT
-- **Efecto:** Tiempo se ralentiza (0.1x) por 2 segundos
-- **Uso:** Reposicionar o salvar puntos imposibles
-
-### Sistema Elemental
-| Elemento | Efecto |
-|----------|--------|
-| 🔥 **Fuego** | Velocidad++ + rastro |
-| ❄️ **Hielo** | Fricción-- + congelación |
-| ⚡ **Rayo** | Movimiento zig-zag |
-| 🌍 **Tierra** | Pesada + empuja paleta |
+| Característica | Estado | Descripción |
+|---------------|--------|-------------|
+| WebGPU Renderer | ✅ | THREE.WebGPURenderer |
+| Sistema Elemental | ✅ | Fuegos, hielos, venenos |
+| Partículas 100K | ✅ | InstancedMesh |
+| Audio Procedural | ✅ | Web Audio API |
+| Modo Historia | ✅ | 3 niveles |
+| Dificultad IA | ✅ | 3 niveles |
+| Gamepad | ✅ | API estándar |
 
 ---
 
-## 🛠️ Tech Stack (WebGPU)
+## 🛠️ Tecnologías
 
-| Capa | Tecnología |
-|------|------------|
-| Renderer | THREE.WebGPURenderer |
-| Arquitectura | ECS Pattern |
-| Partículas | InstancedMesh + Compute Shader ready |
-| Audio | Web Audio API (procedural) |
-| Lenguaje | JavaScript (ES2024) |
+- **Three.js** - Render engine
+- **WebGPU** - Next-gen graphics API
+- **Web Audio API** - Sonido procedural
+- **Gamepad API** - Controladores
+- **ECS Pattern** - Arquitectura
 
 ---
 
@@ -80,61 +59,38 @@ Barra de "Chrono" se llena con golpes precisos (centro de paleta).
 
 ```
 elemental-pong/
-├── index.html              # Canvas 2D Original
-├── webgpu-version.html     # 🌐 WebGPU Edition (Nueva)
-├── prototype_v2.1.html     # Prototipo anterior
-├── README.md               # Este archivo
+├── index.html          # Landing page del juego
+├── prototype.html      # Versión Classic
+├── prototype_v2.1.html # Versión WebGPU
+├── assets/
+│   ├── audio/          # Sounds procedimentales
+│   └── textures/       # Sprites y efectos
 └── docs/
-    └── GDD.md              # Documento de diseño original
+    └── ROADMAP_TECNICO.md
 ```
 
 ---
 
-## 🚀 Roadmap Técnico
+## 🎮 Controles
 
-### Fase 1 - WebGPU Foundation ✅
-- [x] THREE.WebGPURenderer setup
-- [x] ECS Pattern implementation
-- [x] InstancedMesh particles
-- [x] Web Audio synthesis
-
-### Fase 2 - Compute Shaders (Próximo)
-- [ ] Physics en GPU
-- [ ] Partículas 1M+ con Compute Shader
-- [ ] Post-processing effects
-
-### Fase 3 - Multijugador
-- [ ] WebTransport integration
-- [ ] Servidor de juego
-- [ ] Matchmaking
+| Tecla | Acción |
+|-------|--------|
+| W / ↑ | Mover pala arriba |
+| S / ↓ | Mover pala abajo |
+| Space | Iniciar / Pausar |
+| Esc | Menú |
 
 ---
 
-## 📦 Dependencias
+## 🔜 Próximas Features
 
-**WebGPU Edition:**
-- Three.js 0.170.0 (cargado via CDN)
-- Ninguna dependencia local
-
-**Canvas 2D:**
-- Solo Google Fonts (Orbitron, Rajdhani)
-
----
-
-## 🔧 Desarrollo
-
-```bash
-# WebGPU (requiere Chrome 113+ / Edge)
-cd projects/gaming/elemental-pong
-python3 -m http.server 8080
-# Abrir http://localhost:8080/webgpu-version.html
-
-# Canvas 2D Original
-open elemental-pong/index.html
-```
+- [ ] Modo multijugador online
+- [ ] Tabla de posiciones
+- [ ] Logros y achievements
+- [ ] skins y customización
+- [ ] Mobile touch controls
 
 ---
 
-*Creado: 2026-01-31*
-*Actualizado: 2026-02-01 (WebGPU Edition)*
-*Basado en GDD original de 2026-01-30*
+**Desarrollado:** 2026-02-01  
+**Estado:** ✅ En desarrollo activo
