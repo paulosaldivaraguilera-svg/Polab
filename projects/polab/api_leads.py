@@ -14,7 +14,7 @@ import json
 import urllib.parse
 from datetime import datetime
 
-DB_PATH = '/home/pi/.openclaw/workspace/proyectos-paulo/polab/db/leads.db'
+DB_PATH = '/home/pi/.openclaw/workspace/projects/polab/db/leads.db'
 # Nota: El envío real a WhatsApp se hace a través de OpenClaw
 WHATSAPP_TARGET = '+56974349077'  # Paulo
 

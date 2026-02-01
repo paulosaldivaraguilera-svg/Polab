@@ -1,0 +1,99 @@
+/**
+ * LA UNIDAD v3.0 — WORKFLOW PRINCIPAL
+ * Orquestador del pipeline de refinación de coyuntura
+ */
+
+export const workflow = {
+  name: "la_unidad_generar_informe",
+  description: "Genera un informe de coyuntura diario a partir de fuentes RSS",
+  
+  steps: [
+    {
+      name: "recolectar_rss",
+      description: "Recolectar noticias de fuentes RSS",
+      agent: "foundry",
+      prompt: `Recolecta las últimas noticias de las siguientes fuentes:
+- El Siglo (Chile)
+- Telesur (Internacional)
+- APL (Análisis político)
+
+Limita a 10 artículos por fuente.
+Guarda los resultados en formato JSON estructurado.`
+    },
+    {
+      name: "analizar_patrones",
+      description: "Detectar temas y contradicciones",
+      agent: "main",
+      prompt: `Analiza los artículos recolectados y identifica:
+
+1. **3-5 temas principales** del día
+2. **Contradicciones** entre fuentes (cuando una dice A y otra dice no-A)
+3. **Clasificación** de cada tema: Económico / Político / Internacional
+4. **Mapa de fuerzas**: ¿Qué posición tiene cada fuente en el espectro?
+
+Responde en formato JSON con campos: temas, contradicciones, clasificacion, mapa_fuerzas`
+    },
+    {
+      name: "sintetizar_marxista",
+      description: "Generar análisis desde perspectiva marxista",
+      agent: "main",
+      prompt: `Basándote en el análisis de patrones, genera un análisis desde perspectiva marxista:
+
+1. ¿Quiénes son los beneficiarios y perdedores de cada tema?
+2. ¿Cómo se expresa la lucha de clases en estas noticias?
+3. ¿Dónde está la plusvalía, el Estado, la propiedad de los medios?
+4. ¿Qué debe hacer el lector con esta información (acción)?
+
+máximo 800 palabras. Tono: Analítico, no panfletario.`
+    },
+    {
+      name: "detectar_oportunidades",
+      description: "Identificar oportunidades legislativas",
+      agent: "main",
+      prompt: `Revisa los artículos y detecta:
+
+1. Proyectos de ley mencionados o en trámite
+2. Votaciones upcoming
+3. Contradicciones legales/legislativas
+4. Lagunas legales que podrían explotarse políticamente
+
+Enfócate en el contexto chileno.`
+    },
+    {
+      name: "generar_prediccion",
+      description: "Predicción de tendencias",
+      agent: "main",
+      prompt: `Basándote en los patrones detectados y el calendario legislativo chileno,
+predice la tendencia para las próximas 72 horas.
+
+Considera: votaciones, protests agendadas, declaraciones políticas.`
+    },
+    {
+      name: "compilar_informe",
+      description: "Compilar todo en el template final",
+      agent: "foundry",
+      prompt: `Compila todos los análisis en el template de La Unidad v3.0.
+
+INPUT REQUERIDO:
+- Síntesis ejecutiva (100 palabras)
+- Temas principales (lista)
+- Contradicciones (lista)
+- Mapa de fuerzas (texto para cada sector)
+- Oportunidades legislativas (lista)
+- Análisis marxista (800 palabras)
+- Predicción 72h (200 palabras)
+- Conteo por fuente
+
+Genera el HTML final usando el template en:
+/home/pi/.openclaw/workspace/projects/polab/la-unidad/v3-informe/template-informe.html
+
+Guarda el resultado como:
+/home/pi/.openclaw/workspace/projects/polab/la-unidad/v3-informe/informe-YYYY-MM-DD.html`
+    }
+  ],
+
+  // Configuración
+  schedule: "0 9 * * *", // Diario a las 9:00
+  output_dir: "/home/pi/.openclaw/workspace/projects/polab/la-unidad/v3-informe",
+  template: "template-informe.html"
+};

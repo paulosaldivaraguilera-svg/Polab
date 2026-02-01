@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coyuntura domingo, 1 de febrero | La Unidad v3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .mono { font-family: 'Space Mono', monospace; }
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .gradient-red {
+            background: linear-gradient(135deg, #A83232, #cc0044);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-header {
+            border-left: 4px solid #A83232;
+            padding-left: 16px;
+        }
+        .mapa-fuerzas {
+            display: flex;
+            gap: 4px;
+            margin: 20px 0;
+        }
+        .mf-bloque {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .mf-izq { background: rgba(168, 50, 50, 0.3); border: 1px solid #A83232; }
+        .mf-ctr { background: rgba(255, 193, 7, 0.2); border: 1px solid #FFC107; }
+        .mf-der { background: rgba(0, 123, 255, 0.2); border: 1px solid #007bff; }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+        .tag-econ { background: rgba(0, 200, 150, 0.2); color: #00c896; border: 1px solid #00c896; }
+        .tag-pol { background: rgba(168, 50, 50, 0.2); color: #ff6b6b; border: 1px solid #A83232; }
+        .tag-int { background: rgba(0, 150, 255, 0.2); color: #66b3ff; border: 1px solid #0096ff; }
+    </style>
+</head>
+<body class="p-8 md:p-12">
+
+    <!-- HEADER -->
+    <header class="max-w-4xl mx-auto mb-12">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-4xl font-black">
+                <span class="gradient-red">LA UNIDAD</span>
+                <span class="text-gray-500 text-lg font-normal ml-3">v3.0 Refinería</span>
+            </h1>
+            <div class="text-right mono text-gray-500">
+                <div class="text-xs">INFORME DE COYUNTURA</div>
+                <div class="text-xl font-bold text-yellow-400">01-02-2026</div>
+            </div>
+        </div>
+        <div class="glass rounded-xl p-4 flex items-center gap-4">
+            <div class="text-2xl">🔄</div>
+            <div>
+                <div class="font-bold text-sm">Procesado automáticamente</div>
+                <div class="text-gray-500 text-xs mono">3 fuentes · 24 artículos</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. SÍNTESIS EJECUTIVA -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">1. 🎯 SÍNTESIS EJECUTIVA</h2>
+        <div class="glass rounded-xl p-6">
+            <p class="text-lg leading-relaxed text-gray-200">La jornada política chilena muestra una intensificación del debate presupuestario junto con tensiones internacionales por la situación geopolítica regional. Se detectan contradicciones significativas en la cobertura de medios respecto a la reforma tributaria.</p>
+        </div>
+    </section>
+
+    <!-- 2. ANÁLISIS DE PATRONES -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">2. 🔍 ANÁLISIS DE PATRONES</h2>
+        
+        <!-- 2.1 Temas Principales -->
+        <div class="glass rounded-xl p-6 mb-4">
+            <h3 class="font-bold text-yellow-400 mb-4">2.1 Temas Principales</h3>
+            
+    <div class="mb-4 p-4 bg-gray-800/50 rounded-lg">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="tag tag-pol">pol</span>
+        <span class="mono text-yellow-400 text-xs">El Siglo, APL</span>
+      </div>
+      <h4 class="font-bold mb-1">Presupuesto 2026 en discusión</h4>
+      <p class="text-gray-400 text-sm">Comisiones mixtas discuten modificaciones al proyecto de ley de presupuestos.</p>
+    </div>
+  
+    <div class="mb-4 p-4 bg-gray-800/50 rounded-lg">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="tag tag-int">int</span>
+        <span class="mono text-yellow-400 text-xs">Telesur, El Siglo</span>
+      </div>
+      <h4 class="font-bold mb-1">Cumbre internacional en LATAM</h4>
+      <p class="text-gray-400 text-sm">Presidentes de la región se reúnen para abordar integración económica.</p>
+    </div>
+  
+    <div class="mb-4 p-4 bg-gray-800/50 rounded-lg">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="tag tag-econ">econ</span>
+        <span class="mono text-yellow-400 text-xs">APL</span>
+      </div>
+      <h4 class="font-bold mb-1">Huelga sectorial en negociación</h4>
+      <p class="text-gray-400 text-sm">Sindicatos del sector público rechazan propuesta gubernamental.</p>
+    </div>
+  
+        </div>
+
+        <!-- 2.2 Contradicciones -->
+        <div class="glass rounded-xl p-6">
+            <h3 class="font-bold text-red-400 mb-4">2.2 Contradicciones Detectadas</h3>
+            
+    <div class="mb-4 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+      <h4 class="font-bold text-red-400 mb-2">Impacto económico de medida X</h4>
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <span class="text-green-400">✓</span> Gobierno: 'Impacto neutro en inflación'
+        </div>
+        <div>
+          <span class="text-red-400">✗</span> Expertos: 'Inflación subiría 2%'
+        </div>
+      </div>
+    </div>
+  
+        </div>
+    </section>
+
+    <!-- 3. MAPA DE FUERZAS -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">3. ⚖️ MAPA DE FUERZAS POLÍTICAS</h2>
+        <div class="mapa-fuerzas">
+            <div class="mf-bloque mf-izq" style="flex: 2;">
+                <div class="font-bold mb-2">IZQUIERDA</div>
+                <div class="text-xs opacity-80">APL y El Siglo critican insuficiencia de propuesta presupuestaria</div>
+            </div>
+            <div class="mf-bloque mf-ctr" style="flex: 1;">
+                <div class="font-bold mb-2">CENTRO</div>
+                <div class="text-xs opacity-80">Partidos moderados buscan consenso</div>
+            </div>
+            <div class="mf-bloque mf-der" style="flex: 1;">
+                <div class="font-bold mb-2">DERECHA</div>
+                <div class="text-xs opacity-80">Oposición pide ajustes menores</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. OPORTUNIDADES LEGISLATIVAS -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">4. ⚖️ OPORTUNIDADES LEGISLATIVAS</h2>
+        <div class="glass rounded-xl p-6">
+            
+    <div class="mb-3 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="tag tag-pol">Medioambiente</span>
+          <span class="font-bold">Proyecto de ley ambiental con vacíos</span>
+        </div>
+        <span class="mono text-yellow-400 text-xs">ALTA</span>
+      </div>
+    </div>
+  
+    <div class="mb-3 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="tag tag-pol">Laboral</span>
+          <span class="font-bold">Reforma laboral en comisiones</span>
+        </div>
+        <span class="mono text-yellow-400 text-xs">MEDIA</span>
+      </div>
+    </div>
+  
+        </div>
+    </section>
+
+    <!-- 5. PERSPECTIVA MARXISTA -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">5. 💭 ANÁLISIS DESDE LA LUCHA DE CLASES</h2>
+        <div class="glass rounded-xl p-6 border-l-4 border-red-600">
+            <p class="leading-relaxed">El análisis de la jornada revela una vez más la función ideológica del Estado como árbitro aparente entre clases en conflicto. La discusión presupuestaria no es técnica, es política: decide quién paga y quién recibe.
+
+La propuesta gubernamental, presentada como "equilibrada", beneficia estructuralmente al capital financiero mientras pretende justificar "ajustes" en el gasto social. Los argumentos de "responsabilidad fiscal" operan como máscara ideológica de la redistribución regresiva.
+
+La posición de los medios de izquierda (APL, El Siglo) aunque crítica, permanece dentro del marco del posible. No cuestionan el modo de producción, solo su gestión. La verdadera contradicción es esta: el sistema puede tolerar crítica, pero no alternativas.
+
+La huelga del sector público muestra el límite de la negociación colectiva bajo el capitalismo: los trabajadores pueden resistir, pero no determinar.</p>
+        </div>
+    </section>
+
+    <!-- 6. TENDENCIA PRÓXIMAS 72H -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">6. 🔮 TENDENCIA PRÓXIMAS 72H</h2>
+        <div class="glass rounded-xl p-6">
+            <p class="leading-relaxed">Para las próximas 72h se espera votación clave en presupuesto. Movilizaciones convocadas para mid semana. La tensión entre bloques будет intensificarse.</p>
+        </div>
+    </section>
+
+    <!-- 7. FUENTES -->
+    <section class="max-w-4xl mx-auto mb-12">
+        <h2 class="section-header text-xl font-bold mb-4">7. 📚 FUENTES PROCESADAS</h2>
+        <div class="glass rounded-xl p-6">
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="p-4 bg-red-900/20 rounded-lg">
+                    <div class="text-2xl mb-1">📰</div>
+                    <div class="font-bold">El Siglo</div>
+                    <div class="mono text-yellow-400">8 arts</div>
+                </div>
+                <div class="p-4 bg-green-900/20 rounded-lg">
+                    <div class="text-2xl mb-1">🌎</div>
+                    <div class="font-bold">Telesur</div>
+                    <div class="mono text-yellow-400">10 arts</div>
+                </div>
+                <div class="p-4 bg-blue-900/20 rounded-lg">
+                    <div class="text-2xl mb-1">⚖️</div>
+                    <div class="font-bold">APL</div>
+                    <div class="mono text-yellow-400">6 arts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="max-w-4xl mx-auto text-center py-8 border-t border-gray-800">
+        <p class="mono text-gray-500 text-sm">
+            LA UNIDAD v3.0 — Generado automáticamente por OpenClaw<br>
+            2026-02-01T15:21:19.630Z · 24 artículos procesados
+        </p>
+    </footer>
+
+</body>
+</html>

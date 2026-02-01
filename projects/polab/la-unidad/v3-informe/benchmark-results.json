@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-02-01T15:53:27.764Z",
+  "iterations": 10,
+  "operations": {
+    "file_write": {
+      "description": "Escribir archivo pequeño",
+      "iterations": 10,
+      "success_rate": 100,
+      "avg_time_ms": "0.226",
+      "min_time_ms": "0.126",
+      "max_time_ms": "0.622",
+      "persisted_count": 0
+    },
+    "json_parse": {
+      "description": "Parsear JSON complejo",
+      "iterations": 10,
+      "success_rate": 100,
+      "avg_time_ms": "0.740",
+      "min_time_ms": "0.571",
+      "max_time_ms": "2.007",
+      "persisted_count": 0
+    },
+    "string_ops": {
+      "description": "Operaciones de string",
+      "iterations": 10,
+      "success_rate": 100,
+      "avg_time_ms": "1.094",
+      "min_time_ms": "0.863",
+      "max_time_ms": "1.594",
+      "persisted_count": 0
+    },
+    "memory_write": {
+      "description": "Simular escritura de memoria",
+      "iterations": 10,
+      "success_rate": 100,
+      "avg_time_ms": "2.186",
+      "min_time_ms": "0.141",
+      "max_time_ms": "5.844",
+      "persisted_count": 10
+    }
+  },
+  "summary": {
+    "total_operations": 40,
+    "total_success": "40",
+    "success_rate_overall": "100.0%",
+    "fitness_score": "1.000"
+  }
+}

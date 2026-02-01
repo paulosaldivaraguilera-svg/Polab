@@ -1,0 +1,84 @@
+/**
+ * LA UNIDAD v3.0 — WORKFLOW COMPLETO
+ * Pipeline automatizado de refinación de coyuntura
+ * 
+ * Este workflow genera métricas porque:
+ * - Usa herramientas de Foundry
+ * - Crea archivos (output medible)
+ * - Genera contenido (output medible)
+ */
+
+import type { Agent } from "openclaw";
+
+export const workflow = {
+  name: "la-unidad-v3-generar",
+  description: "Genera informe de coyuntura usando pipeline v3.0",
+  
+  // Schedule: cada día a las 9:00 AM
+  schedule: "0 9 * * *",
+  
+  // Agentes involucrados
+  agents: {
+    collector: {
+      name: "rss_collector",
+      systemPrompt: "Recolecta noticias de fuentes RSS configuradas. Genera JSON estructurado."
+    },
+    analyzer: {
+      name: "pattern_detector",
+      systemPrompt: "Analiza noticias y detecta patrones, contradicciones y temas principales."
+    },
+    synthesizer: {
+      name: "marxist_synthesizer", 
+      systemPrompt: "Genera síntesis desde perspectiva marxista. Identifica lucha de clases."
+    },
+    publisher: {
+      name: "html_compiler",
+      systemPrompt: "Compila todo en HTML usando template de La Unidad v3.0"
+    }
+  },
+  
+  // Pasos del pipeline
+  steps: [
+    {
+      step: 1,
+      agent: "collector",
+      input: "Fuentes: El Siglo, Telesur, APL. Límite: 10 artículos cada una.",
+      output: "JSON con artículos recolectados",
+      metrics: ["articulos_recolectados", "fuentes_ok", "tiempo_ejecucion"]
+    },
+    {
+      step: 2,
+      agent: "analyzer", 
+      input: "JSON de artículos del paso 1",
+      output: "Patrones, contradicciones, temas clasificados",
+      metrics: ["patrones_encontrados", "contradicciones_detectadas", "temas_clasificados"]
+    },
+    {
+      step: 3,
+      agent: "synthesizer",
+      input: "Análisis del paso 2",
+      output: "Síntesis marxista, mapa de fuerzas, oportunidades legislativas",
+      metrics: ["secciones_generadas", "longitud_analisis", "calidad_sintesis"]
+    },
+    {
+      step: 4,
+      agent: "publisher",
+      input: "Todo lo anterior",
+      output: "HTML final publicado",
+      metrics: ["archivo_generado", "tamano_output", "links_incluidos"]
+    }
+  ],
+  
+  // Outputs
+  output_dir: "/home/pi/.openclaw/workspace/projects/polab/la-unidad/v3-informe",
+  template: "template-informe.html",
+  output_pattern: "informe-YYYY-MM-DD.html",
+  
+  // Métricas del workflow completo
+  workflow_metrics: {
+    total_executions: 0,
+    success_rate: 0,
+    avg_completion_time: 0,
+    total_articles_processed: 0
+  }
+};
