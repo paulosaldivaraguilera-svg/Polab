@@ -3,79 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recta Provincia - Prototype</title>
+    <title>Recta Provincia - El Camín de la Sombra</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0a0b0d;
+            background: linear-gradient(135deg, #0a0b0d 0%, #1a1f2e 50%, #0d1117 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Courier New', monospace;
+            font-family: 'Georgia', serif;
             overflow: hidden;
         }
-        #gameContainer {
-            position: relative;
-        }
+        #gameContainer { position: relative; }
         canvas {
-            background: #0d1117;
-            border: 3px solid #c5a059;
-            border-radius: 8px;
+            background: #0a0b0d;
+            border: 4px solid #3d2817;
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(107, 88, 60, 0.3), inset 0 0 60px rgba(0, 0, 0, 0.5);
             display: block;
-            box-shadow: 0 0 40px rgba(197, 160, 89, 0.15);
         }
         #ui {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
             display: flex;
             justify-content: space-between;
-            color: #fff;
-            font-size: 14px;
+            color: #d4c4a8;
+            font-size: 16px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
         #karmaBar {
             position: absolute;
-            top: 50px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
-            height: 12px;
-            background: #222;
-            border-radius: 6px;
+            width: 350px;
+            height: 16px;
+            background: linear-gradient(to bottom, #1a1410, #2d1f17);
+            border-radius: 8px;
+            border: 2px solid #4a3728;
             overflow: hidden;
-            border: 1px solid #444;
         }
         #karmaFill {
             height: 100%;
             width: 50%;
-            background: linear-gradient(90deg, #63b3ed 0%, #4a5568 50%, #f56565 100%);
-            transition: width 0.3s;
+            background: linear-gradient(180deg, #63b3ed 0%, #3182ce 50%, #4a5568 70%, #f56565 100%);
+            transition: width 0.5s;
         }
         #karmaLabel {
             position: absolute;
-            top: 65px;
+            top: 78px;
             left: 50%;
             transform: translateX(-50%);
             color: #c5a059;
-            font-size: 11px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
         }
         #macunStatus {
             position: absolute;
-            bottom: 15px;
-            left: 15px;
-            color: #c5a059;
-            font-size: 12px;
+            bottom: 20px;
+            left: 20px;
+            color: #8b7355;
+            font-size: 14px;
+            font-style: italic;
         }
         #transformStatus {
             position: absolute;
-            bottom: 15px;
-            right: 15px;
-            color: #888;
+            bottom: 20px;
+            right: 20px;
+            color: #6b8e6b;
+            font-size: 14px;
+            font-style: italic;
+        }
+        #questLog {
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            color: #9ca3af;
             font-size: 12px;
+            font-style: italic;
         }
         #menu, #gameOver {
             position: absolute;
@@ -83,49 +93,62 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(10, 11, 13, 0.95);
+            background: radial-gradient(ellipse at center, rgba(20, 15, 10, 0.95) 0%, rgba(5, 5, 5, 0.99) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10;
+            border: 3px solid #4a3728;
         }
         #gameOver { display: none; }
         .title {
-            font-size: 36px;
+            font-size: 42px;
             color: #c5a059;
-            text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
-            margin-bottom: 8px;
-            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.5), 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+            letter-spacing: 6px;
+            font-family: 'Times New Roman', serif;
         }
         .subtitle {
-            color: #888;
+            color: #8b7355;
+            font-size: 16px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .quote {
+            color: #6b8e6b;
             font-size: 14px;
+            max-width: 500px;
+            text-align: center;
+            line-height: 1.8;
             margin-bottom: 30px;
             font-style: italic;
         }
         .menu-btn {
-            background: transparent;
-            border: 2px solid #c5a059;
+            background: linear-gradient(to bottom, #3d2817, #2a1a0f);
+            border: 2px solid #5a4030;
             color: #c5a059;
-            padding: 12px 40px;
+            padding: 15px 50px;
             font-size: 16px;
-            font-family: inherit;
+            font-family: 'Georgia', serif;
             cursor: pointer;
-            margin: 8px;
+            margin: 10px;
             transition: all 0.3s;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .menu-btn:hover {
-            background: #c5a059;
-            color: #0a0b0d;
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
+            background: linear-gradient(to bottom, #4d3827, #3a2517);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+            text-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
         }
         .controls {
-            color: #666;
+            color: #5a4a3a;
             font-size: 11px;
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
-            line-height: 1.8;
+            line-height: 2;
         }
         #notification {
             position: absolute;
@@ -133,23 +156,29 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #c5a059;
-            font-size: 18px;
-            text-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
+            font-size: 20px;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.8);
             opacity: 0;
             transition: opacity 0.5s;
             pointer-events: none;
-        }
-        .lore-text {
-            color: #63b3ed;
-            font-size: 12px;
             text-align: center;
-            margin-top: 10px;
+            max-width: 400px;
+        }
+        .fog {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(10, 15, 20, 0.1) 0%, rgba(20, 30, 40, 0.05) 50%, rgba(10, 15, 20, 0.1) 100%);
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <div id="gameContainer">
-        <canvas id="game" width="900" height="600"></canvas>
+        <canvas id="game" width="960" height="640"></canvas>
+        <div class="fog"></div>
         
         <div id="ui">
             <span id="health">❤️ Salud: 100</span>
@@ -157,36 +186,38 @@
             <span id="level">🌑 Nivel: 1</span>
         </div>
         
+        <div id="questLog">"Encuentra la cascada de Traiguén para tu bautismo..."</div>
+        
         <div id="karmaBar">
             <div id="karmaFill"></div>
         </div>
         <div id="karmaLabel">Karma: Equilibrado</div>
         
-        <div id="macunStatus">🧥 Macuñ: Piel de Oveja</div>
+        <div id="macunStatus">🧥 Macuñ: Piel de Oveja (Iniciado)</div>
         <div id="transformStatus">🦅 Transformación: Ninguna</div>
         
         <div id="notification"></div>
         
-        <!-- MENÚ -->
         <div id="menu">
             <div class="title">RECTA PROVINCIA</div>
-            <div class="subtitle">"El camino de la sombra o la luz"</div>
-            <button class="menu-btn" onclick="startGame()">INICIAR JUEGO</button>
-            <div class="lore-text">
+            <div class="subtitle">"El Camín de la Sombra"</div>
+            <div class="quote">
                 "No existe el bien absoluto bajo la niebla.<br>
-                Existe el respeto a la tierra y el conocimiento prohibido."
+                Existe el respeto a la tierra y el conocimiento prohibido.<br>
+                El Macún glowea con el verdor de tu destino."
             </div>
+            <button class="menu-btn" onclick="startGame()">INICIAR VIAJE</button>
             <div class="controls">
-                ← → Mover | A/D Transformarse<br>
-                ESPACIO Atacar | SHIFT Correr
+                WASD / FLECHAS Mover<br>
+                A TRANSFORMARSE | ESPACIO ATACAR | SHIFT CORRER
             </div>
         </div>
         
-        <!-- GAME OVER -->
         <div id="gameOver">
-            <div class="title" style="color:#f56565">FIN DEL CAMINO</div>
+            <div class="title" style="color:#8b0000">FIN DEL CAMINO</div>
             <div class="subtitle" id="endKarma">Tu karma determinó tu destino...</div>
-            <button class="menu-btn" onclick="startGame()">REINICIAR</button>
+            <div class="quote" id="endQuote"></div>
+            <button class="menu-btn" onclick="startGame()">REINTENTAR</button>
             <button class="menu-btn" onclick="showMenu()">MENÚ PRINCIPAL</button>
         </div>
     </div>
@@ -198,74 +229,66 @@
         const state = {
             screen: 'menu',
             player: {
-                x: 450, y: 300, width: 30, height: 40,
-                speed: 3, health: 100, maxHealth: 100,
-                exp: 0, level: 1, karma: 50, // 0-100, 50=neutral
-                transform: 'human', // human, alcatraz, chonchon
-                macun: 'oveja', // oveja, caballo, manusia
+                x: 480, y: 320, width: 28, height: 44,
+                speed: 2.5, health: 100, maxHealth: 100,
+                exp: 0, level: 1, karma: 50,
+                transform: 'human',
+                macun: 'oveja',
                 direction: 1,
                 attacking: false,
                 attackTimer: 0,
-                animFrame: 0
+                animFrame: 0,
+                glowIntensity: 0
             },
             enemies: [],
             particles: [],
-            camera: { x: 0, y: 0 },
             world: {
-                width: 1800, height: 1200,
-                buildings: [],
+                width: 1920, height: 1280,
                 trees: [],
-                props: []
+                rocks: [],
+                ferns: [],
+                mist: []
             },
             keys: {},
             spawnTimer: 0,
-            time: 0
+            time: 0,
+            fogOffset: 0
         };
         
-        // Generate world
         function generateWorld() {
-            const w = state.world.width;
-            const h = state.world.height;
-            
-            // Palafitos (casas sobre agua)
-            for (let i = 0; i < 8; i++) {
-                state.world.buildings.push({
-                    x: 100 + i * 200 + Math.random() * 50,
-                    y: 800 + Math.random() * 200,
-                    width: 60 + Math.random() * 40,
-                    height: 50 + Math.random() * 30,
-                    type: 'palfito'
-                });
-            }
-            
-            // Cerros
-            for (let i = 0; i < 5; i++) {
-                state.world.buildings.push({
-                    x: 200 + i * 300,
-                    y: 100 + Math.random() * 200,
-                    width: 150 + Math.random() * 100,
-                    height: 80 + Math.random() * 60,
-                    type: 'cerro'
-                });
-            }
-            
-            // Árboles (cipreses de Chiloé)
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 80; i++) {
                 state.world.trees.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    height: 30 + Math.random() * 40
+                    x: Math.random() * state.world.width,
+                    y: Math.random() * state.world.height,
+                    width: 40 + Math.random() * 60,
+                    height: 80 + Math.random() * 100,
+                    moss: Math.random() > 0.5,
+                    twisted: Math.random() > 0.7
                 });
             }
             
-            // Rucas (viviendas tradicionales)
-            for (let i = 0; i < 6; i++) {
-                state.world.props.push({
-                    x: 300 + Math.random() * (w - 600),
-                    y: 400 + Math.random() * (h - 500),
-                    width: 80,
-                    height: 60,
-                    type: 'ruca'
+            for (let i = 0; i < 50; i++) {
+                state.world.rocks.push({
+                    x: Math.random() * state.world.width,
+                    y: Math.random() * state.world.height,
+                    size: 10 + Math.random() * 30
+                });
+            }
+            
+            for (let i = 0; i < 100; i++) {
+                state.world.ferns.push({
+                    x: Math.random() * state.world.width,
+                    y: Math.random() * state.world.height,
+                    height: 15 + Math.random() * 25
+                });
+            }
+            
+            for (let i = 0; i < 10; i++) {
+                state.world.mist.push({
+                    x: Math.random() * state.world.width,
+                    y: Math.random() * state.world.height,
+                    width: 200 + Math.random() * 300,
+                    speed: 0.2 + Math.random() * 0.3
                 });
             }
         }
@@ -287,12 +310,13 @@
         function startGame() {
             state.screen = 'playing';
             state.player = {
-                x: 450, y: 300, width: 30, height: 40,
-                speed: 3, health: 100, maxHealth: 100,
+                x: 480, y: 320, width: 28, height: 44,
+                speed: 2.5, health: 100, maxHealth: 100,
                 exp: 0, level: 1, karma: 50,
                 transform: 'human', macun: 'oveja',
                 direction: 1, attacking: false,
-                attackTimer: 0, animFrame: 0
+                attackTimer: 0, animFrame: 0,
+                glowIntensity: 0
             };
             state.enemies = [];
             state.particles = [];
@@ -313,35 +337,38 @@
             const notif = document.getElementById('notification');
             notif.textContent = text;
             notif.style.opacity = '1';
-            setTimeout(() => notif.style.opacity = '0', 2000);
+            setTimeout(() => notif.style.opacity = '0', 2500);
         }
         
         function updateUI() {
-            document.getElementById('health').textContent = `❤️ Salud: ${state.player.health}`;
-            document.getElementById('exp').textContent = `📖 Experiencia: ${state.player.exp}`;
-            document.getElementById('level').textContent = `🌑 Nivel: ${state.player.level}`;
+            const p = state.player;
+            document.getElementById('health').textContent = `❤️ Salud: ${Math.round(p.health)}`;
+            document.getElementById('exp').textContent = `📖 Experiencia: ${p.exp}`;
+            document.getElementById('level').textContent = `🌑 Nivel: ${p.level}`;
             
             const karmaFill = document.getElementById('karmaFill');
-            karmaFill.style.width = state.player.karma + '%';
+            karmaFill.style.width = p.karma + '%';
             
-            let karmaLabel = 'Equilibrado';
-            if (state.player.karma < 30) karmaLabel = 'SOMBRA (El Caleuche)';
-            else if (state.player.karma > 70) karmaLabel = 'LUZ (El Machi)';
-            document.getElementById('karmaLabel').textContent = `Karma: ${karmaLabel}`;
+            let karmaLabel = 'EQUILIBRADO';
+            if (p.karma < 20) karmaLabel = 'SOMBRA PROFUNDA (El Caleuche)';
+            else if (p.karma < 40) karmaLabel = 'SOMBRA (El Oscuro)';
+            else if (p.karma > 80) karmaLabel = 'LUZ SOBERANA (El Machi)';
+            else if (p.karma > 60) karmaLabel = 'LUZ (El Machi-Brujo)';
             
-            // Update macun and transform
+            document.getElementById('karmaLabel').textContent = `KARMA: ${karmaLabel}`;
+            
             const macunNames = {
-                'oveja': 'Piel de Oveja',
-                'caballo': 'Piel de Caballo',
-                'manusia': 'Piel de Hombre'
+                'oveja': 'Piel de Oveja (Iniciado)',
+                'caballo': 'Piel de Caballo (Brujo)',
+                'manusia': 'Piel de Hombre (Maestro)'
             };
             const transformNames = {
                 'human': 'Ninguna',
                 'alcatraz': 'Alcatraz (Luz)',
                 'chonchon': 'Chonchón (Sombra)'
             };
-            document.getElementById('macunStatus').textContent = `🧥 Macuñ: ${macunNames[state.player.macun]}`;
-            document.getElementById('transformStatus').textContent = `🦅 Transformación: ${transformNames[state.player.transform]}`;
+            document.getElementById('macunStatus').textContent = `🧥 Macuñ: ${macunNames[p.macun]}`;
+            document.getElementById('transformStatus').textContent = `🦅 Transformación: ${transformNames[p.transform]}`;
         }
         
         function spawnEnemy() {
@@ -351,32 +378,33 @@
             let x, y;
             
             switch(side) {
-                case 0: x = Math.random() * state.world.width; y = -30; break;
-                case 1: x = state.world.width + 30; y = Math.random() * state.world.height; break;
-                case 2: x = Math.random() * state.world.width; y = state.world.height + 30; break;
-                case 3: x = -30; y = Math.random() * state.world.height; break;
+                case 0: x = Math.random() * state.world.width; y = -40; break;
+                case 1: x = state.world.width + 40; y = Math.random() * state.world.height; break;
+                case 2: x = Math.random() * state.world.width; y = state.world.height + 40; break;
+                case 3: x = -40; y = Math.random() * state.world.height; break;
             }
             
             state.enemies.push({
                 x, y, type,
-                health: type === 'piuchen' ? 60 : 30,
-                maxHealth: type === 'piuchen' ? 60 : 30,
-                speed: type === 'trauco' ? 2 : 1.5,
-                damage: type === 'piuchen' ? 20 : 10,
-                exp: type === 'piuchen' ? 40 : 20,
-                karmaChange: type === 'weka' ? -5 : 5 // Weka evil, piuchen neutral
+                health: type === 'piuchen' ? 80 : 40,
+                maxHealth: type === 'piuchen' ? 80 : 40,
+                speed: type === 'trauco' ? 2.5 : 1.8,
+                damage: type === 'piuchen' ? 25 : 12,
+                exp: type === 'piuchen' ? 50 : 25,
+                karmaChange: type === 'weka' ? -5 : 5
             });
         }
         
-        function createParticle(x, y, color, count) {
+        function createParticle(x, y, color, count, glow = false) {
             for (let i = 0; i < count; i++) {
                 state.particles.push({
                     x, y,
-                    vx: (Math.random() - 0.5) * 6,
-                    vy: (Math.random() - 0.5) * 6,
+                    vx: (Math.random() - 0.5) * 5,
+                    vy: (Math.random() - 0.5) * 5 - 1,
                     life: 1,
                     color,
-                    size: Math.random() * 4 + 2
+                    glow,
+                    size: Math.random() * 5 + 2
                 });
             }
         }
@@ -386,78 +414,64 @@
             
             const p = state.player;
             state.time += 0.016;
+            state.fogOffset += 0.1;
             
-            // Movement
             let moveX = 0, moveY = 0;
             if (state.keys['ArrowLeft'] || state.keys['KeyA']) moveX -= 1;
             if (state.keys['ArrowRight'] || state.keys['KeyD']) moveX += 1;
             if (state.keys['ArrowUp'] || state.keys['KeyW']) moveY -= 1;
             if (state.keys['ArrowDown'] || state.keys['KeyS']) moveY += 1;
             
-            if (state.keys['ShiftLeft'] || state.keys['ShiftRight']) {
-                p.speed = 5;
-            } else {
-                p.speed = 3;
-            }
+            if (state.keys['ShiftLeft'] || state.keys['ShiftRight']) p.speed = 4;
+            else p.speed = 2.5;
             
             if (moveX !== 0) p.direction = moveX > 0 ? 1 : -1;
             
             p.x += moveX * p.speed;
             p.y += moveY * p.speed;
-            p.x = Math.max(0, Math.min(state.world.width - p.width, p.x));
-            p.y = Math.max(0, Math.min(state.world.height - p.height, p.y));
+            p.x = Math.max(20, Math.min(state.world.width - p.width - 20, p.x));
+            p.y = Math.max(20, Math.min(state.world.height - p.height - 20, p.y));
             
-            // Transform
             if (state.keys['KeyA'] && !state.keys['transformA']) {
                 state.keys['transformA'] = true;
                 if (p.karma > 60) {
                     p.transform = p.transform === 'alcatraz' ? 'human' : 'alcatraz';
-                    showNotification(p.transform === 'alcatraz' ? '🦅 Transformación: ALCATRAZ' : '👤 Forma Humana');
-                    createParticle(p.x, p.y, '#63b3ed', 15);
+                    showNotification(p.transform === 'alcatraz' ? '🦅 ALCATRAZ' : '👤 Forma Humana');
+                    createParticle(p.x, p.y, '#63b3ed', 20, true);
                 } else if (p.karma < 40) {
                     p.transform = p.transform === 'chonchon' ? 'human' : 'chonchon';
-                    showNotification(p.transform === 'chonchon' ? '🦇 Transformación: CHONCHÓN' : '👤 Forma Humana');
-                    createParticle(p.x, p.y, '#f56565', 15);
-                } else {
-                    showNotification('💀 Karma insuficiente para transformarte');
+                    showNotification(p.transform === 'chonchon' ? '🦇 CHONCHÓN' : '👤 Forma Humana');
+                    createParticle(p.x, p.y, '#2d5a3d', 20, true);
                 }
             }
             if (!state.keys['KeyA']) state.keys['transformA'] = false;
             
-            // Attack
             if ((state.keys[' '] || state.keys['Space']) && !p.attacking) {
                 p.attacking = true;
-                p.attackTimer = 20;
+                p.attackTimer = 25;
                 
-                // AoE attack based on transformation
-                const range = p.transform === 'chonchon' ? 100 : 60;
-                const damage = p.transform === 'chonchon' ? 40 : 20;
+                const range = p.transform === 'chonchon' ? 120 : 70;
+                const damage = p.transform === 'chonchon' ? 50 : 25;
                 
                 state.enemies.forEach(e => {
                     const dist = Math.hypot(e.x - p.x, e.y - p.y);
                     if (dist < range) {
                         e.health -= damage;
-                        createParticle(e.x, e.y, '#fff', 8);
+                        createParticle(e.x, e.y, p.karma > 50 ? '#63b3ed' : '#f56565', 12);
                     }
                 });
-                
-                createParticle(p.x, p.y, '#c5a059', 10);
+                createParticle(p.x, p.y, '#c5a059', 15, true);
             }
-            if (!state.keys[' '] && !state.keys['Space']) {
-                p.attacking = false;
-            }
+            if (!state.keys[' '] && !state.keys['Space']) p.attacking = false;
             if (p.attackTimer > 0) p.attackTimer--;
             
-            // Spawn enemies
             state.spawnTimer++;
-            if (state.spawnTimer > 120) {
+            if (state.spawnTimer > 100) {
                 spawnEnemy();
                 state.spawnTimer = 0;
             }
             
-            // Update enemies
             state.enemies = state.enemies.filter(e => {
-                // Move towards player
                 const dx = p.x - e.x;
                 const dy = p.y - e.y;
                 const dist = Math.hypot(dx, dy);
@@ -467,26 +481,21 @@
                     e.y += (dy / dist) * e.speed;
                 }
                 
-                // Attack player
-                if (dist < 30) {
-                    p.health -= e.damage * 0.016;
-                    createParticle(p.x, p.y, '#f56565', 2);
+                if (dist < 35) {
+                    p.health -= e.damage * 0.012;
+                    createParticle(p.x, p.y, '#8b0000', 3);
                 }
                 
-                // Death
                 if (e.health <= 0) {
                     p.exp += e.exp;
-                    p.karma = Math.max(0, Math.min(100, p.karma + e.karmaChange));
-                    createParticle(e.x, e.y, '#f56565', 20);
+                    p.karma = Math.max(5, Math.min(95, p.karma + e.karmaChange));
+                    createParticle(e.x, e.y, e.type === 'piuchen' ? '#2d5a3d' : '#4a3728', 25);
                     
-                    // Level up
-                    if (p.exp >= p.level * 100) {
+                    if (p.exp >= p.level * 120) {
                         p.level++;
-                        p.maxHealth += 20;
+                        p.maxHealth += 25;
                         p.health = p.maxHealth;
-                        showNotification(`🌑 NIVEL ${p.level} - Salud restaurada`);
-                        
-                        // Upgrade macun
+                        showNotification(`🌑 NIVEL ${p.level}`);
                         if (p.level === 3) p.macun = 'caballo';
                         if (p.level === 5) p.macun = 'manusia';
                     }
@@ -497,25 +506,47 @@
                 return true;
             });
             
-            // Update particles
             state.particles = state.particles.filter(p => {
                 p.x += p.vx;
                 p.y += p.vy;
-                p.life -= 0.03;
-                p.vx *= 0.95;
-                p.vy *= 0.95;
+                p.life -= 0.025;
+                p.vx *= 0.96;
+                p.vy *= 0.96;
                 return p.life > 0;
             });
             
-            // Game over
+            state.world.mist.forEach(m => {
+                m.x += m.speed;
+                if (m.x > state.world.width + m.width) m.x = -m.width;
+            });
+            
+            p.glowIntensity = Math.sin(state.time * 2) * 0.3 + 0.7;
+            
             if (p.health <= 0) {
                 state.screen = 'gameover';
                 const karma = state.player.karma;
-                let endText = 'Tu karma fue...';
-                if (karma < 30) endText = 'Te convertiste en un Imbunche. Las sombras te consumieron.';
-                else if (karma > 70) endText = 'Te convertiste en un Machi-Brujo respetado. La luz te guió.';
-                else endText = 'Caminaste entre dos mundos sin pertenecer a ninguno.';
+                let endText = '';
+                let endQuote = '';
+                
+                if (karma < 20) {
+                    endText = 'IMBUNCHE';
+                    endQuote = '"Las sombras te consumieron."';
+                } else if (karma < 40) {
+                    endText = 'BRUJO DE LA OSCURIDAD';
+                    endQuote = '"El Caleuche te ha adoptado."';
+                } else if (karma > 80) {
+                    endText = 'MACHI SUPREMO';
+                    endQuote = '"La luz de los ancestros brilla en ti."';
+                } else if (karma > 60) {
+                    endText = 'MACHI-BRUJO';
+                    endQuote = '"Caminas por la luz, pero conoces las sombras."';
+                } else {
+                    endText = 'EL EQUILIBRADO';
+                    endQuote = '"Permaneces entre dos mundos."';
+                }
+                
                 document.getElementById('endKarma').textContent = endText;
+                document.getElementById('endQuote').textContent = endQuote;
                 document.getElementById('gameOver').style.display = 'flex';
             }
         }
@@ -528,93 +559,88 @@
             ctx.save();
             ctx.translate(-camX, -camY);
             
-            // Draw world background
-            ctx.fillStyle = '#0d1117';
+            const bgGrad = ctx.createRadialGradient(p.x, p.y, 50, p.x, p.y, 600);
+            bgGrad.addColorStop(0, '#1a1f2e');
+            bgGrad.addColorStop(1, '#0a0b0d');
+            ctx.fillStyle = bgGrad;
             ctx.fillRect(camX, camY, canvas.width, canvas.height);
             
-            // Draw grid/fog effect
-            ctx.strokeStyle = '#1a1f2e';
-            ctx.lineWidth = 1;
-            for (let x = 0; x < state.world.width; x += 50) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, state.world.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y < state.world.height; y += 50) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(state.world.width, y);
-                ctx.stroke();
-            }
+            state.world.mist.forEach(m => {
+                const gradient = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.width / 2);
+                gradient.addColorStop(0, 'rgba(100, 120, 140, 0.15)');
+                gradient.addColorStop(1, 'rgba(100, 120, 140, 0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(m.x - m.width / 2, m.y - 30, m.width, 60);
+            });
             
-            // Draw buildings (palafitos)
-            state.world.buildings.forEach(b => {
-                if (b.type === 'palfito') {
-                    ctx.fillStyle = '#2d3748';
-                    ctx.fillRect(b.x, b.y, b.width, b.height);
-                    // Stilts
-                    ctx.strokeStyle = '#4a5568';
-                    ctx.lineWidth = 4;
-                    for (let sx = b.x + 10; sx < b.x + b.width; sx += 20) {
+            state.world.trees.forEach(t => {
+                const trunkGrad = ctx.createLinearGradient(t.x - t.width / 2, t.y, t.x + t.width / 2, t.y);
+                trunkGrad.addColorStop(0, '#1a1410');
+                trunkGrad.addColorStop(0.5, '#2d1f17');
+                trunkGrad.addColorStop(1, '#1a1410');
+                ctx.fillStyle = trunkGrad;
+                
+                ctx.beginPath();
+                ctx.moveTo(t.x - t.width / 3, t.y + t.height);
+                ctx.quadraticCurveTo(t.x - t.width / 2, t.y + t.height / 2, t.x - t.width / 4, t.y);
+                ctx.quadraticCurveTo(t.x, t.y - 20, t.x + t.width / 4, t.y);
+                ctx.quadraticCurveTo(t.x + t.width / 2, t.y + t.height / 2, t.x + t.width / 3, t.y + t.height);
+                ctx.fill();
+                
+                if (t.moss) {
+                    ctx.fillStyle = 'rgba(50, 80, 50, 0.6)';
+                    for (let i = 0; i < 5; i++) {
+                        const mossX = t.x + (Math.random() - 0.5) * t.width;
+                        const mossY = t.y + Math.random() * t.height * 0.6;
                         ctx.beginPath();
-                        ctx.moveTo(sx, b.y + b.height);
-                        ctx.lineTo(sx, b.y + b.height + 60);
-                        ctx.stroke();
+                        ctx.arc(mossX, mossY, 3 + Math.random() * 5, 0, Math.PI * 2);
+                        ctx.fill();
                     }
-                    // Roof
-                    ctx.fillStyle = '#744210';
+                }
+                
+                ctx.strokeStyle = 'rgba(40, 60, 40, 0.5)';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 4; i++) {
+                    const mossX = t.x + (Math.random() - 0.5) * t.width * 0.6;
+                    const mossY = t.y + t.height * 0.3 + Math.random() * t.height * 0.4;
                     ctx.beginPath();
-                    ctx.moveTo(b.x - 10, b.y);
-                    ctx.lineTo(b.x + b.width / 2, b.y - 25);
-                    ctx.lineTo(b.x + b.width + 10, b.y);
-                    ctx.fill();
-                } else if (b.type === 'cerro') {
-                    // Fog covering bottom of hills
-                    const gradient = ctx.createLinearGradient(b.x, b.y + b.height, b.x, b.y);
-                    gradient.addColorStop(0, '#0d1117');
-                    gradient.addColorStop(1, '#2d3748');
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.ellipse(b.x + b.width / 2, b.y + b.height, b.width / 2, b.height, 0, Math.PI, 0);
-                    ctx.fill();
+                    ctx.moveTo(mossX, mossY);
+                    for (let j = 0; j < 3; j++) {
+                        ctx.lineTo(mossX + (Math.random() - 0.5) * 10, mossY + 15 + j * 10);
+                    }
+                    ctx.stroke();
                 }
             });
             
-            // Draw trees (cipreses)
-            state.world.trees.forEach(t => {
-                ctx.fillStyle = '#1a3a2a';
+            state.world.rocks.forEach(r => {
+                const rockGrad = ctx.createRadialGradient(r.x, r.y, 0, r.x, r.y, r.size);
+                rockGrad.addColorStop(0, '#3d3528');
+                rockGrad.addColorStop(1, '#1a1815');
+                ctx.fillStyle = rockGrad;
                 ctx.beginPath();
-                ctx.moveTo(t.x, t.y);
-                ctx.lineTo(t.x - 15, t.y + t.height);
-                ctx.lineTo(t.x + 15, t.y + t.height);
+                ctx.arc(r.x, r.y, r.size, 0, Math.PI * 2);
                 ctx.fill();
             });
             
-            // Draw rucas
-            state.world.props.forEach(r => {
-                if (r.type === 'ruca') {
-                    ctx.fillStyle = '#5c4033';
-                    ctx.fillRect(r.x, r.y, r.width, r.height);
-                    // Roof
-                    ctx.fillStyle = '#8b6914';
+            state.world.ferns.forEach(f => {
+                ctx.strokeStyle = 'rgba(40, 80, 40, 0.7)';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 5; i++) {
                     ctx.beginPath();
-                    ctx.moveTo(r.x - 10, r.y);
-                    ctx.lineTo(r.x + r.width / 2, r.y - 30);
-                    ctx.lineTo(r.x + r.width + 10, r.y);
-                    ctx.fill();
-                    // Door
-                    ctx.fillStyle = '#2d1810';
-                    ctx.fillRect(r.x + r.width / 2 - 12, r.y + r.height - 35, 24, 35);
+                    const angle = -Math.PI / 2 + (i - 2) * 0.3;
+                    ctx.moveTo(f.x, f.y);
+                    ctx.quadraticCurveTo(f.x + Math.cos(angle) * 10, f.y - 5, f.x + Math.cos(angle) * f.height, f.y + Math.sin(angle) * 5);
+                    ctx.stroke();
                 }
             });
             
-            // Draw particles
             state.particles.forEach(p => {
                 ctx.globalAlpha = p.life;
                 ctx.fillStyle = p.color;
-                ctx.shadowColor = p.color;
-                ctx.shadowBlur = 10;
+                if (p.glow) {
+                    ctx.shadowColor = p.color;
+                    ctx.shadowBlur = 15;
+                }
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -622,116 +648,85 @@
             ctx.globalAlpha = 1;
             ctx.shadowBlur = 0;
             
-            // Draw enemies
             state.enemies.forEach(e => {
-                // Health bar
-                ctx.fillStyle = '#333';
-                ctx.fillRect(e.x - 20, e.y - 20, 40, 6);
-                ctx.fillStyle = e.type === 'piuchen' ? '#f56565' : '#f6e05e';
-                ctx.fillRect(e.x - 20, e.y - 20, 40 * (e.health / e.maxHealth), 6);
+                ctx.fillStyle = '#1a1410';
+                ctx.fillRect(e.x - 22, e.y - 25, 44, 8);
+                ctx.fillStyle = e.type === 'piuchen' ? '#4a3728' : '#3d3528';
+                ctx.fillRect(e.x - 22, e.y - 25, 44 * (e.health / e.maxHealth), 8);
                 
-                // Body
                 if (e.type === 'weka') {
-                    ctx.fillStyle = '#4a5568';
-                    ctx.fillRect(e.x - 15, e.y - 25, 30, 35);
-                    // Eyes
-                    ctx.fillStyle = '#f56565';
-                    ctx.fillRect(e.x - 10, e.y - 20, 6, 6);
-                    ctx.fillRect(e.x + 4, e.y - 20, 6, 6);
-                } else if (e.type === 'piuchen') {
-                    ctx.fillStyle = '#f6ad55';
-                    ctx.fillRect(e.x - 20, e.y - 35, 40, 45);
-                    // Snake eyes
-                    ctx.fillStyle = '#f56565';
+                    ctx.fillStyle = '#2d2818';
                     ctx.beginPath();
-                    ctx.arc(e.x, e.y - 25, 8, 0, Math.PI * 2);
+                    ctx.ellipse(e.x, e.y, 18, 22, 0, 0, Math.PI * 2);
                     ctx.fill();
-                } else {
-                    ctx.fillStyle = '#2d3748';
-                    ctx.fillRect(e.x - 18, e.y - 30, 36, 40);
-                    ctx.fillStyle = '#f56565';
-                    ctx.fillRect(e.x - 12, e.y - 22, 8, 8);
-                    ctx.fillRect(e.x + 4, e.y - 22, 8, 8);
+                } else if (e.type === 'piuchen') {
+                    ctx.fillStyle = '#3d3528';
+                    ctx.beginPath();
+                    ctx.ellipse(e.x, e.y, 25, 35, 0, 0, Math.PI * 2);
+                    ctx.fill();
                 }
             });
             
-            // Draw player
             ctx.save();
             ctx.translate(p.x + p.width / 2, p.y + p.height / 2);
             ctx.scale(p.direction, 1);
             
-            // Macun color based on type
-            const macunColors = {
-                'oveja': '#e2e8f0',
-                'caballo': '#744210',
-                'manusia': '#c5a059'
-            };
-            
-            // Shadow under player
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.beginPath();
-            ctx.ellipse(0, p.height / 2, 20, 8, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            if (p.transform === 'human') {
-                // Body with macun
-                ctx.fillStyle = macunColors[p.macun];
-                ctx.fillRect(-15, -p.height / 2, 30, p.height);
-                // Head
-                ctx.fillStyle = '#c5a059';
-                ctx.beginPath();
-                ctx.arc(0, -p.height / 2 - 12, 12, 0, Math.PI * 2);
-                ctx.fill();
-                // Eyes
-                ctx.fillStyle = p.karma > 60 ? '#63b3ed' : (p.karma < 40 ? '#f56565' : '#fff');
-                ctx.fillRect(-6, -p.height / 2 - 14, 4, 4);
-                ctx.fillRect(2, -p.height / 2 - 14, 4, 4);
-            } else if (p.transform === 'alcatraz') {
-                // Bird form
-                ctx.fillStyle = '#fff';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, 25, 15, 0, 0, Math.PI * 2);
-                ctx.fill();
-                // Wings
-                ctx.fillStyle = '#e2e8f0';
-                ctx.beginPath();
-                ctx.moveTo(-10, 0);
-                ctx.lineTo(-30, -20 + Math.sin(state.time * 10) * 10);
-                ctx.lineTo(-30, 20);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(10, 0);
-                ctx.lineTo(30, -20 + Math.sin(state.time * 10) * 10);
-                ctx.lineTo(30, 20);
-                ctx.fill();
-            } else if (p.transform === 'chonchon') {
-                // Bat form
-                ctx.fillStyle = '#1a1a2e';
-                ctx.beginPath();
-                ctx.arc(0, 0, 18, 0, Math.PI * 2);
-                ctx.fill();
-                // Wings
-                ctx.fillStyle = '#2d3748';
-                ctx.beginPath();
-                ctx.moveTo(-10, 0);
-                ctx.lineTo(-40, -25 + Math.sin(state.time * 15) * 15);
-                ctx.lineTo(-35, 10);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(10, 0);
-                ctx.lineTo(40, -25 + Math.sin(state.time * 15) * 15);
-                ctx.lineTo(35, 10);
-                ctx.fill();
-                // Glowing eyes
-                ctx.fillStyle = '#f56565';
-                ctx.shadowColor = '#f56565';
-                ctx.shadowBlur = 10;
-                ctx.fillRect(-6, -5, 4, 4);
-                ctx.fillRect(2, -5, 4, 4);
-                ctx.shadowBlur = 0;
+            if (p.karma > 50) {
+                ctx.shadowColor = '#63b3ed';
+                ctx.shadowBlur = 15 * p.glowIntensity;
+            } else if (p.karma < 50) {
+                ctx.shadowColor = '#2d5a3d';
+                ctx.shadowBlur = 15 * p.glowIntensity;
             }
             
-            // Attack effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            ctx.beginPath();
+            ctx.ellipse(0, p.height / 2 - 5, 18, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            const macunColors = {
+                'oveja': '#4a3728',
+                'caballo': '#5a4030',
+                'manusia': '#3d2818'
+            };
+            
+            ctx.fillStyle = macunColors[p.macun];
+            ctx.beginPath();
+            ctx.moveTo(-18, -p.height / 2 + 10);
+            ctx.lineTo(-22, p.height / 2);
+            ctx.lineTo(22, p.height / 2);
+            ctx.lineTo(18, -p.height / 2 + 10);
+            ctx.quadraticCurveTo(0, -p.height / 2 - 5, -18, -p.height / 2 + 10);
+            ctx.fill();
+            
+            ctx.strokeStyle = macunColors[p.macun];
+            ctx.lineWidth = 2;
+            for (let i = -15; i <= 15; i += 8) {
+                ctx.beginPath();
+                ctx.moveTo(i, p.height / 2 - 5);
+                ctx.lineTo(i + (Math.random() - 0.5) * 5, p.height / 2 + 10 + Math.sin(state.time * 3 + i) * 3);
+                ctx.stroke();
+            }
+            
+            ctx.fillStyle = '#c5a059';
+            ctx.shadowColor = '#c5a059';
+            ctx.shadowBlur = 5;
+            ctx.beginPath();
+            ctx.arc(0, -p.height / 2 - 10, 12, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#3d2818';
+            ctx.beginPath();
+            ctx.ellipse(0, -p.height / 2 - 18, 15, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(-14, -p.height / 2 - 22, 28, 8);
+            
+            ctx.fillStyle = '#8b7355';
+            ctx.beginPath();
+            ctx.arc(0, -p.height / 2 - 10, 2, 0, Math.PI * 2);
+            ctx.arc(0, -p.height / 2 - 6, 3, 0, Math.PI * 2);
+            ctx.fill();
+            
             if (p.attackTimer > 10) {
                 ctx.strokeStyle = '#c5a059';
                 ctx.lineWidth = 3;
