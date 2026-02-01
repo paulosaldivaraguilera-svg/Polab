@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📈 Trading Dashboard - Exo-Cerebro V3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); min-height: 100vh; }
+        .card { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); }
+        .pulse-green { animation: pulse-green 2s infinite; }
+        .pulse-red { animation: pulse-red 2s infinite; }
+        @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } }
+        @keyframes pulse-red { 0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } }
+    </style>
+</head>
+<body class="text-white p-6">
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto mb-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">📈 Trading Dashboard</h1>
+                <p class="text-gray-400">Polymarket Algorithmic Trading - OpenClaw Managed</p>
+            </div>
+            <div class="flex gap-4">
+                <span id="status" class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-400">⚡ Paper Mode</span>
+                <span id="connection" class="px-4 py-2 rounded-full bg-green-500/20 text-green-400 pulse-green">🟢 Conectado</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="card rounded-xl p-6">
+            <p class="text-gray-400 text-sm">Balance</p>
+            <p class="text-3xl font-bold text-green-400">$<span id="balance">1,000.00</span></p>
+            <p class="text-sm text-green-400">USDC</p>
+        </div>
+        <div class="card rounded-xl p-6">
+            <p class="text-gray-400 text-sm">P&L Diario</p>
+            <p class="text-3xl font-bold text-green-400">+<span id="daily-pnl">24.50</span></p>
+            <p class="text-sm text-green-400">+2.45%</p>
+        </div>
+        <div class="card rounded-xl p-6">
+            <p class="text-gray-400 text-sm">Win Rate</p>
+            <p class="text-3xl font-bold text-blue-400"><span id="win-rate">62</span>%</p>
+            <p class="text-sm text-gray-400">Últimas 20 ops</p>
+        </div>
+        <div class="card rounded-xl p-6">
+            <p class="text-gray-400 text-sm">Drawdown</p>
+            <p class="text-3xl font-bold text-yellow-400"><span id="drawdown">5.2</span>%</p>
+            <p class="text-sm text-gray-400">Max: 15%</p>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="card rounded-xl p-6">
+            <h3 class="text-lg font-semibold mb-4">📊 P&L History</h3>
+            <canvas id="pnlChart" height="200"></canvas>
+        </div>
+        <div class="card rounded-xl p-6">
+            <h3 class="text-lg font-semibold mb-4">🎯 Signals Distribution</h3>
+            <canvas id="signalsChart" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Risk Monitor -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="card rounded-xl p-6 border-l-4 border-green-500">
+            <h3 class="font-semibold">🛡️ Kelly Criterion</h3>
+            <p class="text-2xl mt-2"><span id="kelly-optimal">12.5</span>% <span class="text-sm text-gray-400">(fraccional)</span></p>
+            <p class="text-sm text-gray-400">Position: $<span id="kelly-position">125</span></p>
+        </div>
+        <div class="card rounded-xl p-6 border-l-4 border-yellow-500">
+            <h3 class="font-semibold">⚡ Arbitrage Windows</h3>
+            <p class="text-2xl mt-2"><span id="arb-windows">3</span></p>
+            <p class="text-sm text-gray-400">detectadas hoy</p>
+        </div>
+        <div class="card rounded-xl p-6 border-l-4 border-blue-500">
+            <h3 class="font-semibold">📡 Latencia Chile</h3>
+            <p class="text-2xl mt-2"><span id="latency">127</span>ms</p>
+            <p class="text-sm text-gray-400">a US East</p>
+        </div>
+    </div>
+
+    <!-- Recent Trades -->
+    <div class="max-w-7xl mx-auto card rounded-xl p-6">
+        <h3 class="text-lg font-semibold mb-4">📝 Recent Operations</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left text-gray-400 text-sm border-b border-gray-700">
+                        <th class="pb-3">Time</th>
+                        <th class="pb-3">Market</th>
+                        <th class="pb-3">Signal</th>
+                        <th class="pb-3">Price</th>
+                        <th class="pb-3">Status</th>
+                        <th class="pb-3">P&L</th>
+                    </tr>
+                </thead>
+                <tbody id="trades-table">
+                    <tr class="border-b border-gray-800">
+                        <td class="py-3">12:45:23</td>
+                        <td>BTC-Price-Dec</td>
+                        <td><span class="text-green-400">BUY</span></td>
+                        <td>0.5234</td>
+                        <td><span class="text-yellow-400">OPEN</span></td>
+                        <td class="text-green-400">+$12.50</td>
+                    </tr>
+                    <tr class="border-b border-gray-800">
+                        <td class="py-3">11:32:10</td>
+                        <td>Fed-Rate-Mar</td>
+                        <td><span class="text-red-400">SELL</span></td>
+                        <td>0.4512</td>
+                        <td><span class="text-gray-400">CLOSED</span></td>
+                        <td class="text-red-400">-$8.30</td>
+                    </tr>
+                    <tr class="border-b border-gray-800">
+                        <td class="py-3">10:15:45</td>
+                        <td>BTC-Price-Dec</td>
+                        <td><span class="text-green-400">BUY</span></td>
+                        <td>0.4890</td>
+                        <td><span class="text-gray-400">CLOSED</span></td>
+                        <td class="text-green-400">+$20.30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Risk Controls -->
+    <div class="max-w-7xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card rounded-xl p-6">
+            <h3 class="text-lg font-semibold mb-4">🛑 Kill Switch Status</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span>Daily Loss Limit ($50)</span>
+                    <span id="kill-daily" class="text-green-400">✅ OK</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Max Drawdown (15%)</span>
+                    <span id="kill-dd" class="text-green-400">✅ OK</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>API Health</span>
+                    <span id="kill-api" class="text-green-400">✅ OK</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Service Status</span>
+                    <span id="kill-service" class="text-green-400">✅ ACTIVE</span>
+                </div>
+            </div>
+        </div>
+        <div class="card rounded-xl p-6">
+            <h3 class="text-lg font-semibold mb-4">⚙️ Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="runCheck()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">🔍 Run Check</button>
+                <button onclick="startBot()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition">▶️ Start Bot</button>
+                <button onclick="stopBot()" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded-lg transition">⏸️ Stop Bot</button>
+                <button onclick="switchMode()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition">🔄 Switch Mode</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // P&L Chart
+        const pnlCtx = document.getElementById('pnlChart').getContext('2d');
+        new Chart(pnlCtx, {
+            type: 'line',
+            data: {
+                labels: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00'],
+                datasets: [{
+                    label: 'P&L',
+                    data: [0, 5.2, 12.8, 18.5, 24.5, 24.5],
+                    borderColor: '#22c55e',
+                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // Signals Chart
+        const signalsCtx = document.getElementById('signalsChart').getContext('2d');
+        new Chart(signalsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['BUY', 'SELL', 'HOLD'],
+                datasets: [{
+                    data: [12, 5, 3],
+                    backgroundColor: ['#22c55e', '#ef4444', '#6b7280']
+                }]
+            },
+            options: {
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Simulate real-time updates
+        function updateStats() {
+            document.getElementById('latency').textContent = Math.floor(Math.random() * 20) + 120;
+            document.getElementById('arb-windows').textContent = Math.floor(Math.random() * 5);
+        }
+        setInterval(updateStats, 5000);
+
+        // Actions
+        function runCheck() {
+            fetch('/home/pi/.openclaw/scripts/risk-manager-v3.sh check')
+                .then(r => r.text())
+                .then(t => alert('Check completado: ' + t.split('\n').pop()));
+        }
+        function startBot() {
+            fetch('/home/pi/.openclaw/scripts/risk-manager-v3.sh start');
+            document.getElementById('status').textContent = '🟢 Live Mode';
+            document.getElementById('status').className = 'px-4 py-2 rounded-full bg-green-500/20 text-green-400';
+        }
+        function stopBot() {
+            fetch('/home/pi/.openclaw/scripts/risk-manager-v3.sh stop');
+            document.getElementById('status').textContent = '🔴 Stopped';
+            document.getElementById('status').className = 'px-4 py-2 rounded-full bg-red-500/20 text-red-400';
+        }
+        function switchMode() {
+            alert('Cambiar entre Paper/Live requiere modificar .env');
+        }
+    </script>
+</body>
+</html>

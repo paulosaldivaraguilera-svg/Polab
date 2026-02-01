@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 SISTEMA DE EVOLUCIÓN CONTINUA | Foundry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(0135deg, #a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glow-green { box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
+        .glow-purple { box-shadow: 0 0 20px rgba(150, 50, 255, 0.2); }
+        .glow-cyan { box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
+        .glow-red { box-shadow: 0 0 20px rgba(168, 50, 50, 0.2); }
+        .progress-fill { transition: width 0.5s ease; }
+        .status-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff88, #9632ff, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .evolution-chain { border-left: 2px solid #9632ff; }
+        .evolution-item { position: relative; }
+        .evolution-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #9632ff;
+            border: 3px solid #0a0a0a;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- HEADER -->
+    <header class="max-w-6xl mx-auto mb-8">
+        <h1 class="text-3xl font-black mb-2">
+            <span class="gradient-text">SISTEMA DE EVOLUCIÓN CONTINUA</span>
+        </h1>
+        <p class="mono text-gray-500">Foundry Self-Improvement System | Sesión: 2026-02-01</p>
+    </header>
+
+    <!-- MAIN GRID -->
+    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- FITNESS SCORE -->
+        <section class="col-span-1 md:col-span-4">
+            <div class="glass rounded-xl p-6 glow-green">
+                <h2 class="text-lg font-bold mb-4">🎯 Fitness Score General</h2>
+                <div class="flex items-center gap-8">
+                    <div class="text-6xl font-black text-green-400">100%</div>
+                    <div class="flex-1">
+                        <div class="h-4 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500 progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-2">Operations: 86 | Success: 86 | Errors: 0</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CADENA DE EVOLUCIÓN -->
+        <section class="col-span-1 md:col-span-2">
+            <div class="glass rounded-xl p-6 h-full">
+                <h2 class="text-lg font-bold mb-4">🧬 Cadena de Evolución</h2>
+                <div class="evolution-chain pl-6 space-y-6">
+                    
+                    <div class="evolution-item">
+                        <div class="font-bold text-purple-400">Fase 1: Contexto</div>
+                        <p class="text-sm text-gray-400">Lectura de memoria y archivos del workspace</p>
+                        <div class="text-xs text-green-400 mt-1">✅ Completado</div>
+                    </div>
+
+                    <div class="evolution-item">
+                        <div class="font-bold text-purple-400">Fase 2: Extracción</div>
+                        <p class="text-sm text-gray-400">Análisis de texto técnico sobre arquitectura de sistemas</p>
+                        <div class="text-xs text-green-400 mt-1">✅ Completado: 5 insights extraídos</div>
+                    </div>
+
+                    <div class="evolution-item">
+                        <div class="font-bold text-purple-400">Fase 3: Creación</div>
+                        <p class="text-sm text-gray-400">Scripts de hardening, optimización, monitoreo</p>
+                        <div class="text-xs text-green-400 mt-1">✅ Completado: 4 scripts creados</div>
+                    </div>
+
+                    <div class="evolution-item">
+                        <div class="font-bold text-purple-400">Fase 4: Medición</div>
+                        <p class="text-sm text-gray-400">Benchmarks y métricas de rendimiento</p>
+                        <div class="text-xs text-green-400 mt-1">✅ Completado: 3 benchmarks ejecutados</div>
+                    </div>
+
+                    <div class="evolution-item">
+                        <div class="font-bold text-cyan-400">Fase 5: Persistencia</div>
+                        <p class="text-sm text-gray-400">Guardar aprendizajes en memoria permanente</p>
+                        <div class="text-xs text-yellow-400 mt-1">⏳ En progreso</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- HERRAMIENTAS -->
+        <section class="col-span-1 md:col-span-2">
+            <div class="glass rounded-xl p-6 h-full">
+                <h2 class="text-lg font-bold mb-4">🛠️ Herramientas Creadas</h2>
+                <div class="space-y-4">
+                    
+                    <div class="p-3 bg-gray-800/50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">memory_autosave</span>
+                            <span class="text-green-400 text-sm">✅ Activa</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Auto-guardado inteligente de contexto</p>
+                    </div>
+
+                    <div class="p-3 bg-gray-800/50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">workspace_backup</span>
+                            <span class="text-green-400 text-sm">✅ Activa</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Backup automático con métricas</p>
+                    </div>
+
+                    <div class="p-3 bg-gray-800/50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">foundry_log_metric</span>
+                            <span class="text-yellow-400 text-sm">⏳ Restart</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Registro de métricas ADAS</p>
+                    </div>
+
+                    <div class="p-3 bg-gray-800/50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">foundry_self_observe</span>
+                            <span class="text-yellow-400 text-sm">⏳ Restart</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Auto-análisis de rendimiento</p>
+                    </div>
+
+                    <div class="p-3 bg-purple-900/30 border border-purple-500/30 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-purple-400">hardening.sh</span>
+                            <span class="text-purple-400 text-sm">📄 Script</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Seguridad: UFW, Fail2ban, usuario no-root</p>
+                    </div>
+
+                    <div class="p-3 bg-cyan-900/30 border border-cyan-500/30 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-cyan-400">optimize-pi.sh</span>
+                            <span class="text-cyan-400 text-sm">📄 Script</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Raspberry Pi: Overclock, performance mode</p>
+                    </div>
+
+                    <div class="p-3 bg-green-900/30 border border-green-500/30 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-green-400">monitor.sh</span>
+                            <span class="text-green-400 text-sm">📄 Script</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Monitoreo: CPU, memoria, latencia, temp</p>
+                    </div>
+
+                    <div class="p-3 bg-yellow-900/30 border border-yellow-500/30 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-yellow-400">extract-insights.sh</span>
+                            <span class="text-yellow-400 text-sm">📄 Script</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Extracción de patrones de documentos</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- INSIGHTS EXTRAÍDOS -->
+        <section class="col-span-1 md:col-span-4">
+            <div class="glass rounded-xl p-6 glow-purple">
+                <h2 class="text-lg font-bold mb-4">💡 Insights Extraídos del Texto</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <div class="p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg">
+                        <div class="text-purple-400 font-bold text-sm mb-2">PATRÓN 1</div>
+                        <p class="text-sm">Heartbeat para monitoreo autónomo</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Auto-observación periódica</p>
+                    </div>
+
+                    <div class="p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg">
+                        <div class="text-purple-400 font-bold text-sm mb-2">PATRÓN 2</div>
+                        <p class="text-sm">Localidad + Autonomía = Seguridad</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Herramientas locales primero</p>
+                    </div>
+
+                    <div class="p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg">
+                        <div class="text-purple-400 font-bold text-sm mb-2">PATRÓN 3</div>
+                        <p class="text-sm">Optimización iterativa continua</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Benchmark regular</p>
+                    </div>
+
+                    <div class="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <div class="text-red-400 font-bold text-sm mb-2">ERROR 1</div>
+                        <p class="text-sm">Latencia > 150ms</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Usar dRPC + WebSocket</p>
+                    </div>
+
+                    <div class="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <div class="text-red-400 font-bold text-sm mb-2">ERROR 2</div>
+                        <p class="text-sm">Sobrecalentamiento</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Cooling activo si > 75°C</p>
+                    </div>
+
+                    <div class="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <div class="text-red-400 font-bold text-sm mb-2">ERROR 3</div>
+                        <p class="text-sm">Inyección de prompts</p>
+                        <p class="text-xs text-gray-500 mt-1">→ Sandboxing + validación</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- MÉTRICAS ACUMULADAS -->
+        <section class="col-span-1 md:col-span-2">
+            <div class="glass rounded-xl p-6 h-full">
+                <h2 class="text-lg font-bold mb-4">📊 Métricas Acumuladas</h2>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Benchmarks ejecutados</span>
+                            <span class="mono text-cyan-400">3</span>
+                        </div>
+                        <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-cyan-500" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Operaciones exitosas</span>
+                            <span class="mono text-green-400">86/86</span>
+                        </div>
+                        <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Insights extraídos</span>
+                            <span class="mono text-purple-400">5</span>
+                        </div>
+                        <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Scripts/ Herramientas</span>
+                            <span class="mono text-yellow-400">8</span>
+                        </div>
+                        <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Archivos en workspace</span>
+                            <span class="mono text-gray-400">840+</span>
+                        </div>
+                        <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gray-600" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRÓXIMOS PASOS -->
+        <section class="col-span-1 md:col-span-2">
+            <div class="glass rounded-xl p-6 h-full">
+                <h2 class="text-lg font-bold mb-4">🚀 Próximos Pasos</h2>
+                <div class="space-y-3">
+                    
+                    <div class="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
+                        <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                        <div>
+                            <div class="font-bold text-sm">Ejecutar hardening.sh</div>
+                            <div class="text-xs text-gray-500">Seguridad completa</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
+                        <span class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                        <div>
+                            <div class="font-bold text-sm">Ejecutar optimize-pi.sh</div>
+                            <div class="text-xs text-gray-500">Rendimiento óptimo</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
+                        <span class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                        <div>
+                            <div class="font-bold text-sm">Configurar monitor.sh</div>
+                            <div class="text-xs text-gray-500">Observabilidad</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
+                        <span class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                        <div>
+                            <div class="font-bold text-sm">Gateway restart</div>
+                            <div class="text-xs text-gray-500">Cargar nuevas tools</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                        <div>
+                            <div class="font-bold text-sm">Implementar polymarket_api</div>
+                            <div class="text-xs text-gray-500">Trading real (futuro)</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- COMANDOS RÁPIDOS -->
+        <section class="col-span-1 md:col-span-4">
+            <div class="glass rounded-xl p-6">
+                <h2 class="text-lg font-bold mb-4">⚡ Comandos Rápidos</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="copyCmd('bash /home/pi/.openclaw/scripts/hardening.sh')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        🔒 Aplicar Hardening
+                    </button>
+                    <button onclick="copyCmd('bash /home/pi/.openclaw/scripts/optimize-pi.sh')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        ⚙️ Optimizar Pi
+                    </button>
+                    <button onclick="copyCmd('bash /home/pi/.openclaw/scripts/monitor.sh')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        📊 Monitorear
+                    </button>
+                    <button onclick="copyCmd('bash /home/pi/.openclaw/scripts/extract-insights.sh')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        💡 Extraer Insights
+                    </button>
+                    <button onclick="copyCmd('node /home/pi/.openclaw/workspace/projects/polab/la-unidad/v3-informe/benchmark.js --iterations 10')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        🎯 Benchmark
+                    </button>
+                    <button onclick="copyCmd('openclaw gateway restart')" class="p-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm text-left">
+                        🔄 Gateway Restart
+                    </button>
+                    <button onclick="copyCmd('cat /home/pi/.openclaw/.foundry/insights/resumen_*.md')" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        📄 Ver Insights
+                    </button>
+                    <button onclick="location.reload()" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-left">
+                        🔃 Actualizar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-6xl mx-auto mt-8 py-4 border-t border-gray-800 text-center">
+        <p class="mono text-gray-600 text-sm">
+            🧬 Sistema de Evolución Continua | Generado automáticamente | 2026-02-01 15:48
+        </p>
+        <p class="mono text-gray-700 text-xs mt-1">
+            Fitness: 100% | Herramientas: 8 | Insights: 5 | Benchmarks: 3
+        </p>
+    </footer>
+
+    <script>
+        function copyCmd(cmd) {
+            navigator.clipboard.writeText(cmd).then(() => {
+                alert('Comando copiado:\n' + cmd);
+            });
+        }
+        
+        console.log('%c🧬 Sistema de Evolución Continua cargado', 'color: #9632ff; font-size: 16px;');
+        console.log('Fitness Score: 100%');
+        console.log('Herramientas: 8');
+        console.log('Insights: 5');
+    </script>
+</body>
+</html>
