@@ -39,6 +39,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOvklkM2xDnRfaHXSvfJuxWsw3A/n9waWl+tfA4v5sN
 
 - **La Unidad:** Script de informe diario
 - **Docker:** Portainer + Netdata + Uptime Kuma
+- **Backup:** Diario a las 3:00 AM (`/home/pi/.openclaw/workspace/scripts/backup.sh`)
 
 ---
 
