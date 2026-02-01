@@ -289,7 +289,7 @@
             </div>
             
             <div id="ui">
-                <div id="stats">
+                <div id="stats" style="cursor: pointer;" onclick="showShop()">
                     <div class="stat">
                         <div class="stat-label">Karma Luz</div>
                         <div class="stat-value karma-light" id="karmaLight">0</div>
@@ -610,6 +610,50 @@
         document.getElementById('karmaShadow').textContent = state.karmaShadow;
         document.getElementById('rituals').textContent = state.rituals;
     }
+
+    // Tienda
+    const inventory = { espada: 0, escudo: 0, pocion: 0, libro: 0 };
+    let karmaBonus = 0;
+    
+    function showShop() {
+        document.getElementById('shopPanel').classList.remove('hidden');
+    }
+    
+    function closeShop() {
+        document.getElementById('shopPanel').classList.add('hidden');
+    }
+    
+    function buyItem(item, cost) {
+        const total = state.karmaLight + state.karmaShadow;
+        if (total < cost) {
+            document.getElementById('shopMessage').innerHTML = '<span style="color: #ff4444;">No tienes suficiente Karma!</span>';
+            return;
+        }
+        
+        // Prefer shadow karma
+        if (state.karmaShadow >= cost) {
+            state.karmaShadow -= cost;
+        } else {
+            const remaining = cost - state.karmaShadow;
+            state.karmaShadow = 0;
+            state.karmaLight -= remaining;
+        }
+        
+        inventory[item]++;
+        
+        if (item === 'libro') karmaBonus += 5;
+        if (item === 'escudo') playerHP += 20;
+        
+        document.getElementById('shopMessage').innerHTML = `<span style="color: #00ff88;">Compraste ${item}!</span>`;
+        updateStats();
+    }
+    
+    function addKarma(type, amount) {
+        const bonus = type === 'shadow' ? karmaBonus : 0;
+        if (type === 'light') state.karmaLight += amount + bonus;
+        else state.karmaShadow += amount + bonus;
+        updateStats();
+    }
 </script>
 
     <!-- Panel de Combate -->
@@ -636,6 +680,40 @@
         </div>
         <div id="combatLog" style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; font-size: 12px; color: #888; max-height: 100px; overflow-y: auto;"></div>
         <button onclick="closeCombat()" style="margin-top: 15px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">Cerrar</button>
+    </div>
+
+    <!-- Tienda -->
+    <div id="shopPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #1a1a2e 0%, #0a0a1a 100%); padding: 30px; border-radius: 15px; border: 2px solid #ffd700; z-index: 1000; min-width: 400px; max-width: 500px;">
+        <h2 style="color: #ffd700; margin-bottom: 20px; text-align: center;">🏪 Tienda del Brujo</h2>
+        <p style="color: #888; text-align: center; margin-bottom: 20px;">Gasta tu Karma en mejoras</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 30px;">🗡️</div>
+                <div style="color: #ff4466; font-weight: bold;">Espada</div>
+                <div style="color: #888; font-size: 12px;">+10 Daño</div>
+                <button onclick="buyItem('espada', 20)" style="margin-top: 10px; padding: 5px 15px; background: #ffd700; border: none; border-radius: 5px; cursor: pointer;">20 Karma</button>
+            </div>
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 30px;">🛡️</div>
+                <div style="color: #00ff88; font-weight: bold;">Escudo</div>
+                <div style="color: #888; font-size: 12px;">+20 HP</div>
+                <button onclick="buyItem('escudo', 15)" style="margin-top: 10px; padding: 5px 15px; background: #ffd700; border: none; border-radius: 5px; cursor: pointer;">15 Karma</button>
+            </div>
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 30px;">🔮</div>
+                <div style="color: #6a5acd; font-weight: bold;">Poción</div>
+                <div style="color: #888; font-size: 12px;">Cura 30 HP</div>
+                <button onclick="buyItem('pocion', 10)" style="margin-top: 10px; padding: 5px 15px; background: #ffd700; border: none; border-radius: 5px; cursor: pointer;">10 Karma</button>
+            </div>
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 30px;">📜</div>
+                <div style="color: #00aaff; font-weight: bold;">Libro</div>
+                <div style="color: #888; font-size: 12px;">+5 Karma/spawn</div>
+                <button onclick="buyItem('libro', 30)" style="margin-top: 10px; padding: 5px 15px; background: #ffd700; border: none; border-radius: 5px; cursor: pointer;">30 Karma</button>
+            </div>
+        </div>
+        <div id="shopMessage" style="color: #888; text-align: center; margin-bottom: 10px;"></div>
+        <button onclick="closeShop()" style="padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
     </div>
 </body>
 </html>

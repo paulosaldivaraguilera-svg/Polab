@@ -232,7 +232,7 @@
                     <button class="mode-btn" onclick="startGame('survival')">
                         💀 Survival Mode
                     </button>
-                    <button class="mode-btn" onclick="startGame('elemental')">
+                    <button class="mode-btn" onclick="showMultiplayer()">
                         ⚡ Elemental Chaos
                     </button>
                 </div>
@@ -621,6 +621,135 @@
         if (state.combo >= 5) unlockAchievement('combo5');
         if (ball.speed >= 15) unlockAchievement('speed');
     }
+
+    // Multiplayer
+    let multiplayer = false;
+    let player1Score = 0;
+    let player2Score = 0;
+    let ballMulti = { x: 0, y: 0, vx: 0, vy: 0, speed: 7 };
+    let p1Y = 0, p2Y = 0;
+    
+    const keys1 = { w: false, s: false };
+    const keys2 = { ArrowUp: false, ArrowDown: false };
+    
+    document.addEventListener('keydown', e => {
+        if (e.key in keys1) keys1[e.key] = true;
+        if (e.key in keys2) keys2[e.key] = true;
+    });
+    document.addEventListener('keyup', e => {
+        if (e.key in keys1) keys1[e.key] = false;
+        if (e.key in keys2) keys2[e.key] = false;
+    });
+    
+    function showMultiplayer() {
+        document.getElementById('multiplayerPanel').classList.remove('hidden');
+    }
+    
+    function closeMultiplayer() {
+        multiplayer = false;
+        document.getElementById('multiplayerPanel').classList.add('hidden');
+    }
+    
+    function startMultiplayer() {
+        multiplayer = true;
+        player1Score = 0;
+        player2Score = 0;
+        p1Y = canvas.height / 2 - paddleHeight / 2;
+        p2Y = canvas.height / 2 - paddleHeight / 2;
+        resetBallMulti();
+        document.getElementById('multiplayerPanel').classList.add('hidden');
+        gameLoopMulti();
+    }
+    
+    function resetBallMulti() {
+        ballMulti.x = canvas.width / 2;
+        ballMulti.y = canvas.height / 2;
+        const angle = (Math.random() - 0.5) * Math.PI / 2;
+        ballMulti.vx = Math.cos(angle) * ballMulti.speed * (Math.random() > 0.5 ? 1 : -1);
+        ballMulti.vy = Math.sin(angle) * ballMulti.speed;
+    }
+    
+    function updateMultiplayer() {
+        // P1
+        if (keys1.w) p1Y -= player.speed;
+        if (keys1.s) p1Y += player.speed;
+        p1Y = Math.max(0, Math.min(canvas.height - paddleHeight, p1Y));
+        
+        // P2
+        if (keys2.ArrowUp) p2Y -= player.speed;
+        if (keys2.ArrowDown) p2Y += player.speed;
+        p2Y = Math.max(0, Math.min(canvas.height - paddleHeight, p2Y));
+        
+        // Ball
+        ballMulti.x += ballMulti.vx;
+        ballMulti.y += ballMulti.vy;
+        
+        // Walls
+        if (ballMulti.y - ballRadius < 0 || ballMulti.y + ballRadius > canvas.height) {
+            ballMulti.vy *= -1;
+        }
+        
+        // P1
+        if (ballMulti.x - ballRadius < paddleWidth + 10 && ballMulti.y > p1Y && ballMulti.y < p1Y + paddleHeight) {
+            ballMulti.vx = Math.abs(ballMulti.vx) * 1.05;
+            ballMulti.x = paddleWidth + 10 + ballRadius;
+        }
+        
+        // P2
+        if (ballMulti.x + ballRadius > canvas.width - paddleWidth - 10 && ballMulti.y > p2Y && ballMulti.y < p2Y + paddleHeight) {
+            ballMulti.vx = -Math.abs(ballMulti.vx) * 1.05;
+            ballMulti.x = canvas.width - paddleWidth - 10 - ballRadius;
+        }
+        
+        // Score
+        if (ballMulti.x < 0) {
+            player2Score++;
+            document.getElementById('p2ScoreMulti').textContent = player2Score;
+            resetBallMulti();
+        }
+        if (ballMulti.x > canvas.width) {
+            player1Score++;
+            document.getElementById('p1ScoreMulti').textContent = player1Score;
+            resetBallMulti();
+        }
+    }
+    
+    function drawMultiplayer() {
+        ctx.fillStyle = '#0a0a0f';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Center line
+        ctx.strokeStyle = '#333';
+        ctx.setLineDash([15, 15]);
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(canvas.width / 2, canvas.height);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Paddles
+        ctx.fillStyle = '#00ff88';
+        ctx.fillRect(10, p1Y, paddleWidth, paddleHeight);
+        
+        ctx.fillStyle = '#ff4466';
+        ctx.fillRect(canvas.width - paddleWidth - 10, p2Y, paddleWidth, paddleHeight);
+        
+        // Ball
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(ballMulti.x, ballMulti.y, ballRadius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    function gameLoopMulti() {
+        if (!multiplayer) return;
+        updateMultiplayer();
+        drawMultiplayer();
+        requestAnimationFrame(gameLoopMulti);
+    }
+    
+    // Hook into main game loop
+    const originalUpdate = typeof update === 'function' ? update : () => {};
 </script>
 
     <!-- Sistema de Logros -->
@@ -635,6 +764,18 @@
     <div id="achievementsMenu" class="hidden" style="position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9); padding: 20px; border-radius: 10px; z-index: 100;">
         <h3 style="color: #ffcc00; margin-bottom: 10px;">🏆 Logros</h3>
         <div id="achievementsList" style="color: #888; font-size: 14px;"></div>
+    </div>
+
+    <!-- Multiplayer Panel -->
+    <div id="multiplayerPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(10,10,20,0.95); padding: 30px; border-radius: 15px; border: 2px solid #00ff88; z-index: 1000; text-align: center; min-width: 350px;">
+        <h2 style="color: #00ff88; margin-bottom: 20px;">🎮 Modo 2 Jugadores</h2>
+        <p style="color: #888; margin-bottom: 20px;">Jugador 1: W/S | Jugador 2: Flechas</p>
+        <div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+            <div style="color: #00ff88;">Jugador 1<br><span id="p1ScoreMulti">0</span></div>
+            <div style="color: #ff4466;">Jugador 2<br><span id="p2ScoreMulti">0</span></div>
+        </div>
+        <button onclick="startMultiplayer()" style="padding: 15px 40px; background: #00ff88; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer; font-size: 16px;">INICIAR PARTIDA</button>
+        <button onclick="closeMultiplayer()" style="margin-top: 15px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
     </div>
 </body>
 </html>
