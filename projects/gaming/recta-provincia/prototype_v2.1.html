@@ -709,6 +709,41 @@
             showNotification(`🏆 Logro desbloqueado: ${a.name}!`);
         }
     }
+
+    // Daily Challenge v2.6
+    const dailyChallenges = [
+        { desc: "Explora 3 locaciones diferentes", reward: 10, type: "explore" },
+        { desc: "Gana un combate sin recibir dano", reward: 15, type: "combat" },
+        { desc: "Usa 3 rituales diferentes", reward: 10, type: "ritual" },
+        { desc: "Encuentra un secreto oculto", reward: 20, type: "secret" },
+        { desc: "Compra algo en la tienda", reward: 5, type: "shop" }
+    ];
+    
+    function getTodayChallenge() {
+        const day = new Date().getDate();
+        return dailyChallenges[day % dailyChallenges.length];
+    }
+    
+    function showDailyChallenge() {
+        const challenge = getTodayChallenge();
+        document.getElementById('dailyContent').innerHTML = `
+            <p style="font-size: 18px; margin-bottom: 15px;">${challenge.desc}</p>
+            <p style="color: #ffd700; font-size: 24px;">Recompensa: +${challenge.reward} Karma</p>
+        `;
+        document.getElementById('dailyPanel').classList.remove('hidden');
+    }
+    
+    function claimDailyReward() {
+        const challenge = getTodayChallenge();
+        state.karmaLight += challenge.reward;
+        updateStats();
+        closeDaily();
+        showNotification(`+${challenge.reward} Karma reclamados!`);
+    }
+    
+    function closeDaily() {
+        document.getElementById('dailyPanel').classList.add('hidden');
+    }
 </script>
 
     <!-- Panel de Combate -->
@@ -776,6 +811,14 @@
         <h2 style="color: #ffd700; margin-bottom: 20px; text-align: center;">🏆 Logros</h2>
         <div id="achievementsList" style="color: #fff;"></div>
         <button onclick="closeAchievements()" style="margin-top: 20px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
+    </div>
+
+    <!-- Daily Challenge -->
+    <div id="dailyPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 25px; border-radius: 15px; border: 2px solid #ffd700; z-index: 1000; min-width: 350px; text-align: center;">
+        <h2 style="color: #ffd700; margin-bottom: 20px;">🎯 Desafio Diario</h2>
+        <div id="dailyContent" style="color: #fff;"></div>
+        <button onclick="claimDailyReward()" style="margin-top: 20px; padding: 15px 40px; background: #ffd700; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;">RECLAMAR RECOMPENSA</button>
+        <button onclick="closeDaily()" style="margin-top: 10px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
     </div>
 </body>
 </html>
