@@ -841,6 +841,47 @@ Tu nombre:`) || 'Anónimo';
             ballRadius = 15;
         }
     }
+
+    // Tournament mode v2.5
+    let tournamentPlayers = [];
+    let tournamentBracket = [];
+    
+    function startTournament() {
+        const name = prompt("Tu nombre para el tournament:") || "Player";
+        tournamentPlayers = [name, "CPU1", "CPU2", "CPU3", "CPU4", "CPU5", "CPU6", "CPU7"];
+        tournamentBracket = generateBracket(tournamentPlayers);
+        showTournamentBracket();
+    }
+    
+    function generateBracket(players) {
+        // Shuffle
+        players = players.sort(() => Math.random() - 0.5);
+        const rounds = [];
+        let current = players;
+        while (current.length > 1) {
+            const next = [];
+            for (let i = 0; i < current.length; i += 2) {
+                if (i + 1 < current.length) {
+                    next.push({ p1: current[i], p2: current[i+1], winner: null });
+                } else {
+                    next.push({ p1: current[i], p2: "BYE", winner: current[i] });
+                }
+            }
+            rounds.push(next);
+            current = next.map(m => m.winner || "?");
+        }
+        return rounds;
+    }
+    
+    function showTournamentBracket() {
+        const html = tournamentBracket.map((round, i) => 
+            `<div style="margin: 20px;">
+                <h3 style="color: #ffd700;">Ronda ${i+1}</h3>
+                ${round.map(m => `<div style="padding: 5px; background: #222; margin: 5px;">${m.p1} vs ${m.p2}</div>`).join('')}
+            </div>`
+        ).join('');
+        document.getElementById('gameArea').innerHTML = `<div style="color: white;">${html}</div>`;
+    }
 </script>
 
     <!-- Sistema de Logros -->

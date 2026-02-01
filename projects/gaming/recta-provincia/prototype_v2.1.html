@@ -671,6 +671,44 @@
         }
         updateStats();
     }
+
+    // Sistema de logros v2.5
+    const achievements = [
+        { id: "first_visit", name: "Primer Paso", desc: "Visita tu primera locacion", unlocked: false },
+        { id: "explorer", name: "Explorador", desc: "Visit all 7 locations", unlocked: false },
+        { id: "shadow_master", name: "Maestro de las Sombras", desc: "50+ Karma Sombra", unlocked: false },
+        { id: "light_master", name: "Maestro de la Luz", desc: "50+ Karma Luz", unlocked: false },
+        { id: "ritual_master", name: "Maestro Rituales", desc: "Usa todos los rituales", unlocked: false },
+        { id: "combat_wins", name: "Guerrero", desc: "Gana 10 combates", unlocked: false },
+        { id: "shop_master", name: "Comprador", desc: "Compra 5 items en la tienda", unlocked: false },
+        { id: "hidden_secrets", name: "Secretos Ocultos", desc: "Encuentra todos los secretos", unlocked: false }
+    ];
+    
+    function showAchievements() {
+        const list = document.getElementById('achievementsList');
+        list.innerHTML = achievements.map(a => 
+            `<div style="padding: 10px; border-bottom: 1px solid #333; display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 24px;">${a.unlocked ? '🏆' : '🔒'}</span>
+                <div>
+                    <div style="font-weight: bold; color: ${a.unlocked ? '#ffd700' : '#666'};">${a.name}</div>
+                    <div style="font-size: 12px; color: #888;">${a.desc}</div>
+                </div>
+            </div>`
+        ).join('');
+        document.getElementById('achievementsPanel').classList.remove('hidden');
+    }
+    
+    function closeAchievements() {
+        document.getElementById('achievementsPanel').classList.add('hidden');
+    }
+    
+    function unlockAchievement(id) {
+        const a = achievements.find(x => x.id === id);
+        if (a && !a.unlocked) {
+            a.unlocked = true;
+            showNotification(`🏆 Logro desbloqueado: ${a.name}!`);
+        }
+    }
 </script>
 
     <!-- Panel de Combate -->
@@ -731,6 +769,13 @@
         </div>
         <div id="shopMessage" style="color: #888; text-align: center; margin-bottom: 10px;"></div>
         <button onclick="closeShop()" style="padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
+    </div>
+
+    <!-- Logros Panel -->
+    <div id="achievementsPanel" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 25px; border-radius: 15px; border: 2px solid #ffd700; z-index: 1000; min-width: 350px; max-width: 500px;">
+        <h2 style="color: #ffd700; margin-bottom: 20px; text-align: center;">🏆 Logros</h2>
+        <div id="achievementsList" style="color: #fff;"></div>
+        <button onclick="closeAchievements()" style="margin-top: 20px; padding: 10px 30px; background: #444; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%;">CERRAR</button>
     </div>
 </body>
 </html>

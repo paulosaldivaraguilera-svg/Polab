@@ -33,7 +33,38 @@
             "addressCountry": "CL"
         }
     }
-    </script>
+    
+    function toggleChatbot() {
+        const chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const message = input.value.trim();
+        
+        if (message) {
+            messages.innerHTML += `
+                <div style="background: #1a365d; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: right;">
+                    <p style="margin: 0; color: white; font-size: 14px;">${message}</p>
+                </div>
+            `;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            // Auto response
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <p style="margin: 0; color: #2d3748; font-size: 14px;">Gracias por tu mensaje! Paulo te contactara por WhatsApp pronto.</p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -383,13 +414,75 @@
     </style>
 
     <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">
+    function toggleChatbot() {
+        const chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const message = input.value.trim();
+        
+        if (message) {
+            messages.innerHTML += `
+                <div style="background: #1a365d; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: right;">
+                    <p style="margin: 0; color: white; font-size: 14px;">${message}</p>
+                </div>
+            `;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            // Auto response
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <p style="margin: 0; color: #2d3748; font-size: 14px;">Gracias por tu mensaje! Paulo te contactara por WhatsApp pronto.</p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    
+    function toggleChatbot() {
+        const chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const message = input.value.trim();
+        
+        if (message) {
+            messages.innerHTML += `
+                <div style="background: #1a365d; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: right;">
+                    <p style="margin: 0; color: white; font-size: 14px;">${message}</p>
+                </div>
+            `;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            // Auto response
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <p style="margin: 0; color: #2d3748; font-size: 14px;">Gracias por tu mensaje! Paulo te contactara por WhatsApp pronto.</p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
 </head>
 <body>
     <a href="https://wa.me/56974349077" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
@@ -604,6 +697,57 @@
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
-    </script>
+    
+    function toggleChatbot() {
+        const chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const message = input.value.trim();
+        
+        if (message) {
+            messages.innerHTML += `
+                <div style="background: #1a365d; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: right;">
+                    <p style="margin: 0; color: white; font-size: 14px;">${message}</p>
+                </div>
+            `;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            // Auto response
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <p style="margin: 0; color: #2d3748; font-size: 14px;">Gracias por tu mensaje! Paulo te contactara por WhatsApp pronto.</p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
+
+    <!-- Chatbot Flotante -->
+    <div id="chatbot" style="position: fixed; bottom: 90px; right: 20px; z-index: 999; display: none;">
+        <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); border-radius: 15px; padding: 20px; width: 350px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="color: white; margin: 0;">💬 Chat con Paulo</h3>
+                <button onclick="toggleChatbot()" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">✕</button>
+            </div>
+            <div id="chatMessages" style="height: 250px; overflow-y: auto; background: #f7fafc; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                <div style="background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                    <p style="margin: 0; color: #2d3748; font-size: 14px;">Hola! Soy el asistente de Paulo. Como puedo ayudarte?</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." style="flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none;">
+                <button onclick="sendChatMessage()" style="background: #1a365d; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <button onclick="toggleChatbot()" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #1a365d; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 1000;">💬</button>
 </body>
 </html>
