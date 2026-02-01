@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Panel de Control | Paulo Saldívar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .mono { font-family: 'Space Mono', monospace; }
+        .glass {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .glow-red { box-shadow: 0 0 30px rgba(168, 50, 50, 0.3); }
+        .glow-cyan { box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); }
+        .glow-yellow { box-shadow: 0 0 30px rgba(255, 193, 7, 0.3); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); }
+        .status-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .gradient-text {
+            background: linear-gradient(135deg, #A83232, #FFC107, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- HEADER -->
+    <header class="max-w-7xl mx-auto mb-12">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-5xl font-black mb-2">
+                    <span class="gradient-text">PANEL DE CONTROL</span>
+                </h1>
+                <p class="mono text-gray-500">Paulo Saldívar | Workspace v2.0</p>
+            </div>
+            <div class="text-right">
+                <div class="flex items-center gap-3">
+                    <span class="mono text-green-400 text-sm">● Sistema activo</span>
+                    <span class="mono text-gray-500 text-sm" id="clock">--:--:--</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN GRID -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- 🎮 JUEGOS -->
+        <section class="col-span-1 md:col-span-2 lg:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">🎮</span> Proyectos Gaming
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- ELEMENTAL PONG -->
+                <div class="glass rounded-xl p-6 card-hover glow-cyan cursor-pointer" onclick="openGame('pong')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-2xl">🏓</div>
+                        <span class="mono text-green-400 text-xs">✅ Listo</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">ELEMENTAL PONG v2.1</h3>
+                    <p class="text-gray-400 text-sm mb-3">Arcade party game con audio y partículas</p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">32 KB</span>
+                        <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded">877 líneas</span>
+                    </div>
+                </div>
+
+                <!-- RECTA PROVINCIA -->
+                <div class="glass rounded-xl p-6 card-hover glow-red cursor-pointer" onclick="openGame('recta')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-2xl">🌑</div>
+                        <span class="mono text-green-400 text-xs">✅ Listo</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">RECTA PROVINCIA v2.0</h3>
+                    <p class="text-gray-400 text-sm mb-3">RPG de folklore chilote</p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded">38 KB</span>
+                        <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded">1098 líneas</span>
+                    </div>
+                </div>
+
+                <!-- DELITOS -->
+                <div class="glass rounded-xl p-6 card-hover glow-yellow col-span-1 md:col-span-2 cursor-pointer" onclick="openGame('delitos')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl">🔍</div>
+                        <span class="mono text-green-400 text-xs">✅ 18/18 CASOS</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">DELITOS v1.5</h3>
+                            <p class="text-gray-400 text-sm">RPG de investigación cyberpunk</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <div class="text-3xl font-bold text-yellow-400">82 KB</div>
+                            <div class="mono text-gray-500 text-xs">2027 líneas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📰 LA UNIDAD -->
+        <section class="col-span-1 md:col-span-2 lg:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">📰</span> La Unidad v2.0
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Periódico -->
+                <div class="glass rounded-xl p-6 card-hover cursor-pointer" onclick="openLink('/projects/polab/la-unidad/index_v2.html')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-2xl">📰</div>
+                        <span class="mono text-green-400 text-xs">● Online</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Periódico Digital</h3>
+                    <p class="text-gray-400 text-sm mb-3">Análisis desde perspectiva ML</p>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="bg-gray-700 px-2 py-1 rounded">Política</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded">Economía</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded">Internacional</span>
+                        <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded">Análisis</span>
+                    </div>
+                </div>
+
+                <!-- RSS Monitor -->
+                <div class="glass rounded-xl p-6 card-hover cursor-pointer" onclick="openLink('/projects/polab/la-unidad/components/rss-monitor.html')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-2xl">📡</div>
+                        <span class="mono text-yellow-400 text-xs status-dot">Monitoreando</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">RSS Monitor</h3>
+                    <p class="text-gray-400 text-sm mb-3">5 fuentes activas</p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded">El Siglo</span>
+                        <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded">Telesur</span>
+                        <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded">APL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📄 FORMALIZACIÓN -->
+        <section class="col-span-1 md:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">📄</span> Formalización Kant vs Marx
+            </h2>
+            <div class="glass rounded-xl p-6 card-hover cursor-pointer" onclick="openLink('/formalizacion-epistemologica-v2.html')">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-2xl">⚖️</div>
+                    <span class="mono text-green-400 text-xs">v2.0</span>
+                </div>
+                <h3 class="font-bold text-lg mb-1">Análisis Epistemológico</h3>
+                <p class="text-gray-400 text-sm mb-3">Topología cerrada vs Dinámica dialéctica</p>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <div class="bg-purple-500/20 text-purple-400 py-2 rounded">8 Secciones</div>
+                    <div class="bg-purple-500/20 text-purple-400 py-2 rounded">8 Gráficos</div>
+                    <div class="bg-purple-500/20 text-purple-400 py-2 rounded">30 KB</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🧠 SISTEMA DIALÉCTICO -->
+        <section class="col-span-1 md:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">🧠</span> Sistema Dialéctico v2.0
+            </h2>
+            <div class="glass rounded-xl p-6 card-hover">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-2xl">⚖️</div>
+                    <span class="mono text-green-400 text-xs">● Activo</span>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Marco Filosófico</h3>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="text-center p-3 bg-gray-800/50 rounded">
+                        <div class="text-xl mb-1">🔵</div>
+                        <div class="text-xs text-gray-400">Kantiano</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-800/50 rounded">
+                        <div class="text-xl mb-1">🟢</div>
+                        <div class="text-xs text-gray-400">Hegeliano</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-800/50 rounded">
+                        <div class="text-xl mb-1">🔴</div>
+                        <div class="text-xs text-gray-400">Marxista</div>
+                    </div>
+                </div>
+                <div class="flex gap-2 text-xs">
+                    <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">CLI</span>
+                    <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded">Python</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📊 MÉTRICAS -->
+        <section class="col-span-1 md:col-span-4">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">📊</span> Métricas del Workspace
+            </h2>
+            <div class="glass rounded-xl p-6">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-400">4</div>
+                        <div class="text-xs text-gray-400">Proyectos</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-cyan-400">18</div>
+                        <div class="text-xs text-gray-400">Casos DELITOS</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-yellow-400">4000+</div>
+                        <div class="text-xs text-gray-400">Líneas código</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-400">6.5 MB</div>
+                        <div class="text-xs text-gray-400">Workspace</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-red-400">100%</div>
+                        <div class="text-xs text-gray-400">Completado</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🔧 HERRAMIENTAS -->
+        <section class="col-span-1 md:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">🔧</span> Herramientas
+            </h2>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="openLink('/projects/polab/la-unidad/components/analisis-coyuntura.html')" class="glass rounded-lg p-4 text-left hover:bg-white/10 transition">
+                    <div class="text-xl mb-1">📈</div>
+                    <div class="font-bold text-sm">Análisis Coyuntura</div>
+                </button>
+                <button onclick="openLink('/projects/polab/la-unidad/MEJORAS.md')" class="glass rounded-lg p-4 text-left hover:bg-white/10 transition">
+                    <div class="text-xl mb-1">📋</div>
+                    <div class="font-bold text-sm">Roadmap</div>
+                </button>
+                <button onclick="runCommand('code')" class="glass rounded-lg p-4 text-left hover:bg-white/10 transition">
+                    <div class="text-xl mb-1">💻</div>
+                    <div class="font-bold text-sm">VS Code</div>
+                </button>
+                <button onclick="runCommand('openclaw dashboard')" class="glass rounded-lg p-4 text-left hover:bg-white/10 transition">
+                    <div class="text-xl mb-1">🦞</div>
+                    <div class="font-bold text-sm">OpenClaw</div>
+                </button>
+            </div>
+        </section>
+
+        <!-- 💡 ACCIÓN RÁPIDA -->
+        <section class="col-span-1 md:col-span-2">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-2xl">💡</span> Acción Rápida
+            </h2>
+            <div class="glass rounded-xl p-6">
+                <p class="text-gray-400 text-sm mb-4">¿Qué quieres hacer ahora?</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="openLink('/projects/polab/la-unidad/index_v2.html')" class="bg-gradient-to-r from-red-600 to-red-800 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
+                        📰 Ver La Unidad
+                    </button>
+                    <button onclick="openGame('pong')" class="bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
+                        🎮 Jugar PONG
+                    </button>
+                    <button onclick="openGame('recta')" class="bg-gradient-to-r from-red-700 to-red-900 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
+                        🌑 Jugar RECTA
+                    </button>
+                    <button onclick="openGame('delitos')" class="bg-gradient-to-r from-yellow-500 to-orange-600 px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
+                        🔍 Jugar DELITOS
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-7xl mx-auto mt-12 py-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+        <p>🎮💙 Panel de Control | Creado con Foundry para Paulo Saldívar</p>
+        <p class="mono text-xs mt-2">2026-02-01 | v2.0</p>
+    </footer>
+
+    <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent = now.toLocaleTimeString('es-CL');
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Navigation functions
+        function openGame(game) {
+            const paths = {
+                'pong': '/projects/gaming/elemental-pong/prototype_v2.1.html',
+                'recta': '/projects/gaming/recta-provincia/prototype_v2.0.html',
+                'delitos': '/projects/polab/videojuegos/delitos/index_v1.5.html'
+            };
+            if (paths[game]) {
+                window.open(paths[game], '_blank');
+            }
+        }
+
+        function openLink(path) {
+            window.open(path, '_blank');
+        }
+
+        function runCommand(cmd) {
+            // In a real implementation, this would send to OpenClaw
+            console.log('Command:', cmd);
+            alert('Comando enviado: ' + cmd);
+        }
+
+        console.log('🎮 Panel de Control cargado - v2.0');
+    </script>
+</body>
+</html>

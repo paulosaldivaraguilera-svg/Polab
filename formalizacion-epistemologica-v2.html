@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formalización Completa: Kant vs. Materialismo Dialéctico</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-basic-latest.min.js"></script>
+
+    <!-- KaTeX para matemáticas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Paleta: Contraste Revolucionario */
+        .bg-primary { background-color: #D32F2F; }
+        .text-primary { color: #D32F2F; }
+        .border-primary { border-color: #D32F2F; }
+        
+        .bg-dark { background-color: #1a1a1a; }
+        .text-dark { color: #1a1a1a; }
+        
+        .bg-accent { background-color: #FFC107; }
+        .text-accent { color: #B00020; }
+
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.2s;
+            border-top: 4px solid #D32F2F;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .equation-box {
+            background-color: #1a1a1a;
+            color: #FFC107;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 1rem 0;
+            border-left: 4px solid #D32F2F;
+            overflow-x: auto;
+        }
+
+        .math-display {
+            display: block;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Encabezado -->
+    <header class="bg-dark text-white py-16 px-4 shadow-lg border-b-8 border-primary">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight uppercase">
+                Formalización de <span class="text-primary">Sistemas Epistemológicos</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 font-light max-w-4xl mx-auto leading-relaxed">
+                Un Análisis Matemático Comparativo entre la <span class="text-accent font-bold">Topología Cerrada Kantiana</span> y la <span class="text-primary font-bold">Dinámica Dialéctica Materialista</span>.
+            </p>
+            <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">Topología</span>
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">Teoría de Sistemas</span>
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">Cibernética</span>
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">唯物辯證法</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- SECCIÓN 1: KANT - TOPOLOGÍA CERRADA -->
+        <section class="col-span-1 md:col-span-2 card">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-dark mb-4 border-l-8 border-primary pl-4">1. El Límite Topológico Kantiano</h2>
+                    <p class="mb-4 text-gray-700 leading-relaxed">
+                        El sistema epistemológico kantiano se formaliza como un <b>espacio métrico completo y cerrado</b>. Las categorías del entendimiento ($\kappa$) son invariantes absolutas que estructuran todo fenómeno posible.
+                    </p>
+                    <div class="equation-box">
+                        K = (X, d<sub>κ</sub>, ∂X)<br>
+                        ∀x ∈ X: d<sub>κ</sub>(x, x₀) ≤ C<br>
+                        ∂X ∩ X = ∅
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        Donde $X$ es el dominio de los fenómenos, $d_κ$ la métrica definida por las categorías a priori, y $\partial X$ la frontera nouménica asintóticamente inaccesible.
+                    </p>
+                    <div class="mt-4 p-4 bg-gray-100 rounded text-sm">
+                        <b>Implicación:</b> No existe operador dialéctico dentro del sistema que pueda generar nuevas categorías. El conocimiento está cerrado sobre sí mismo.
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div class="chart-container">
+                        <canvas id="kantChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs font-bold text-primary mt-2 uppercase tracking-widest">Fig 1. El Dominio Fenoménico: Conjunto Cerrado en ℝ²</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: MARX - DINÁMICA NO LINEAL -->
+        <section class="col-span-1 md:col-span-2 card bg-gray-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="order-2 md:order-1 w-full">
+                    <div class="chart-container" id="dialecticChartContainer"></div>
+                    <p class="text-center text-xs font-bold text-primary mt-2 uppercase tracking-widest">Fig 2. Atractor de Lorenz: Caos Determinado y Nuevos Estados</p>
+                </div>
+                <div class="order-1 md:order-2">
+                    <h2 class="text-3xl font-bold text-dark mb-4 border-l-8 border-primary pl-4">2. Dinámica Dialéctica No Lineal</h2>
+                    <p class="mb-4 text-gray-700 leading-relaxed">
+                        El materialismo dialéctico se modela como un <b>sistema dinámico no lineal</b>. La contradicción ($\psi \land \neg\psi$) es la fuente de generación de nuevas estructuras. El <i>Aufhebung</i> es bifurcación.
+                    </p>
+                    <div class="equation-box">
+                        dx/dt = σ(y - x)<br>
+                        dy/dt = x(ρ - z) - y<br>
+                        dz/dt = xy - βz<br>
+                        Bifurcación en ρ = ρ<sub>c</sub>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        El sistema de Lorenz demuestra cómo condiciones iniciales similares divergen en trayectorias cualitativamente distintas. Las "categorías" no son fijas: emergen del campo de fuerzas contradictorias.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: TEORÍA DEL REFLEJO -->
+        <section class="col-span-1 card">
+            <h3 class="text-2xl font-bold text-dark mb-3">3. Teoría del Reflejo (Lenin)</h3>
+            <p class="mb-4 text-gray-600 text-sm">
+                La conciencia como proceso de correspondencia activa. La praxis ($\Pi$) es el agente transformador que reduce la distancia epistémica.
+            </p>
+            <div class="math-display" id="math-reflexion"></div>
+            <div class="equation-box text-sm">
+                M<sub>t+1</sub> = f(M<sub>t</sub>, E<sub>t</sub>, Π<sub>t</sub>)<br>
+                lim<sub>t→∞</sub> ||M<sub>t</sub> - E<sub>t</sub>|| → ε
+            </div>
+            <div class="chart-container h-64">
+                <canvas id="reflectionChart"></canvas>
+            </div>
+            <p class="mt-2 text-xs text-gray-500 italic">
+                La cognición (rojo) oscila alrededor de la verdad objetiva (negro), convergiendo mediante la práctica transformadora.
+            </p>
+        </section>
+
+        <!-- SECCIÓN 4: VANGUARDIA Y ENTROPÍA -->
+        <section class="col-span-1 card">
+            <h3 class="text-2xl font-bold text-dark mb-3">4. Vanguardia: Reducción de Entropía</h3>
+            <p class="mb-4 text-gray-600 text-sm">
+                Las masas como sistema estocástico de alta entropía. El partido como <b>operador de reducción de indeterminación</b> ($\Delta H < 0$).
+            </p>
+            <div class="math-display" id="math-entropy"></div>
+            <div class="equation-box text-sm">
+                H(S) = -∑ p<sub>i</sub> log(p<sub>i</sub>)<br>
+                dH/dt = (∂H/∂t)<sub>espontáneo</sub> + (∂H/∂t)<sub>vanguardia</sub><br>
+                dH/dt &lt; 0
+            </div>
+            <div class="chart-container h-64">
+                <canvas id="entropyChart"></canvas>
+            </div>
+            <p class="mt-2 text-xs text-gray-500 italic">
+                La distribución plana de la espontaneidad se transforma en un pico de coherencia estratégica mediante la organización.
+            </p>
+        </section>
+
+        <!-- SECCIÓN 5: IMPERIALISMO Y REDES -->
+        <section class="col-span-1 md:col-span-2 card">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="col-span-1">
+                    <h3 class="text-2xl font-bold text-dark mb-3">5. Imperialismo: Hubs y Periferia</h3>
+                    <p class="mb-4 text-gray-700">
+                        El sistema mundial capitalista como <b>red de grafos desiguales</b>. Concentración de capital en centros ($v_{hub}$) vs. extracción en periferia ($v_{perif}$).
+                    </p>
+                    <p class="mb-4 text-gray-700">
+                        Cuando el gradiente de extracción $\nabla C$ se agota en un nodo, el sistema debe expandir las aristas $E$ hacia nuevos territorios.
+                    </p>
+                    <div class="math-display" id="math-imperialism"></div>
+                    <div class="equation-box">
+                        G = (V, E)<br>
+                        deg(v<sub>hub</sub>) ≫ deg(v<sub>perif</sub>)<br>
+                        |E<sub>hub→perif</sub>)| → ∞
+                    </div>
+                </div>
+                <div class="col-span-1 md:col-span-2">
+                    <div class="chart-container">
+                        <canvas id="imperialismChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs font-bold text-primary mt-2">Fig 3. Topología de la Dependencia: Centros Imperiales y Nodos Periféricos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: TRANSICIÓN SOCIALISTA -->
+        <section class="col-span-1 md:col-span-2 card bg-dark text-white border-none">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <div class="chart-container">
+                        <canvas id="transitionChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-3 text-primary">6. Transición de Fase Crítica</h3>
+                    <p class="mb-4 text-gray-300">
+                        La transición al socialismo como <b>ruptura de simetría</b>. Analogía con el modelo de Ising: el campo externo $H$ (conciencia colectiva organizada) supera el desorden térmico $T$ en $T_c$.
+                    </p>
+                    <div class="math-display" id="math-ising"></div>
+                    <div class="equation-box border-l-4 border-white bg-gray-800">
+                        M = tanh(β(Jm + H))<br>
+                        H ≠ 0 → Orden socialism
+                    </div>
+                    <p class="mt-4 text-sm text-gray-400">
+                        El parámetro de orden $M$ emerge cuando la intervención consciente rompe la estocasticidad del mercado capitalista.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: CRISIS Y CONTRADICCIÓN -->
+        <section class="col-span-1 md:col-span-2 card">
+            <h2 class="text-3xl font-bold text-dark mb-6 border-l-8 border-primary pl-4">7. Crisis: El Punto de Bifurcación Sistémica</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="mb-4 text-gray-700">
+                        Todo sistema capitalista contiene contradicciones internas que se agravan hasta alcanzar un <b>punto de crisis</b>. Formalizamos esto como la pérdida de atractores estables.
+                    </p>
+                    <div class="equation-box">
+                        lim<sub>t→t<sub>c</sub></sub> ||dX/dt|| → ∞<br>
+                        Sistema → Espacio de fases vacíos<br>
+                        (Colapso de hegemonía)
+                    </div>
+                    <p class="mt-4 text-sm text-gray-600">
+                        En términos de Gramsci: la "crisis de hegemonía" ocurre cuando el bloque en poder pierde consentimiento y coerción falla.
+                    </p>
+                </div>
+                <div class="w-full">
+                    <div class="chart-container">
+                        <canvas id="crisisChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs font-bold text-primary mt-2">Fig 4. Acumulación de Contradicciones → Crisis Sistémica</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 8: PRAXIS Y CONCIENCIA -->
+        <section class="col-span-1 md:col-span-2 card bg-gray-50">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="col-span-1">
+                    <h3 class="text-2xl font-bold text-dark mb-3">8. Praxis: El Ciclo Dialéctico</h3>
+                    <p class="mb-4 text-gray-700">
+                        La práctica como motor de transformación de la conciencia. El ciclo praxis-teoría-praxis ($\Pi \to T \to \Pi$) es el mecanismo de ascenso epistémico.
+                    </p>
+                    <div class="equation-box">
+                        C<sub>t+1</sub> = C<sub>t</sub> + α·Π(C<sub>t</sub>, R)<br>
+                        donde α = coeficiente de aprendizaje<br>
+                        R = realidad material
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        A diferencia del empirismo kantiano, aquí la conciencia se transforma a sí misma mediante la intervención práctica en el mundo.
+                    </p>
+                </div>
+                <div class="col-span-2 w-full">
+                    <div class="chart-container">
+                        <canvas id="praxisChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs font-bold text-primary mt-2">Fig 5. Ascenso Dialéctico: De la Conciencia Empírica a la Racional</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 9: CONCLUSIÓN MATEMÁTICA -->
+        <section class="col-span-1 md:col-span-2 bg-primary text-white p-8 rounded shadow-lg">
+            <h2 class="text-3xl font-black mb-6 uppercase text-center">Conclusión: Intraducibilidad Topológica</h2>
+            <div class="max-w-4xl mx-auto">
+                <p class="text-xl leading-relaxed font-light mb-6">
+                    Hemos demostrado que los sistemas epistemológicos de Kant y Marx presentan una <b>intraducibilidad fundamental</b>:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white/10 p-4 rounded">
+                        <h4 class="font-bold text-accent mb-2">Sistema Kantiano</h4>
+                        <ul class="text-sm space-y-2">
+                            <li>• Topología cerrada</li>
+                            <li>• Métrica invariante</li>
+                            <li>• Categorías trascendentales fijas</li>
+                            <li>• Conocimiento como representación</li>
+                            <li>• Sujeto pasivo</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded">
+                        <h4 class="font-bold text-accent mb-2">Sistema Dialéctico</h4>
+                        <ul class="text-sm space-y-2">
+                            <li>• Sistema abierto/disipativo</li>
+                            <li>• Métrica emergente</li>
+                            <li>• Categorías históricas/variables</li>
+                            <li>• Conocimiento como mediación práctica</li>
+                            <li>• Sujeto activo/transformador</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="equation-box text-center">
+                    ∄ Operador φ: K → M tal que φ(σ<sub>K</sub>) = σ<sub>M</sub>
+                </div>
+                <p class="text-center text-lg">
+                    No existe función de traducción que preserve la estructura. El materialismo dialéctico no es una "corrección" del kantismo: es un <b>salto cualitativo</b> en la estructura del pensamiento mismo.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-gray-500 text-sm bg-dark text-white">
+        <p class="mb-2">Formalización Marxista-Leninista v2.0</p>
+        <p class="text-gray-400">Generado mediante análisis dialéctico computacional</p>
+    </footer>
+
+    <script>
+        // Inicializar KaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+        });
+
+        // Configuración de Chart.js
+        Chart.defaults.font.family = "'Roboto', sans-serif";
+        const COLOR_PRIMARY = '#D32F2F';
+        const COLOR_DARK = '#1a1a1a';
+        const COLOR_ACCENT = '#FFC107';
+        const COLOR_GREY = '#9CA3AF';
+
+        // -------------------------------------------------------
+        // 1. KANT CHART (Scatter)
+        // -------------------------------------------------------
+        const kantCtx = document.getElementById('kantChart').getContext('2d');
+        const boundaryPoints = [];
+        for (let i = 0; i <= 360; i+=5) {
+            const rad = i * (Math.PI / 180);
+            boundaryPoints.push({x: Math.cos(rad) * 10, y: Math.sin(rad) * 10});
+        }
+        const phenomenaPoints = [];
+        for (let i = 0; i < 60; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.sqrt(Math.random()) * 9.5;
+            phenomenaPoints.push({x: Math.cos(angle) * radius, y: Math.sin(angle) * radius});
+        }
+
+        new Chart(kantCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Frontera Nouménica',
+                    data: boundaryPoints,
+                    showLine: true,
+                    borderColor: COLOR_DARK,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    fill: false
+                }, {
+                    label: 'Fenómenos',
+                    data: phenomenaPoints,
+                    backgroundColor: COLOR_PRIMARY,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: {
+                    x: { display: false, min: -12, max: 12 },
+                    y: { display: false, min: -12, max: 12 }
+                }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 2. LORENZ ATTRACTOR
+        // -------------------------------------------------------
+        let x = 0.1, y = 0, z = 0;
+        const dt = 0.01, sigma = 10, rho = 28, beta = 8/3;
+        let xs = [], ys = [], zs = [];
+        for (let i = 0; i < 2000; i++) {
+            let dx = sigma * (y - x) * dt;
+            let dy = (x * (rho - z) - y) * dt;
+            let dz = (x * y - beta * z) * dt;
+            x += dx; y += dy; z += dz;
+            xs.push(x); ys.push(y); zs.push(z);
+        }
+
+        Plotly.newPlot('dialecticChartContainer', [{
+            x: xs, y: ys, z: zs,
+            mode: 'lines',
+            type: 'scatter3d',
+            line: { width: 4, color: zs, colorscale: [[0, COLOR_DARK], [1, COLOR_PRIMARY]] }
+        }], {
+            margin: {l: 0, r: 0, b: 0, t: 0},
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            scene: {
+                xaxis: {showgrid: false, zeroline: false, showticklabels: false},
+                yaxis: {showgrid: false, zeroline: false, showticklabels: false},
+                zaxis: {showgrid: false, zeroline: false, showticklabels: false},
+                camera: { eye: {x: 1.5, y: 1.5, z: 1.2} }
+            }
+        }, {displayModeBar: false, responsive: true});
+
+        // -------------------------------------------------------
+        // 3. REFLECTION CHART
+        // -------------------------------------------------------
+        const labelsRef = Array.from({length: 25}, (_, i) => i);
+        const realityData = labelsRef.map(() => 10);
+        const cognitionData = labelsRef.map((i) => 10 + (Math.sin(i) * 12 * Math.exp(-0.15 * i)));
+
+        new Chart(document.getElementById('reflectionChart'), {
+            type: 'line',
+            data: {
+                labels: labelsRef,
+                datasets: [{
+                    label: 'Realidad Objetiva',
+                    data: realityData,
+                    borderColor: COLOR_DARK,
+                    borderWidth: 3,
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }, {
+                    label: 'Reflejo Cognitivo',
+                    data: cognitionData,
+                    borderColor: COLOR_PRIMARY,
+                    backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 4. ENTROPY CHART
+        // -------------------------------------------------------
+        new Chart(document.getElementById('entropyChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Reaccionario', 'Pasivo', 'Economicista', 'Revolucionario', 'Ultraizq.'],
+                datasets: [{
+                    label: 'Espontáneo',
+                    data: [20, 25, 30, 15, 10],
+                    backgroundColor: COLOR_GREY
+                }, {
+                    label: 'Con Vanguardia',
+                    data: [5, 8, 12, 70, 5],
+                    backgroundColor: COLOR_PRIMARY
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 5. IMPERIALISM CHART
+        // -------------------------------------------------------
+        new Chart(document.getElementById('imperialismChart'), {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    label: 'Centros Imperiales',
+                    data: [{x: 85, y: 85, r: 30}, {x: 75, y: 90, r: 25}],
+                    backgroundColor: COLOR_DARK
+                }, {
+                    label: 'Periferia',
+                    data: [{x: 15, y: 25, r: 6}, {x: 20, y: 35, r: 7}, {x: 25, y: 20, r: 5}, {x: 30, y: 40, r: 8}],
+                    backgroundColor: COLOR_PRIMARY
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: {
+                    x: { title: {display: true, text: 'Acumulación'}, min: 0, max: 100 },
+                    y: { title: {display: true, text: 'Influencia'}, min: 0, max: 100 }
+                }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 6. TRANSITION CHART
+        // -------------------------------------------------------
+        const transCtx = document.getElementById('transitionChart').getContext('2d');
+        const transLabels = [], transData = [];
+        for(let i = -12; i <= 12; i+=0.5) {
+            transLabels.push(i.toFixed(1));
+            transData.push(1 / (1 + Math.exp(-2 * i)));
+        }
+
+        new Chart(transCtx, {
+            type: 'line',
+            data: {
+                labels: transLabels,
+                datasets: [{
+                    label: 'Planificación Socialista',
+                    data: transData,
+                    borderColor: '#FFFFFF',
+                    backgroundColor: 'rgba(255, 193, 7, 0.3)',
+                    borderWidth: 3,
+                    fill: true,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: 'white' } } },
+                scales: {
+                    x: { grid: { color: '#374151' }, ticks: { display: false } },
+                    y: { grid: { color: '#374151' }, ticks: { display: false } }
+                }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 7. CRISIS CHART
+        // -------------------------------------------------------
+        const crisisCtx = document.getElementById('crisisChart').getContext('2d');
+        const crisisLabels = Array.from({length: 30}, (_, i) => i);
+        const crisisData = crisisLabels.map(i => {
+            if (i < 20) return Math.exp(i/10) * 0.5;
+            return Math.exp(i/8) * 2; // Crecimiento exponencial
+        });
+
+        new Chart(crisisCtx, {
+            type: 'line',
+            data: {
+                labels: crisisLabels,
+                datasets: [{
+                    label: 'Acumulación de Contradicciones',
+                    data: crisisData,
+                    borderColor: COLOR_PRIMARY,
+                    backgroundColor: 'rgba(211, 47, 47, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: {
+                    x: { title: {display: true, text: 'Tiempo'} },
+                    y: { title: {display: true, text: 'Tensión Sistémica'} }
+                }
+            }
+        });
+
+        // -------------------------------------------------------
+        // 8. PRAXIS CHART
+        // -------------------------------------------------------
+        const praxisCtx = document.getElementById('praxisChart').getContext('2d');
+        const praxisLabels = Array.from({length: 30}, (_, i) => i);
+        const praxisData = praxisLabels.map(i => 2 + 8 * (1 - Math.exp(-i/8)));
+
+        new Chart(praxisCtx, {
+            type: 'line',
+            data: {
+                labels: praxisLabels,
+                datasets: [{
+                    label: 'Nivel de Conciencia',
+                    data: praxisData,
+                    borderColor: COLOR_PRIMARY,
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: {
+                    x: { title: {display: true, text: 'Ciclos de Praxis'} },
+                    y: { title: {display: true, text: 'Conciencia Racional'} }
+                }
+            }
+        });
+
+        // Math expressions
+        document.getElementById('math-reflexion').innerHTML = '$$M_{t+1} = f(M_t, E_t, \\Pi_t) \\quad \\text{donde } \\Pi_t = \\text{Praxis}_t$$';
+        document.getElementById('math-entropy').innerHTML = '$$\\frac{dH}{dt} = \\left(\\frac{\\partial H}{\\partial t}\\right)_{espont} + \\left(\\frac{\\partial H}{\\partial t}\\right)_{vanguardia} < 0$$';
+        document.getElementById('math-imperialism').innerHTML = '$$G_{imperial} = (V_{hub} \\cup V_{perif}, E_{extract}) \\quad \\text{con } |E_{hub\\to perif}| \\gg |E_{perif\\to hub}|$$';
+        document.getElementById('math-ising').innerHTML = '$$m = \\tanh\\left(\\frac{Jm + H}{k_B T}\\right) \\quad \\xrightarrow{H \\neq 0} \\quad m \\neq 0$$';
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECTA PROVINCIA v2.0 - El Camino de la Sombra</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0a0505 0%, #1a0a0a 50%, #0a0505 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Crimson Text', serif;
+            overflow: hidden;
+        }
+        
+        #gameContainer { position: relative; }
+        
+        canvas {
+            background: #0a0505;
+            border: 4px solid #3d2b1f;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(139, 115, 85, 0.2),
+                        inset 0 0 100px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* HUD */
+        #hud {
+            position: absolute;
+            top: -55px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: #8b7355;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .stat { text-align: center; }
+        .statLabel { font-size: 10px; color: #5a4a3a; text-transform: uppercase; letter-spacing: 2px; }
+        .statValue { font-size: 22px; font-weight: bold; color: #c5a059; text-shadow: 0 0 10px rgba(197, 160, 89, 0.5); }
+        
+        #karmaBar {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 8px;
+            background: #1a1410;
+            border: 2px solid #3d2b1f;
+            border-radius: 4px;
+        }
+        
+        #karmaFill {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #63b3ed, #8b7355, #8b3d3d);
+            transition: width 0.5s, background 0.5s;
+        }
+        
+        #karmaLabel {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: #8b7355;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        /* Quest Tracker */
+        #questTracker {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            width: 220px;
+            background: rgba(10, 5, 3, 0.9);
+            border: 1px solid #3d2b1f;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 11px;
+            color: #8b7355;
+            z-index: 50;
+        }
+        
+        #questTracker h4 {
+            font-family: 'Cinzel', serif;
+            color: #c5a059;
+            margin-bottom: 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3d2b1f;
+            padding-bottom: 5px;
+        }
+        
+        .quest-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #2d2015;
+            line-height: 1.4;
+        }
+        
+        .quest-item.completed { color: #5a8a5a; text-decoration: line-through; }
+        .quest-item.active { color: #c5a059; }
+        .quest-progress { font-size: 10px; color: #6a5a4a; margin-top: 3px; }
+        
+        /* Dialogue System */
+        #dialogueBox {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 750px;
+            background: rgba(10, 5, 3, 0.97);
+            border: 2px solid #3d2b1f;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 100;
+        }
+        
+        #speakerName {
+            font-family: 'Cinzel', serif;
+            color: #c5a059;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        #dialogueText {
+            color: #d4c4b0;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            min-height: 50px;
+        }
+        
+        #dialogueChoices {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .choice-btn {
+            background: rgba(61, 43, 31, 0.6);
+            border: 1px solid #4a3a2a;
+            color: #c5a059;
+            padding: 10px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .choice-btn:hover {
+            background: rgba(139, 115, 85, 0.25);
+            border-color: #c5a059;
+            padding-left: 22px;
+        }
+        
+        .choice-btn.karma-light { border-color: #63b3ed; color: #63b3ed; }
+        .choice-btn.karma-shadow { border-color: #8b3d3d; color: #8b3d3d; }
+        
+        /* Notification */
+        #notification {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(139, 115, 85, 0.95);
+            color: #0a0505;
+            padding: 15px 35px;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 300;
+            letter-spacing: 1px;
+        }
+        
+        #notification.show { transform: translateX(-50%) translateY(0); }
+        
+        /* Menus */
+        .menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, #1a0a0a 0%, #0a0503 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            overflow: hidden;
+        }
+        
+        /* Efecto de niebla en el fondo */
+        .menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 70%, rgba(197, 160, 89, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(90, 74, 58, 0.05) 0%, transparent 50%);
+            animation: menuFog 10s ease-in-out infinite;
+        }
+        
+        @keyframes menuFog {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        .menu.hidden { display: none !important; }
+        
+        .title {
+            position: relative;
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            color: #c5a059;
+            margin-bottom: 12px;
+            text-shadow: 0 0 40px rgba(197, 160, 89, 0.3), 0 0 80px rgba(197, 160, 89, 0.1);
+            letter-spacing: 8px;
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes titlePulse {
+            0%, 100% { text-shadow: 0 0 40px rgba(197, 160, 89, 0.3), 0 0 80px rgba(197, 160, 89, 0.1); }
+            50% { text-shadow: 0 0 60px rgba(197, 160, 89, 0.5), 0 0 120px rgba(197, 160, 89, 0.2); }
+        }
+        
+        .subtitle {
+            position: relative;
+            font-family: 'Crimson Text', serif;
+            font-style: italic;
+            color: #5a4a3a;
+            margin-bottom: 40px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+        
+        .menu button {
+            position: relative;
+            background: linear-gradient(135deg, #3d2b1f 0%, #2d2015 50%, #1a120a 100%);
+            border: 2px solid #5a4a3a;
+            padding: 14px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: #c5a059;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s;
+            border-radius: 4px;
+            letter-spacing: 3px;
+            overflow: hidden;
+        }
+        
+        .menu button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .menu button:hover {
+            background: linear-gradient(135deg, #4a3a2a, #3d2b1f);
+            border-color: #c5a059;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .menu button:hover::before {
+            left: 100%;
+        }
+        
+        .menu button:active {
+            transform: translateY(0);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+        }
+        
+        .controls-info {
+            margin-top: 35px;
+            font-size: 11px;
+            color: #3a2a1a;
+            text-align: center;
+            line-height: 2.2;
+        }
+        
+        .controls-info kbd {
+            background: #2d2015;
+            padding: 4px 9px;
+            border-radius: 3px;
+            border: 1px solid #5a4a3a;
+            color: #8b7355;
+            font-family: monospace;
+        }
+        
+        /* Transformation Indicator */
+        #transformIndicator {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            padding: 8px 15px;
+            background: rgba(10, 5, 3, 0.8);
+            border: 1px solid #3d2b1f;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: #c5a059;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="hud">
+            <div class="stat">
+                <div class="statLabel">Nivel</div>
+                <div class="statValue" id="levelDisplay">1</div>
+            </div>
+            <div class="stat">
+                <div class="statLabel">Experiencia</div>
+                <div class="statValue" id="expDisplay">0/100</div>
+            </div>
+            <div class="stat">
+                <div class="statLabel">Macuñ</div>
+                <div class="statValue" id="macunDisplay">Oveja</div>
+            </div>
+        </div>
+        
+        <div id="karmaBar">
+            <div id="karmaFill"></div>
+        </div>
+        <div id="karmaLabel">EQUILIBRIO</div>
+        
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="questTracker">
+            <h4>📜 Misiones Activas</h4>
+            <div id="questList"></div>
+        </div>
+        
+        <div id="transformIndicator">🦅 Alcatraz</div>
+        
+        <!-- Dialogue Box -->
+        <div id="dialogueBox">
+            <div id="speakerName">Nombre</div>
+            <div id="dialogueText">Texto...</div>
+            <div id="dialogueChoices"></div>
+        </div>
+        
+        <!-- Main Menu -->
+        <div id="mainMenu" class="menu">
+            <h1 class="title">RECTA PROVINCIA</h1>
+            <p class="subtitle">"Un camino de sombra o luz bajo la niebla de Chiloé"</p>
+            <button onclick="startGame()">INICIAR CAMINO</button>
+            <button onclick="showCredits()">CRÉDITOS</button>
+            <div class="controls-info">
+                <kbd>← → ↑ ↓</kbd> Mover &nbsp;|&nbsp; 
+                <kbd>A</kbd> Transformar &nbsp;|&nbsp; 
+                <kbd>ESPACIO</kbd> Atacar &nbsp;|&nbsp; 
+                <kbd>SHIFT</kbd> Correr &nbsp;|&nbsp; 
+                <kbd>E</kbd> Interactuar
+            </div>
+        </div>
+        
+        <!-- Pause Menu -->
+        <div id="pauseMenu" class="menu hidden">
+            <h1 class="title">PAUSA</h1>
+            <button onclick="resumeGame()">CONTINUAR</button>
+            <button onclick="returnToMenu()">MENÚ PRINCIPAL</button>
+        </div>
+        
+        <!-- Credits -->
+        <div id="creditsMenu" class="menu hidden">
+            <h1 class="title">CRÉDITOS</h1>
+            <div style="color: #5a4a3a; text-align: center; max-width: 420px; line-height: 2.2; font-size: 14px;">
+                <p><strong>Diseño & Programación</strong><br>Paulo Saldívar</p>
+                <p><strong>Inspiración</strong><br>Folklore chilote • Darkest Dungeon</p>
+                <p><strong>Motor</strong><br>HTML5 Canvas + Vanilla JS</p>
+                <p style="margin-top: 25px; font-style: italic; line-height: 1.8;">"No existe el bien absoluto bajo la niebla.<br>Existe el respeto a la tierra y el conocimiento prohibido."</p>
+            </div>
+            <button onclick="returnToMenu()">VOLVER</button>
+        </div>
+    </div>
+    
+    <div id="notification">Mensaje</div>
+
+<script>
+// ============================================
+// RECTA PROVINCIA v2.0 - Enhanced
+// ============================================
+
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Game State
+const game = {
+    screen: 'menu',
+    running: false,
+    paused: false,
+    dialogueActive: false,
+    
+    player: {
+        x: 400, y: 450,
+        width: 30, height: 40,
+        speed: 3,
+        running: false,
+        vx: 0, vy: 0,
+        direction: 1,
+        transformed: false,
+        transformation: 'human'
+    },
+    
+    stats: {
+        level: 1,
+        exp: 0,
+        expToLevel: 100,
+        karma: 50,
+        macunLevel: 1
+    },
+    
+    camera: { x: 0, y: 0 },
+    worldWidth: 1600,
+    worldHeight: 1200,
+    
+    enemies: [],
+    npcs: [],
+    
+    quests: [
+        { id: 'q1', title: 'El Primer Paso', desc: 'Habla con el Brujo Anciando', status: 'active', completed: false },
+        { id: 'q2', title: 'El Bautismo', desc: 'Encuentra la cascada de Traiguén', status: 'pending', completed: false },
+        { id: 'q3', title: 'Caza del Weka', desc: 'Derrota 3 wekas en el bosque', status: 'pending', completed: false, progress: 0, required: 3 }
+    ],
+    
+    keys: {},
+    lastTime: 0
+};
+
+// NPC Database with Dialogue System
+const NPCS = {
+    brujo: {
+        name: 'Brujo Anciando',
+        x: 350, y: 280,
+        color: '#4a3728',
+        dialogues: [
+            {
+                text: 'Ah, un nuevo candidato. La niebla te ha traído hasta aquí, forastero.',
+                choices: [
+                    { text: 'Quiero unirme a la Recta Provincia.', karma: 'neutral', next: 'join' },
+                    { text: '¿Quién eres?', karma: 'neutral', next: 'identity' },
+                    { text: 'Solo pasaba.', karma: 'neutral', next: 'end' }
+                ]
+            },
+            {
+                id: 'join',
+                text: 'Para unirte, debes pasar las pruebas. La primera es el bautismo en las aguas de la cascada de Traiguén.',
+                choices: [
+                    { text: '¿Dónde encuentro la cascada?', karma: 'light', next: 'cascade_loc' },
+                    { text: 'Soy capaz de cualquier prueba.', karma: 'shadow', next: 'accept_quest' }
+                ]
+            },
+            {
+                id: 'identity',
+                text: 'Soy el Brujo Anciando. Guío a los que buscan el conocimiento prohibido de nuestras tierras.',
+                choices: [
+                    { text: '¿Conocimiento prohibido?', karma: 'light', next: 'knowledge' },
+                    { text: 'Quiero ese poder.', karma: 'shadow', next: 'join' }
+                ]
+            },
+            {
+                id: 'cascade_loc',
+                text: 'Al norte, donde los cipreses llegan hasta el mar. Busca la niebla más densa.',
+                choices: [
+                    { text: 'Iré allí.', karma: 'neutral', next: 'accept_quest' }
+                ]
+            },
+            {
+                id: 'knowledge',
+                text: 'El conocimiento que cura y el que mata. Todo depende de las manos que lo empuñen.',
+                choices: [
+                    { text: 'Entiendo. Quiero unirme.', karma: 'neutral', next: 'join' }
+                ]
+            },
+            {
+                id: 'accept_quest',
+                text: 'Ve entonces. Y cuida tu karma, forastero. Las wekas rondan el bosque.',
+                choices: [
+                    { text: 'Gracias, anciano.', karma: 'light', next: 'end' }
+                ]
+            },
+            { id: 'end', text: 'Que la niebla te guíe.', choices: [] }
+        ]
+    },
+    pincoya: {
+        name: 'La Pincoya',
+        x: 650, y: 500,
+        color: '#6b8a8a',
+        dialogues: [
+            {
+                text: 'Hijo de la niebla... ¿buscas respuestas junto al fuego?',
+                choices: [
+                    { text: '¿Sabes dónde está la cascada de Traiguén?', karma: 'light', next: 'cascade' },
+                    { text: '¿Qué es la Recta Provincia?', karma: 'neutral', next: 'recta' },
+                    { text: 'Solo buscaba pelea.', karma: 'shadow', next: 'end' }
+                ]
+            },
+            {
+                id: 'cascade',
+                text: 'La cascada canta cuando la luna se refleja. Busca al norte, donde los cipreses lloran.',
+                choices: [
+                    { text: 'Gracias.', karma: 'light', next: 'end' }
+                ]
+            },
+            {
+                id: 'recta',
+                text: 'La Recta Provincia... los que caminan entre mundos. Luz y sombra, en equilibrio perfecto bajo la tierra.',
+                choices: [
+                    { text: 'Interesante.', karma: 'neutral', next: 'end' }
+                ]
+            },
+            { id: 'end', text: 'Que las aguas te bendigan, hijo.', choices: [] }
+        ]
+    }
+};
+
+// Enemy Database
+const ENEMIES = {
+    weka: { name: 'Weka', x: 0, y: 0, width: 35, height: 35, hp: 30, maxHp: 30, damage: 10, exp: 20, color: '#5a4a3a', speed: 1.5, karmaDrop: -5, behavior: 'patrol' },
+    trauco: { name: 'Trauco', x: 0, y: 0, width: 40, height: 45, hp: 50, maxHp: 50, damage: 15, exp: 40, color: '#8b3d3d', speed: 2, karmaDrop: -10, behavior: 'aggressive' },
+    piuchen: { name: 'Piuchen', x: 0, y: 0, width: 50, height: 30, hp: 80, maxHp: 80, damage: 25, exp: 60, color: '#3d5a3d', speed: 3, karmaDrop: 5, behavior: 'ambush' }
+};
+
+// Quest Rewards
+const QUEST_REWARDS = {
+    'q1': { exp: 50, karma: 5 },
+    'q2': { exp: 100, karma: 10, macunUpgrade: true },
+    'q3': { exp: 150, karma: -5 }
+};
+
+// ============================================
+// AUDIO SYSTEM (Basic)
+// ============================================
+const AudioSys = {
+    ctx: null,
+    enabled: true,
+    init() {
+        try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) { console.log('Audio no disponible'); }
+    },
+    play(type) {
+        if (!this.enabled || !this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        const now = this.ctx.currentTime;
+        switch(type) {
+            case 'step': // Tierra
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+                break;
+            case 'attack': // Golpe
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(50, now + 0.1);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+                break;
+            case 'transform': // Transformación
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.linearRampToValueAtTime(600, now + 0.3);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+                break;
+            case 'levelup': // Nivel
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.setValueAtTime(500, now + 0.1);
+                osc.frequency.setValueAtTime(600, now + 0.2);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now); osc.stop(now + 0.4);
+                break;
+        }
+    }
+};
+
+// Initialize
+function init() {
+    AudioSys.init();
+    document.addEventListener('keydown', (e) => {
+        game.keys[e.key.toLowerCase()] = true;
+        if (e.key === 'Shift') game.player.running = true;
+        if (e.key === ' ' && !game.dialogueActive) game.player.attacking = true;
+        if (e.key.toLowerCase() === 'e' && !game.dialogueActive) tryInteract();
+        if (e.key === 'Escape' && game.running) togglePause();
+        if (e.key.toLowerCase() === 'a' && game.running && !game.dialogueActive) transformPlayer();
+    });
+    
+    document.addEventListener('keyup', (e) => {
+        game.keys[e.key.toLowerCase()] = false;
+        if (e.key === 'Shift') game.player.running = false;
+        if (e.key === ' ') game.player.attacking = false;
+    });
+    
+    // Spawn NPCs
+    Object.entries(NPCS).forEach(([id, npc]) => {
+        game.npcs.push({ ...npc, id, visible: true });
+    });
+    
+    game.lastTime = performance.now();
+    requestAnimationFrame(gameLoop);
+}
+
+function startGame() {
+    game.screen = 'playing';
+    game.running = true;
+    game.paused = false;
+    game.dialogueActive = false;
+    
+    // Reset player
+    game.player.x = 400;
+    game.player.y = 450;
+    game.player.transformed = false;
+    game.player.transformation = 'human';
+    
+    // Reset stats
+    game.stats = { level: 1, exp: 0, expToLevel: 100, karma: 50, macunLevel: 1 };
+    
+    // Reset quests
+    game.quests = [
+        { id: 'q1', title: 'El Primer Paso', desc: 'Habla con el Brujo Anciando', status: 'active', completed: false },
+        { id: 'q2', title: 'El Bautismo', desc: 'Encuentra la cascada de Traiguén', status: 'pending', completed: false },
+        { id: 'q3', title: 'Caza del Weka', desc: 'Derrota 3 wekas en el bosque', status: 'pending', completed: false, progress: 0, required: 3 }
+    ];
+    
+    // Spawn enemies
+    spawnEnemy('weka', 200, 150);
+    spawnEnemy('weka', 550, 200);
+    spawnEnemy('weka', 300, 350);
+    
+    document.querySelectorAll('.menu').forEach(m => m.classList.add('hidden'));
+    updateUI();
+    updateQuestTracker();
+}
+
+function spawnEnemy(type, x, y) {
+    const enemy = { ...ENEMIES[type] };
+    enemy.x = x;
+    enemy.y = y;
+    enemy.type = type;
+    game.enemies.push(enemy);
+}
+
+function update(deltaTime) {
+    if (!game.running || game.paused || game.dialogueActive) return;
+    
+    const dt = deltaTime * 60;
+    const speed = game.player.running ? game.player.speed * 2 : game.player.speed;
+    
+    // Player movement
+    game.player.vx = 0;
+    game.player.vy = 0;
+    if (game.keys['arrowleft'] || game.keys['a']) game.player.vx = -speed;
+    if (game.keys['arrowright'] || game.keys['d']) game.player.vx = speed;
+    if (game.keys['arrowup'] || game.keys['w']) game.player.vy = -speed;
+    if (game.keys['arrowdown'] || game.keys['s']) game.player.vy = speed;
+    
+    if (game.player.vx !== 0 && game.player.vy !== 0) {
+        game.player.vx *= 0.707;
+        game.player.vy *= 0.707;
+    }
+    
+    game.player.x += game.player.vx * dt;
+    game.player.y += game.player.vy * dt;
+    
+    // Sonido de pasos
+    if ((game.player.vx !== 0 || game.player.vy !== 0) && Math.random() < 0.03) {
+        AudioSys.play('step');
+    }
+    
+    if (game.player.vx > 0) game.player.direction = 1;
+    if (game.player.vx < 0) game.player.direction = -1;
+    
+    // World bounds
+    game.player.x = Math.max(50, Math.min(game.worldWidth - 50, game.player.x));
+    game.player.y = Math.max(50, Math.min(game.worldHeight - 50, game.player.y));
+    
+    // Camera
+    game.camera.x = game.player.x - canvas.width / 2;
+    game.camera.y = game.player.y - canvas.height / 2;
+    game.camera.x = Math.max(0, Math.min(game.worldWidth - canvas.width, game.camera.x));
+    game.camera.y = Math.max(0, Math.min(game.worldHeight - canvas.height, game.camera.y));
+    
+    // Enemy AI
+    game.enemies.forEach(enemy => {
+        const dx = game.player.x - enemy.x;
+        const dy = game.player.y - enemy.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 200 && enemy.behavior === 'aggressive') {
+            enemy.x += (dx / dist) * enemy.speed * dt;
+            enemy.y += (dy / dist) * enemy.speed * dt;
+        } else if (enemy.behavior === 'patrol') {
+            if (Math.random() < 0.01) {
+                enemy.vx = (Math.random() - 0.5) * 2;
+                enemy.vy = (Math.random() - 0.5) * 2;
+            }
+            enemy.x += (enemy.vx || 0) * enemy.speed * dt;
+            enemy.y += (enemy.vy || 0) * enemy.speed * dt;
+        }
+        
+        enemy.x = Math.max(20, Math.min(game.worldWidth - 20, enemy.x));
+        enemy.y = Math.max(20, Math.min(game.worldHeight - 20, enemy.y));
+        
+        // Attack player
+        if (dist < 40 && Math.random() < 0.02) {
+            game.stats.karma = Math.max(0, Math.min(100, game.stats.karma + enemy.karmaDrop));
+            showNotification(`-${Math.abs(enemy.karmaDrop)} Karma!`);
+            updateUI();
+        }
+    });
+    
+    // Player attack
+    if (game.player.attacking) {
+        game.player.attacking = false;
+        AudioSys.play('attack');
+        game.enemies = game.enemies.filter(enemy => {
+            const dx = game.player.x - enemy.x;
+            const dy = game.player.y - enemy.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 50) {
+                enemy.hp -= 25;
+                if (enemy.hp <= 0) {
+                    game.stats.exp += enemy.exp;
+                    showNotification(`+${enemy.exp} EXP`);
+                    checkLevelUp();
+                    checkQuestProgress(enemy.type);
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+    
+    updateUI();
+}
+
+function checkLevelUp() {
+    if (game.stats.exp >= game.stats.expToLevel) {
+        game.stats.level++;
+        game.stats.exp -= game.stats.expToLevel;
+        game.stats.expToLevel = Math.floor(game.stats.expToLevel * 1.5);
+        
+        if (game.stats.level >= 3 && game.stats.macunLevel < 2) {
+            game.stats.macunLevel = 2;
+            showNotification('Macuñ Mejorado: Piel de Caballo!');
+        } else if (game.stats.level >= 5 && game.stats.macunLevel < 3) {
+            game.stats.macunLevel = 3;
+            showNotification('Macuñ Mejorado: Piel de Hombre!');
+        }
+        
+        showNotification(`¡Nivel ${game.stats.level}!`);
+            AudioSys.play('levelup');
+    }
+}
+
+function checkQuestProgress(enemyType) {
+    const q3 = game.quests.find(q => q.id === 'q3');
+    if (q3 && !q3.completed && q3.status === 'active') {
+        if (enemyType === 'weka') {
+            q3.progress = Math.min(q3.required, q3.progress + 1);
+            updateQuestTracker();
+            showNotification(`Weka: ${q3.progress}/${q3.required}`);
+            
+            if (q3.progress >= q3.required) completeQuest('q3');
+        }
+    }
+}
+
+function completeQuest(questId) {
+    const quest = game.quests.find(q => q.id === questId);
+    if (quest && !quest.completed) {
+        quest.completed = true;
+        quest.status = 'completed';
+        
+        const reward = QUEST_REWARDS[questId];
+        if (reward) {
+            game.stats.exp += reward.exp;
+            game.stats.karma = Math.max(0, Math.min(100, game.stats.karma + reward.karma));
+            if (reward.macunUpgrade) {
+                game.stats.macunLevel = Math.min(3, game.stats.macunLevel + 1);
+            }
+            showNotification(`¡Misión completada! +${reward.exp} EXP`);
+        }
+        
+        updateUI();
+        updateQuestTracker();
+        
+        if (questId === 'q1') {
+            const q2 = game.quests.find(q => q.id === 'q2');
+            if (q2) q2.status = 'active';
+        }
+    }
+}
+
+function transformPlayer() {
+    if (game.stats.karma > 60) {
+        game.player.transformed = true;
+        game.player.transformation = 'alcatraz';
+        showNotification('Transformación: 🦅 Alcatraz');
+        AudioSys.play('transform');
+        document.getElementById('transformIndicator').style.display = 'block';
+        document.getElementById('transformIndicator').textContent = '🦅 Alcatraz (Luz)';
+        document.getElementById('transformIndicator').style.borderColor = '#63b3ed';
+    } else if (game.stats.karma < 40) {
+        game.player.transformed = true;
+        game.player.transformation = 'choncon';
+        showNotification('Transformación: 👻 Chonchón');
+        AudioSys.play('transform');
+        document.getElementById('transformIndicator').style.display = 'block';
+        document.getElementById('transformIndicator').textContent = '👻 Chonchón (Sombra)';
+        document.getElementById('transformIndicator').style.borderColor = '#8b3d3d';
+    } else {
+        game.player.transformed = false;
+        game.player.transformation = 'human';
+        showNotification('Forma: Humano');
+        AudioSys.play('transform');
+        document.getElementById('transformIndicator').style.display = 'none';
+    }
+}
+
+function tryInteract() {
+    for (const npc of game.npcs) {
+        const dx = game.player.x - npc.x;
+        const dy = game.player.y - npc.y;
+        if (Math.sqrt(dx * dx + dy * dy) < 60) {
+            startDialogue(npc);
+            return;
+        }
+    }
+}
+
+function startDialogue(npc) {
+    game.dialogueActive = true;
+    game.currentSpeaker = npc;
+    game.currentDialogue = npc.dialogues[0];
+    game.dialogueIndex = 0;
+    
+    document.getElementById('dialogueBox').style.display = 'block';
+    document.getElementById('speakerName').textContent = npc.name;
+    updateDialogue();
+}
+
+function updateDialogue() {
+    const dialogue = game.currentDialogue;
+    document.getElementById('dialogueText').textContent = dialogue.text;
+    
+    const choicesDiv = document.getElementById('dialogueChoices');
+    choicesDiv.innerHTML = '';
+    
+    dialogue.choices.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        if (choice.karma === 'light') btn.classList.add('karma-light');
+        if (choice.karma === 'shadow') btn.classList.add('karma-shadow');
+        btn.textContent = `• ${choice.text}`;
+        btn.onclick = () => selectChoice(i);
+        choicesDiv.appendChild(btn);
+    });
+}
+
+function selectChoice(index) {
+    const choice = game.currentDialogue.choices[index];
+    
+    // Karma effect
+    if (choice.karma === 'light') game.stats.karma = Math.min(100, game.stats.karma + 3);
+    if (choice.karma === 'shadow') game.stats.karma = Math.max(0, game.stats.karma - 3);
+    
+    if (choice.next === 'end') {
+        endDialogue();
+        return;
+    }
+    
+    const nextDialogue = game.currentSpeaker.dialogues.find(d => d.id === choice.next);
+    if (nextDialogue) {
+        game.currentDialogue = nextDialogue;
+        updateDialogue();
+    }
+    
+    updateUI();
+}
+
+function endDialogue() {
+    game.dialogueActive = false;
+    document.getElementById('dialogueBox').style.display = 'none';
+}
+
+function showNotification(text) {
+    const notif = document.getElementById('notification');
+    notif.textContent = text;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 2500);
+}
+
+function updateUI() {
+    document.getElementById('levelDisplay').textContent = game.stats.level;
+    document.getElementById('expDisplay').textContent = `${game.stats.exp}/${game.stats.expToLevel}`;
+    
+    const macunNames = ['Oveja', 'Caballo', 'Hombre'];
+    document.getElementById('macunDisplay').textContent = macunNames[game.stats.macunLevel - 1];
+    
+    document.getElementById('karmaFill').style.width = game.stats.karma + '%';
+    
+    if (game.stats.karma > 60) {
+        document.getElementById('karmaFill').style.background = 'linear-gradient(90deg, #63b3ed, #4a90a4)';
+    } else if (game.stats.karma < 40) {
+        document.getElementById('karmaFill').style.background = 'linear-gradient(90deg, #8b3d3d, #a04545)';
+    } else {
+        document.getElementById('karmaFill').style.background = 'linear-gradient(90deg, #63b3ed, #8b7355, #8b3d3d)';
+    }
+}
+
+function updateQuestTracker() {
+    const list = document.getElementById('questList');
+    list.innerHTML = '';
+    
+    game.quests.forEach(quest => {
+        const div = document.createElement('div');
+        div.className = `quest-item ${quest.completed ? 'completed' : ''} ${quest.status === 'active' ? 'active' : ''}`;
+        div.innerHTML = `<strong>${quest.title}</strong><br>${quest.desc}`;
+        
+        if (quest.progress !== undefined && !quest.completed) {
+            div.innerHTML += `<div class="quest-progress">Progreso: ${quest.progress}/${quest.required}</div>`;
+        }
+        
+        list.appendChild(div);
+    });
+}
+
+function togglePause() {
+    game.paused = !game.paused;
+    document.getElementById('pauseMenu').classList.toggle('hidden', !game.paused);
+}
+
+function resumeGame() {
+    game.paused = false;
+    document.getElementById('pauseMenu').classList.add('hidden');
+}
+
+function returnToMenu() {
+    game.running = false;
+    game.screen = 'menu';
+    document.querySelectorAll('.menu').forEach(m => m.classList.add('hidden'));
+    document.getElementById('mainMenu').classList.remove('hidden');
+    document.getElementById('transformIndicator').style.display = 'none';
+}
+
+function showCredits() {
+    document.getElementById('mainMenu').classList.add('hidden');
+    document.getElementById('creditsMenu').classList.remove('hidden');
+}
+
+function draw() {
+    ctx.fillStyle = '#0a0505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.save();
+    ctx.translate(-game.camera.x, -game.camera.y);
+    
+    // Draw world grid
+    ctx.strokeStyle = '#1a1410';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < game.worldWidth; x += 100) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, game.worldHeight);
+        ctx.stroke();
+    }
+    for (let y = 0; y < game.worldHeight; y += 100) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(game.worldWidth, y);
+        ctx.stroke();
+    }
+    
+    // Draw zones
+    ctx.fillStyle = 'rgba(34, 45, 40, 0.3)';
+    ctx.fillRect(50, 50, 500, 400);
+    ctx.fillStyle = 'rgba(30, 45, 60, 0.3)';
+    ctx.fillRect(550, 200, 400, 300);
+    ctx.fillStyle = 'rgba(45, 35, 30, 0.3)';
+    ctx.fillRect(200, 450, 600, 300);
+    
+    // Draw NPCs
+    game.npcs.forEach(npc => {
+        ctx.fillStyle = npc.color;
+        ctx.beginPath();
+        ctx.arc(npc.x, npc.y, 15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowColor = npc.color;
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#8b7355';
+        ctx.font = '10px Cinzel';
+        ctx.textAlign = 'center';
+        ctx.fillText(npc.name, npc.x, npc.y - 25);
+    });
+    
+    // Draw Enemies
+    game.enemies.forEach(enemy => {
+        ctx.fillStyle = '#2d2015';
+        ctx.fillRect(enemy.x - 20, enemy.y - 25, 40, 4);
+        ctx.fillStyle = '#8b3d3d';
+        ctx.fillRect(enemy.x - 20, enemy.y - 25, 40 * (enemy.hp / enemy.maxHp), 4);
+        ctx.fillStyle = enemy.color;
+        ctx.beginPath();
+        ctx.arc(enemy.x, enemy.y, enemy.width / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(enemy.x - 5, enemy.y - 5, 4, 0, Math.PI * 2);
+        ctx.arc(enemy.x + 5, enemy.y - 5, 4, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    
+    // Draw Player
+    const p = game.player;
+    const macunColors = ['#8b7355', '#5a4a3a', '#2d2015'];
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + 15, 15, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = macunColors[p.macunLevel - 1];
+    ctx.fillRect(p.x - p.width/2, p.y - p.height/2, p.width, p.height);
+    if (p.transformed) {
+        ctx.shadowColor = p.transformation === 'alcatraz' ? '#63b3ed' : '#8b3d3d';
+        ctx.shadowBlur = 20;
+        ctx.strokeStyle = p.transformation === 'alcatraz' ? '#63b3ed' : '#8b3d3d';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(p.x - p.width/2 - 3, p.y - p.height/2 - 3, p.width + 6, p.height + 6);
+        ctx.shadowBlur = 0;
+    }
+    
+    // Draw Interaction hint
+    game.npcs.forEach(npc => {
+        const dx = p.x - npc.x;
+        const dy = p.y - npc.y;
+        if (Math.sqrt(dx * dx + dy * dy) < 60) {
+            ctx.fillStyle = '#c5a059';
+            ctx.font = '11px Cinzel';
+            ctx.textAlign = 'center';
+            ctx.fillText('[E] Hablar', npc.x, npc.y + 35);
+        }
+    });
+    
+    ctx.restore();
+}
+
+function gameLoop(timestamp) {
+    const deltaTime = Math.min((timestamp - game.lastTime) / 1000, 0.1);
+    game.lastTime = timestamp;
+    update(deltaTime);
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+// Start
+init();

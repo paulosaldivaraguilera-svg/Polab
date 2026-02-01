@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 PROYECTOS PERSONALES | Paulo Saldívar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-3px); }
+        .progress-fill { transition: width 0.5s ease; }
+        .status-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .gradient-text {
+            background: linear-gradient(135deg, #A83232, #FFC107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+        .tag-done { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .tag-pending { background: rgba(255, 193, 7, 0.2); color: #FFC107; }
+        .tag-blocked { background: rgba(168, 50, 50, 0.2); color: #ff6b6b; }
+    </style>
+</head>
+<body class="p-6 md:p-8">
+
+    <!-- HEADER -->
+    <header class="max-w-6xl mx-auto mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-black mb-1">
+                    <span class="gradient-text">PROYECTOS PERSONALES</span>
+                </h1>
+                <p class="mono text-gray-500">Paulo Saldívar | 2026-02-01</p>
+            </div>
+            <div class="text-right">
+                <div class="flex items-center gap-2">
+                    <span class="status-dot w-3 h-3 bg-yellow-400 rounded-full"></span>
+                    <span class="mono text-yellow-400">Abandonados</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- RESUMEN -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass rounded-xl p-6">
+            <h2 class="text-lg font-bold mb-4">📊 Estado General</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="text-2xl font-bold text-yellow-400">2</div>
+                    <div class="text-xs text-gray-400">Proyectos</div>
+                </div>
+                <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="text-2xl font-bold text-green-400">45%</div>
+                    <div class="text-xs text-gray-400">Completado</div>
+                </div>
+                <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="text-2xl font-bold text-red-400">5</div>
+                    <div class="text-xs text-gray-400">Bloqueados</div>
+                </div>
+                <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="text-2xl font-bold text-cyan-400">12</div>
+                    <div class="text-xs text-gray-400">Tareas Pendientes</div>
+                </div>
+                <div class="text-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="text-2xl font-bold text-purple-400">0</div>
+                    <div class="text-xs text-gray-400">Ingresos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTO 1: COMENZAR -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass rounded-xl p-6 border-l-4 border-cyan-500">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="text-xl font-bold">🚀 COMENZAR</h2>
+                    <p class="text-gray-400 text-sm">Landing page para infraestructura legal</p>
+                </div>
+                <span class="mono text-cyan-400 text-sm">45% COMPLETADO</span>
+            </div>
+
+            <!-- Progreso -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">Progreso total</span>
+                    <span class="mono text-cyan-400">45%</span>
+                </div>
+                <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-cyan-500 progress-fill" style="width: 45%"></div>
+                </div>
+            </div>
+
+            <!-- Componentes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 bg-gray-800/50 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold">Frontend React</span>
+                        <span class="tag tag-done">✅ Listo</span>
+                    </div>
+                    <p class="text-xs text-gray-500">Comenzar.jsx + Tailwind CSS</p>
+                </div>
+                <div class="p-4 bg-gray-800/50 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold">Backend Node.js</span>
+                        <span class="tag tag-done">✅ Listo</span>
+                    </div>
+                    <p class="text-xs text-gray-500">server.js + API endpoints</p>
+                </div>
+                <div class="p-4 bg-gray-800/50 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold">CRM Notion</span>
+                        <span class="tag tag-pending">⚠️ Faltan credenciales</span>
+                    </div>
+                    <p class="text-xs text-gray-500">integrations.js configurado</p>
+                </div>
+                <div class="p-4 bg-gray-800/50 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold">WhatsApp Webhook</span>
+                        <span class="tag tag-pending">⚠️ Faltan credenciales</span>
+                    </div>
+                    <p class="text-xs text-gray-500">integrations.js listo</p>
+                </div>
+            </div>
+
+            <!-- Tareas -->
+            <h3 class="font-bold text-sm mb-3 text-gray-400">TAREAS PENDIENTES:</h3>
+            <div class="space-y-2">
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-cyan-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Agregar credenciales de Notion API</div>
+                        <div class="text-xs text-gray-500">Crear cuenta + database para leads</div>
+                    </div>
+                    <span class="tag tag-blocked">🔴 BLOQUEADO</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-cyan-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Configurar Webhook de WhatsApp</div>
+                        <div class="text-xs text-gray-500">Obtener URL del proveedor</div>
+                    </div>
+                    <span class="tag tag-blocked">🔴 BLOQUEADO</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-cyan-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Desplegar en hosting</div>
+                        <div class="text-xs text-gray-500">Vercel / Railway / Render</div>
+                    </div>
+                    <span class="tag tag-pending">🟡 ESPERA</span>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="mt-4 pt-4 border-t border-gray-700">
+                <button onclick="openLink('/projects/personal/comenzar-landing/Comenzar.jsx')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg text-sm mr-2">
+                    📝 Ver Código
+                </button>
+                <button onclick="alert('Para ejecutar: cd /projects/personal/comenzar-landing && npm install && npm start')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm">
+                    ▶️ Ejecutar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTO 2: WEB PERSONAL -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass rounded-xl p-6 border-l-4 border-yellow-500">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="text-xl font-bold">👤 WEB PERSONAL</h2>
+                    <p class="text-gray-400 text-sm">paulosaldivar.cv - Optimización de captación</p>
+                </div>
+                <span class="mono text-yellow-400 text-sm">30% COMPLETADO</span>
+            </div>
+
+            <!-- Progreso -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">Progreso total</span>
+                    <span class="mono text-yellow-400">30%</span>
+                </div>
+                <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-yellow-500 progress-fill" style="width: 30%"></div>
+                </div>
+            </div>
+
+            <!-- Problemas Identificados -->
+            <div class="mb-6">
+                <h3 class="font-bold text-sm mb-3 text-red-400">🚨 PROBLEMAS CRÍTICOS:</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <span class="text-red-400">❌</span> Sin CTAs claros
+                    </div>
+                    <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <span class="text-red-400">❌</span> Sin prueba social
+                    </div>
+                    <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <span class="text-red-400">❌</span> Solo WhatsApp texto
+                    </div>
+                    <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <span class="text-red-400">❌</span> Sin SEO keywords
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tareas -->
+            <h3 class="font-bold text-sm mb-3 text-gray-400">ACCIONES RECOMENDADAS:</h3>
+            <div class="space-y-2">
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-yellow-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Agregar botón WhatsApp click-to-chat</div>
+                        <div class="text-xs text-gray-500">Link directo: wa.me/569XXXXXXXX</div>
+                    </div>
+                    <span class="tag tag-pending">🟡 FÁCIL</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-yellow-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Reescribir Hero con propuesta de valor</div>
+                        <div class="text-xs text-gray-500">"Abogado que entienden creadores"</div>
+                    </div>
+                    <span class="tag tag-pending">🟡 MEDIA</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-yellow-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Agregar testimonios (aunque sean de prueba)</div>
+                        <div class="text-xs text-gray-500">Case studies ficticios basados en reales</div>
+                    </div>
+                    <span class="tag tag-pending">🟡 MEDIA</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg">
+                    <input type="checkbox" class="w-5 h-5 accent-yellow-500">
+                    <div class="flex-1">
+                        <div class="font-bold text-sm">Optimizar SEO (keywords + meta tags)</div>
+                        <div class="text-xs text-gray-500">"abogado familia Temuco", "herencias"</div>
+                    </div>
+                    <span class="tag tag-pending">🟡 FÁCIL</span>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="mt-4 pt-4 border-t border-gray-700">
+                <button onclick="openLink('/projects/personal/web-personal/')" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-sm mr-2">
+                    📁 Ver Archivos
+                </button>
+                <button onclick="alert('Ver meta-tags.html para optimización SEO')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm">
+                    🔍 Ver SEO
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANÁLISIS COMPARATIVO -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass rounded-xl p-6">
+            <h2 class="text-lg font-bold mb-4">⚖️ ANÁLISIS: ¿CUÁL PRIORITIZAR?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- COMENZAR -->
+                <div class="p-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg">
+                    <h3 class="font-bold text-cyan-400 mb-2">🚀 COMENZAR</h3>
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Ingresos potenciales</td>
+                            <td class="py-2 text-right text-green-400">Alto (clientes PyMEs)</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Esfuerzo para terminar</td>
+                            <td class="py-2 text-right text-yellow-400">Medio (falta config)</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Tiempo a producción</td>
+                            <td class="py-2 text-right text-yellow-400">1-2 días</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 text-gray-400">Prioridad</td>
+                            <td class="py-2 text-right font-bold text-cyan-400">#1</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- WEB PERSONAL -->
+                <div class="p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+                    <h3 class="font-bold text-yellow-400 mb-2">👤 WEB PERSONAL</h3>
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Ingresos potenciales</td>
+                            <td class="py-2 text-right text-green-400">Medio (clientes individuales)</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Esfuerzo para terminar</td>
+                            <td class="py-2 text-right text-yellow-400">Medio (copy + CTAs)</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2 text-gray-400">Tiempo a producción</td>
+                            <td class="py-2 text-right text-yellow-400">2-3 días</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 text-gray-400">Prioridad</td>
+                            <td class="py-2 text-right font-bold text-yellow-400">#2</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mt-4 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+                <h4 class="font-bold text-green-400 mb-2">💡 RECOMENDACIÓN</h4>
+                <p class="text-sm">
+                    <strong>Comenzar</strong> tiene más potencial de ingresos porque está orientado a 
+                    <strong>PyMEs y profesionales</strong> (mayor ticket). Además, ya tiene el 
+                    <strong>80% del código listo</strong>, solo faltan credenciales.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCIONES RÁPIDAS -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass rounded-xl p-6">
+            <h2 class="text-lg font-bold mb-4">⚡ ACCIONES RÁPIDAS</h2>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="alert('Para Comenzar:\n1. Crear cuenta notion.so\n2. Obtener API key\n3. Crear database para leads\n4. Agregar a .env')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg text-sm">
+                    📋 Configurar Notion
+                </button>
+                <button onclick="alert('Para WhatsApp:\n1. Crear cuenta en proveedor (Callbell, Meta)\n2. Obtener Webhook URL\n3. Agregar a .env')" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm">
+                    📱 Configurar WhatsApp
+                </button>
+                <button onclick="openLink('/projects/personal/web-personal/meta-tags.html')" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-sm">
+                    🔍 Optimizar SEO
+                </button>
+                <button onclick="location.reload()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm">
+                    🔄 Actualizar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="max-w-6xl mx-auto mt-8 py-4 border-t border-gray-800 text-center">
+        <p class="mono text-gray-600 text-sm">
+            📋 Proyectos Personales | Estado actualizado 2026-02-01
+        </p>
+    </footer>
+
+    <script>
+        console.log('%c📋 Dashboard cargado', 'color: #00ff88; font-size: 16px;');
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+# ==========================================
+# CONFIGURACIÓN PÚBLICA - polab/workspace
+# ==========================================
+
+# -------------------------------------------------
+# PRIVADO - Eliminar o mover a repositorio local
+# -------------------------------------------------
+memory/                    # Notas diarias, datos sensibles
+backups/                   # Backups de memoria
+logs/                      # Logs con datos de actividad
+*.log                      # Archivos de log
+
+# Documentación personal sensible
+docs/MEMORY.md             # Memoria personal, contactos
+docs/USER.md               # Datos del usuario
+docs/IDENTITY.md           # Identidad privada
+docs/IDENTITY.md.bak       # Backup de identidad
+
+# Proyectos sensibles
+affiliate-polymarket.md    # Análisis financiero
+plan-negocio.md            # Estrategia comercial
+reunion-celula-*.md        # Reuniones políticas
+memory/persistent/*.md     # Memoria persistente
+
+# -------------------------------------------------
+# ENTORNO LOCAL
+# -------------------------------------------------
+.env
+.env.local
+.env.*
+*.local
+.venv/
+venv/
+node_modules/
+
+# -------------------------------------------------
+# TEMPORALES
+# -------------------------------------------------
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+.cache/
+
+# -------------------------------------------------
+# CÓDIGO PÚBLICO - ESTE ES EL ÚNICO CONTENIDO PÚBLICO
+# -------------------------------------------------
+!docs/AGENTS.md           # Guías para agentes (público)
+!docs/SOUL.md             # Configuración del agente (público)
+!docs/TOOLS.md            # Notas de herramientas (público)
+!docs/README.md           # Documentación general (público)
+!docs/REPOSITORIOS.md     # Lista de repositorios
+!README.md                # Este archivo
+!PUBLIC_REPO_STRUCTURE.md # Estructura propuesta
+!TO_DELETE_FROM_PUBLIC.md # Guía de limpieza

@@ -239,8 +239,11 @@
     </footer>
 
     <script>
+        // API Configuration
+        const API_URL = 'http://localhost:8081/api/lead';
+        
         // Form submission handler
-        document.getElementById('leadForm').addEventListener('submit', function(e) {
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = {
@@ -251,19 +254,34 @@
                 fecha: new Date().toISOString()
             };
             
-            // Guardar en localStorage (simulación de base de datos)
-            const leads = JSON.parse(localStorage.getItem('comenzar_leads') || '[]');
-            leads.push(formData);
-            localStorage.setItem('comenzar_leads', JSON.stringify(leads));
-            
-            // Enviar a webhook (configurar URL)
-            // fetch('WEBHOOK_URL', { method: 'POST', body: JSON.stringify(formData) });
-            
-            // Mostrar mensaje de éxito
-            document.getElementById('leadForm').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-            
-            console.log('Lead capturado:', formData);
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Mostrar mensaje de éxito
+                    document.getElementById('leadForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    
+                    // Abrir WhatsApp de Paulo
+                    if (result.whatsapp_url) {
+                        setTimeout(() => {
+                            window.open(result.whatsapp_url, '_blank');
+                        }, 1000);
+                    }
+                    
+                    console.log('✅ Lead enviado:', result);
+                } else {
+                    alert('Error al enviar. Intenta de nuevo.');
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Error de conexión. Intenta de nuevo.');
+            }
         });
 
         // Contador de clientes satisfechos (animado)

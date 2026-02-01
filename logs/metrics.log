@@ -1,0 +1,6 @@
+{
+    "timestamp": "2026-02-01 15:31:08",
+    "leads": { "total": , "nuevos":  },
+    "system": { "cpu": 4.3, "mem": 18.9, "disk": 52 },
+    "services": { "web": "UP", "api": "UP", "tunnel": "UP" }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Status Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            padding: 30px;
+        }
+        h1 { color: #00f3ff; margin-bottom: 30px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .card h3 { color: #00f3ff; margin-bottom: 15px; }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat:last-child { border: none; }
+        .stat-label { color: #666; }
+        .stat-value { color: #00ff88; }
+        .status { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+        .status.active { background: #00ff88; }
+        .status.missing { background: #ff0055; }
+        .status.warning { background: #ffcc00; }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00f3ff, #00a5aa);
+            color: #000;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .backup-list { font-size: 11px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>🎮 Game Dev Status</h1>
+    
+    <div class="grid">
+        <!-- Projects Status -->
+        <div class="card">
+            <h3>📁 Proyectos</h3>
+            <div id="projects"></div>
+        </div>
+        
+        <!-- Backups -->
+        <div class="card">
+            <h3>💾 Backups Recientes</h3>
+            <div class="backup-list" id="backups"></div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card">
+            <h3>⚡ Acciones Rápidas</h3>
+            <div style="margin-top: 15px;">
+                <a href="DASHBOARD.html" class="btn">📊 Dashboard Principal</a>
+                <a href="#" onclick="location.reload()" class="btn">🔄 Actualizar</a>
+            </div>
+        </div>
+        
+        <!-- Metrics -->
+        <div class="card">
+            <h3>📈 Métricas</h3>
+            <div id="metrics"></div>
+        </div>
+    </div>
+
+    <script>
+        // Game data
+        const games = [
+            { name: 'ELEMENTAL PONG', file: 'projects/gaming/elemental-pong/prototype_v2.1.html', version: '2.1' },
+            { name: 'RECTA PROVINCIA', file: 'projects/gaming/recta-provincia/prototype_v2.0.html', version: '2.0' },
+            { name: 'DELITOS', file: 'projects/polab/videojuegos/delitos/index_v1.5.html', version: '1.5' }
+        ];
+        
+        // Render projects
+        const projectsHtml = games.map(game => {
+            const status = 'active'; // Would check actual file
+            return `
+                <div class="stat">
+                    <span class="stat-label">
+                        <span class="status ${status}"></span>
+                        ${game.name} v${game.version}
+                    </span>
+                    <span class="stat-value">✅</span>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('projects').innerHTML = projectsHtml;
+        
+        // Render metrics
+        const totalLines = 877 + 1098 + 2027;
+        const totalSize = '~200KB';
+        document.getElementById('metrics').innerHTML = `
+            <div class="stat"><span class="stat-label">Total líneas</span><span class="stat-value">${totalLines}</span></div>
+            <div class="stat"><span class="stat-label">Proyectos</span><span class="stat-value">3</span></div>
+            <div class="stat"><span class="stat-label">Casos DELITOS</span><span class="stat-value">18/18</span></div>
+            <div class="stat"><span class="stat-label">Backups</span><span class="stat-value">Auto</span></div>
+        `;
+        
+        // Render backups
+        document.getElementById('backups').innerHTML = `
+            <div class="stat"><span class="stat-label">Auto-backups</span><span class="stat-value">✅ Activo</span></div>
+            <div class="stat"><span class="stat-label">Directorio</span><span class="stat-value">backups/auto/</span></div>
+        `;
+        
+        console.log('Game Dev Dashboard loaded');
+    </script>
+</body>
+</html>

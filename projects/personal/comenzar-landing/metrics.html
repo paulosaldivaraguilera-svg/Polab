@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comenzar - Métricas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .metric-card { transition: transform 0.2s; }
+        .metric-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-black mb-6">📊 Panel de Métricas - Comenzar</h1>
+        
+        <!-- Metrics Grid -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="metric-card bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">CPU</p>
+                <p class="text-3xl font-bold text-blue-400" id="cpu">--%</p>
+            </div>
+            <div class="metric-card bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">RAM</p>
+                <p class="text-3xl font-bold text-green-400" id="ram">--%</p>
+            </div>
+            <div class="metric-card bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Disco</p>
+                <p class="text-3xl font-bold text-yellow-400" id="disk">--%</p>
+            </div>
+            <div class="metric-card bg-gray-800 p-6 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">Servicios</p>
+                <p class="text-3xl font-bold text-purple-400" id="services">--/3</p>
+            </div>
+        </div>
+        
+        <!-- Leads & System -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Leads Chart -->
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">🎯 Leads</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-gray-700 rounded-lg">
+                        <p class="text-gray-400 text-sm">Total</p>
+                        <p class="text-3xl font-bold text-green-400" id="leadsTotal">--</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-700 rounded-lg">
+                        <p class="text-gray-400 text-sm">Nuevos</p>
+                        <p class="text-3xl font-bold text-yellow-400" id="leadsNuevos">--</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services Status -->
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">🔧 Servicios</h2>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>🌐 Web Server</span>
+                        <span id="svcWeb" class="px-3 py-1 rounded-full text-sm">Checking...</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>🔌 API Leads</span>
+                        <span id="svcApi" class="px-3 py-1 rounded-full text-sm">Checking...</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>🔗 Tunnel</span>
+                        <span id="svcTunnel" class="px-3 py-1 rounded-full text-sm">Checking...</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>🐳 Docker</span>
+                        <span id="svcDocker" class="px-3 py-1 rounded-full text-sm">Checking...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Links -->
+        <div class="text-center text-gray-400 text-sm space-x-4">
+            <a href="/" class="text-green-400 hover:underline">← Volver</a>
+            <a href="/dashboard.html" class="text-blue-400 hover:underline">Dashboard Leads</a>
+            <a href="http://localhost:9000" target="_blank" class="text-purple-400 hover:underline">Portainer</a>
+            <a href="http://localhost:19999" target="_blank" class="text-yellow-400 hover:underline">Netdata</a>
+        </div>
+    </div>
+    
+    <script>
+        const METRICS_API = 'http://localhost:8082/api/metrics';
+        const LEADS_API = 'http://localhost:8081/api/stats';
+        
+        async function loadMetrics() {
+            try {
+                // System metrics
+                const mRes = await fetch(METRICS_API);
+                const mData = await mRes.json();
+                
+                document.getElementById('cpu').textContent = mData.cpu + '%';
+                document.getElementById('ram').textContent = mData.memory_percent + '%';
+                document.getElementById('disk').textContent = mData.disk_percent + '%';
+                
+                const services = mData.services;
+                const svcCount = (services.web?1:0) + (services.api?1:0) + (services.tunnel?1:0);
+                document.getElementById('services').textContent = svcCount + '/3';
+                
+                // Update service badges
+                updateBadge('svcWeb', services.web);
+                updateBadge('svcApi', services.api);
+                updateBadge('svcTunnel', services.tunnel);
+                document.getElementById('svcDocker').textContent = 'Running';
+                document.getElementById('svcDocker').className = 'px-3 py-1 rounded-full text-sm bg-green-600';
+                
+            } catch (e) {
+                console.error('Metrics error:', e);
+            }
+        }
+        
+        async function loadLeads() {
+            try {
+                const res = await fetch(LEADS_API);
+                const data = await res.json();
+                document.getElementById('leadsTotal').textContent = data.total || 0;
+                document.getElementById('leadsNuevos').textContent = data.nuevos || 0;
+            } catch (e) {
+                console.error('Leads error:', e);
+            }
+        }
+        
+        function updateBadge(id, isUp) {
+            const el = document.getElementById(id);
+            el.textContent = isUp ? 'UP' : 'DOWN';
+            el.className = isUp ? 'px-3 py-1 rounded-full text-sm bg-green-600' : 'px-3 py-1 rounded-full text-sm bg-red-600';
+        }
+        
+        // Load on start
+        loadMetrics();
+        loadLeads();
+        
+        // Refresh every 10 seconds
+        setInterval(() => {
+            loadMetrics();
+            loadLeads();
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=La Unidad - OpenClaw
+Comment=Launcher para OpenClaw Dashboard
+Exec=python3 /home/pi/.openclaw/workspace/launcher.py --auto
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=Development;
+Keywords=openclaw;chat;ai;terminal;
+StartupNotify=true
