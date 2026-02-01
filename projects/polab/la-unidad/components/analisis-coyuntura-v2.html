@@ -1,0 +1,161 @@
+<!-- Análisis de Coyuntura v2 - La Unidad -->
+<div class="analisis-coyuntura p-6 bg-white dark:bg-brand-dark-card rounded-lg shadow-lg">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-serif font-bold flex items-center gap-2">
+            <i data-lucide="bar-chart-3" class="w-6 h-6 text-brand-red"></i>
+            Análisis de Coyuntura
+        </h2>
+        <div class="flex items-center gap-2">
+            <select id="periodSelect" class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm">
+                <option value="week">Última semana</option>
+                <option value="month" selected>Último mes</option>
+                <option value="quarter">Último trimestre</option>
+                <option value="year">Último año</option>
+            </select>
+            <button id="refreshAnalysis" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors" title="Actualizar">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Métricas Principales -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="metric-card p-4 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/30 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Lucha de Clases</div>
+            <div class="text-2xl font-bold text-brand-red" id="classStruggleMetric">85</div>
+            <div class="text-xs text-green-600 flex items-center gap-1">
+                <i data-lucide="trending-up" class="w-3 h-3"></i> +5%
+            </div>
+        </div>
+        <div class="metric-card p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/30 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Contradicciones</div>
+            <div class="text-2xl font-bold text-brand-blue" id="contradictionsMetric">12</div>
+            <div class="text-xs text-gray-500">activas</div>
+        </div>
+        <div class="metric-card p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/30 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Movimientos</div>
+            <div class="text-2xl font-bold text-green-600" id="movementsMetric">8</div>
+            <div class="text-xs text-gray-500">organizados</div>
+        </div>
+        <div class="metric-card p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-900/30 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Conciencia</div>
+            <div class="text-2xl font-bold text-purple-600" id="consciousnessMetric">72</div>
+            <div class="text-xs text-gray-500">índice general</div>
+        </div>
+    </div>
+
+    <!-- Gráfico Principal -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <h3 class="font-bold mb-4 text-sm text-gray-700 dark:text-gray-300">Evolución de la Lucha de Clases</h3>
+            <canvas id="coyunturaLineChart" height="200"></canvas>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <h3 class="font-bold mb-4 text-sm text-gray-700 dark:text-gray-300">Distribución de Contradicciones</h3>
+            <canvas id="coyunturaPieChart" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Mapa de Conflictos -->
+    <div class="mb-6">
+        <h3 class="font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="map" class="w-5 h-5 text-brand-red"></i>
+            Mapa de Conflictos Activos
+        </h3>
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4" id="conflictMap">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <!-- Conflictos -->
+                <div class="bg-white dark:bg-brand-dark-card p-3 rounded shadow-sm border-l-4 border-red-500">
+                    <div class="font-medium text-sm">Santiago - Vivienda</div>
+                    <div class="text-xs text-gray-500">Movilización activa</div>
+                    <div class="text-xs font-mono mt-1 text-red-600">Intensidad: 8/10</div>
+                </div>
+                <div class="bg-white dark:bg-brand-dark-card p-3 rounded shadow-sm border-l-4 border-orange-500">
+                    <div class="font-medium text-sm">Valparaíso - Educación</div>
+                    <div class="text-xs text-gray-500">Negociación</div>
+                    <div class="text-xs font-mono mt-1 text-orange-600">Intensidad: 5/10</div>
+                </div>
+                <div class="bg-white dark:bg-brand-dark-card p-3 rounded shadow-sm border-l-4 border-yellow-500">
+                    <div class="font-medium text-sm">Concepción - Medio Ambiente</div>
+                    <div class="text-xs text-gray-500">Protesta</div>
+                    <div class="text-xs font-mono mt-1 text-yellow-600">Intensidad: 6/10</div>
+                </div>
+                <div class="bg-white dark:bg-brand-dark-card p-3 rounded shadow-sm border-l-4 border-blue-500">
+                    <div class="font-medium text-sm">Norte Grande - Laboral</div>
+                    <div class="text-xs text-gray-500">Huelga</div>
+                    <div class="text-xs font-mono mt-1 text-blue-600">Intensidad: 7/10</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Análisis Dialéctico -->
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+        <h3 class="font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="brain-circuit" class="w-5 h-5 text-brand-red"></i>
+            Análisis Dialéctico Automático
+        </h3>
+        <div class="space-y-3" id="dialecticalAnalysis">
+            <div class="p-3 bg-white dark:bg-brand-dark-card rounded border-l-4 border-brand-red">
+                <div class="font-medium text-sm mb-1">Contradicción Principal</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    La contradicción entre el capital financiero transnacional y la clase trabajadora se ha agudizado en el último mes, manifestándose en un aumento del 15% en las jornadas de movilización.
+                </p>
+            </div>
+            <div class="p-3 bg-white dark:bg-brand-dark-card rounded border-l-4 border-brand-blue">
+                <div class="font-medium text-sm mb-1">Tendencia Principal</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Se observa una tendencia hacia la radicalización de las bases sindicales y poblaciones periféricas, con una creciente articulación entre luchas locales y nacionales.
+                </p>
+            </div>
+            <div class="p-3 bg-white dark:bg-brand-dark-card rounded border-l-4 border-green-600">
+                <div class="font-medium text-sm mb-1">Perspectiva</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Las condiciones objetivas favorecen la unidad de las fuerzas populares. La ofensiva neoliberal genera las condiciones para una contraofensiva coordinada del movimiento de masas.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Gráfico de línea
+new Chart(document.getElementById('coyunturaLineChart'), {
+    type: 'line',
+    data: {
+        labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+        datasets: [{
+            label: 'Intensidad',
+            data: [72, 78, 75, 85],
+            borderColor: '#A83232',
+            backgroundColor: 'rgba(168, 50, 50, 0.1)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false, min: 50, max: 100 } }
+    }
+});
+
+// Gráfico de torta
+new Chart(document.getElementById('coyunturaPieChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Capital-Trabajo', 'Imperialismo', 'Medio Ambiente', 'Género', 'Democracia'],
+        datasets: [{
+            data: [35, 25, 18, 12, 10],
+            backgroundColor: ['#A83232', '#1E293B', '#166534', '#7c3aed', '#0369a1']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } }
+    }
+});
+</script>

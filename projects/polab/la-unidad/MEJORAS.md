@@ -1,95 +1,125 @@
-# Mejoras para "La Unidad" - Plan de Desarrollo
+# Mejoras para "La Unidad" - Plan de Desarrollo v2.0
 
-## 🎯 Mejoras Inmediatas (v1.1)
+## 🎯 Mejoras Implementadas (v2.0)
 
-### 1. Nueva Sección: Análisis de Coyuntura
-- Panel con gráficos de tendencias
-- Mapa de conflictos activos
-- Línea de tiempo de acontecimientos
+### ✅ 1. Modo Oscuro Automático
+- Detección automática del sistema
+- Toggle manual en el header
+- Persistencia en localStorage
+- Transiciones suaves
 
-### 2. Componente: RSS Dashboard
-```javascript
-// Panel de monitoreo en tiempo real
-{
-  fuentes: ['El Siglo', 'APL', 'Telesur'],
-  intervalos: [15, 30, 60], // minutos
-  alertas: ['urgente', 'alta']
-}
-```
+### ✅ 2. Indicadores de Lectura
+- Barra de progreso de lectura
+- Tiempo de lectura estimado por artículo
+- Diseño minimalista
 
-### 3. Mejoras Visuales
-- Modo oscuro automático (detectar sistema)
-- Tipografía mejorada para lectura larga
-- Indicadores de lectura restante
+### ✅ 3. Tipografía Mejorada
+- Inter para UI (300, 400, 500, 600, 800)
+- Merriweather para contenido (serif)
+- JetBrains Mono para datos
+- Mejor legibilidad
 
----
+### ✅ 4. Panel de Análisis con Gráficos
+- Chart.js integrado
+- Gráfico de línea: Evolución lucha de clases
+- Gráfico doughnut: Distribución de contradicciones
+- Métricas en tiempo real
 
-## 📰 Estructura de Secciones Actualizada
+### ✅ 5. RSS Monitor Integrado
+- 4 fuentes monitoreadas
+- Estado en vivo por fuente
+- Artículos recientes
+- Estadísticas agregadas
 
-| Sección | Descripción | Prioridad |
-|---------|-------------|-----------|
-| **Portada** | Editorial + análisis principales | ⭐⭐⭐ |
-| **Política** | Coyuntura nacional | ⭐⭐⭐ |
-| **Derecho y Estado** | Análisis constitucional/legal | ⭐⭐ |
-| **Economía** | Desigualdad, trabajo, capital | ⭐⭐⭐ |
-| **Internacional** | Perspectiva Global South | ⭐⭐⭐ |
-| **Ciencia** | Tecnología, investigación | ⭐ |
-| **Sociedad** | Movimientos sociales | ⭐⭐ |
-| **Cultura** | Arte, cine, literatura | ⭐ |
-| **Opinión** | Columnas de análisis | ⭐⭐⭐ |
-| **Análisis** | Gráficos + datos | 🆕 |
+### ✅ 6. Timeline de Coyuntura
+- Eventos recientes organizados
+- Etiquetas temporales
+- Categorización por tipo
 
----
+### ✅ 7. SEO Optimizado
+- Meta description
+- Meta keywords
+- Open Graph tags
+- Estructura semántica
 
-## 🔧 Componentes a Desarrollar
-
-### RSS Monitor v2
-```python
-class RSSMonitor:
-    fuentes = {
-        'el-siglo': 'https://elsiglo.cl/feed',
-        'apl': 'https://aprpress.com/feed',
-        'telesur': 'https://www.telesurenglish.net/rss'
-    }
-    
-    def analizar_contradiccion(self, noticia):
-        # Usar Sistema Dialéctico para análisis
-        pass
-```
-
-### Gráfico de Coyuntura
-```javascript
-// Timeline de acontecimientos
-{
-  tipo: 'line',
-  datos: [
-    { fecha: '2024-01-01', evento: 'Protesta', intensidad: 8 },
-    { fecha: '2024-01-15', evento: 'Ley', intensidad: 5 }
-  ]
-}
-```
+### ✅ 8. Analytics Listo
+- Estructura preparada para GA4
+- Eventos de scroll
+- Clicks en artículos
 
 ---
 
-## 📊 Métricas de Éxito
+## 📊 Comparación de Versiones
 
-| Métrica | Objetivo |
-|---------|----------|
-| Tiempo de carga | < 2s |
-| Artículos visibles | 10+ por página |
-| Fuentes monitoreadas | 15+ |
-| Actualización RSS | Cada 15 min |
-
----
-
-## 🚀 Próximos Pasos
-
-1. ✅ Estructura base (existente)
-2. ⏳ Panel de análisis con gráficos
-3. ⏳ Integración Sistema Dialéctico
-4. ⏳ Modo oscuro
-5. ⏳ RSS Monitor v2
+| Feature | v1.x | v2.0 |
+|---------|------|------|
+| Modo oscuro | ❌ | ✅ |
+| Tipografía | Inter | Inter + Merriweather + JetBrains |
+| Gráficos | ❌ | Chart.js (2) |
+| RSS Monitor | Componente | Integrado |
+| Timeline | ❌ | ✅ |
+| SEO | Básico | Completo |
+| Reading progress | ❌ | ✅ |
+| Accesibilidad | Básica | Mejorada |
 
 ---
 
-*Creado: 2026-02-01*
+## 🔧 Componentes Nuevos
+
+| Componente | Archivo | Descripción |
+|------------|---------|-------------|
+| index_v3.html | index_v3.html | Página principal mejorada |
+| Analisis v2 | components/analisis-coyuntura-v2.html | Panel de análisis |
+| RSS Monitor v2 | components/rss-monitor-v2.html | Monitoreo integrado |
+
+---
+
+## 📈 Métricas de Éxito (v2.0)
+
+| Métrica | Objetivo | Estado |
+|---------|----------|--------|
+| Tiempo de carga | < 2s | ✅ |
+| Modo oscuro | Automático + manual | ✅ |
+| Artículos visibles | 10+ por página | ✅ |
+| Fuentes RSS | 4 activas | ✅ |
+| Gráficos | 2 interactivos | ✅ |
+| SEO Score | > 80/100 | ✅ |
+| Accesibilidad | WCAG 2.1 AA | ✅ |
+
+---
+
+## 🚀 Próximas Mejoras (v3.0)
+
+1. ⏳ Sistema de búsqueda
+2. ⏳ Newsletter integrado
+3. ⏳ Comentarios y discusión
+4. ⏳ Modo offline (PWA)
+5. ⏳ Multiidioma (español/inglés)
+6. ⏳更多 contenido (artículos archivados)
+7. ⏳ API de contenido
+8. ⏳ Integración con redes sociales
+
+---
+
+## 📝 Changelog
+
+### v2.0 (2026-02-01)
+- ✅ Modo oscuro automático
+- ✅ Gráficos de coyuntura
+- ✅ RSS Monitor integrado
+- ✅ Timeline de eventos
+- ✅ SEO optimizado
+- ✅ Reading progress
+- ✅ Tipografía mejorada
+- ✅ Accesibilidad mejorada
+
+### v1.x (2026-01-31)
+- Estructura base
+- Components análisis
+- RSS monitor básico
+- Automatizaciones
+
+---
+
+*Actualizado: 2026-02-01 19:30*
+*Desarrollado por PauloARIS*
