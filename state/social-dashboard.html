@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎛️ Social Media Control Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .platform-card { @apply bg-white rounded-xl shadow-lg p-6 border-l-4; }
+        .twitter { border-color: #1DA1F2; }
+        .linkedin { border-color: #0A66C2; }
+        .discord { border-color: #5865F2; }
+        .moltbook { border-color: #FF6B6B; }
+        
+        .metric-value { @apply text-3xl font-bold; }
+        .metric-label { @apply text-sm text-gray-500; }
+        
+        .status-indicator { @apply inline-flex items-center px-2 py-1 rounded-full text-xs; }
+        .status-active { @apply bg-green-100 text-green-800; }
+        .status-inactive { @apply bg-gray-100 text-gray-800; }
+        .status-warning { @apply bg-yellow-100 text-yellow-800; }
+        
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6 px-8">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">🎛️ Social Media Control Center</h1>
+                <p class="text-indigo-200">PauloARIS v2.1 - Automated Social Management</p>
+            </div>
+            <div class="text-right">
+                <div class="flex items-center gap-2">
+                    <span class="status-indicator status-active">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                        Sistema Activo
+                    </span>
+                </div>
+                <p class="text-sm text-indigo-200" id="timestamp"></p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-8 px-8">
+        <!-- Platform Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Twitter/X -->
+            <div class="platform-card twitter">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-[#1DA1F2] rounded-full flex items-center justify-center text-white text-xl">🐦</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">X (Twitter)</h3>
+                            <span class="status-indicator status-active">Activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <div class="metric-value text-[#1DA1F2]" id="twitter-posts">0</div>
+                        <div class="metric-label">Posts Hoy</div>
+                    </div>
+                    <div>
+                        <div class="metric-value text-[#1DA1F2]" id="twitter-remaining">3000</div>
+                        <div class="metric-label">Restantes</div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t">
+                    <button onclick="manualPost('twitter')" class="w-full bg-[#1DA1F2] hover:bg-[#1a91da] text-white py-2 rounded-lg transition">
+                        📝 Publicar
+                    </button>
+                </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="platform-card linkedin">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-[#0A66C2] rounded-full flex items-center justify-center text-white text-xl">💼</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">LinkedIn</h3>
+                            <span class="status-indicator status-warning">Config Req</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <div class="metric-value text-[#0A66C2]" id="linkedin-posts">0</div>
+                        <div class="metric-label">Posts Hoy</div>
+                    </div>
+                    <div>
+                        <div class="metric-value text-[#0A66C2]" id="linkedin-remaining">100</div>
+                        <div class="metric-label">Restantes</div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t">
+                    <button onclick="manualPost('linkedin')" class="w-full bg-[#0A66C2] hover:bg-[#095aa3] text-white py-2 rounded-lg transition">
+                        📝 Publicar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Discord -->
+            <div class="platform-card discord">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-[#5865F2] rounded-full flex items-center justify-center text-white text-xl">💬</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Discord</h3>
+                            <span class="status-indicator status-active">Activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <div class="metric-value text-[#5865F2]" id="discord-messages">0</div>
+                        <div class="metric-label">Mensajes</div>
+                    </div>
+                    <div>
+                        <div class="metric-value text-[#5865F2]" id="discord-channels">3</div>
+                        <div class="metric-label">Canales</div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t">
+                    <button onclick="manualPost('discord')" class="w-full bg-[#5865F2] hover:bg:#4752c4] text-white py-2 rounded-lg transition">
+                        💬 Enviar Mensaje
+                    </button>
+                </div>
+            </div>
+
+            <!-- Moltbook -->
+            <div class="platform-card moltbook">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-[#FF6B6B] rounded-full flex items-center justify-center text-white text-xl">📚</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Moltbook</h3>
+                            <span class="status-indicator status-active">Activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <div class="metric-value text-[#FF6B6B]" id="moltbook-posts">0</div>
+                        <div class="metric-label">Posts Hoy</div>
+                    </div>
+                    <div>
+                        <div class="metric-value text-[#FF6B6B]" id="moltbook-remaining">48</div>
+                        <div class="metric-label">Restantes</div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t">
+                    <button onclick="manualPost('moltbook')" class="w-full bg-[#FF6B6B] hover:bg-[#ff5252] text-white py-2 rounded-lg transition">
+                        📝 Publicar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Overview -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">📊 Resumen de Rendimiento</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-indigo-600" id="total-posts">0</div>
+                    <div class="text-gray-500">Total Posts</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-green-600" id="engagement-rate">0%</div>
+                    <div class="text-gray-500">Tasa Engagement</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600" id="mentions-answered">0</div>
+                    <div class="text-gray-500">Menciones Respondidas</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-600" id="uptime">100%</div>
+                    <div class="text-gray-500">Uptime</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">⚡ Acciones Rápidas</h2>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="broadcastAll()" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition">
+                    📢 Broadcast a Todas
+                </button>
+                <button onclick="checkMentions()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                    🔔 Ver Menciones
+                </button>
+                <button onclick="generateReport()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                    📋 Generar Reporte
+                </button>
+                <button onclick="pauseScheduler()" class="px-6 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">
+                    ⏸️ Pausar Scheduler
+                </button>
+            </div>
+        </section>
+
+        <!-- Content Scheduler -->
+        <section class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">📅 Programador de Contenido</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-indigo-50 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">🌅</span>
+                        <span class="font-semibold">Mañana</span>
+                    </div>
+                    <p class="text-sm text-gray-600">08:00 - 10:00</p>
+                    <p class="text-xs text-gray-500 mt-1">Thought Leadership, Engagement</p>
+                </div>
+                <div class="bg-yellow-50 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">☀️</span>
+                        <span class="font-semibold">Mediodía</span>
+                    </div>
+                    <p class="text-sm text-gray-600">12:00 - 14:00</p>
+                    <p class="text-xs text-gray-500 mt-1">Industry News, Personal Updates</p>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">🌆</span>
+                        <span class="font-semibold">Tarde</span>
+                    </div>
+                    <p class="text-sm text-gray-600">17:00 - 19:00</p>
+                    <p class="text-xs text-gray-500 mt-1">Threads, Thought Leadership</p>
+                </div>
+            </div>
+            
+            <!-- Queue -->
+            <div class="border-t pt-4">
+                <h3 class="font-semibold text-gray-700 mb-3">Cola de Publicaciones</h3>
+                <div id="queue-list" class="space-y-2">
+                    <p class="text-gray-500 text-sm">No hay publicaciones en cola</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Posting -->
+    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 w-full max-w-lg mx-4">
+            <h3 class="text-xl font-bold mb-4" id="modal-title">Publicar en Plataforma</h3>
+            <textarea id="post-content" class="w-full border rounded-lg p-3 h-32 resize-none" placeholder="Escribe tu contenido aquí..."></textarea>
+            <div class="flex justify-between items-center mt-4">
+                <span class="text-sm text-gray-500" id="char-count">0/280</span>
+                <div class="flex gap-2">
+                    <button onclick="closeModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancelar</button>
+                    <button onclick="submitPost()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración
+        const PLATFORMS = ['twitter', 'linkedin', 'discord', 'moltbook'];
+        let currentPlatform = null;
+        
+        // Estado
+        let state = {
+            twitter: { posts: 0, remaining: 3000 },
+            linkedin: { posts: 0, remaining: 100 },
+            discord: { messages: 0, channels: 3 },
+            moltbook: { posts: 0, remaining: 48 }
+        };
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimestamp();
+            loadStats();
+            startAutoRefresh();
+        });
+        
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleString('es-CL');
+        }
+        
+        function loadStats() {
+            // Actualizar métricas de plataformas
+            PLATFORMS.forEach(p => {
+                const el = document.getElementById(`${p}-posts`);
+                if (el) el.textContent = state[p].posts || 0;
+            });
+            
+            // Calcular total
+            const totalPosts = Object.values(state).reduce((sum, p) => sum + (p.posts || 0) + (p.messages || 0), 0);
+            document.getElementById('total-posts').textContent = totalPosts;
+        }
+        
+        function startAutoRefresh() {
+            setInterval(() => {
+                updateTimestamp();
+                loadStats();
+            }, 30000); // Cada 30 segundos
+        }
+        
+        // Acciones
+        function manualPost(platform) {
+            currentPlatform = platform;
+            const platformNames = {
+                twitter: 'X (Twitter)',
+                linkedin: 'LinkedIn',
+                discord: 'Discord',
+                moltbook: 'Moltbook'
+            };
+            document.getElementById('modal-title').textContent = `Publicar en ${platformNames[platform]}`;
+            document.getElementById('post-modal').classList.remove('hidden');
+            document.getElementById('post-content').focus();
+        }
+        
+        function closeModal() {
+            document.getElementById('post-modal').classList.add('hidden');
+            document.getElementById('post-content').value = '';
+            currentPlatform = null;
+        }
+        
+        function submitPost() {
+            const content = document.getElementById('post-content').value.trim();
+            if (!content) return;
+            
+            // Simular publicación
+            console.log(`Publishing to ${currentPlatform}: ${content}`);
+            
+            if (state[currentPlatform]) {
+                state[currentPlatform].posts = (state[currentPlatform].posts || 0) + 1;
+                if (state[currentPlatform].remaining) {
+                    state[currentPlatform].remaining--;
+                }
+            }
+            
+            loadStats();
+            closeModal();
+            
+            // Notificación
+            showNotification('Publicación exitosa', `Publicado en ${currentPlatform}`);
+        }
+        
+        function broadcastAll() {
+            alert('Funcionalidad de broadcast coming soon');
+        }
+        
+        function checkMentions() {
+            alert('Verificando menciones...');
+        }
+        
+        function generateReport() {
+            alert('Generando reporte...');
+        }
+        
+        function pauseScheduler() {
+            alert('Scheduler pausado');
+        }
+        
+        function showNotification(title, body) {
+            if (Notification.permission === 'granted') {
+                new Notification(title, { body });
+            }
+        }
+        
+        // Contador de caracteres
+        document.getElementById('post-content').addEventListener('input', (e) => {
+            const count = e.target.value.length;
+            document.getElementById('char-count').textContent = `${count}/280`;
+        });
+    </script>
+</body>
+</html>
