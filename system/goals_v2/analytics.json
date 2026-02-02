@@ -1,0 +1,35 @@
+{
+  "total": 8,
+  "completed": 0,
+  "pending": 8,
+  "completion_rate": 0.0,
+  "avg_completion_hours": 24,
+  "critical_goals": 4,
+  "critical_list": [
+    {
+      "goal": "Configurar Foundry para self-modification",
+      "deadline": "2026-02-02"
+    },
+    {
+      "goal": "Crear nuevo juego o herramienta",
+      "deadline": "2026-02-03"
+    },
+    {
+      "goal": "Configurar Foundry para self-modification",
+      "deadline": "2026-02-02"
+    },
+    {
+      "goal": "Crear nuevo juego o herramienta",
+      "deadline": "2026-02-03"
+    }
+  ],
+  "predicted_completion": "2026-02-09T22:39:04.667164",
+  "by_category": {
+    "system": 6,
+    "project": 2
+  },
+  "by_priority": {
+    "high": 4,
+    "medium": 4
+  }
+}

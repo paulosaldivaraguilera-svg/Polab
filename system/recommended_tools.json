@@ -1,0 +1,79 @@
+{
+  "fecha_analisis": "2026-02-01 22:48",
+  "prioridad_alta": [
+    {
+      "nombre": "sentence-transformers",
+      "version": "3.0.0",
+      "uso": "Embeddings locales para búsqueda semántica",
+      "instalacion": "pip install sentence-transformers",
+      "tamano": "~200MB",
+      "beneficio": "Búsqueda de memoria por significado, no solo palabras"
+    },
+    {
+      "nombre": "chromadb",
+      "version": "0.5.0",
+      "uso": "Base de datos vectorial ligera",
+      "instalacion": "pip install chromadb",
+      "tamano": "~50MB",
+      "beneficio": "Almacenar y buscar vectores localmente"
+    },
+    {
+      "nombre": "structlog",
+      "version": "24.0.0",
+      "uso": "Logging estructurado avanzado",
+      "instalacion": "pip install structlog",
+      "tamano": "~1MB",
+      "beneficio": "Logs mejorados para debugging y análisis"
+    },
+    {
+      "nombre": "httpx",
+      "version": "0.27.0",
+      "uso": "Cliente HTTP moderno async",
+      "instalacion": "pip install httpx",
+      "tamano": "~2MB",
+      "beneficio": "APIs más robustas con async/await"
+    }
+  ],
+  "prioridad_media": [
+    {
+      "nombre": "langchain",
+      "version": "0.2.0",
+      "uso": "Chains y RAG para razonamiento",
+      "instalacion": "pip install langchain",
+      "tamano": "~100MB",
+      "nota": "Pesado, evaluar necesidad"
+    },
+    {
+      "nombre": "openai-whisper",
+      "version": "1.0.0",
+      "uso": "Transcripción de audio a texto",
+      "instalacion": "pip install openai-whisper",
+      "tamano": "~1GB",
+      "nota": "Solo si se necesita transcripción"
+    },
+    {
+      "nombre": "python-dotenv",
+      "version": "1.0.0",
+      "uso": "Gestión de variables de entorno",
+      "instalacion": "pip install python-dotenv",
+      "tamano": "~100KB",
+      "beneficio": "Configuración más segura"
+    }
+  ],
+  "prioridad_baja": [
+    {
+      "nombre": "rich",
+      "version": "13.0.0",
+      "uso": "CLI prettier output",
+      "instalacion": "pip install rich",
+      "tamano": "~1MB"
+    },
+    {
+      "nombre": "tqdm",
+      "version": "4.66.0",
+      "uso": "Progress bars",
+      "instalacion": "pip install tqdm",
+      "tamano": "~500KB"
+    }
+  ]
+}

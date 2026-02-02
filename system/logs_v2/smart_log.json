@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2026-02-01T22:39:04.458925",
+    "level": "INFO",
+    "message": "Smart Logger v2 inicializado",
+    "context": {
+      "version": "2.0"
+    },
+    "day_of_week": "Sunday",
+    "hour": 22
+  }
+]

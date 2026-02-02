@@ -1,0 +1,15 @@
+{
+    "name": "PauloARIS_Foundry",
+    "version": "1.0.0",
+    "status": "pending_setup",
+    "capabilities": [
+        "self_modification",
+        "pattern_crystallization",
+        "tool_evolution"
+    ],
+    "goals": [
+        "Habilitar self-writing de herramientas",
+        "Crystallize patrones aprendidos",
+        "Evolucionar herramientas existentes"
+    ]
+}

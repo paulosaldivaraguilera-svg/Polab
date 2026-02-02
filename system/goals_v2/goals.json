@@ -1,0 +1,154 @@
+[
+  {
+    "id": "goal_20260201_223735",
+    "goal": "Configurar Foundry para self-modification",
+    "category": "system",
+    "priority": "high",
+    "deadline": "2026-02-02",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:37:35.835655",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:37:35.835679"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223735",
+    "goal": "Implementar vector memory para b\u00fasqueda sem\u00e1ntica",
+    "category": "system",
+    "priority": "medium",
+    "deadline": "2026-02-03",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:37:35.836797",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:37:35.836807"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223735",
+    "goal": "Mejorar sistema de logging con an\u00e1lisis",
+    "category": "system",
+    "priority": "medium",
+    "deadline": "2026-02-02",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:37:35.838351",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:37:35.838361"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223735",
+    "goal": "Crear nuevo juego o herramienta",
+    "category": "project",
+    "priority": "high",
+    "deadline": "2026-02-03",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:37:35.839791",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:37:35.839802"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223904",
+    "goal": "Configurar Foundry para self-modification",
+    "category": "system",
+    "priority": "high",
+    "deadline": "2026-02-02",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:39:04.659909",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:39:04.659934"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223904",
+    "goal": "Implementar vector memory para b\u00fasqueda sem\u00e1ntica",
+    "category": "system",
+    "priority": "medium",
+    "deadline": "2026-02-03",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:39:04.661949",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:39:04.661963"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223904",
+    "goal": "Mejorar sistema de logging con an\u00e1lisis",
+    "category": "system",
+    "priority": "medium",
+    "deadline": "2026-02-02",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:39:04.664559",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:39:04.664570"
+      }
+    ]
+  },
+  {
+    "id": "goal_20260201_223904",
+    "goal": "Crear nuevo juego o herramienta",
+    "category": "project",
+    "priority": "high",
+    "deadline": "2026-02-03",
+    "status": "pending",
+    "progress": 0,
+    "created_at": "2026-02-01T22:39:04.666240",
+    "completed_at": null,
+    "subtasks": [],
+    "dependencies": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-02-01T22:39:04.666252"
+      }
+    ]
+  }
+]
