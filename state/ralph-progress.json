@@ -4828,11 +4828,165 @@
       "project": "la_unidad",
       "task": "Deploy La Unidad en puerto 8084 (separado de SUR 8083)",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T20:16:13.082033",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.408051"
+    },
+    {
+      "project": "comenzar",
+      "task": "Mejorar velocidad de carga del landing",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:22.902555",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.408231"
+    },
+    {
+      "project": "comenzar",
+      "task": "A\u00f1adir m\u00e1s secciones de servicios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.008034",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.539131"
+    },
+    {
+      "project": "comenzar",
+      "task": "Integrar formulario de contacto funcional",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.112697",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.539266"
+    },
+    {
+      "project": "comenzar",
+      "task": "Mejorar SEO metadata",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.222863",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.669824"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "A\u00f1adir 20 art\u00edculos de Marx/Engels",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.330113",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.669966"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "Implementar sistema de quizzes interactivos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.434807",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.808773"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "Crear \u00edndice tem\u00e1tico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.540273",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.808917"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "Mejorar navegaci\u00f3n entre secciones",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.644229",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.940849"
+    },
+    {
+      "project": "economy",
+      "task": "Completar integraci\u00f3n x402 payments",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.749366",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:31.940990"
+    },
+    {
+      "project": "economy",
+      "task": "Crear dashboard de transacciones",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.854142",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.071848"
+    },
+    {
+      "project": "economy",
+      "task": "A\u00f1adir m\u00e1s protocolos de econom\u00eda",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:23.958406",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.071992"
+    },
+    {
+      "project": "la-unidad",
+      "task": "Conectar backend con fuentes RSS",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.064810",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.204002"
+    },
+    {
+      "project": "la-unidad",
+      "task": "Integrar dise\u00f1o HTML profesional",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.169097",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.204186"
+    },
+    {
+      "project": "la-unidad",
+      "task": "Implementar sistema de categor\u00edas",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.286104",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.342626"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Crear script de backup autom\u00e1tico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.447411",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.342765"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Implementar monitoring de servicios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.557504",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.473940"
+    },
+    {
+      "project": "docs",
+      "task": "Actualizar documentaci\u00f3n de proyectos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:34:24.661683",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:34:32.474083"
     }
   ],
-  "iterations": 277,
-  "lastUpdate": "2026-02-02T20:16:20.400449"
+  "iterations": 286,
+  "lastUpdate": "2026-02-02T20:34:32.474148"
 }
