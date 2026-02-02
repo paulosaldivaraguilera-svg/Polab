@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Unidad | Análisis y Opinión desde la Izquierda</title>
+    <meta name="description" content="Publicación marxista-leninista. Análisis de coyuntura política, económica y social desde una perspectiva dialéctica materialista.">
+    <meta name="keywords" content="marxismo,leninismo,análisis político,izquierda,Chile,coyuntura">
+    <meta property="og:title" content="La Unidad | Análisis y Opinión desde la Izquierda">
+    <meta property="og:description" content="Análisis marxista-leninista de la realidad chilena e internacional.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#A83232">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NewsMediaOrganization",
+        "name": "La Unidad",
+        "url": "https://la-unidad.example.com",
+        "description": "Publicación marxista-leninista de análisis político",
+        "inLanguage": "es-CL"
+    }
+    </script>
+    
+    <script>
+        // Theme detection
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#111111',
+                            gray: '#F4F4F4',
+                            red: '#A83232',
+                            blue: '#1E293B',
+                            dark: { bg: '#0a0a0a', card: '#1a1a1a', text: '#e5e5e5' }
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #FAFAFA; color: #111111; transition: all 0.3s ease; }
+        .dark body { background-color: #0a0a0a; color: #e5e5e5; }
+        .dark .bg-white { background-color: #1a1a1a !important; }
+        .dark .text-gray-800 { color: #e5e5e5 !important; }
+        .dark .text-gray-600 { color: #a3a3a3 !important; }
+        .dark .border-gray-200 { border-color: #333 !important; }
+        .dark .bg-gray-50 { background-color: #1a1a1a !important; }
+        
+        .prose-dropcap::first-letter { font-size: 3.5rem; font-weight: 700; float: left; margin-right: 0.5rem; line-height: 1; margin-top: 0.2rem; }
+        .separator-double { border-top: 1px solid #111; border-bottom: 3px solid #111; height: 6px; margin: 1.5rem 0; }
+        .dark .separator-double { border-top-color: #333; border-bottom-color: #444; }
+        
+        .news-card { transition: all 0.3s ease; }
+        .news-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .dark .news-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        
+        .section-tag { background: #A83232; color: white; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #A83232; z-index: 100; transition: width 0.1s; }
+        .reading-time { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #666; }
+        .dark .reading-time { color: #888; }
+        
+        /* Breaking news ticker */
+        .ticker-wrap { overflow: hidden; white-space: nowrap; }
+        .ticker-item { display: inline-block; padding-right: 2rem; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
+        /* Search modal */
+        .search-modal { backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased selection:bg-brand-red selection:text-white">
+
+    <!-- Reading Progress -->
+    <div class="reading-progress" id="readingProgress" style="width: 0%"></div>
+
+    <!-- HEADER -->
+    <header class="border-b border-gray-200 bg-white dark:bg-brand-dark-card dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
+        
+        <!-- Breaking News Ticker -->
+        <div class="bg-brand-black dark:bg-brand-blue text-white text-xs py-1 overflow-hidden ticker-wrap">
+            <div class="ticker-inline">
+                <span class="ticker-item">🔴 URGENTE: Movilizaciones por vivienda digna continúan en Santiago</span>
+                <span class="ticker-item">📊 Economistas alertan sobre concentración del capital</span>
+                <span class="ticker-item">🌎 Cumbres regionales discuten integración latinoamericana</span>
+                <span class="ticker-item">⚔️ Nueva ola de despidos en sector público</span>
+            </div>
+        </div>
+        
+        <div class="px-4 py-3 flex items-center justify-between bg-white dark:bg-brand-dark-card">
+            <div class="flex items-center gap-8">
+                <a href="#" class="text-2xl font-serif font-black tracking-tight hover:text-brand-red transition-colors">
+                    LA UNIDAD
+                </a>
+                <nav class="hidden md:flex gap-4 text-sm font-medium">
+                    <a href="#portada" class="hover:text-brand-red transition-colors">Portada</a>
+                    <a href="#politica" class="hover:text-brand-red transition-colors">Política</a>
+                    <a href="#economia" class="hover:text-brand-red transition-colors">Economía</a>
+                    <a href="#internacional" class="hover:text-brand-red transition-colors">Internacional</a>
+                    <a href="#analisis" class="hover:text-brand-red transition-colors">Análisis</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="searchToggle" class="p-2 hover:text-brand-red transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
+                <a href="#" class="p-2 hover:text-brand-red transition-colors"><i data-lucide="rss" class="w-5 h-5"></i></a>
+                <button id="themeToggle" class="ml-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
+                    <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Modal (hidden by default) -->
+    <div id="searchModal" class="fixed inset-0 bg-black/50 search-modal z-50 hidden flex items-start justify-center pt-20">
+        <div class="bg-white dark:bg-brand-dark-card rounded-lg p-6 w-full max-w-2xl mx-4 shadow-2xl">
+            <div class="flex items-center gap-3 mb-4">
+                <i data-lucide="search" class="w-6 h-6 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Buscar artículos, secciones, autores..." 
+                    class="flex-1 bg-transparent text-lg outline-none dark:text-white" autofocus>
+                <button id="closeSearch" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="searchResults" class="space-y-2 max-h-64 overflow-y-auto">
+                <p class="text-gray-500 text-sm">Escribe para buscar...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+        
+        <!-- PORTADA -->
+        <section id="portada" class="py-8 px-4">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Featured Article with Image -->
+                <article class="mb-8 bg-white dark:bg-brand-dark-card rounded-lg overflow-hidden shadow-lg news-card fade-in">
+                    <div class="grid md:grid-cols-2 gap-0">
+                        <div class="h-64 md:h-auto bg-gradient-to-br from-brand-red to-brand-blue relative overflow-hidden group">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="newspaper" class="w-24 h-24 text-white opacity-50 group-hover:scale-110 transition-transform duration-500"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <span class="absolute bottom-4 left-4 section-tag">Editorial</span>
+                        </div>
+                        <div class="p-6 flex flex-col justify-center">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                                <span class="font-mono text-xs" id="featuredDate"></span>
+                                <span>•</span>
+                                <span class="reading-time">⏱️ 8 min lectura</span>
+                                <span>•</span>
+                                <span class="text-brand-red font-medium">⭐ Destacado</span>
+                            </div>
+                            <h1 class="text-2xl md:text-3xl font-serif font-bold mb-3 leading-tight hover:text-brand-red transition-colors cursor-pointer">
+                                Hacia una Nueva Etapa de la Lucha de Clases en Chile
+                            </h1>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                                El análisis dialéctico de las contradicciones actuales del modelo neoliberal y las perspectivas del movimiento popular en el contexto post-constitucional.
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">Comité Editorial</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Grid de Noticias -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    
+                    <!-- Artículo 1 -->
+                    <article class="bg-white dark:bg-brand-dark-card rounded-lg overflow-hidden shadow news-card fade-in">
+                        <div class="h-48 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/30 flex items-center justify-center relative">
+                            <i data-lucide="trending-up" class="w-12 h-12 text-red-200 dark:text-red-800"></i>
+                            <span class="absolute top-3 left-3 section-tag">Economía</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                                <span class="font-mono">05.02.2026</span>
+                                <span>•</span>
+                                <span class="reading-time">⏱️ 5 min</span>
+                            </div>
+                            <h2 class="font-serif font-bold mb-2 leading-snug hover:text-brand-red transition-colors cursor-pointer">
+                                Desigualdad y Concentración del Capital: Un Análisis Cuantitativo
+                            </h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                                La oligarquía financiera chilena consolida su poder mientras el proletariado enfrenta condiciones de precarización creciente.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 2 -->
+                    <article class="bg-white dark:bg-brand-dark-card rounded-lg overflow-hidden shadow news-card fade-in">
+                        <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/30 flex items-center justify-center relative">
+                            <i data-lucide="globe" class="w-12 h-12 text-blue-200 dark:text-blue-800"></i>
+                            <span class="absolute top-3 left-3 section-tag">Internacional</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                                <span class="font-mono">04.02.2026</span>
+                                <span>•</span>
+                                <span class="reading-time">⏱️ 6 min</span>
+                            </div>
+                            <h2 class="font-serif font-bold mb-2 leading-snug hover:text-brand-red transition-colors cursor-pointer">
+                                El Imperialismo en América Latina: Nuevas Formas de Dominio
+                            </h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                                Las estrategias del capital transnacional y la respuesta de los pueblos organizados en la región.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 3 -->
+                    <article class="bg-white dark:bg-brand-dark-card rounded-lg overflow-hidden shadow news-card fade-in">
+                        <div class="h-48 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-900/30 flex items-center justify-center relative">
+                            <i data-lucide="scale" class="w-12 h-12 text-purple-200 dark:text-purple-800"></i>
+                            <span class="absolute top-3 left-3 section-tag">Derecho</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                                <span class="font-mono">03.02.2026</span>
+                                <span>•</span>
+                                <span class="reading-time">⏱️ 4 min</span>
+                            </div>
+                            <h2 class="font-serif font-bold mb-2 leading-snug hover:text-brand-red transition-colors cursor-pointer">
+                                Estado de Derecho y Dictadura del Proletariado
+                            </h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                                La función ideológica del derecho burgués y las perspectivas de una justicia popular.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="separator-double max-w-6xl mx-auto"></div>
+
+        <!-- ANÁLISIS DE COYUNTURA -->
+        <section id="analisis" class="py-8 px-4 bg-gray-50 dark:bg-brand-dark-card">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-serif font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-6 h-6 text-brand-red"></i>
+                    Análisis de Coyuntura v3.0
+                </h2>
+                
+                <!-- Métricas -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-4 shadow">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Lucha de Clases</div>
+                        <div class="text-2xl font-bold text-brand-red">85</div>
+                        <div class="text-xs text-green-600">↑ +5%</div>
+                    </div>
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-4 shadow">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Contradicciones</div>
+                        <div class="text-2xl font-bold text-brand-blue">12</div>
+                        <div class="text-xs text-gray-500">activas</div>
+                    </div>
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-4 shadow">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Movimientos</div>
+                        <div class="text-2xl font-bold text-green-600">8</div>
+                        <div class="text-xs text-gray-500">organizados</div>
+                    </div>
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-4 shadow">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Conciencia</div>
+                        <div class="text-2xl font-bold text-purple-600">72</div>
+                        <div class="text-xs text-gray-500">índice</div>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-6 shadow">
+                        <h3 class="font-bold mb-4">Intensidad de la Lucha de Clases</h3>
+                        <canvas id="classStruggleChart" height="200"></canvas>
+                    </div>
+                    <div class="bg-white dark:bg-brand-dark-card rounded-lg p-6 shadow">
+                        <h3 class="font-bold mb-4">Principales Contradicciones</h3>
+                        <canvas id="contradictionsChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="bg-white dark:bg-brand-dark-card rounded-lg p-6 shadow">
+                    <h3 class="font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="clock" class="w-5 h-5 text-brand-red"></i>
+                        Línea de Tiempo: Acontecimientos Recientes
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="w-24 text-sm text-gray-500 dark:text-gray-400 font-mono">Ene 2026</div>
+                            <div class="flex-1 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-brand-red">
+                                <span class="font-bold">Movimiento Social:</span> Movilizaciones por vivienda digna en Santiago
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-24 text-sm text-gray-500 dark:text-gray-400 font-mono">Dic 2025</div>
+                            <div class="flex-1 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-brand-blue">
+                                <span class="font-bold">Política:</span> Nuevo paquete de medidas neoliberales anunciado
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-24 text-sm text-gray-500 dark:text-gray-400 font-mono">Nov 2025</div>
+                            <div class="flex-1 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-green-600">
+                                <span class="font-bold">Economía:</span> Aumento del desempleo en sectores populares
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white dark:bg-brand-blue py-12 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-serif font-bold text-lg mb-4">LA UNIDAD</h4>
+                <p class="text-sm text-gray-400">
+                    Publicación marxista-leninista dedicada al análisis de la realidad chilena e internacional.
+                </p>
+            </div>
+            <div>
+                <h5 class="font-bold mb-4">Secciones</h5>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-white transition-colors">Portada</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Política</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Economía</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Internacional</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-4">Conectar</h5>
+                <div class="flex gap-3">
+                    <a href="#" class="p-2 bg-gray-800 rounded hover:bg-brand-red transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="p-2 bg-gray-800 rounded hover:bg-brand-red transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                    <a href="#" class="p-2 bg-gray-800 rounded hover:bg-brand-red transition-colors"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            <div>
+                <h5 class="font-bold mb-4">Suscríbete</h5>
+                <div class="flex">
+                    <input type="email" placeholder="tu@email.com" class="px-3 py-2 bg-gray-800 rounded-l text-sm flex-1">
+                    <button class="bg-brand-red px-4 py-2 rounded-r font-medium hover:bg-red-700 transition-colors">Enviar</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+            <p>© 2026 La Unidad. Contradiction • Unity of Opposites • Transformation</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Fecha
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        document.getElementById('featuredDate').textContent = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Search modal
+        const searchToggle = document.getElementById('searchToggle');
+        const searchModal = document.getElementById('searchModal');
+        const closeSearch = document.getElementById('closeSearch');
+        
+        searchToggle.addEventListener('click', () => {
+            searchModal.classList.remove('hidden');
+            document.getElementById('searchInput').focus();
+        });
+        
+        closeSearch.addEventListener('click', () => searchModal.classList.add('hidden'));
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) searchModal.classList.add('hidden');
+        });
+
+        // Reading progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('readingProgress').style.width = scrolled + '%';
+        });
+
+        // Charts
+        new Chart(document.getElementById('classStruggleChart'), {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Intensidad',
+                    data: [65, 72, 68, 80, 75, 85],
+                    borderColor: '#A83232',
+                    backgroundColor: 'rgba(168, 50, 50, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, min: 50, max: 100 } } }
+        });
+
+        new Chart(document.getElementById('contradictionsChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Capital-Trabajo', 'Imperialismo', 'Medio Ambiente', 'Género', 'Democracia'],
+                datasets: [{
+                    data: [35, 25, 18, 12, 10],
+                    backgroundColor: ['#A83232', '#1E293B', '#166534', '#7c3aed', '#0369a1']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+</body>
+</html>

@@ -1,84 +1,36 @@
-# RECTA PROVINCIA
-## Simulador de Brujería - RPG Táctico Isométrico
+# Recta Provincia v2.7
 
-*"Un camino de sombra o luz bajo la niebla de Chiloé"*
+## 🎮 Modo Historia Completo
 
----
+### Logros (12 total)
 
-## 🎮 Información
+| Logro | Descripción | Recompensa |
+|-------|-------------|------------|
+| 🌱 Primeros Pasos | Completar el tutorial | +10 Karma Luz |
+| ⚔️ Guerrero Novato | Vencer tu primer enemigo | Espada de Hierro |
+| 🛡️ Defensor | Supervivir 5 combates | Escudo Mejorado |
+| 💰 Comerciante | Visitar la tienda 3 veces | Descuento 10% |
+| 🔮 Místico | Completar 3 rituales | +20 Karma |
+| 👑 Cazador | Derrotar 10 enemigos | Espada de Oro |
+| 🏆 Maestro | Completar modo historia | Equipo Completo |
+| ✨ Iluminado | Alcanzar 100 Karma Luz | Aura de Luz |
+| 🌑 Sombras | Alcanzar 100 Karma Sombra | Aura de Sombra |
+| ⚖️ Equilibrado | 50/50 Karma Luz/Sombra | Logro Especial |
+| 🔥 Superviviente | Sin recibir daño 3 combates | +50 HP |
+| 🏃 Maratonista | Explorar todas las locaciones | Mapa Completo |
 
-| Aspecto | Detalle |
-|---------|---------|
-| **Género** | Isometric RPG / Simulator |
-| **Plataforma** | PC / Web |
-| **Perspectiva** | Isométrica fija (45°) |
-| **Estilo** | Dark Fantasy / Folk Horror |
-| **Engine** | HTML5 Canvas + JavaScript |
+## 🗺️ Locaciones (7)
 
----
+1. Casa Inicial (tutorial)
+2. Bosque Oscuro (enemigos fáciles)
+3. Pueblo Central (comercio)
+4. Templo Antiguo (rituales)
+5. Cueva Profunda (enemigos difíciles)
+6. Ruinas Perdidas (jefe)
+7. Cascada Sagrada ( endgame)
 
-## 🌟 Historia
+## 🎯 Daily Challenge (v2.6)
 
-En el archipiélago de Chiloé durante el siglo XIX, el jugador controla a un iniciado que busca unirse a la sociedad secreta de brujos conocida como **"La Recta Provincia"**.
-
-Deberá navegar entre intrigas, realizar rituales y tomar decisiones que definirán su camino hacia la maestría o la condena.
-
----
-
-## 🎯 Características
-
-| Característica | Estado | Descripción |
-|---------------|--------|-------------|
-| Sistema de Rituales | ✅ | Magia basada en elementos |
-| Combate Táctico | ✅ | Por turnos isométrico |
-| Narrativa Ramificada | ✅ | Múltiples endings |
-| Exploración | ✅ | Mapa abierto de Chiloé |
-| Sistema de Karma | ✅ | Luz/Sombra |
-
----
-
-## 🕹️ Controles
-
-| Tecla | Acción |
-|-------|--------|
-| Click | Seleccionar / Mover |
-| Space | Menú |
-| Esc | Pausar |
-
----
-
-## 📁 Estructura
-
-```
-recta-provincia/
-├── prototype.html      # Versión base
-├── prototype_v2.0.html # Versión mejorada
-├── README.md
-└── docs/
-    └── GDD.md
-```
-
----
-
-## 🚀 Cómo Jugar
-
-1. Abre `prototype_v2.0.html` en tu navegador
-2. Explora el mundo de Chiloé
-3. Realiza rituales
-4. Toma decisiones
-5. Descubre los secretos de La Recta Provincia
-
----
-
-## 🔜 Próximas Features
-
-- [ ] Modo combate completo
-- [ ] Más rituales y hechizos
-- [ ] Expansión del mapa
-- [ ] Sistema de inventario
-- [ ] cutscenes animadas
-
----
-
-**Estado:** 🟡 En desarrollo  
-**Última actualización:** 2026-02-01
+- 5 desafíos diarios rotativos
+- Recompensas extra de karma
+- Tabla de posiciones semanal
