@@ -1619,8 +1619,107 @@
       "created": "2026-02-02T17:55:25.124112",
       "iterations_spent": 1,
       "completed": "2026-02-02T17:55:40.430002"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar La Unidad: agregar newsletter revolucionaria",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.325843",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.600974"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar La Unidad: implementar sistema de art\u00edculos autom\u00e1ticos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.426446",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.601127"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar La Unidad: agregar secci\u00f3n de eventos y movilizaci\u00f3n",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.525917",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.720298"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar La Unidad: integrar con Moltbook API",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.624289",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.720444"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear tienda de merchandising revolucionario",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.722656",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.838341"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de donaciones para proyecto",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:21.822116",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:29.838489"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear bot de Telegram para La Unidad",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:38.342885",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:46.308965"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar traductor autom\u00e1tico de art\u00edculos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:38.443739",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:46.309271"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear podcast semanal de an\u00e1lisis pol\u00edtico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:38.544058",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:46.449406"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar foro de discusi\u00f3n para lectores",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:38.642478",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:46.449590"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear app m\u00f3vil de La Unidad",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T18:00:38.741061",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T18:00:55.952746"
     }
   ],
-  "iterations": 95,
-  "lastUpdate": "2026-02-02T17:55:40.430076"
+  "iterations": 101,
+  "lastUpdate": "2026-02-02T18:00:55.952815"
 }
