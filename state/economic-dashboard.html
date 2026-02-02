@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Economic Dashboard - PauloARIS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .money-card { @apply bg-white rounded-xl shadow-lg p-6; }
+        .positive { @apply text-green-600; }
+        .negative { @apply text-red-600; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-green-600 to-emerald-600 py-6 px-8">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">💰 Economic Dashboard</h1>
+                <p class="text-green-200">PauloARIS v2.1 - Passive Income System</p>
+            </div>
+            <div class="text-right">
+                <div class="flex items-center gap-2">
+                    <span class="status-indicator status-active bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-1 inline-block"></span>
+                        Sistema Activo
+                    </span>
+                </div>
+                <p class="text-green-200 text-sm mt-1" id="timestamp"></p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-8 px-8">
+        <!-- Portfolio Summary -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="money-card bg-gradient-to-br from-blue-500 to-blue-700 text-white">
+                <div class="text-sm opacity-80">Total Portfolio Value</div>
+                <div class="text-4xl font-bold mt-2" id="total-value">$0</div>
+                <div class="text-sm mt-2 opacity-80">Invertido: <span id="total-invested">$0</span></div>
+            </div>
+            <div class="money-card bg-gradient-to-br from-green-500 to-green-700 text-white">
+                <div class="text-sm opacity-80">Ingresos Mensuales</div>
+                <div class="text-4xl font-bold mt-2" id="monthly-income">$0</div>
+                <div class="text-sm mt-2 opacity-80">Passive Income</div>
+            </div>
+            <div class="money-card bg-gradient-to-br from-purple-500 to-purple-700 text-white">
+                <div class="text-sm opacity-80">ROI Total</div>
+                <div class="text-4xl font-bold mt-2" id="roi">0%</div>
+                <div class="text-sm mt-2 opacity-80">Return on Investment</div>
+            </div>
+            <div class="money-card bg-gradient-to-br from-orange-500 to-orange-700 text-white">
+                <div class="text-sm opacity-80">B2B Revenue MRR</div>
+                <div class="text-4xl font-bold mt-2" id="b2b-mrr">$0</div>
+                <div class="text-sm mt-2 opacity-80">Clientes: <span id="b2b-clients">0</span></div>
+            </div>
+        </section>
+
+        <!-- DePIN Nodes -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">🔧 DePIN Nodes (Passive Income)</h2>
+                <span class="text-sm text-gray-500">Estimated: $50-200/mes</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">🌊</span>
+                        <span class="font-semibold text-gray-800">Olas</span>
+                    </div>
+                    <div class="text-sm text-gray-600">AI Agents para blockchain</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Stake:</span>
+                            <span id="olas-stake" class="font-mono">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Yield:</span>
+                            <span class="text-green-600">5-15% APY</span>
+                        </div>
+                    </div>
+                    <button onclick="stakeNode('Olas')" class="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
+                        💰 Stake
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">🌐</span>
+                        <span class="font-semibold text-gray-800">Mysterium</span>
+                    </div>
+                    <div class="text-sm text-gray-600">VPN decentralized</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span id="mysterium-status" class="text-yellow-600">Pending</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Yield:</span>
+                            <span class="text-green-600">$10-50/mes</span>
+                        </div>
+                    </div>
+                    <button onclick="setupNode('Mysterium')" class="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
+                        ⚙️ Setup
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">🎨</span>
+                        <span class="font-semibold text-gray-800">Render Token</span>
+                    </div>
+                    <div class="text-sm text-gray-600">GPU rendering</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span id="render-status" class="text-yellow-600">Pending</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Yield:</span>
+                            <span class="text-green-600">Variable</span>
+                        </div>
+                    </div>
+                    <button onclick="setupNode('Render Token')" class="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
+                        ⚙️ Setup
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-2xl">📦</span>
+                        <span class="font-semibold text-gray-800">Filecoin</span>
+                    </div>
+                    <div class="text-sm text-gray-600">Storage decentralized</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status:</span>
+                            <span id="filecoin-status" class="text-yellow-600">Pending</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Yield:</span>
+                            <span class="text-green-600">5-10% APY</span>
+                        </div>
+                    </div>
+                    <button onclick="setupNode('Filecoin')" class="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
+                        ⚙️ Setup
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trading & DCA -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Grid Trading -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">📊 Grid Trading</h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-semibold">BTC/USD Grid</div>
+                                <div class="text-sm text-gray-500">$80,000 - $120,000</div>
+                            </div>
+                            <span class="text-green-600 font-mono">+2.3%</span>
+                        </div>
+                        <div class="mt-3 grid grid-cols-3 gap-2 text-sm">
+                            <div class="text-center">
+                                <div class="text-gray-500">Niveles</div>
+                                <div class="font-semibold">10</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500">Profit/Grid</div>
+                                <div class="font-semibold">0.5%</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500">Capital</div>
+                                <div class="font-semibold">$1,000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-semibold">ETH/USD Grid</div>
+                                <div class="text-sm text-gray-500">$2,500 - $4,000</div>
+                            </div>
+                            <span class="text-green-600 font-mono">+1.8%</span>
+                        </div>
+                        <div class="mt-3 grid grid-cols-3 gap-2 text-sm">
+                            <div class="text-center">
+                                <div class="text-gray-500">Niveles</div>
+                                <div class="font-semibold">10</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500">Profit/Grid</div>
+                                <div class="font-semibold">0.5%</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500">Capital</div>
+                                <div class="font-semibold">$500</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg">
+                    ➕ Agregar Estrategia
+                </button>
+            </div>
+
+            <!-- DCA -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">💰 DCA Automático</h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">₿</span>
+                                <div>
+                                    <div class="font-semibold">Bitcoin</div>
+                                    <div class="text-sm text-gray-500">$50/semana</div>
+                                </div>
+                            </div>
+                            <span class="text-green-600" id="btc-status">● Activo</span>
+                        </div>
+                        <div class="mt-3 flex justify-between text-sm">
+                            <span class="text-gray-500">Total Comprado:</span>
+                            <span class="font-mono" id="btc-total">$0</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">Ξ</span>
+                                <div>
+                                    <div class="font-semibold">Ethereum</div>
+                                    <div class="text-sm text-gray-500">$30/semana</div>
+                                </div>
+                            </div>
+                            <span class="text-green-600" id="eth-status">● Activo</span>
+                        </div>
+                        <div class="mt-3 flex justify-between text-sm">
+                            <span class="text-gray-500">Total Comprado:</span>
+                            <span class="font-mono" id="eth-total">$0</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg">
+                    ⚙️ Configurar DCA
+                </button>
+            </div>
+        </section>
+
+        <!-- B2B Services -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">🏢 Servicios B2B</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
+                    <div class="text-2xl mb-2">🔄</div>
+                    <div class="font-semibold text-gray-800">Automatización n8n</div>
+                    <div class="text-sm text-gray-600 mt-1">Workflows para empresas</div>
+                    <div class="text-lg font-bold text-indigo-600 mt-2">$200-500/mes</div>
+                    <div class="mt-2 text-sm">
+                        <span class="text-gray-500">Clientes:</span>
+                        <span id="n8n-clients" class="font-semibold">0</span>/5
+                    </div>
+                    <button class="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded text-sm">
+                        ➕ Nuevo Cliente
+                    </button>
+                </div>
+
+                <div class="bg-gradient-to-br from-pink-50 to-red-50 rounded-lg p-4 border border-pink-200">
+                    <div class="text-2xl mb-2">📄</div>
+                    <div class="font-semibold text-gray-800">Landing Pages</div>
+                    <div class="text-sm text-gray-600 mt-1">Pages de conversión</div>
+                    <div class="text-lg font-bold text-pink-600 mt-2">$150-300</div>
+                    <div class="mt-2 text-sm">
+                        <span class="text-gray-500">Clientes:</span>
+                        <span id="landing-clients" class="font-semibold">0</span>/10
+                    </div>
+                    <button class="mt-3 w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded text-sm">
+                        ➕ Nuevo Cliente
+                    </button>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
+                    <div class="text-2xl mb-2">💬</div>
+                    <div class="font-semibold text-gray-800">WhatsApp Bots</div>
+                    <div class="text-sm text-gray-600 mt-1">Atención automatizada</div>
+                    <div class="text-lg font-bold text-green-600 mt-2">$100-200/mes</div>
+                    <div class="mt-2 text-sm">
+                        <span class="text-gray-500">Clientes:</span>
+                        <span id="whatsapp-clients" class="font-semibold">0</span>/8
+                    </div>
+                    <button class="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded text-sm">
+                        ➕ Nuevo Cliente
+                    </button>
+                </div>
+
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg p-4 border border-orange-200">
+                    <div class="text-2xl mb-2">📊</div>
+                    <div class="font-semibold text-gray-800">Analytics Dashboards</div>
+                    <div class="text-sm text-gray-600 mt-1">Métricas personalizadas</div>
+                    <div class="text-lg font-bold text-orange-600 mt-2">$300-800</div>
+                    <div class="mt-2 text-sm">
+                        <span class="text-gray-500">Clientes:</span>
+                        <span id="analytics-clients" class="font-semibold">0</span>/3
+                    </div>
+                    <button class="mt-3 w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded text-sm">
+                        ➕ Nuevo Cliente
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Pipeline -->
+            <div class="mt-6 pt-6 border-t">
+                <h3 class="font-semibold text-gray-700 mb-3">Pipeline de Ventas</h3>
+                <div id="sales-pipeline" class="space-y-2">
+                    <p class="text-gray-500 text-sm">No hay prospectos activos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl shadow-lg p-6 text-white">
+            <h2 class="text-xl font-bold mb-4">💡 Recomendaciones de Income</h2>
+            <div id="recommendations" class="space-y-3">
+                <div class="bg-white/20 rounded-lg p-3 flex items-center gap-3">
+                    <span class="text-2xl">🔧</span>
+                    <div>
+                        <div class="font-semibold">Setup Olas Node</div>
+                        <div class="text-sm opacity-90">Expected: $50-200/mes | Effort: Low</div>
+                    </div>
+                    <button class="ml-auto bg-white/30 hover:bg-white/40 px-3 py-1 rounded text-sm">
+                        Start
+                    </button>
+                </div>
+                <div class="bg-white/20 rounded-lg p-3 flex items-center gap-3">
+                    <span class="text-2xl">🏢</span>
+                    <div>
+                        <div class="font-semibold">Ofrecer n8n a empresas locales</div>
+                        <div class="text-sm opacity-90">Expected: $200-500/mes por cliente</div>
+                    </div>
+                    <button class="ml-auto bg-white/30 hover:bg-white/40 px-3 py-1 rounded text-sm">
+                        Start
+                    </button>
+                </div>
+                <div class="bg-white/20 rounded-lg p-3 flex items-center gap-3">
+                    <span class="text-2xl">₿</span>
+                    <div>
+                        <div class="font-semibold">Iniciar DCA Bitcoin</div>
+                        <div class="text-sm opacity-90">Expected: 5-15% yearly | Effort: Auto</div>
+                    </div>
+                    <button class="ml-auto bg-white/30 hover:bg-white/40 px-3 py-1 rounded text-sm">
+                        Start
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Economic System Integration
+        const economicSystem = new EconomicSystem();
+        
+        // Update dashboard
+        async function updateDashboard() {
+            const dashboard = await economicSystem.getDashboard();
+            
+            document.getElementById('total-value').textContent = 
+                formatCurrency(dashboard.portfolio.depin.currentValue + dashboard.portfolio.trading.currentValue);
+            document.getElementById('monthly-income').textContent = formatCurrency(dashboard.totalMonthlyIncome);
+            document.getElementById('b2b-mrr').textContent = formatCurrency(dashboard.portfolio.b2b.mrR);
+            document.getElementById('b2b-clients').textContent = dashboard.portfolio.b2b.clients;
+            
+            updateTimestamp();
+        }
+        
+        function formatCurrency(amount) {
+            return '$' + (amount || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+        
+        function updateTimestamp() {
+            document.getElementById('timestamp').textContent = new Date().toLocaleString('es-CL');
+        }
+        
+        // Actions
+        async function setupNode(nodeName) {
+            const result = await economicSystem.setupDepinNode(nodeName);
+            alert(`${nodeName} setup: ${result.status}`);
+        }
+        
+        async function stakeNode(nodeName) {
+            const amount = prompt('Amount to stake:', '100');
+            if (amount) {
+                const result = await economicSystem.stakeDepin(nodeName, parseFloat(amount));
+                alert(`Staked ${amount} in ${nodeName}. Total: ${result.totalStake}`);
+            }
+        }
+        
+        // Auto-refresh
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+            setInterval(updateDashboard, 30000);
+        });
+    </script>
+</body>
+</html>
