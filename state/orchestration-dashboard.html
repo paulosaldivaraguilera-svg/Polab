@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 PauloARIS Advanced Orchestration Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1px;
+        }
+        
+        .gradient-border-inner {
+            background: #111827;
+            padding: 1.5rem;
+        }
+        
+        .trace-node {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid #374151;
+        }
+        
+        .trace-node::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #374151;
+        }
+        
+        .trace-node.success::before { background: #10B981; }
+        .trace-node.error::before { background: #EF4444; }
+        .trace-node.running::before { background: #F59E0B; animation: pulse 1s infinite; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="gradient-border">
+        <div class="gradient-border-inner">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">🧠 PauloARIS Orchestration</h1>
+                    <p class="text-gray-400 text-sm">LangGraph + Reflexion + GraphRAG + Guardrails</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="status-indicator" class="flex items-center gap-2 text-green-400">
+                        <span class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></span>
+                        System Operational
+                    </span>
+                    <span class="text-gray-500">|</span>
+                    <span id="current-time" class="text-gray-400"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="metric-card bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Status</div>
+                <div id="agent-status" class="text-3xl font-bold text-green-400">IDLE</div>
+                <div class="text-sm text-gray-500 mt-1">Current state</div>
+            </div>
+            
+            <div class="metric-card bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Tasks Completed</div>
+                <div id="tasks-completed" class="text-3xl font-bold">0</div>
+                <div class="text-sm text-gray-500 mt-1">Total executed</div>
+            </div>
+            
+            <div class="metric-card bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Errors</div>
+                <div id="error-count" class="text-3xl font-bold text-red-400">0</div>
+                <div class="text-sm text-gray-500 mt-1">Failed executions</div>
+            </div>
+            
+            <div class="metric-card bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Cache Hit Rate</div>
+                <div id="cache-rate" class="text-3xl font-bold text-blue-400">0%</div>
+                <div class="text-sm text-gray-500 mt-1">Semantic cache</div>
+            </div>
+        </div>
+
+        <!-- Architecture Diagram -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">🏗️ Architecture Overview</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- LangGraph State Machine -->
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <h3 class="font-bold text-purple-400 mb-3">LangGraph State Machine</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-purple-600 flex items-center justify-center text-xs">1</span>
+                            <span>think → analyze task</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-purple-600 flex items-center justify-center text-xs">2</span>
+                            <span>execute → run with guardrails</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-purple-600 flex items-center justify-center text-xs">3</span>
+                            <span>reflect → critic evaluation</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-purple-600 flex items-center justify-center text-xs">4</span>
+                            <span>correct → auto-heal if needed</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-green-600 flex items-center justify-center text-xs">✓</span>
+                            <span>complete → save to memory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Components -->
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <h3 class="font-bold text-blue-400 mb-3">Active Components</h3>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-green-400">●</span>
+                            GraphRAG Memory
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-green-400">●</span>
+                            Guardrails
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-green-400">●</span>
+                            Semantic Cache
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-yellow-400">●</span>
+                            Human-in-Loop
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-green-400">●</span>
+                            Reflection Agent
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded flex items-center gap-2">
+                            <span class="text-green-400">●</span>
+                            Self-Healing
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trace Viewer -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">📊 Execution Traces</h2>
+                <select id="trace-filter" class="bg-gray-700 rounded px-3 py-1 text-sm">
+                    <option value="all">All Traces</option>
+                    <option value="success">Success</option>
+                    <option value="error">Errors</option>
+                </select>
+            </div>
+            
+            <div id="traces-container" class="space-y-4">
+                <div class="text-center text-gray-500 py-8">
+                    No traces yet. Execute a task to see the flow.
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory & Cache -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- GraphRAG Memory -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">🧠 GraphRAG Memory</h2>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Entities</span>
+                        <span id="memory-entities" class="font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Relations</span>
+                        <span id="memory-relations" class="font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Episodes</span>
+                        <span id="memory-episodes" class="font-mono">0</span>
+                    </div>
+                    <div class="h-32 bg-gray-900 rounded flex items-center justify-center text-gray-500 text-sm">
+                        Knowledge Graph Visualization
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semantic Cache -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">⚡ Semantic Cache</h2>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Cached Queries</span>
+                        <span id="cache-size" class="font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Total Hits</span>
+                        <span id="cache-hits" class="font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Savings</span>
+                        <span id="cache-savings" class="font-mono text-green-400">$0.00</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div id="cache-bar" class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guardrails Status -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">🛡️ Guardrails Status</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <div class="text-gray-400 text-sm mb-2">Input Rails</div>
+                    <div class="text-2xl font-bold text-green-400">Active</div>
+                    <div class="text-xs text-gray-500">Blocking prompt injection</div>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <div class="text-gray-400 text-sm mb-2">Output Rails</div>
+                    <div class="text-2xl font-bold text-green-400">Active</div>
+                    <div class="text-xs text-gray-500">Filtering sensitive data</div>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <div class="text-gray-400 text-sm mb-2">Topical Rails</div>
+                    <div class="text-2xl font-bold text-green-400">Active</div>
+                    <div class="text-xs text-gray-500">Domain enforcement</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Human-in-the-Loop -->
+        <div class="bg-gray-800 rounded-xl p-6">
+            <h2 class="text-xl font-bold mb-4">👤 Human-in-the-Loop</h2>
+            <div id="hitl-container">
+                <div class="text-center text-gray-500 py-4">
+                    No pending interventions
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Console Panel -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 p-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex gap-4">
+                <input type="text" id="task-input" 
+                    placeholder="Enter task for PauloARIS..." 
+                    class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 focus:border-purple-500 focus:outline-none">
+                <button onclick="executeTask()" 
+                    class="bg-purple-600 px-6 py-2 rounded-lg font-bold hover:bg-purple-500 transition">
+                    Execute
+                </button>
+                <button onclick="clearConsole()" 
+                    class="bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                    Clear
+                </button>
+            </div>
+            <div id="console-output" class="mt-4 h-40 overflow-auto font-mono text-sm space-y-2">
+                <div class="text-gray-500">// PauloARIS Advanced Orchestration Console</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let orchestratorState = {
+            status: 'IDLE',
+            tasksCompleted: 0,
+            errors: 0,
+            cache: { size: 0, hits: 0, savings: 0 },
+            memory: { entities: 0, relations: 0, episodes: 0 },
+            traces: [],
+            hitl: []
+        };
+
+        // Update time
+        function updateTime() {
+            document.getElementById('current-time').textContent = 
+                new Date().toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Execute task
+        async function executeTask() {
+            const input = document.getElementById('task-input');
+            const task = input.value.trim();
+            if (!task) return;
+
+            log(`🚀 Executing: ${task}`);
+            input.value = '';
+
+            // Simulate execution
+            const trace = {
+                id: Date.now(),
+                task,
+                status: 'running',
+                steps: [
+                    { name: 'think', status: 'success', duration: 150 },
+                    { name: 'execute', status: 'running', duration: 0 },
+                    { name: 'reflect', status: 'pending', duration: 0 },
+                    { name: 'complete', status: 'pending', duration: 0 }
+                ],
+                timestamp: new Date().toISOString()
+            };
+
+            orchestratorState.traces.unshift(trace);
+            renderTraces();
+
+            // Simulate progress
+            setTimeout(() => {
+                trace.steps[1].status = 'success';
+                trace.steps[1].duration = Math.floor(Math.random() * 500) + 200;
+                trace.steps[2].status = 'running';
+                renderTraces();
+            }, 500);
+
+            setTimeout(() => {
+                trace.steps[2].status = 'success';
+                trace.steps[2].duration = Math.floor(Math.random() * 300) + 100;
+                trace.steps[3].status = 'success';
+                trace.steps[3].duration = 50;
+                trace.status = 'success';
+                orchestratorState.tasksCompleted++;
+                renderAll();
+                log(`✅ Completed: ${task} (${trace.steps.reduce((s, step) => s + step.duration, 0)}ms)`);
+            }, 1200);
+
+            renderTraces();
+        }
+
+        // Log to console
+        function log(message) {
+            const consoleOutput = document.getElementById('console-output');
+            const entry = document.createElement('div');
+            entry.innerHTML = `<span class="text-purple-400">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+            consoleOutput.appendChild(entry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = 
+                '<div class="text-gray-500">// Console cleared</div>';
+        }
+
+        // Render functions
+        function renderAll() {
+            document.getElementById('agent-status').textContent = orchestratorState.status;
+            document.getElementById('tasks-completed').textContent = orchestratorState.tasksCompleted;
+            document.getElementById('error-count').textContent = orchestratorState.errors;
+            
+            const hitRate = orchestratorState.cache.hits / (orchestratorState.cache.size || 1);
+            document.getElementById('cache-rate').textContent = 
+                `${(hitRate * 100).toFixed(1)}%`;
+            
+            document.getElementById('memory-entities').textContent = orchestratorState.memory.entities;
+            document.getElementById('memory-relations').textContent = orchestratorState.memory.relations;
+            document.getElementById('memory-episodes').textContent = orchestratorState.memory.episodes;
+            
+            document.getElementById('cache-size').textContent = orchestratorState.cache.size;
+            document.getElementById('cache-hits').textContent = orchestratorState.cache.hits;
+            document.getElementById('cache-savings').textContent = 
+                `$${orchestratorState.cache.savings.toFixed(2)}`;
+            document.getElementById('cache-bar').style.width = `${hitRate * 100}%`;
+        }
+
+        function renderTraces() {
+            const container = document.getElementById('traces-container');
+            
+            if (orchestratorState.traces.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        No traces yet. Execute a task to see the flow.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = orchestratorState.traces.slice(0, 5).map(trace => `
+                <div class="trace-node ${trace.status}">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="font-mono text-sm text-gray-400">#${trace.id}</span>
+                        <span class="font-bold">${trace.task}</span>
+                        <span class="text-xs px-2 py-0.5 rounded ${
+                            trace.status === 'success' ? 'bg-green-900 text-green-400' :
+                            trace.status === 'error' ? 'bg-red-900 text-red-400' :
+                            'bg-yellow-900 text-yellow-400'
+                        }">${trace.status}</span>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        ${trace.steps.map(step => `
+                            <div class="text-xs px-2 py-1 rounded ${
+                                step.status === 'success' ? 'bg-green-900 text-green-400' :
+                                step.status === 'error' ? 'bg-red-900 text-red-400' :
+                                step.status === 'running' ? 'bg-yellow-900 text-yellow-400' :
+                                'bg-gray-700 text-gray-400'
+                            }">
+                                ${step.name} (${step.duration}ms)
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Simulate periodic updates
+        setInterval(() => {
+            orchestratorState.memory.entities = Math.floor(Math.random() * 100) + 50;
+            orchestratorState.memory.relations = Math.floor(Math.random() * 200) + 100;
+            orchestratorState.memory.episodes = orchestratorState.tasksCompleted;
+            orchestratorState.cache.size = Math.floor(Math.random() * 20) + 10;
+            orchestratorState.cache.hits = Math.floor(Math.random() * 50) + 20;
+            orchestratorState.cache.savings = orchestratorState.cache.hits * 0.01;
+            renderAll();
+        }, 5000);
+
+        // Initial render
+        renderAll();
+        renderTraces();
+    </script>
+</body>
+</html>
