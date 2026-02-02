@@ -715,203 +715,228 @@
       "project": "pauloaris",
       "task": "Crear guardrails de seguridad para contenido generado",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:04:41.074611",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:16.397801"
     },
     {
       "project": "pauloaris",
       "task": "Implementar optimizaci\u00f3n de prompts con m\u00e9tricas de engagement",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:04:41.173675",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:16.397947"
     },
     {
       "project": "pauloaris",
       "task": "Crear dashboard de observabilidad para agente social",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:04:41.280525",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:16.514684"
     },
     {
       "project": "pauloaris",
       "task": "Implementar sistema de rate limiting adaptativo para APIs",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:04:41.379992",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:16.514823"
     },
     {
       "project": "pauloaris",
       "task": "Implementar sistema de analytics de engagement para agente social",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:06:20.409675",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:21.780151"
     },
     {
       "project": "pauloaris",
       "task": "Crear wrapper de API unificado para X/LinkedIn/Discord",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:06:20.509131",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:21.780299"
     },
     {
       "project": "pauloaris",
       "task": "Documentar arquitectura de agentes sociales en wiki t\u00e9cnica",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:06:20.608512",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:21.897260"
     },
     {
       "project": "pauloaris",
       "task": "Mejorar Comenzar: analytics de engagement + guardrails de contenido",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:39.931410",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:21.897409"
     },
     {
       "project": "pauloaris",
       "task": "Implementar memoria persistente para agente Moltbook (RAG + Graph)",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.030548",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:31.971892"
     },
     {
       "project": "pauloaris",
       "task": "Agregar sistema de analytics de engagement a dashboard",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.128726",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:31.972040"
     },
     {
       "project": "pauloaris",
       "task": "Mejorar E-commerce PyME: automatizaci\u00f3n n8n con guardrails",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.240236",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:32.088978"
     },
     {
       "project": "pauloaris",
       "task": "Crear plugin de observabilidad (tracing) para agentes",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.341667",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:32.089124"
     },
     {
       "project": "pauloaris",
       "task": "Integrar rate limiting adaptativo en todas las APIs",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.444482",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:32.207948"
     },
     {
       "project": "pauloaris",
       "task": "Actualizar MEMORY.md con patrones de agentes sociales",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:09:40.543017",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:32.208137"
     },
     {
       "project": "pauloaris",
       "task": "Integrar agent-memory.js en Comenzar landing",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:11:01.117760",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:42.170424"
     },
     {
       "project": "pauloaris",
       "task": "Agregar metrics endpoint a API existentes",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:11:01.223298",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:42.170563"
     },
     {
       "project": "pauloaris",
       "task": "Crear script de backup automatizado con git hooks",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:11:01.325007",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:42.295173"
     },
     {
       "project": "pauloaris",
       "task": "Documentar arquitectura de observabilidad en wiki",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:11:01.440324",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:42.295312"
     },
     {
       "project": "pauloaris",
       "task": "Integrar agent-memory.js en Comenzar landing",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.077817",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.385600"
     },
     {
       "project": "pauloaris",
       "task": "Agregar metrics endpoint a API existentes",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.177040",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.385751"
     },
     {
       "project": "pauloaris",
       "task": "Crear script de backup automatizado con git hooks",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.284041",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.501714"
     },
     {
       "project": "pauloaris",
       "task": "Documentar arquitectura de observabilidad en wiki",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.383636",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.501854"
     },
     {
       "project": "pauloaris",
       "task": "Optimizar dashboard con m\u00e9tricas de engagement",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.484256",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.616530"
     },
     {
       "project": "pauloaris",
       "task": "Crear API endpoint unificado para m\u00e9tricas",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.582703",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:47.616670"
     },
     {
       "project": "pauloaris",
       "task": "Implementar health check avanzado con alertas",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T17:13:41.680582",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:14:52.187658"
     }
   ],
-  "iterations": 40,
-  "lastUpdate": "2026-02-02T17:14:04.352714"
+  "iterations": 53,
+  "lastUpdate": "2026-02-02T17:14:52.187730"
 }
