@@ -1367,8 +1367,116 @@
       "created": "2026-02-02T17:51:41.232932",
       "iterations_spent": 1,
       "completed": "2026-02-02T17:51:48.395149"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar Comenzar landing con chatbot de WhatsApp integrado",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:53:59.997358",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.626099"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear FAQ extendida para Comenzar servicios legales",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:00.098044",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.626247"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar chat en vivo en Comenzar landing",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:00.197889",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.744738"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar testimoniales de clientes a Comenzar",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:00.304986",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.744880"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear blog con art\u00edculos legales para SEO",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:00.407738",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.862111"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar chat online para E-commerce PyME",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:00.508270",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.862250"
+    },
+    {
+      "project": "pauloaris",
+      "task": "A\u00f1adir modo multiplayer a Elemental Pong",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.441172",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.978477"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear sistema de ranked matches para Recta Provincia",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.542186",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:20.978614"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar tienda in-game para Delitos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.641640",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:21.095479"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear blog personal con art\u00edculos de tecnolog\u00eda",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.740209",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:21.095621"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar newsletter para subscribers",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.848555",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:21.217985"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear podcast automation para contenido semanal",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T17:54:13.947957",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:54:21.218184"
     }
   ],
-  "iterations": 80,
-  "lastUpdate": "2026-02-02T17:51:48.395225"
+  "iterations": 86,
+  "lastUpdate": "2026-02-02T17:54:21.218269"
 }
