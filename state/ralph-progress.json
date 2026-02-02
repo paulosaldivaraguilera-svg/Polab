@@ -4630,11 +4630,119 @@
       "project": "docs",
       "task": "Crear contribuci\u00f3n guide",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T19:50:06.865161",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.638087"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear documentaci\u00f3n de diferencia: La Unidad (Prensa) vs SUR (Educaci\u00f3n)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:57.755023",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.638237"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear puerto separado para La Unidad (8084)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:57.857747",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.769440"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Integrar dise\u00f1o HTML del usuario al proyecto",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:57.961139",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.769646"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Conectar RSS feeds de medios chilenos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.067979",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.903077"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Implementar NLP para categorizaci\u00f3n autom\u00e1tica",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.178646",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:20.903230"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear API de distribuci\u00f3n a redes sociales",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.338923",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.035874"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Mejorar dise\u00f1o con modo oscuro",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.450349",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.036013"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Implementar sistema de b\u00fasqueda",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.555938",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.165458"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear p\u00e1gina de categor\u00eda",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.658771",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.165656"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Configurar Google AdSense placeholder",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.762939",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.306626"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear sistema de suscripciones",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:08:58.867769",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:09:21.306767"
+    },
+    {
+      "project": "docs",
+      "task": "Documentar arquitectura completa de proyectos",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T20:08:58.973678",
       "iterations_spent": 0
     }
   ],
-  "iterations": 266,
-  "lastUpdate": "2026-02-02T19:50:13.441411"
+  "iterations": 272,
+  "lastUpdate": "2026-02-02T20:09:21.306832"
 }
