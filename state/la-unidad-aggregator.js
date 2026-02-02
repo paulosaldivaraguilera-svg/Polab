@@ -1,52 +1,93 @@
 /**
  * LA UNIDAD - News Aggregator & Content Curator
  * 
- * Backend para el medio de prensa digital
- * Funciones: RSS feeds, NLP, distribución, monetización
+ * Backend para agencia de prensa digital
+ * Fuentes: CGTN, El Siglo, Radio Nuevo Mundo, Granma, Telesur, Prensa Latina
  */
 
 const Parser = require('rss-parser');
-const { JSDOM } = require('jsdom');
 const crypto = require('crypto');
 
-// Configuración
+// Configuración con fuentes del usuario (perspectiva editorial específica)
 const CONFIG = {
     refreshInterval: 15 * 60 * 1000, // 15 minutos
-    maxArticlesPerSource: 50,
-    categories: ['politica', 'economia', 'derecho', 'sociedad', 'ciencia', 'opinion'],
+    maxArticlesPerSource: 30,
+    categories: ['politica', 'internacional', 'economia', 'cultura', 'sociedad', 'opinion'],
+    
+    // FUENTES CORREGIDAS (del usuario)
     sources: {
-        nacional: [
-            { name: 'El Mercurio', url: 'https://www.mer.cl/rss/', category: 'politica' },
-            { name: 'La Tercera', url: 'https://www.latercera.com/feed/', category: 'actualidad' },
-            { name: 'CNN Chile', url: 'https://www.cnnchile.com/feed/', category: 'politica' },
-            { name: 'BioBioChile', url: 'https://www.biobiochile.cl/rss/', category: 'actualidad' }
-        ],
-        internacional: [
-            { name: 'NYT', url: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', category: 'world' },
-            { name: 'WaPo', url: 'https://feeds.washingtonpost.com/rss/world', category: 'world' },
-            { name: 'The Guardian', url: 'https://www.theguardian.com/world/rss', category: 'world' },
-            { name: 'BBC', url: 'http://feeds.bbci.co.uk/news/rss.xml', category: 'world' }
-        ],
-        economia: [
-            { name: 'Diario Financiero', url: 'https://www.df.cl/rss/', category: 'economia' },
-            { name: 'Estrategia', url: 'https://www.estrategia.cl/rss/', category: 'economia' }
-        ],
-        opinion: [
-            { name: 'CIPER', url: 'https://www.ciperchile.cl/rss/', category: 'investigacion' },
-            { name: 'El Mostrador', url: 'https://www.elmostrador.cl/feed/', category: 'opinion' }
-        ]
+        // CGTN Español - China Global
+        cgtn: {
+            name: 'CGTN Español',
+            url: 'https://espanol.cgtn.com/',
+            rss: 'https://espanol.cgtn.com/rss/',
+            category: 'internacional',
+            language: 'es'
+        },
+        
+        // El Siglo - Chile
+        elsiglo: {
+            name: 'El Siglo',
+            url: 'https://elsiglo.cl/',
+            rss: 'https://elsiglo.cl/feed/',
+            category: 'politica',
+            language: 'es'
+        },
+        
+        // Radio Nuevo Mundo - Chile
+        nuevomundo: {
+            name: 'Radio Nuevo Mundo',
+            url: 'https://radionuevomundo.cl/',
+            rss: 'https://radionuevomundo.cl/feed/',
+            category: 'cultura',
+            language: 'es'
+        },
+        
+        // Granma - Cuba
+        granma: {
+            name: 'Granma',
+            url: 'https://www.granma.cu/',
+            rss: 'https://www.granma.cu/rss/',
+            category: 'internacional',
+            language: 'es'
+        },
+        
+        // Telesur - Venezuela
+        telesur: {
+            name: 'TeleSUR',
+            url: 'https://www.telesurtv.net/',
+            rss: 'https://www.telesurtv.net/rss/',
+            category: 'internacional',
+            language: 'es'
+        },
+        
+        // Prensa Latina - Cuba
+        prensalatina: {
+            name: 'Prensa Latina',
+            url: 'https://www.prensa-latina.cu/',
+            rss: 'https://www.prensa-latina.cu/rss/',
+            category: 'internacional',
+            language: 'es'
+        }
     }
 };
 
 class NewsAggregator {
     constructor() {
-        this.parser = new Parser();
+        this.parser = new Parser({
+            timeout: 10000,
+            headers: {
+                'User-Agent': 'LaUnidad-Bot/1.0'
+            }
+        });
+        
         this.articles = new Map(); // url -> article
         this.categories = new Map(); // category -> articles[]
         this.trending = []; // trending topics
         this.stats = {
             totalArticles: 0,
             publishedToday: 0,
+            bySource: {},
             byCategory: {},
             lastUpdate: null
         };
@@ -55,75 +96,85 @@ class NewsAggregator {
     /**
      * Agregar artículo desde feed RSS
      */
-    async processFeed(source) {
+    async processFeed(sourceKey) {
+        const source = CONFIG.sources[sourceKey];
+        if (!source) return [];
+
         try {
-            const feed = await this.parser.parseURL(source.url);
+            console.log(`📰 Procesando: ${source.name}...`);
+            
+            const feed = await this.parser.parseURL(source.rss);
             const articles = [];
 
             for (const item of feed.items.slice(0, CONFIG.maxArticlesPerSource)) {
+                // Skip si no tiene link válido
+                if (!item.link || !item.link.startsWith('http')) continue;
+
                 const article = {
                     id: crypto.createHash('md5').update(item.link).digest('hex').slice(0, 12),
-                    title: item.title,
+                    title: this.cleanTitle(item.title),
                     link: item.link,
                     source: source.name,
+                    sourceKey: sourceKey,
                     sourceUrl: source.url,
-                    publishedAt: new Date(item.pubDate || item.isoDate),
+                    publishedAt: new Date(item.pubDate || item.isoDate || item.date),
                     category: source.category,
-                    content: item.contentSnippet || item.content || '',
+                    content: item.contentSnippet || item.content || item.summary || '',
                     summary: this.generateSummary(item.contentSnippet || item.content || ''),
+                    author: item.creator || item.author || source.name,
                     sentiment: null,
                     engagement: 0,
                     curated: false,
                     published: false,
-                    sharedTo: [], // ['twitter', 'facebook', 'whatsapp']
+                    sharedTo: [],
                     createdAt: Date.now()
                 };
 
                 // Detectar idioma
                 article.lang = this.detectLanguage(article.title + ' ' + article.summary);
 
-                // Analizar sentimiento (simplificado)
+                // Analizar sentimiento
                 article.sentiment = this.analyzeSentiment(article.summary);
 
-                // Verificar si ya existe
+                // Verificar duplicado
                 if (!this.articles.has(article.link)) {
                     this.articles.set(article.link, article);
                     articles.push(article);
                 }
             }
 
-            // Actualizar estadísticas por categoría
+            // Actualizar estadísticas
+            if (!this.stats.bySource[source.name]) {
+                this.stats.bySource[source.name] = 0;
+            }
+            this.stats.bySource[source.name] += articles.length;
+
             if (!this.stats.byCategory[source.category]) {
                 this.stats.byCategory[source.category] = 0;
             }
             this.stats.byCategory[source.category] += articles.length;
 
-            console.log(`✅ ${source.name}: ${articles.length} artículos nuevos`);
+            console.log(`   ✅ ${source.name}: ${articles.length} artículos nuevos`);
             return articles;
 
         } catch (error) {
-            console.error(`❌ Error procesando ${source.name}:`, error.message);
+            console.error(`   ❌ Error ${source.name}: ${error.message}`);
             return [];
         }
     }
 
     /**
-     * Procesar todos los feeds
+     * Procesar todos los feeds configurados
      */
     async refreshAll() {
-        console.log('🔄 La Unidad: Refrescando feeds de noticias...');
+        console.log('\n🔄 LA UNIDAD: Refrescando feeds de noticias...');
         const startTime = Date.now();
         let totalNew = 0;
 
-        const allSources = [
-            ...CONFIG.sources.nacional,
-            ...CONFIG.sources.internacional,
-            ...CONFIG.sources.economia,
-            ...CONFIG.sources.opinion
-        ];
-
-        for (const source of allSources) {
-            const newArticles = await this.processFeed(source);
+        const sourceKeys = Object.keys(CONFIG.sources);
+        
+        for (const sourceKey of sourceKeys) {
+            const newArticles = await this.processFeed(sourceKey);
             totalNew += newArticles.length;
         }
 
@@ -134,7 +185,7 @@ class NewsAggregator {
         this.stats.totalArticles = this.articles.size;
 
         const duration = Date.now() - startTime;
-        console.log(`✅ Feed refresh completo: ${totalNew} artículos nuevos en ${duration}ms`);
+        console.log(`\n✅ Feed refresh completo: ${totalNew} artículos nuevos en ${duration}ms\n`);
 
         return { totalNew, duration };
     }
@@ -142,7 +193,7 @@ class NewsAggregator {
     /**
      * Curar artículo para publicación
      */
-    curateArticle(articleId, editorNotes = '') {
+    curateArticle(articleId, editorNotes = '', customCategory = null) {
         const article = Array.from(this.articles.values())
             .find(a => a.id === articleId);
 
@@ -152,13 +203,15 @@ class NewsAggregator {
 
         article.curated = true;
         article.editorNotes = editorNotes;
+        article.customCategory = customCategory || article.category;
         article.curatedAt = Date.now();
 
         // Añadir a categoría
-        if (!this.categories.has(article.category)) {
-            this.categories.set(article.category, []);
+        const cat = article.customCategory;
+        if (!this.categories.has(cat)) {
+            this.categories.set(cat, []);
         }
-        this.categories.get(article.category).push(article);
+        this.categories.get(cat).push(article);
 
         return article;
     }
@@ -181,11 +234,9 @@ class NewsAggregator {
         article.published = true;
         article.publishedAt = Date.now();
         article.sharedTo = platforms;
-
-        // Generar preview para compartir
         article.preview = this.generatePreview(article);
+        article.publishedBy = 'La Unidad Editorial';
 
-        // Actualizar estadísticas
         this.stats.publishedToday++;
 
         return article;
@@ -196,11 +247,11 @@ class NewsAggregator {
      */
     generateShareText(article) {
         const maxLength = 280;
-        const hashtag = `#LaUnidad #${this.capitalize(article.category)}`;
+        const hashtag = `#LaUnidad #${this.capitalize(article.customCategory || article.category)}`;
         
         let text = `📰 ${article.title}\n\n`;
-        text += `${article.summary.slice(0, 150)}...\n\n`;
-        text += `🔗 ${article.link.split('/').slice(0, 3).join('/')}\n`;
+        text += `${article.summary.slice(0, 120)}...\n\n`;
+        text += `🔗 ${new URL(article.link).hostname}\n`;
         text += `${hashtag}`;
 
         if (text.length > maxLength) {
@@ -221,8 +272,10 @@ class NewsAggregator {
             stats: {
                 totalArticles: this.stats.totalArticles,
                 publishedToday: this.stats.publishedToday,
+                bySource: this.stats.bySource,
                 byCategory: this.stats.byCategory,
-                lastUpdate: this.stats.lastUpdate
+                lastUpdate: this.stats.lastUpdate,
+                sourcesConfigured: Object.keys(CONFIG.sources).length
             },
             trending: this.trending.slice(0, 10),
             recentArticles: Array.from(this.articles.values())
@@ -246,17 +299,19 @@ class NewsAggregator {
     }
 
     // Helpers
+    cleanTitle(title) {
+        return title?.replace(/\s+/g, ' ').trim() || '';
+    }
+
     generateSummary(content) {
         if (!content) return '';
-        // Strip HTML
-        const text = content.replace(/<[^>]*>/g, '').trim();
-        // Take first 300 chars
-        return text.slice(0, 300);
+        const text = content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        return text.slice(0, 400);
     }
 
     detectLanguage(text) {
-        const spanishWords = ['el', 'la', 'de', 'que', 'y', 'en', 'un', 'una', 'es', 'son'];
-        const englishWords = ['the', 'and', 'of', 'to', 'a', 'in', 'is', 'it', 'that', 'for'];
+        const spanishWords = ['el', 'la', 'de', 'que', 'y', 'en', 'un', 'una', 'es', 'son', 'los', 'las', 'por', 'con'];
+        const englishWords = ['the', 'and', 'of', 'to', 'a', 'in', 'is', 'it', 'that', 'for', 'are', 'was'];
         
         const words = text.toLowerCase().split(/\s+/);
         const esCount = words.filter(w => spanishWords.includes(w)).length;
@@ -266,8 +321,8 @@ class NewsAggregator {
     }
 
     analyzeSentiment(text) {
-        const positive = ['bueno', 'mejor', 'avance', 'progreso', 'good', 'better', 'advance', 'progress'];
-        const negative = ['malo', 'peor', 'crisis', 'problema', 'bad', 'worse', 'crisis', 'problem'];
+        const positive = ['bueno', 'mejor', 'avance', 'progreso', 'acuerdo', 'cooperación', 'paz', 'solidaridad'];
+        const negative = ['crisis', 'conflicto', 'guerra', 'bloqueo', 'sanciones', 'ataque', 'crisis', 'problema'];
         
         const lower = text.toLowerCase();
         const posCount = positive.filter(w => lower.includes(w)).length;
@@ -279,13 +334,12 @@ class NewsAggregator {
     }
 
     updateTrending() {
-        // Simple trending algorithm based on recency and keywords
         const keywords = {};
         
         for (const article of this.articles.values()) {
             const words = article.title.toLowerCase().split(/\s+/);
             for (const word of words) {
-                if (word.length > 4) {
+                if (word.length > 5 && !['como', 'donde', 'cuando', 'porque', 'entre', 'hacia'].includes(word)) {
                     keywords[word] = (keywords[word] || 0) + 1;
                 }
             }
@@ -303,15 +357,14 @@ class NewsAggregator {
             description: article.summary.slice(0, 200),
             source: article.source,
             url: article.link,
-            image: null // Would extract from OG tags
+            image: null
         };
     }
 
     capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        return str?.charAt(0).toUpperCase() + str?.slice(1) || '';
     }
 
-    // Auto-refresh loop
     startAutoRefresh() {
         setInterval(() => this.refreshAll(), CONFIG.refreshInterval);
         console.log(`🔄 La Unidad: Auto-refresh cada ${CONFIG.refreshInterval / 60000} minutos`);

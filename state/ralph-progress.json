@@ -4738,11 +4738,101 @@
       "project": "docs",
       "task": "Documentar arquitectura completa de proyectos",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T20:08:58.973678",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:19.865886"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Testear conexi\u00f3n con RSS de CGTN",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.126032",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:19.866038"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Testear conexi\u00f3n con RSS de El Siglo",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.242380",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:19.996076"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Testear conexi\u00f3n con RSS de Granma",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.347876",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:19.996230"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Testear conexi\u00f3n con RSS de Telesur",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.451181",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.128370"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Testear conexi\u00f3n con RSS de Prensa Latina",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.556183",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.128517"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear endpoint API para frontend",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.667211",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.268652"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Integrar dise\u00f1o HTML del usuario con backend",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.769518",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.268803"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear sistema de categories din\u00e1mic",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.874022",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.400231"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Implementar p\u00e1gina de art\u00edculo",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:16:12.978055",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:16:20.400380"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Deploy La Unidad en puerto 8084 (separado de SUR 8083)",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T20:16:13.082033",
       "iterations_spent": 0
     }
   ],
-  "iterations": 272,
-  "lastUpdate": "2026-02-02T20:09:21.306832"
+  "iterations": 277,
+  "lastUpdate": "2026-02-02T20:16:20.400449"
 }

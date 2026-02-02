@@ -2,85 +2,85 @@
 
 ## Concepto Real
 
-**La Unidad** es un **medio de análisis y opinión** que curay repostea contenido de prensa, análisis político, y opinión ciudadana.
+**La Unidad** es un **medio de análisis y opinión** que curay repostea contenido de prensa internacional y latinoamericana con perspectiva editorial específica.
 
 ### Diferencia con Sistema SUR:
-- **Sistema SUR**: Contenido educativo Marxist-Leninist (generado internamente)
-- **La Unidad**: Agencia de prensa - curay repostea contenido periodístico existente
+- **Sistema SUR**: Contenido educativo Marxist-Leninist (generado internamente) - Puerto 8083
+- **La Unidad**: Agencia de prensa - curay repostea contenido de fuentes específicas - Puerto 8084
+
+---
+
+## Fuentes Configuradas (DEL USUARIO)
+
+| # | Fuente | País | Categoría |
+|---|--------|------|-----------|
+| 1 | **CGTN Español** | 🇨🇳 China | Internacional |
+| 2 | **El Siglo** | 🇨🇱 Chile | Política |
+| 3 | **Radio Nuevo Mundo** | 🇨🇱 Chile | Cultura |
+| 4 | **Granma** | 🇨🇺 Cuba | Internacional |
+| 5 | **Telesur** | 🇻🇪 Venezuela | Internacional |
+| 6 | **Prensa Latina** | 🇨🇺 Cuba | Internacional |
+
+### Características de las fuentes:
+- Perspectiva editorial progresista/alternativa
+- Cobertura internacional con enfoque Sur-Sur
+- Sin sesgo mediático tradicional occidental
+- Contenido en español
 
 ---
 
 ## Arquitectura
 
-### Fuentes de Contenido
-1. **APIs de News**: RSS feeds de medios aliados
-2. **Prensa Nacional**: El Mercurio, La Tercera, CNN Chile, etc.
-3. **Prensa Internacional**: NYT, WaPo, The Guardian, etc.
-4. **Análisis Propio**: Editoriales y columnas de opinión
-5. **Redes Sociales**: Tweets, posts relevantes
-
-### Funcionalidades
-- **Agregador**: Recoge noticias de múltiples fuentes
-- **Curador**: Filtra por relevancia/tema
-- **Editor**: Permite agregar análisis/contexto
-- **Distribuidor**: Publica en redes sociales
-- **Monetización**: Ads, suscripciones,Sponsored content
-
----
-
-## Stack Técnico
-
-### Frontend (el diseño del usuario)
-```html
-<!-- Ver: projects/personal/la-unidad/ -->
-- HTML5 + Tailwind CSS
+### Frontend (Diseño del usuario)
+- HTML + Tailwind CSS
 - Merriweather (serif) + Inter (sans)
-- Mobile-first responsive
-- Dark mode support
 - SPA (Single Page Application)
-```
+- Mobile-first responsive
 
 ### Backend
-```python
-# aggregator.py
+```javascript
+// state/la-unidad-aggregator.js
 - RSS feed parser
 - NLP para categorización
 - Sentiment analysis
 - Trend detection
+- Auto-refresh cada 15 min
 ```
 
 ### Integraciones
-- Twitter/X API (para compartir)
-- Facebook/Instagram API
-- WhatsApp Business (distribución)
-- Email newsletters (Mailchimp)
+- Twitter/X API (distribución)
+- WhatsApp Business
+- Email newsletters
 
 ---
 
 ## Dashboard
 
 ### Métricas
-- Artículos curados hoy: X
-- Engagement en redes: X
-- Suscriptores: X
-- Ingresos del día: X
+- Artículos agregados: X
+- Por fuente: X
+- Por categoría: X
+- Trending topics: X
 
 ---
 
 ## Estado del Proyecto
 
-**PUERTO:** Por definir (no es 8083, que es SUR)
+**PUERTO:** 8084 (separado de SUR en 8083)
 
 **ARCHIVOS:**
 - `projects/personal/la-unidad/index.html` (diseño base)
+- `state/la-unidad-aggregator.js` (backend con fuentes correctas)
+
+**FUENTES CORREGIDAS:** ✅ CGTN, El Siglo, Radio Nuevo Mundo, Granma, Telesur, Prensa Latina
 
 **POR HACER:**
-- [ ] Conectar backend de agregación
-- [ ] Integrar APIs de redes sociales
-- [ ] Configurar RSS feeds
+- [ ] Deploy en puerto 8084
+- [ ] Conectar frontend al backend
+- [ ] Configurar distribución automática
 - [ ] Implementar monetización
-- [ ] Deploy a producción
 
 ---
 
 **Referencia del diseño:** Ver HTML completo en el mensaje del usuario.
+**Actualizado:** 2026-02-02 - Fuentes corregidas según especificaciones del usuario.
