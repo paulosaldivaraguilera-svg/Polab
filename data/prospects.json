@@ -1,0 +1,252 @@
+[
+  {
+    "id": "lead_1770064726622_0",
+    "name": "Restaurante Chile",
+    "industry": "gastronomy",
+    "size": "pyme",
+    "contact": "DM",
+    "timestamp": 1770064726622,
+    "status": "pending",
+    "services": [
+      {
+        "name": "Automatización n8n",
+        "description": "Workflows automatizados para tu negocio",
+        "price": "$200-500/mes",
+        "painPoints": [
+          "tareas repetitivas",
+          "pérdida de tiempo",
+          "errores manuales"
+        ],
+        "coldMessage": "Hola! Vi tu negocio y creo que puedo ayudarte a automatizar tareas repetitivas.\n\nNuestro sistema n8n puede:\n• Automatizar tu atención al cliente\n• Organizar pedidos y inventario\n• Enviar notificaciones automáticas\n• Conectar todas tus herramientas\n\nPrecio: $200-500/mes (según complejidad)\n\n¿Te gustaría una demo gratis de 15 minutos?"
+      },
+      {
+        "name": "WhatsApp Bot",
+        "description": "Asistente virtual 24/7 para tu empresa",
+        "price": "$100-200/mes",
+        "painPoints": [
+          "consultas repetitivas",
+          "no poder responder 24/7",
+          "perder clientes"
+        ],
+        "coldMessage": "Hola! Tu negocio recibe muchas consultas por WhatsApp?\n\nPodemos crear un bot que:\n• Responda las preguntas más frecuentes\n• Atienda las 24 horas\n• Califique leads automáticamente\n• Agende citas sin que tengas que intervenir\n\nPrecio: $100-200/mes\n\nTe interesa conocer más?"
+      },
+      {
+        "name": "Landing Page",
+        "description": "Página de ventas optimizada para convertir",
+        "price": "$150-300",
+        "painPoints": [
+          "pocas ventas",
+          "baja conversión",
+          "web desactualizada"
+        ],
+        "coldMessage": "Vi tu negocio online y tenemos una oferta:\n\nCreamos landing pages optimizadas para:\n• Más conversiones\n• Mejor velocidad de carga\n• Diseño profesional\n• SEO optimizado\n\nPrecio: $150-300 (incluye diseño y deploy)\n\nPodemos hacer una consulta gratis?"
+      }
+    ]
+  },
+  {
+    "id": "lead_1770064726623_1",
+    "name": "Tienda Online Moda",
+    "industry": "ecommerce",
+    "size": "pyme",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": [
+      {
+        "name": "Automatización n8n",
+        "description": "Workflows automatizados para tu negocio",
+        "price": "$200-500/mes",
+        "painPoints": [
+          "tareas repetitivas",
+          "pérdida de tiempo",
+          "errores manuales"
+        ],
+        "coldMessage": "Hola! Vi tu negocio y creo que puedo ayudarte a automatizar tareas repetitivas.\n\nNuestro sistema n8n puede:\n• Automatizar tu atención al cliente\n• Organizar pedidos y inventario\n• Enviar notificaciones automáticas\n• Conectar todas tus herramientas\n\nPrecio: $200-500/mes (según complejidad)\n\n¿Te gustaría una demo gratis de 15 minutos?"
+      },
+      {
+        "name": "WhatsApp Bot",
+        "description": "Asistente virtual 24/7 para tu empresa",
+        "price": "$100-200/mes",
+        "painPoints": [
+          "consultas repetitivas",
+          "no poder responder 24/7",
+          "perder clientes"
+        ],
+        "coldMessage": "Hola! Tu negocio recibe muchas consultas por WhatsApp?\n\nPodemos crear un bot que:\n• Responda las preguntas más frecuentes\n• Atienda las 24 horas\n• Califique leads automáticamente\n• Agende citas sin que tengas que intervenir\n\nPrecio: $100-200/mes\n\nTe interesa conocer más?"
+      },
+      {
+        "name": "Landing Page",
+        "description": "Página de ventas optimizada para convertir",
+        "price": "$150-300",
+        "painPoints": [
+          "pocas ventas",
+          "baja conversión",
+          "web desactualizada"
+        ],
+        "coldMessage": "Vi tu negocio online y tenemos una oferta:\n\nCreamos landing pages optimizadas para:\n• Más conversiones\n• Mejor velocidad de carga\n• Diseño profesional\n• SEO optimizado\n\nPrecio: $150-300 (incluye diseño y deploy)\n\nPodemos hacer una consulta gratis?"
+      }
+    ]
+  },
+  {
+    "id": "lead_1770064726623_2",
+    "name": "Clínica Dental",
+    "industry": "health",
+    "size": "small",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": []
+  },
+  {
+    "id": "lead_1770064726623_3",
+    "name": "Gimnasio Fitness",
+    "industry": "fitness",
+    "size": "pyme",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": [
+      {
+        "name": "Automatización n8n",
+        "description": "Workflows automatizados para tu negocio",
+        "price": "$200-500/mes",
+        "painPoints": [
+          "tareas repetitivas",
+          "pérdida de tiempo",
+          "errores manuales"
+        ],
+        "coldMessage": "Hola! Vi tu negocio y creo que puedo ayudarte a automatizar tareas repetitivas.\n\nNuestro sistema n8n puede:\n• Automatizar tu atención al cliente\n• Organizar pedidos y inventario\n• Enviar notificaciones automáticas\n• Conectar todas tus herramientas\n\nPrecio: $200-500/mes (según complejidad)\n\n¿Te gustaría una demo gratis de 15 minutos?"
+      },
+      {
+        "name": "WhatsApp Bot",
+        "description": "Asistente virtual 24/7 para tu empresa",
+        "price": "$100-200/mes",
+        "painPoints": [
+          "consultas repetitivas",
+          "no poder responder 24/7",
+          "perder clientes"
+        ],
+        "coldMessage": "Hola! Tu negocio recibe muchas consultas por WhatsApp?\n\nPodemos crear un bot que:\n• Responda las preguntas más frecuentes\n• Atienda las 24 horas\n• Califique leads automáticamente\n• Agende citas sin que tengas que intervenir\n\nPrecio: $100-200/mes\n\nTe interesa conocer más?"
+      },
+      {
+        "name": "Landing Page",
+        "description": "Página de ventas optimizada para convertir",
+        "price": "$150-300",
+        "painPoints": [
+          "pocas ventas",
+          "baja conversión",
+          "web desactualizada"
+        ],
+        "coldMessage": "Vi tu negocio online y tenemos una oferta:\n\nCreamos landing pages optimizadas para:\n• Más conversiones\n• Mejor velocidad de carga\n• Diseño profesional\n• SEO optimizado\n\nPrecio: $150-300 (incluye diseño y deploy)\n\nPodemos hacer una consulta gratis?"
+      }
+    ]
+  },
+  {
+    "id": "lead_1770064726623_4",
+    "name": "Agencia Marketing",
+    "industry": "services",
+    "size": "agency",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": [
+      {
+        "name": "Automatización n8n",
+        "description": "Workflows automatizados para tu negocio",
+        "price": "$200-500/mes",
+        "painPoints": [
+          "tareas repetitivas",
+          "pérdida de tiempo",
+          "errores manuales"
+        ],
+        "coldMessage": "Hola! Vi tu negocio y creo que puedo ayudarte a automatizar tareas repetitivas.\n\nNuestro sistema n8n puede:\n• Automatizar tu atención al cliente\n• Organizar pedidos y inventario\n• Enviar notificaciones automáticas\n• Conectar todas tus herramientas\n\nPrecio: $200-500/mes (según complejidad)\n\n¿Te gustaría una demo gratis de 15 minutos?"
+      },
+      {
+        "name": "WhatsApp Bot",
+        "description": "Asistente virtual 24/7 para tu empresa",
+        "price": "$100-200/mes",
+        "painPoints": [
+          "consultas repetitivas",
+          "no poder responder 24/7",
+          "perder clientes"
+        ],
+        "coldMessage": "Hola! Tu negocio recibe muchas consultas por WhatsApp?\n\nPodemos crear un bot que:\n• Responda las preguntas más frecuentes\n• Atienda las 24 horas\n• Califique leads automáticamente\n• Agende citas sin que tengas que intervenir\n\nPrecio: $100-200/mes\n\nTe interesa conocer más?"
+      },
+      {
+        "name": "Landing Page",
+        "description": "Página de ventas optimizada para convertir",
+        "price": "$150-300",
+        "painPoints": [
+          "pocas ventas",
+          "baja conversión",
+          "web desactualizada"
+        ],
+        "coldMessage": "Vi tu negocio online y tenemos una oferta:\n\nCreamos landing pages optimizadas para:\n• Más conversiones\n• Mejor velocidad de carga\n• Diseño profesional\n• SEO optimizado\n\nPrecio: $150-300 (incluye diseño y deploy)\n\nPodemos hacer una consulta gratis?"
+      }
+    ]
+  },
+  {
+    "id": "lead_1770064726623_5",
+    "name": "Consultorio Legal",
+    "industry": "legal",
+    "size": "small",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": []
+  },
+  {
+    "id": "lead_1770064726623_6",
+    "name": "Academia Cursos",
+    "industry": "education",
+    "size": "pyme",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": []
+  },
+  {
+    "id": "lead_1770064726623_7",
+    "name": "Local Belleza",
+    "industry": "beauty",
+    "size": "small",
+    "contact": "DM",
+    "timestamp": 1770064726623,
+    "status": "pending",
+    "services": [
+      {
+        "name": "Automatización n8n",
+        "description": "Workflows automatizados para tu negocio",
+        "price": "$200-500/mes",
+        "painPoints": [
+          "tareas repetitivas",
+          "pérdida de tiempo",
+          "errores manuales"
+        ],
+        "coldMessage": "Hola! Vi tu negocio y creo que puedo ayudarte a automatizar tareas repetitivas.\n\nNuestro sistema n8n puede:\n• Automatizar tu atención al cliente\n• Organizar pedidos y inventario\n• Enviar notificaciones automáticas\n• Conectar todas tus herramientas\n\nPrecio: $200-500/mes (según complejidad)\n\n¿Te gustaría una demo gratis de 15 minutos?"
+      },
+      {
+        "name": "WhatsApp Bot",
+        "description": "Asistente virtual 24/7 para tu empresa",
+        "price": "$100-200/mes",
+        "painPoints": [
+          "consultas repetitivas",
+          "no poder responder 24/7",
+          "perder clientes"
+        ],
+        "coldMessage": "Hola! Tu negocio recibe muchas consultas por WhatsApp?\n\nPodemos crear un bot que:\n• Responda las preguntas más frecuentes\n• Atienda las 24 horas\n• Califique leads automáticamente\n• Agende citas sin que tengas que intervenir\n\nPrecio: $100-200/mes\n\nTe interesa conocer más?"
+      },
+      {
+        "name": "Landing Page",
+        "description": "Página de ventas optimizada para convertir",
+        "price": "$150-300",
+        "painPoints": [
+          "pocas ventas",
+          "baja conversión",
+          "web desactualizada"
+        ],
+        "coldMessage": "Vi tu negocio online y tenemos una oferta:\n\nCreamos landing pages optimizadas para:\n• Más conversiones\n• Mejor velocidad de carga\n• Diseño profesional\n• SEO optimizado\n\nPrecio: $150-300 (incluye diseño y deploy)\n\nPodemos hacer una consulta gratis?"
+      }
+    ]
+  }
+]
