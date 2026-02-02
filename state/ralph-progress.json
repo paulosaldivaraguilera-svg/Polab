@@ -4409,8 +4409,232 @@
       "created": "2026-02-02T19:49:29.363493",
       "iterations_spent": 1,
       "completed": "2026-02-02T19:49:44.375724"
+    },
+    {
+      "project": "comenzar",
+      "task": "Mejorar dise\u00f1o mobile-first",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.288414",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:11.989617"
+    },
+    {
+      "project": "comenzar",
+      "task": "Implementar heatmaps de engagement",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.393208",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:11.989776"
+    },
+    {
+      "project": "comenzar",
+      "task": "Crear thank you page con upsell",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.498828",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.120822"
+    },
+    {
+      "project": "comenzar",
+      "task": "Optimizar velocidad de carga",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.602843",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.120972"
+    },
+    {
+      "project": "comenzar",
+      "task": "Implementar chat widget para leads",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.707058",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.261826"
+    },
+    {
+      "project": "la_unidad",
+      "task": "A\u00f1adir sistema de bookmarks",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.810752",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.261979"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear recomendaciones personalizadas",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:04.914332",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.391386"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Implementar modo oscuro",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.019135",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.391535"
+    },
+    {
+      "project": "la_unidad",
+      "task": "A\u00f1adir export a PDF",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.123179",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.521739"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Integrar sistema de comentarios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.235051",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.521886"
+    },
+    {
+      "project": "social_commerce",
+      "task": "Crear sistema de reviews",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.341832",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.657187"
+    },
+    {
+      "project": "social_commerce",
+      "task": "Implementar wishlist",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.445404",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.657341"
+    },
+    {
+      "project": "social_commerce",
+      "task": "A\u00f1adir comparador de precios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.549863",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.785939"
+    },
+    {
+      "project": "social_commerce",
+      "task": "Integrar chat support",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.652989",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.786076"
+    },
+    {
+      "project": "social_commerce",
+      "task": "Crear sistema de puntos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.758873",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.917318"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Implementar rate limiting avanzado",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.862228",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:12.917458"
+    },
+    {
+      "project": "infrastructure",
+      "task": "A\u00f1adir WAF b\u00e1sico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:05.964893",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.047431"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Crear backup autom\u00e1tico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.071984",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.047572"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Implementar CDN caching",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.175237",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.177086"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Mejorar logging estructurado",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.291780",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.177227"
+    },
+    {
+      "project": "docs",
+      "task": "Crear API documentation",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.395528",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.312977"
+    },
+    {
+      "project": "docs",
+      "task": "Documentar arquitectura de memoria",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.540882",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.313118"
+    },
+    {
+      "project": "docs",
+      "task": "Crear runbook de deployment",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.645381",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.441204"
+    },
+    {
+      "project": "docs",
+      "task": "Documentar protocolos econ\u00f3micos",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:50:06.754576",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:50:13.441345"
+    },
+    {
+      "project": "docs",
+      "task": "Crear contribuci\u00f3n guide",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T19:50:06.865161",
+      "iterations_spent": 0
     }
   ],
-  "iterations": 254,
-  "lastUpdate": "2026-02-02T19:49:44.375789"
+  "iterations": 266,
+  "lastUpdate": "2026-02-02T19:50:13.441411"
 }
