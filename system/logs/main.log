@@ -1,0 +1,1 @@
+{"timestamp": "2026-02-01T22:23:23.443376", "level": "SUCCESS", "name": "PauloARIS", "message": "Logger inicializado", "data": {"logs_dir": "/home/pi/.openclaw/workspace/system/logs", "version": "2.0"}}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PauloARIS - Dashboard de Métricas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; }
+        .card { background: #1e293b; border-radius: 12px; padding: 20px; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <header class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold">📊 PauloARIS Dashboard</h1>
+                <p class="text-gray-400">Sistema de monitoreo y métricas</p>
+            </div>
+            <div class="text-right">
+                <div id="currentTime" class="text-2xl font-mono">--:--:--</div>
+                <div id="currentDate" class="text-gray-400">--</div>
+            </div>
+        </header>
+
+        <!-- KPIs -->
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Iteraciones Hoy</p>
+                        <p class="text-3xl font-bold text-green-400">13</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-400/20 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-6 h-6 text-green-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Commits</p>
+                        <p class="text-3xl font-bold text-blue-400">45+</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-400/20 rounded-lg flex items-center justify-center">
+                        <i data-lucide="git-branch" class="w-6 h-6 text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Proyectos</p>
+                        <p class="text-3xl font-bold text-purple-400">8</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-400/20 rounded-lg flex items-center justify-center">
+                        <i data-lucide="folder" class="w-6 h-6 text-purple-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Health Score</p>
+                        <p class="text-3xl font-bold text-yellow-400">100%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-400/20 rounded-lg flex items-center justify-center">
+                        <i data-lucide="heart" class="w-6 h-6 text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="card">
+                <h3 class="font-bold mb-4">Productividad por Hora</h3>
+                <canvas id="productivityChart" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3 class="font-bold mb-4">Distribución de Trabajo</h3>
+                <canvas id="workDistChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="grid grid-cols-3 gap-4">
+            <div class="card">
+                <h3 class="font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="server" class="w-5 h-5 text-green-400"></i>
+                    Servicios
+                </h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between"><span>Docker</span><span class="text-green-400">● Online</span></div>
+                    <div class="flex justify-between"><span>APIs</span><span class="text-green-400">● Online</span></div>
+                    <div class="flex justify-between"><span>GitHub</span><span class="text-green-400">● Sync</span></div>
+                    <div class="flex justify-between"><span>Moltbook</span><span class="text-green-400">● Posted</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="target" class="w-5 h-5 text-blue-400"></i>
+                    Goals
+                </h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between"><span>Moltbook</span><span class="text-green-400">✅</span></div>
+                    <div class="flex justify-between"><span>La Unidad</span><span class="text-green-400">✅</span></div>
+                    <div class="flex justify-between"><span>Juegos</span><span class="text-green-400">✅</span></div>
+                    <div class="flex justify-between"><span>Foundry</span><span class="text-yellow-400">⏳</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="activity" class="w-5 h-5 text-red-400"></i>
+                    Actividad Reciente
+                </h3>
+                <div class="text-sm space-y-2 text-gray-400">
+                    <div>• Newsletter v2 creado</div>
+                    <div>• Modo Historia añadido</div>
+                    <div>• Caso 6 Delitos creado</div>
+                    <div>• Enhanced Logger v2</div>
+                    <div>• Búsqueda avanzada</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        // Update time
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CL');
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CL');
+        }, 1000);
+
+        // Charts
+        new Chart(document.getElementById('productivityChart'), {
+            type: 'bar',
+            data: {
+                labels: ['08', '10', '12', '14', '16', '18', '20', '22'],
+                datasets: [{
+                    label: 'Commits',
+                    data: [3, 5, 8, 6, 7, 8, 5, 3],
+                    backgroundColor: 'rgba(168, 50, 50, 0.8)'
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+
+        new Chart(document.getElementById('workDistChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['La Unidad', 'Juegos', 'Sistema', 'Docs', 'Other'],
+                datasets: [{
+                    data: [35, 30, 20, 10, 5],
+                    backgroundColor: ['#A83232', '#1E293B', '#166534', '#7c3aed', '#64748b']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+</body>
+</html>

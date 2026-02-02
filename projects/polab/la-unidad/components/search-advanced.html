@@ -1,0 +1,124 @@
+<!-- Advanced Search System - La Unidad -->
+<div class="advanced-search p-6 bg-white dark:bg-brand-dark-card rounded-lg shadow-lg">
+    
+    <h2 class="text-2xl font-serif font-bold mb-4 flex items-center gap-2">
+        <i data-lucide="search" class="w-6 h-6 text-brand-red"></i>
+        Búsqueda Avanzada
+    </h2>
+
+    <!-- Search Input -->
+    <div class="relative mb-4">
+        <input type="text" id="advancedSearchInput" 
+            placeholder="Buscar artículos, secciones, autores..."
+            class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-brand-red bg-white dark:bg-gray-800">
+        <i data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-2 mb-4">
+        <button class="filter-btn px-3 py-1 bg-brand-red text-white rounded-full text-sm" data-filter="all">Todo</button>
+        <button class="filter-btn px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-sm" data-filter="article">Artículos</button>
+        <button class="filter-btn px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-sm" data-filter="section">Secciones</button>
+        <button class="filter-btn px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-sm" data-filter="author">Autores</button>
+        <button class="filter-btn px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-sm" data-filter="tag">Tags</button>
+    </div>
+
+    <!-- Results -->
+    <div id="searchResults" class="space-y-2 max-h-80 overflow-y-auto">
+        <!-- Resultados se generan dinámicamente -->
+        <div class="text-center py-8 text-gray-500">
+            <i data-lucide="search" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
+            <p>Escribe para buscar...</p>
+        </div>
+    </div>
+
+    <!-- Search History -->
+    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+        <h3 class="font-bold text-sm mb-2 text-gray-500">Búsquedas recientes</h3>
+        <div id="searchHistory" class="flex flex-wrap gap-2">
+            <button class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs hover:bg-gray-200 dark:hover:bg-gray-700">
+                lucha de clases
+            </button>
+            <button class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs hover:bg-gray-200 dark:hover:bg-gray-700">
+                marxismo
+            </button>
+            <button class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs hover:bg-gray-200 dark:hover:bg-gray-700">
+                chile
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Base de datos de búsqueda (simulada)
+const searchIndex = [
+    { type: 'article', title: 'Hacia una Nueva Etapa de la Lucha de Clases', section: 'Portada', tags: ['marxismo', 'chile', 'lucha de clases'] },
+    { type: 'article', title: 'Desigualdad y Concentración del Capital', section: 'Economía', tags: ['capitalismo', 'desigualdad'] },
+    { type: 'article', title: 'El Imperialismo en América Latina', section: 'Internacional', tags: ['imperialismo', 'latinoamérica'] },
+    { type: 'article', title: 'Estado de Derecho y Dictadura del Proletariado', section: 'Derecho', tags: ['estado', 'derecho', 'proletariado'] },
+    { type: 'section', title: 'Política Nacional', tags: ['política', 'chile'] },
+    { type: 'section', title: 'Economía Política', tags: ['economía', 'capital'] },
+    { type: 'section', title: 'Internacional', tags: ['global', 'mundial'] },
+    { type: 'author', title: 'Comité Editorial', tags: ['editor'] },
+    { type: 'tag', title: '#marxismo', count: 12 },
+    { type: 'tag', title: '#chile', count: 8 },
+    { type: 'tag', title: '#lucha-de-clases', count: 5 },
+];
+
+// Búsqueda en tiempo real
+document.getElementById('advancedSearchInput')?.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (query.length < 2) {
+        resultsContainer.innerHTML = `
+            <div class="text-center py-8 text-gray-500">
+                <i data-lucide="search" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
+                <p>Escribe para buscar...</p>
+            </div>`;
+        lucide.createIcons();
+        return;
+    }
+    
+    // Filtrar resultados
+    const results = searchIndex.filter(item => 
+        item.title.toLowerCase().includes(query) ||
+        (item.tags && item.tags.some(t => t.includes(query)))
+    );
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="text-center py-8 text-gray-500">
+                <i data-lucide="search" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
+                <p>No se encontraron resultados para "${e.target.value}"</p>
+            </div>`;
+    } else {
+        resultsContainer.innerHTML = results.map(r => `
+            <a href="#" class="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                <div class="w-10 h-10 bg-${r.type === 'article' ? 'red' : r.type === 'section' ? 'blue' : r.type === 'author' ? 'green' : 'purple'}-100 dark:bg-${r.type === 'article' ? 'red' : r.type === 'section' ? 'blue' : r.type === 'author' ? 'green' : 'purple'}-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="${r.type === 'article' ? 'file-text' : r.type === 'section' ? 'folder' : r.type === 'author' ? 'user' : 'tag'}" class="w-5 h-5 text-${r.type === 'article' ? 'red' : r.type === 'section' ? 'blue' : r.type === 'author' ? 'green' : 'purple'}-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="font-medium">${r.title}</div>
+                    <div class="text-xs text-gray-500">${r.section || r.type}</div>
+                </div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-gray-400"></i>
+            </a>
+        `).join('');
+    }
+    lucide.createIcons();
+});
+
+// Filtros
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('bg-brand-red', 'text-white');
+            b.classList.add('bg-gray-200', 'dark:bg-gray-700');
+        });
+        this.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+        this.classList.add('bg-brand-red', 'text-white');
+    });
+});
+</script>
