@@ -87,6 +87,16 @@
     - Neovim + IA: Avante.nvim, CodeCompanion (modal editing)
     - Platform Engineering: Nix Flakes (reproducibilidad), Pulumi (IaC como software)
     - Edge Tech: Unison (código direccionable por contenido)
+13. **Agentes de IA para Redes Sociales (2026-02-02):**
+    - Frameworks: ElizaOS (TypeScript, personalidad), LangGraph (grafos cíclicos), CrewAI (roles jerárquicos)
+    - Gestión de Memoria: RAG avanzado, Grafos de Conocimiento (Zep), Mem0 (memoria personalizada)
+    - APIs de Plataformas: X API v2 (límites de niveles), LinkedIn (OAuth restringido), Discord (Gateway/Webhooks)
+    - Rate Limiting: Token bucket con Redis, smart polling, priorización de endpoints
+    - Optimización: DSPy (compilación de prompts), RLHF (retroalimentación social)
+    - Seguridad: Guardrails (Nemo, Guardrails AI), detección de jailbreak, prevención de alucinaciones
+    - Observabilidad: LangSmith (tracing), métricas de engagement, logs de decisiones
+    - Multi-Agente: Enjambres (CrewAI), coordinación de roles, comunicación inter-agente
+    - Compliance: Respeto a Términos de Servicio, rotación de IPs (proxies residenciales)
 
 ## Objetivos Persistentes
 1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
