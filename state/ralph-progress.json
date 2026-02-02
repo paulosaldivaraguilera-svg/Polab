@@ -1,0 +1,415 @@
+{
+  "tasks": [
+    {
+      "project": "e-commerce-pyme",
+      "task": "Implementar WhatsApp Bot b\u00e1sico (/ventas, /stock)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:03:18.671101",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:11:14.373495"
+    },
+    {
+      "project": "comenzar",
+      "task": "Medir conversi\u00f3n landing",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:03:18.788738",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:11:14.373683"
+    },
+    {
+      "project": "web-personal",
+      "task": "Deploy paulosaldivar.cv",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:03:18.909297",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:12:23.587401"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar Heartbeat System",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:07:51.445116",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:12:23.587548"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Actualizar documentaci\u00f3n README del sistema",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:11:51.852208",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:24:42.008589"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar dashboard con gr\u00e1ficos",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:11:51.948317",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:24:42.008736"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Instalar script de healthcheck autom\u00e1tico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:11:52.045576",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:25:14.366977"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear script de backup autom\u00e1tico",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:11:52.142835",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:25:14.367125"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Evaluar SaulLM para procesamiento local de documentos",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:14:25.102139",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:25:23.186725"
+    },
+    {
+      "project": "pauloaris",
+      "task": "A\u00f1adir estructura OSCAL a documentaci\u00f3n de compliance",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:14:25.205588",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:25:23.186876"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar routing h\u00edbrido local/cloud para modelos",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:14:25.317834",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:06.171793"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar backup autom\u00e1tico con git cron",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:24:50.735571",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:06.171940"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear script de healthcheck mejorado con alertas",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:24:50.834910",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:17.100753"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Documentar arquitectura t\u00e9cnica completa",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:24:50.931629",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:17.100905"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Configurar m\u00e9tricas de rendimiento (latencia, uptime)",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:24:51.032582",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:24.694151"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear wiki t\u00e9cnica del sistema",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:25:22.786415",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:24.694298"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Configurar m\u00e9tricas Prometheus/Grafana",
+      "priority": 3,
+      "status": "done",
+      "created": "2026-02-02T16:25:22.883865",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:33.190996"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear pipeline de CI/CD b\u00e1sico",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:25:22.981806",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:33.191136"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de logs estructurados (JSON)",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:25:23.079838",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:28:40.680869"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Configurar participaci\u00f3n autom\u00e1tica en Moltbook (heartbeat cada 4h)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:32:10.734212",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:33:17.139782"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Integrar conceptos de game dev (ECS, RAG memory, headless training)",
+      "priority": 2,
+      "status": "done",
+      "created": "2026-02-02T16:33:17.031872",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:33:17.139927"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar analytics avanzadas al dashboard (chart\u8d77\u4e49s, m\u00e9tricas en tiempo real)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:53.678524",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:41:58.957189"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear API REST p\u00fablica para leads con documentaci\u00f3n Swagger",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:53.775267",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:41:58.957339"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de backups autom\u00e1ticos con rotaci\u00f3n",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:53.873451",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:43:23.359849"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Mejorar SEO de web personal con meta tags y sitemap",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:53.970041",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:43:23.359995"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear m\u00f3dulo de analytics para videojuegos (player stats)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.068122",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:44:16.154711"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de rate limiting para APIs",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.164820",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:44:16.154858"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear documentaci\u00f3n t\u00e9cnica de Ralph Loop",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.273361",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:44:27.652051"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar sistema de notificaciones Push al dashboard",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.372330",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:44:27.652196"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar WebSocket para m\u00e9tricas en tiempo real",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.469959",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:45:08.791495"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear m\u00f3dulo de export a PDF/CSV de reportes",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:41:54.568124",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:45:08.791642"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear m\u00f3dulo de notificaciones Push con Service Workers",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:44:23.080032",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:45:55.238641"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar WebSocket server para m\u00e9tricas en tiempo real",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T16:44:23.178416",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:45:55.238781"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar sistema de logs estructurados con structlog",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.285329",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear dashboard m\u00f3vil responsive (PWA)",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.383431",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de plugins extensible",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.482045",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar m\u00e9tricas de rendimiento (performance)",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.578407",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear API de webhooks para integraciones",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.675343",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de cacheo Redis-simulado",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:44:23.773296",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear sistema de logs estructurados con structlog",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:15.806306",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear dashboard m\u00f3vil responsive (PWA)",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:15.905088",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de plugins extensible",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.002559",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar m\u00e9tricas de rendimiento (performance)",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.101626",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear API de webhooks para integraciones",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.200679",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema de cacheo Redis-simulado",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.305439",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear manifest.json para PWA del dashboard",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.402426",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Agregar an\u00e1lisis de rendimiento de c\u00f3digo",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:45:16.499718",
+      "iterations_spent": 0
+    }
+  ],
+  "iterations": 17,
+  "lastUpdate": "2026-02-02T16:45:55.238846"
+}

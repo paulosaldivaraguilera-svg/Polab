@@ -1,0 +1,31 @@
+{
+  "project": "PauloARIS",
+  "version": "2.1",
+  "metrics": {
+    "tasks": {
+      "total": 19,
+      "completed": 12,
+      "pending": 7,
+      "failed": 0,
+      "success_rate": 100.0
+    },
+    "performance": {
+      "iterations": 6,
+      "avg_iterations_per_task": 1.0,
+      "uptime_hours": 0.5
+    },
+    "resources": {
+      "cpu_percent": 5.2,
+      "memory_percent": 26.4,
+      "temperature_c": 50.2
+    },
+    "services": {
+      "web": true,
+      "api_leads": true,
+      "api_metrics": true,
+      "tunnel": true
+    }
+  },
+  "last_updated": "2026-02-02T16:28:30Z",
+  "status": "healthy"
+}

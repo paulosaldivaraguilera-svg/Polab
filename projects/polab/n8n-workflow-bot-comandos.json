@@ -1,0 +1,234 @@
+{
+  "name": "Bot WhatsApp - Comandos E-commerce",
+  "nodes": [
+    {
+      "name": "Webhook Entrante",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-bot",
+        "options": {}
+      }
+    },
+    {
+      "name": "Extraer Datos",
+      "type": "n8n-nodes-base.function",
+      "position": [450, 300],
+      "parameters": {
+        "functionCode": "const data = $input.first().json;\n\n// Extraer mensaje\nconst messages = data.entry?.[0]?.changes?.[0]?.value?.messages;\nif (!messages || messages.length === 0) return null;\n\nconst message = messages[0];\nconst from = message.from;\nconst text = message.text?.body || '';\nconst command = text.split(' ')[0].toLowerCase();\nconst args = text.split(' ').slice(1);\n\nreturn {\n  json: {\n    from,\n    text,\n    command,\n    args,\n    timestamp: message.timestamp\n  }\n};"
+      }
+    },
+    {
+      "name": "Switch Comando",
+      "type": "n8n-nodes-base.switch",
+      "position": [650, 300],
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "value": "=/ventas",
+              "operation": "regex",
+              "output": 0
+            },
+            {
+              "value": "=/pedidos",
+              "operation": "regex",
+              "output": 1
+            },
+            {
+              "value": "=/stock",
+              "operation": "regex",
+              "output": 2
+            },
+            {
+              "value": "=/ayuda",
+              "operation": "regex",
+              "output": 3
+            }
+          ]
+        },
+        "fallbackOutput": 4
+      }
+    },
+    {
+      "name": "Get Ventas",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 150],
+      "parameters": {
+        "functionCode": "const args = $input.first().json.args;\nconst periodo = args[0] || 'hoy';\n\n// Aquí integrar con WooCommerce REST API\n// GET /wp-json/wc/v3/reports?period={periodo}\n\nconst response = {\n  json: {\n    text: `📊 *Reporte de Ventas*\\n\\nPeríodo: ${periodo}\\nTotal: $150.000\\nPedidos: 12\\n\\n⏰ Generado: ${new Date().toLocaleString('es-CL')}`\n  }\n};\n\nreturn response;"
+      }
+    },
+    {
+      "name": "Get Pedidos",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 250],
+      "parameters": {
+        "functionCode": "const args = $input.first().json.args;\nconst estado = args[0] || 'pendientes';\n\n// WooCommerce: GET /wp-json/wc/v3/orders?status={estado}\n\nconst response = {\n  json: {\n    text: `📦 *Pedidos ${estado}*\\n\\n1. #1234 - Juan Pérez - $25.000 - 📦 Pendiente\\n2. #1235 - María García - $32.000 - 📦 Pendiente\\n3. #1236 - Carlos Ruiz - $18.500 - 📦 Pendiente\\n\\nTotal: 3 pedidos`\n  }\n};\n\nreturn response;"
+      }
+    },
+    {
+      "name": "Get Stock",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 350],
+      "parameters": {
+        "functionCode": "const args = $input.first().json.args;\nconst producto = args.join(' ');\n\n// WooCommerce: GET /wp-json/wc/v3/products?search={producto}\n\nconst response = {\n  json: {\n    text: `📦 *Stock: ${producto || 'Todos'}*\\n\\n• Polera Negra M: 45 unidades\\n• Polera Negra L: 23 unidades\\n• Polera Negra S: 67 unidades\\n\\n⚠️ *Stock bajo:* Polera Roja L (3)`\n  }\n};\n\nreturn response;"
+      }
+    },
+    {
+      "name": "Get Ayuda",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 450],
+      "parameters": {
+        "functionCode": "return {\n  json: {\n    text: `🤖 *Comandos Disponibles*\\n\\n📊 */ventas [hoy|semana]* - Ver ventas\\n📦 */pedidos [pendientes|procesados]* - Ver pedidos\\n📦 */stock [producto]* - Ver stock\\n❓ */ayuda* - Mostrar ayuda\\n\\n_Ejemplo: /ventas semana_`\n  }\n};"
+      }
+    },
+    {
+      "name": "Comando Desconocido",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 550],
+      "parameters": {
+        "functionCode": "const text = $input.first().json.text;\nreturn {\n  json: {\n    text: `❓ *Comando no reconocido:* ${text}\\n\\nUsa */ayuda* para ver los comandos disponibles.`\n  }\n};"
+      }
+    },
+    {
+      "name": "Enviar Respuesta WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1050, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{ $json.phone_number_id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"messaging_product\": \"whatsapp\", \"to\": \"{{ $json.to }}\", \"type\": \"text\", \"text\": {\"body\": \"{{ $json.text }}\" }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Entrante": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos": {
+      "main": [
+        [
+          {
+            "node": "Switch Comando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Comando": {
+      "main": [
+        [
+          {
+            "node": "Get Ventas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Pedidos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Stock",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Ayuda",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Comando Desconocido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Ventas": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pedidos": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Stock": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Ayuda": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comando Desconocido": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

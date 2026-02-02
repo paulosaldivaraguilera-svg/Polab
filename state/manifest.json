@@ -1,0 +1,38 @@
+{
+  "name": "PauloARIS Dashboard",
+  "short_name": "PauloARIS",
+  "description": "Sistema de monitoreo y auto-mejora autónoma",
+  "start_url": "/state/dashboard.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2310b981' width='100' height='100' rx='20'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='white'>P</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "es",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "scope": "/",
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Ver Estado",
+      "short_name": "Estado",
+      "description": "Ver estado actual del sistema",
+      "url": "/state/dashboard.html"
+    },
+    {
+      "name": "Ejecutar Loop",
+      "short_name": "Loop",
+      "description": "Ejecutar Ralph Loop",
+      "url": "/state/loop-runner.py/run"
+    }
+  ]
+}

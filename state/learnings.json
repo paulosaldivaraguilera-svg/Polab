@@ -1,0 +1,24 @@
+{
+  "insights": [
+    {
+      "type": "frequency",
+      "description": "Project 'e-commerce-pyme' has most tasks (1)",
+      "recommendation": "Consider allocating more resources to this project",
+      "timestamp": "2026-02-02T16:05:10.872291"
+    },
+    {
+      "type": "frequency",
+      "description": "Project 'pauloaris' has most tasks (16)",
+      "recommendation": "Consider allocating more resources to this project",
+      "timestamp": "2026-02-02T16:27:28.123784"
+    }
+  ],
+  "optimizations": [
+    {
+      "type": "performance",
+      "metric": "Avg iterations per task: 1.0",
+      "recommendation": "Performance is optimal",
+      "timestamp": "2026-02-02T16:27:28.123868"
+    }
+  ]
+}

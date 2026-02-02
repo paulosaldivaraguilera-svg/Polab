@@ -39,9 +39,16 @@
 4. JetBrains Mono para datos, Merriweather para contenido serif
 5. Multiplayer/cooperative para engagement en juegos
 6. Daily challenges para retención
+7. **Game Dev Patterns (2026-02-02):**
+   - ECS (Entity Component System) para escalabilidad
+   - RAG Memory para NPCs contextuales
+   - Shaders procedimentales para efectos visuales
+   - Headless mode para entrenamiento IA
+   - State serialization para checkpoints
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
 - [ ] Instalar sentence-transformers en servidor x64
 - [ ] Implementar RAG con chromadb + langchain
 - [ ] Mejorar "Comenzar" según feedback
+- [x] Mejorar juegos con ECS/RAG/Shaders (2026-02-02)

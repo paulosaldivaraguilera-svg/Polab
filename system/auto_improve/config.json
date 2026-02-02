@@ -1,0 +1,17 @@
+{
+  "target_iterations_per_day": 15,
+  "target_health_score": 100,
+  "learning_topics": [
+    "python",
+    "html",
+    "automation",
+    "ai"
+  ],
+  "daily_goal": "Complete all planned improvements",
+  "metrics_to_track": [
+    "iterations",
+    "commits",
+    "health_score",
+    "features"
+  ]
+}

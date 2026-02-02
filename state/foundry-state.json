@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "created": "2026-02-02T19:05:00Z",
+  "selfImproving": true,
+  "ralphLoopEnabled": true,
+  "checkpoints": {},
+  "ralphProgress": {
+    "tasks": [],
+    "iterations": 0,
+    "lastUpdate": null
+  },
+  "metrics": {
+    "totalTasks": 0,
+    "completed": 0,
+    "failed": 0,
+    "avgLatencyMs": 0
+  }
+}

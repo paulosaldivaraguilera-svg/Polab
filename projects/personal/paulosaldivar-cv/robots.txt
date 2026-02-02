@@ -1,0 +1,5 @@
+# Robots.txt para paulosaldivar.cl
+User-agent: *
+Allow: /
+
+Sitemap: https://paulosaldivar.cl/sitemap.xml

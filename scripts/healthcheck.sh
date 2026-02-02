@@ -1,40 +1,59 @@
 #!/bin/bash
-# Health Check - polab Services
-# Verifica que todos los servicios estén responding
+# PauloARIS Health Check Script
+# Ejecutar cada 5 minutos via cron
 
-ERRORS=0
+STATE_DIR="/home/pi/.openclaw/workspace/state"
+LOG_DIR="/home/pi/.openclaw/workspace/logs"
 
-check_service() {
-    local name=$1
-    local url=$2
-    local status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 5 "$url")
-    
-    if [ "$status" = "200" ] || [ "$status" = "302" ]; then
-        echo "✅ $name (HTTP $status)"
-    else
-        echo "❌ $name (HTTP $status)"
-        ERROR=$((ERROR + 1))
-    fi
+mkdir -p "$LOG_DIR"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
-echo "🏥 Health Check - $(date)"
-echo "================================"
+log "========================================="
+log "PauloARIS Health Check Started"
+log "========================================="
 
-check_service "Portainer" "http://localhost:9000"
-check_service "Netdata" "http://localhost:19999"
-check_service "Uptime Kuma" "http://localhost:3001"
-
-# Check Docker services
-echo ""
-echo "🐳 Docker Services:"
-docker ps --format "table {{.Names}}\t{{.Status}}" | grep -v "NAMES"
-
-if [ $ERRORS -gt 0 ]; then
-    echo ""
-    echo "⚠️ $ERRORS servicios con problemas"
-    exit 1
+# Check web server
+if curl -s --max-time 5 http://localhost:8080 > /dev/null 2>&1; then
+    log "✅ Web Server (8080): UP"
 else
-    echo ""
-    echo "✅ Todos los servicios saludables"
-    exit 0
+    log "❌ Web Server (8080): DOWN"
 fi
+
+# Check API Leads
+if curl -s --max-time 5 http://localhost:8081/api/stats > /dev/null 2>&1; then
+    log "✅ API Leads (8081): UP"
+else
+    log "❌ API Leads (8081): DOWN"
+fi
+
+# Check API Metrics
+if curl -s --max-time 5 http://localhost:8082/api/metrics > /dev/null 2>&1; then
+    log "✅ API Metrics (8082): UP"
+else
+    log "❌ API Metrics (8082): DOWN"
+fi
+
+# CPU Load
+LOAD=$(uptime | awk -F'load average:' '{print $2}' | sed 's/,//g')
+log "📊 CPU Load: $LOAD"
+
+# Memory
+MEM=$(free -h | grep Mem | awk '{print $3"/"$2}')
+log "💾 Memory: $MEM"
+
+# Temperature
+TEMP=$(vcgencmd measure_temp 2>/dev/null)
+log "🌡️ Temperature: $TEMP"
+
+# Ralph Loop
+python3 "$STATE_DIR/loop-runner.py" status > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    log "✅ Ralph Loop: ACTIVE"
+else
+    log "⚠️ Ralph Loop: CHECK NEEDED"
+fi
+
+log "Health check completed"
