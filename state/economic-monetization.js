@@ -17,7 +17,7 @@ const CONFIG = {
         name: 'Paulo Saldivar',
         run: '18173791-3',
         bancoEstado: '18173791',
-        btcWallet: process.env.BTC_WALLET || ''  // Configurar
+        btcWallet: 'bc1qa4un4rswnxgt7mvmsaap8hpgfr93gm5uhemvl6'  // Provided by user
     },
     
     strategies: {
