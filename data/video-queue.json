@@ -1,0 +1,46 @@
+[
+  {
+    "id": "vid_1770066829039_27mxhxxdv",
+    "channel": "christianity",
+    "topic": "oración mañana",
+    "title": "oración mañana: Un mensaje de Dios para ti",
+    "script": "Buenos días, hermano. Que la paz de Dios esté con ustedes. oración mañana nos enseña que la fe mueve montañas. Como dice Filipenses 4:13: \"Todo lo puedo en Cristo que me fortalece\". Oremos juntos. Amén.",
+    "thumbnail": "Warm golden sunset, praying hands, inspirational atmosphere, soft clouds",
+    "duration": "5-7 minutos",
+    "status": "ready_for_production",
+    "scheduledUpload": "08:00"
+  },
+  {
+    "id": "vid_1770066829040_akq0f8dwi",
+    "channel": "sports",
+    "topic": "top 10",
+    "title": "Top 10: top 10 que te dejarán sin palabras",
+    "script": "¡Bienvenidos a Datos Sportivos! Hoy les traemos los números de la historia. En top 10, los récords alcanzaron niveles históricos. Los datos no mienten. Síganos para más estadísticas increíble.",
+    "thumbnail": "Dynamic sports moment, stadium lights, trophy celebration, energetic mood",
+    "duration": "6-8 minutos",
+    "status": "ready_for_production",
+    "scheduledUpload": "15:00"
+  },
+  {
+    "id": "vid_1770066829040_ktn9xz35m",
+    "channel": "history",
+    "topic": "roma",
+    "title": "Cómo roma cambió el mundo",
+    "script": "Bienvenidos a Historia Para Todos. Hoy viajaremos en el tiempo. roma cambió el curso de la humanidad. Los historiadores señalan que fue un punto de inflexión. ¿Qué habría pasado si...? Cuéntame tu opinión.",
+    "thumbnail": "Historical documentary style, parchment texture, epic orchestral background",
+    "duration": "8-12 minutos",
+    "status": "ready_for_production",
+    "scheduledUpload": "18:00"
+  },
+  {
+    "id": "vid_1770066829041_82rxm8s15",
+    "channel": "islam",
+    "topic": "gratitud",
+    "title": "Oración poderosa para gratitud | Paz y Fe",
+    "script": "Assalamu alaykum. Que la paz de Allah esté con ustedes. gratitud nos recuerda la sabiduría del Corán. En tiempos difíciles, la fe nos fortalece. Hagamos esta oración. Aláhuma salli wa sallim 'ala nabiyyina Muhammad.",
+    "thumbnail": "Peaceful mosque interior, crescent moon, golden and blue light, Islamic calligraphy",
+    "duration": "4-6 minutos",
+    "status": "ready_for_production",
+    "scheduledUpload": "20:00"
+  }
+]
