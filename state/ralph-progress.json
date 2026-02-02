@@ -2879,8 +2879,98 @@
       "created": "2026-02-02T19:15:58.502163",
       "iterations_spent": 1,
       "completed": "2026-02-02T19:16:05.316365"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Publicar post de logros en Moltbook para karma farming",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:20:23.836640",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:20:23.949233"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar integracion Fintoc para pagos Open Banking",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:37.613159",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.068006"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear automatizacion Instagram DM con Chatbot (Manychat/Jummpy style)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:37.716144",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.068157"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema antifraude para transacciones (validacion cartola)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:37.821181",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.192252"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear plataforma dropshipping local Chile (proveedores Zofri/Meiggs)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:37.923647",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.192426"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar agregador envios multi-courier (Env\u00edame/Shipit integration)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:38.026072",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.329320"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear dashboard analytics para Instagram/Facebook Marketplace",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:38.127539",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.329459"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema formalizacion automatizada SII (inicio actividades)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:38.251840",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.452301"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear marketplace vertical mascotas (productos curados)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:38.409104",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:46.452442"
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema moda circular/vintage con curadoria IA",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T19:22:38.514078",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T19:22:52.965803"
     }
   ],
-  "iterations": 168,
-  "lastUpdate": "2026-02-02T19:16:05.316435"
+  "iterations": 174,
+  "lastUpdate": "2026-02-02T19:22:52.965877"
 }
