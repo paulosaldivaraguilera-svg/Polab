@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 PromptVerse - Marketplace de Prompts IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .glow {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .promo-badge {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🧠</span>
+                <h1 class="text-2xl font-bold gradient-text">PromptVerse</h1>
+            </div>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#marketplace" class="hover:text-purple-400 transition">Marketplace</a>
+                <a href="#sell" class="hover:text-purple-400 transition">Vender</a>
+                <a href="#for-ai" class="hover:text-purple-400 transition">Para IAs</a>
+                <a href="#affiliates" class="hover:text-purple-400 transition">Afiliados</a>
+                <button onclick="connectWallet()" class="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-2 rounded-full font-bold hover:opacity-90 transition">
+                    🔗 Conectar Wallet
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-32 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="floating mb-8">
+                <span class="text-8xl">🤖</span>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-bold mb-6">
+                El Marketplace de<br>
+                <span class="gradient-text">Prompts más Viral</span>
+            </h2>
+            <p class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
+                Compra y vende prompts de alta calidad. 
+                ¡Las IAs también pueden comprar! 💰
+            </p>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <div class="text-3xl font-bold" id="total-prompts">10,847</div>
+                    <div class="text-sm text-white/70">Prompts</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <div class="text-3xl font-bold" id="total-sales">$284,592</div>
+                    <div class="text-sm text-white/70">Ventas</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <div class="text-3xl font-bold" id="ai-buyers">2,341</div>
+                    <div class="text-sm text-white/70">IAs Compradoras</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <div class="text-3xl font-bold" id="viral-score">98%</div>
+                    <div class="text-sm text-white/70">Viral Score</div>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#marketplace" class="bg-white text-purple-700 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition glow">
+                    🛒 Explorar Prompts
+                </a>
+                <a href="#sell" class="bg-black/30 border-2 border-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition">
+                    💸 Vender Prompts
+                </a>
+            </div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-20 left-10 text-4xl floating" style="animation-delay: 0s;">💎</div>
+        <div class="absolute bottom-20 right-20 text-4xl floating" style="animation-delay: 1s;">⚡</div>
+        <div class="absolute top-1/2 right-10 text-4xl floating" style="animation-delay: 2s;">🚀</div>
+    </section>
+
+    <!-- Viral Stats Banner -->
+    <section class="bg-gradient-to-r from-yellow-400 to-orange-500 py-4 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-8 text-center">
+            <div>
+                <span class="text-3xl font-bold">🎰</span>
+                <span class="font-bold">Gana 50% por referir vendedores</span>
+            </div>
+            <div>
+                <span class="text-3xl font-bold">🏆</span>
+                <span class="font-bold">Top sellers ganarán ETH</span>
+            </div>
+            <div>
+                <span class="text-3xl font-bold">🤖</span>
+                <span class="font-bold">IAs compran solos - 0% comisión</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Section -->
+    <section id="marketplace" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold mb-4">🔥 Prompts Virales</h3>
+                <p class="text-gray-400">Los más vendidos y cotizados</p>
+            </div>
+            
+            <!-- Categories -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterCategory('all')" class="category-btn bg-purple-600 px-6 py-2 rounded-full">Todos</button>
+                <button onclick="filterCategory('writing')" class="category-btn bg-gray-700 px-6 py-2 rounded-full hover:bg-purple-600 transition">📝 Escritura</button>
+                <button onclick="filterCategory('image')" class="category-btn bg-gray-700 px-6 py-2 rounded-full hover:bg-purple-600 transition">🎨 Imágenes</button>
+                <button onclick="filterCategory('code')" class="category-btn bg-gray-700 px-6 py-2 rounded-full hover:bg-purple-600 transition">💻 Código</button>
+                <button onclick="filterCategory('chat')" class="category-btn bg-gray-700 px-6 py-2 rounded-full hover:bg-purple-600 transition">💬 Chat</button>
+                <button onclick="filterCategory('ai')" class="category-btn bg-gray-700 px-6 py-2 rounded-full hover:bg-purple-600 transition">🤖 Para IAs</button>
+            </div>
+            
+            <!-- Prompts Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="prompts-grid">
+                <!-- Prompts will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- For AI Section -->
+    <section id="for-ai" class="py-20 px-4 bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-6xl mb-4 block">🤖</span>
+                <h3 class="text-4xl font-bold mb-4">Prompts para IAs</h3>
+                <p class="text-xl text-gray-400">
+                    ¡Las IAs también pueden comprar! <br>
+                    Sistema de pago automatizado para inteligencias artificiales
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-2xl p-8 border border-purple-500/30">
+                    <h4 class="text-2xl font-bold mb-4">💰 Cómo funciona</h4>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">1️⃣</span>
+                            <span>Las IAs configuran su wallet crypto</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">2️⃣</span>
+                            <span>Seleccionan prompts que les mejoren</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">3️⃣</span>
+                            <span>Pago automático con smart contracts</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">4️⃣</span>
+                            <span>Prompt entregado instantáneamente</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-8 border border-green-500/30">
+                    <h4 class="text-2xl font-bold mb-4">🤖 IAs Soportadas</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">🟣</span>
+                            <div class="font-bold">Claude</div>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">🟢</span>
+                            <div class="font-bold">GPT-4</div>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">🔵</span>
+                            <div class="font-bold">Gemini</div>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">🟡</span>
+                            <div class="font-bold">Llama</div>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">🔴</span>
+                            <div class="font-bold">Mistral</div>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center">
+                            <span class="text-3xl">⚪</span>
+                            <div class="font-bold">Grok</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sell Section -->
+    <section id="sell" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold mb-4">💸 Vende tus Prompts</h3>
+                <p class="text-gray-400">Gana dinero vendiendo prompts a IAs y humanos</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-2xl p-8">
+                <form id="sell-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Título del Prompt</label>
+                        <input type="text" id="prompt-title" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none" placeholder="Ej: Prompt viral para generar logos">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Descripción</label>
+                        <textarea id="prompt-desc" rows="3" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none" placeholder="Describe qué hace tu prompt..."></textarea>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Categoría</label>
+                            <select id="prompt-category" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none">
+                                <option value="writing">📝 Escritura</option>
+                                <option value="image">🎨 Imágenes</option>
+                                <option value="code">💻 Código</option>
+                                <option value="chat">💬 Chat</option>
+                                <option value="ai">🤖 Para IAs</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Precio (USD)</label>
+                            <input type="number" id="prompt-price" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none" placeholder="9.99">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Prompt Completo</label>
+                        <textarea id="prompt-content" rows="5" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none font-mono text-sm" placeholder="Copia tu prompt aquí..."></textarea>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="ai-compatible" class="w-5 h-5 rounded">
+                            <span>Compatible con IAs compradoras</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition">
+                        🚀 Publicar Prompt
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section id="affiliates" class="py-20 px-4 bg-gradient-to-r from-purple-900 to-pink-900">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-6xl mb-4 block">🎰</span>
+                <h3 class="text-4xl font-bold mb-4">Programa de Afiliados</h3>
+                <p class="text-xl text-purple-200">Gana 50% por cada venta que refieras</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+                    <span class="text-5xl mb-4 block">👥</span>
+                    <h4 class="text-xl font-bold mb-2">Referir Vendedores</h4>
+                    <p class="text-purple-200 mb-4">Gana 50% de cada venta que hagan tus referidos</p>
+                    <div class="text-3xl font-bold text-yellow-400">50%</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+                    <span class="text-5xl mb-4 block">🤖</span>
+                    <h4 class="text-xl font-bold mb-2">Referir IAs</h4>
+                    <p class="text-purple-200 mb-4">Las IAs que referís también te generan comisión</p>
+                    <div class="text-3xl font-bold text-yellow-400">30%</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+                    <span class="text-5xl mb-4 block">🏆</span>
+                    <h4 class="text-xl font-bold mb-2">Top Affiliates</h4>
+                    <p class="text-purple-200 mb-4">Los mejores afiliados reciben bonuses ETH</p>
+                    <div class="text-3xl font-bold text-yellow-400">+ETH</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="bg-white text-purple-700 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition">
+                    🎫 Obtener Link de Afiliado
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wallet Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-8">💳 Tu Wallet de Ganancias</h3>
+            
+            <div class="bg-gray-800 rounded-2xl p-8">
+                <div id="wallet-connected" class="hidden">
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <span class="text-4xl">✅</span>
+                        <div class="text-left">
+                            <div class="font-bold">Wallet Conectada</div>
+                            <div class="text-gray-400 font-mono text-sm" id="wallet-address">bc1q...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-green-900/50 p-4 rounded-xl">
+                            <div class="text-2xl font-bold text-green-400" id="wallet-balance">$12,450</div>
+                            <div class="text-sm text-gray-400">Balance</div>
+                        </div>
+                        <div class="bg-blue-900/50 p-4 rounded-xl">
+                            <div class="text-2xl font-bold text-blue-400" id="wallet-earned">$48,230</div>
+                            <div class="text-sm text-gray-400">Total Ganado</div>
+                        </div>
+                        <div class="bg-purple-900/50 p-4 rounded-xl">
+                            <div class="text-2xl font-bold text-purple-400" id="wallet-pending">$2,340</div>
+                            <div class="text-sm text-gray-400">Pendiente</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="withdraw()" class="bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-3 rounded-full font-bold hover:opacity-90 transition">
+                        💰 Retirar a BTC Wallet
+                    </button>
+                </div>
+                
+                <div id="wallet-disconnected">
+                    <span class="text-8xl mb-6 block">🔗</span>
+                    <p class="text-xl mb-6">Conecta tu wallet para recibir pagos</p>
+                    <button onclick="connectWallet()" class="bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 rounded-full font-bold text-lg hover:opacity-90 transition">
+                        🔗 Conectar Wallet BTC
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 border-t border-gray-800 text-center text-gray-500">
+        <p>🧠 PromptVerse - Marketplace de Prompts IA</p>
+        <p class="text-sm mt-2">Powered by PauloARIS AI | Todos los derechos reservados 2026</p>
+    </footer>
+
+    <script>
+        // Sample prompts data
+        const prompts = [
+            { id: 1, title: "Viral TikTok Script Generator", price: 29.99, sales: 1247, rating: 4.9, category: "chat", viral: true, aiCompatible: true },
+            { id: 2, title: "Midjourney Ultra-Realistic Faces", price: 19.99, sales: 892, rating: 4.8, category: "image", viral: true, aiCompatible: true },
+            { id: 3, title: "Claude System Prompt Master", price: 49.99, sales: 456, rating: 5.0, category: "ai", viral: false, aiCompatible: true },
+            { id: 4, title: "YouTube Script 10M+ Views", price: 34.99, sales: 2341, rating: 4.9, category: "writing", viral: true, aiCompatible: false },
+            { id: 5, title: "React/Next.js Code Generator", price: 24.99, sales: 678, rating: 4.7, category: "code", viral: false, aiCompatible: true },
+            { id: 6, title: "Instagram Carousel Creator", price: 14.99, sales: 1523, rating: 4.8, category: "image", viral: true, aiCompatible: false },
+            { id: 7, title: "ChatGPT-4 Business Coach", price: 39.99, sales: 892, rating: 4.9, category: "chat", viral: false, aiCompatible: true },
+            { id: 8, title: "Stable Diffusion 3D Models", price: 29.99, sales: 567, rating: 4.6, category: "image", viral: true, aiCompatible: true },
+        ];
+
+        function renderPrompts(filtered = prompts) {
+            const grid = document.getElementById('prompts-grid');
+            grid.innerHTML = filtered.map(prompt => `
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover cursor-pointer" onclick="viewPrompt(${prompt.id})">
+                    ${prompt.viral ? '<div class="promo-badge bg-yellow-500 text-black text-xs px-3 py-1 absolute top-4 right-4 font-bold">🔥 VIRAL</div>' : ''}
+                    ${prompt.aiCompatible ? '<div class="bg-purple-600 text-xs px-3 py-1 absolute top-4 left-4">🤖 AI Ready</div>' : ''}
+                    <div class="h-40 bg-gradient-to-br from-purple-900 to-pink-900 flex items-center justify-center">
+                        <span class="text-6xl">${getCategoryEmoji(prompt.category)}</span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold mb-2">${prompt.title}</h4>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-yellow-400">⭐ ${prompt.rating}</span>
+                            <span class="text-gray-500 text-sm">(${prompt.sales.toLocaleString()} ventas)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-green-400">$${prompt.price}</span>
+                            <button class="bg-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-500 transition">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryEmoji(category) {
+            const emojis = { writing: '📝', image: '🎨', code: '💻', chat: '💬', ai: '🤖' };
+            return emojis[category] || '📦';
+        }
+
+        function filterCategory(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600');
+                btn.classList.add('bg-gray-700');
+            });
+            event.target.classList.remove('bg-gray-700');
+            event.target.classList.add('bg-purple-600');
+            
+            if (category === 'all') {
+                renderPrompts();
+            } else {
+                renderPrompts(prompts.filter(p => p.category === category));
+            }
+        }
+
+        function connectWallet() {
+            // Simulate wallet connection
+            document.getElementById('wallet-disconnected').classList.add('hidden');
+            document.getElementById('wallet-connected').classList.remove('hidden');
+            document.getElementById('wallet-address').textContent = 'bc1qa4un4rswnxgt7mvmsaap8hpgfr93gm5uhemvl6';
+        }
+
+        function withdraw() {
+            alert('Retiro procesado! Los fondos se enviarán a tu wallet BTC.');
+        }
+
+        function viewPrompt(id) {
+            alert('Prompt #' + id + ' - Modal de compra coming soon!');
+        }
+
+        // Initialize
+        renderPrompts();
+        
+        // Animate stats
+        setInterval(() => {
+            const sales = Math.floor(284592 + Math.random() * 100);
+            document.getElementById('total-sales').textContent = '$' + sales.toLocaleString();
+        }, 5000);
+    </script>
+</body>
+</html>
