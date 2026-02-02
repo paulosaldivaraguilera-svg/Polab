@@ -97,6 +97,14 @@
     - Observabilidad: LangSmith (tracing), métricas de engagement, logs de decisiones
     - Multi-Agente: Enjambres (CrewAI), coordinación de roles, comunicación inter-agente
     - Compliance: Respeto a Términos de Servicio, rotación de IPs (proxies residenciales)
+14. **Engagement Analytics & Observabilidad (2026-02-02):**
+    - Tracking: Pageviews, clicks, scrolls, conversiones, funnel analysis
+    - A/B Testing: Asignación de variantes, métricas de uplift
+    - Heatmaps: Posición de clicks, scroll depth tracking
+    - Tracing: Distributed tracing con spans, parent-child relationships
+    - Métricas: Counters, gauges, histograms para análisis de performance
+    - Alerting: Rules-based alerts, thresholds, actions
+    - Logging: Estructurado (JSON), niveles (debug/info/warn/error)
 
 ## Objetivos Persistentes
 1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
@@ -108,6 +116,9 @@
 7. Desarrollar arquitectura Staff+ (influencia sin autoridad)
 8. Implementar agentes autónomos con MCP para automatización
 9. Deployar agente económico en RPi
+10. **Integrar observabilidad completa** en todos los sistemas
+11. **Medir engagement** de todos los puntos de contacto
+12. **Asegurar compliance** con guardrails en contenido generado
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
