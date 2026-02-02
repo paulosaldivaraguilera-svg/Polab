@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 PromptVerse Market v2.0 - Agéntic Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        code { font-family: 'JetBrains Mono', monospace; }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #8b5cf6 100%);
+            padding: 2px;
+        }
+        .gradient-border-inner { background: #111827; padding: 1.5rem; }
+        
+        .bitcoin-orange { color: #f7931a; }
+        .lightning-yellow { color: #ffd700; }
+        .success-green { color: #10b981; }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(247, 147, 26, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(247, 147, 26, 0.8); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="gradient-border">
+        <div class="gradient-border-inner">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">🧠 PromptVerse <span class="bitcoin-orange">Market v2.0</span></h1>
+                    <p class="text-gray-400 text-sm">Agéntic Marketplace with L402 + DSPy Optimization</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div id="connection-status" class="flex items-center gap-2 text-success-green">
+                        <span class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></span>
+                        Connected
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Total Prompts</div>
+                <div id="total-prompts" class="text-3xl font-bold">0</div>
+                <div class="text-xs text-gray-500">Active marketplace</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Revenue</div>
+                <div id="total-revenue" class="text-3xl font-bold bitcoin-orange">0 sats</div>
+                <div class="text-xs text-gray-500">$0.00 USD</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Transactions</div>
+                <div id="total-tx" class="text-3xl font-bold">0</div>
+                <div class="text-xs text-gray-500">M2M payments</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Optimizations</div>
+                <div id="total-optimizations" class="text-3xl font-bold lightning-yellow">0</div>
+                <div class="text-xs text-gray-500">DSPy improved</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="text-gray-400 text-sm">Disputes</div>
+                <div id="total-disputes" class="text-3xl font-bold">0</div>
+                <div class="text-xs text-gray-500">Kleros pending</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid lg:grid-cols-2 gap-6 mb-8">
+            <!-- L402 Payment Flow -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">⚡ L402 Payment Flow</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-bold">1</div>
+                        <div>
+                            <div class="font-bold">Agent Request</div>
+                            <div class="text-sm text-gray-400">POST /api/prompts/{id}/execute</div>
+                        </div>
+                    </div>
+                    <div class="ml-6 border-l-2 border-gray-700 pl-4 py-2">
+                        <code class="text-yellow-400 text-sm">HTTP 402 Payment Required</code>
+                        <div class="text-sm text-gray-400 mt-1">WWW-Authenticate: L402 macaroon="...", invoice="lnbc..."</div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-yellow-600 flex items-center justify-center font-bold">2</div>
+                        <div>
+                            <div class="font-bold">Payment</div>
+                            <div class="text-sm text-gray-400">Lightning Network / USDC</div>
+                        </div>
+                    </div>
+                    <div class="ml-6 border-l-2 border-gray-700 pl-4 py-2">
+                        <code class="text-yellow-400 text-sm">Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;</code>
+                        <div class="text-sm text-gray-400 mt-1">Atomic payment verification</div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center font-bold">3</div>
+                        <div>
+                            <div class="font-bold">Execution</div>
+                            <div class="text-sm text-gray-400">Prompt result delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DSPy Optimization -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">🧠 DSPy Auto-Optimization</h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400">Fidelity Score</span>
+                            <span id="dspy-fidelity" class="font-mono text-green-400">0.85</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div id="dspy-fidelity-bar" class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400">Relevance</span>
+                            <span id="dspy-relevance" class="font-mono text-blue-400">0.82</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div id="dspy-relevance-bar" class="bg-blue-500 h-2 rounded-full" style="width: 82%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400">Safety</span>
+                            <span id="dspy-safety" class="font-mono text-purple-400">0.91</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div id="dspy-safety-bar" class="bg-purple-500 h-2 rounded-full" style="width: 91%"></div>
+                        </div>
+                    </div>
+                    <button onclick="runOptimization()" class="w-full bg-purple-600 py-3 rounded-lg font-bold hover:bg-purple-500 transition">
+                        🚀 Run DSPy Optimization
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Interfaces -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">🤖 Agent Interfaces (OpenAPI + AI Plugin)</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <h3 class="font-bold text-blue-400 mb-2">OpenAPI 3.1 Spec</h3>
+                    <p class="text-gray-400 text-sm mb-3">Machine-readable API specification for agent discovery</p>
+                    <code class="text-xs bg-gray-800 p-2 rounded block">GET /.well-known/openapi.json</code>
+                    <div class="mt-2 text-xs text-gray-500">Used by LangChain, CrewAI, AutoGen</div>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <h3 class="font-bold text-green-400 mb-2">AI Plugin Manifest</h3>
+                    <p class="text-gray-400 text-sm mb-3">Plugin descriptor for ChatGPT/Copilot</p>
+                    <code class="text-xs bg-gray-800 p-2 rounded block">GET /.well-known/ai-plugin.json</code>
+                    <div class="mt-2 text-xs text-gray-500">Enables direct plugin installation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Split & Affiliate -->
+        <div class="grid lg:grid-cols-2 gap-6 mb-8">
+            <!-- Revenue Split -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">💰 Revenue Split (90/8/2)</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between bg-gray-900 p-4 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">👤</span>
+                            <span>Creator</span>
+                        </div>
+                        <span class="text-2xl font-bold text-green-400">90%</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-900 p-4 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-yellow-600 flex items-center justify-center">🔗</span>
+                            <span>Affiliate (Referrer)</span>
+                        </div>
+                        <span class="text-2xl font-bold text-yellow-400">8%</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-900 p-4 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">🏛️</span>
+                            <span>Platform (Kleros)</span>
+                        </div>
+                        <span class="text-2xl font-bold text-blue-400">2%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affiliate Dashboard -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">🔗 Affiliate Program</h2>
+                <div class="bg-gray-900 rounded-lg p-4 mb-4">
+                    <div class="text-gray-400 text-sm mb-2">Your Affiliate Code</div>
+                    <div class="flex items-center gap-2">
+                        <code id="affiliate-code" class="text-xl font-mono bg-gray-800 px-4 py-2 rounded flex-1">GENERATING...</code>
+                        <button onclick="copyAffiliateCode()" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500">Copy</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-900 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold" id="affiliate-earnings">0 sats</div>
+                        <div class="text-sm text-gray-400">Your Earnings</div>
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold" id="affiliate-referrals">0</div>
+                        <div class="text-sm text-gray-400">Referrals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kleros Disputes -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">⚖️ Kleros Dispute Resolution</h2>
+            <div id="disputes-container">
+                <div class="text-center text-gray-500 py-8">
+                    No active disputes
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompts Grid -->
+        <div class="bg-gray-800 rounded-xl p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">📦 Marketplace Prompts</h2>
+                <button onclick="createPrompt()" class="bg-green-600 px-6 py-2 rounded-lg font-bold hover:bg-green-500">
+                    + New Prompt
+                </button>
+            </div>
+            <div id="prompts-grid" class="grid md:grid-cols-3 gap-4">
+                <!-- Prompts will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Console -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 p-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex gap-4">
+                <input type="text" id="wallet-input" 
+                    placeholder="Enter your Lightning wallet (for affiliate tracking)..." 
+                    class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 focus:border-orange-500 focus:outline-none">
+                <button onclick="loadAffiliateData()" 
+                    class="bg-orange-600 px-6 py-2 rounded-lg font-bold hover:bg-orange-500">
+                    Load Affiliate Data
+                </button>
+            </div>
+            <div id="console-output" class="mt-4 h-32 overflow-auto font-mono text-sm space-y-2">
+                <div class="text-gray-500">// PromptVerse Market v2.0 Console - Ready</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3005';
+        
+        // State
+        let analytics = {
+            totalPrompts: 0,
+            totalRevenueSats: 0,
+            totalTransactions: 0,
+            totalDisputes: 0
+        };
+
+        // Load analytics
+        async function loadAnalytics() {
+            try {
+                const res = await fetch(`${API_URL}/api/analytics`);
+                analytics = await res.json();
+                
+                document.getElementById('total-prompts').textContent = analytics.totalPrompts;
+                document.getElementById('total-revenue').textContent = `${analytics.totalRevenueSats} sats`;
+                document.getElementById('total-tx').textContent = analytics.totalTransactions;
+                document.getElementById('total-disputes').textContent = analytics.totalDisputes;
+                
+                // Update USD
+                const usd = (analytics.totalRevenueSats / 100000).toFixed(2);
+                document.querySelector('#total-revenue + div').textContent = `$${usd} USD`;
+                
+                // Render prompts
+                renderPrompts(analytics.topPrompts || []);
+            } catch (e) {
+                log(`Error loading analytics: ${e.message}`);
+            }
+        }
+
+        // Render prompts
+        function renderPrompts(prompts) {
+            const grid = document.getElementById('prompts-grid');
+            if (!prompts.length) {
+                grid.innerHTML = '<div class="col-span-3 text-center text-gray-500 py-8">No prompts yet. Create one!</div>';
+                return;
+            }
+            
+            grid.innerHTML = prompts.map(p => `
+                <div class="bg-gray-900 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold">${p.title}</h3>
+                        <span class="bitcoin-orange font-mono">${p.priceSats} sats</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">${p.description?.slice(0, 80)}...</p>
+                    <div class="flex justify-between items-center text-sm text-gray-500">
+                        <span>v${p.version}</span>
+                        <span>${p.sales} sales</span>
+                        <span class="success-green">Score: ${(p.score || 0.8).toFixed(2)}</span>
+                    </div>
+                    <button onclick="executePrompt('${p.id}')" class="w-full mt-3 bg-blue-600 py-2 rounded hover:bg-blue-500">
+                        Execute (Pay ${p.priceSats} sats)
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Execute prompt (L402 flow)
+        async function executePrompt(promptId) {
+            log(`Attempting to execute prompt: ${promptId}`);
+            
+            try {
+                const res = await fetch(`${API_URL}/api/prompts/${promptId}/execute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input: 'Test input for execution' })
+                });
+                
+                if (res.status === 402) {
+                    const data = await res.json();
+                    log(`💰 Payment required: ${data.amountSats} sats`);
+                    log(`📄 Macaroon: ${data.macaroon?.slice(0, 20)}...`);
+                    log(`🧾 Invoice: ${data.invoice}`);
+                    log(`🔑 Preimage (simulated): ${data.simulatedPreimage?.slice(0, 16)}...`);
+                    
+                    // Simulate payment by calling purchase endpoint
+                    await purchasePrompt(promptId, data.macaroon, data.simulatedPreimage);
+                } else {
+                    const data = await res.json();
+                    log(`✅ Execution successful: ${data.result}`);
+                }
+            } catch (e) {
+                log(`Error: ${e.message}`);
+            }
+        }
+
+        // Purchase prompt (simulate payment)
+        async function purchasePrompt(promptId, macaroon, preimage) {
+            try {
+                const res = await fetch(`${API_URL}/api/purchase`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        promptId,
+                        wallet: 'test_wallet',
+                        affiliateCode: null,
+                        paymentMethod: 'lightning'
+                    })
+                });
+                
+                const data = await res.json();
+                if (data.success) {
+                    log(`✅ Purchase successful!`);
+                    log(`💰 Distribution: Creator ${data.payment.distribution.creator}sats, Affiliate ${data.payment.distribution.affiliate}sats`);
+                    loadAnalytics();
+                }
+            } catch (e) {
+                log(`Purchase error: ${e.message}`);
+            }
+        }
+
+        // Load affiliate data
+        async function loadAffiliateData() {
+            const wallet = document.getElementById('wallet-input').value;
+            if (!wallet) {
+                log('Please enter a wallet address');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_URL}/api/affiliate/stats?wallet=${encodeURIComponent(wallet)}`);
+                const data = await res.json();
+                
+                if (data.code) {
+                    document.getElementById('affiliate-code').textContent = data.code;
+                    document.getElementById('affiliate-earnings').textContent = `${data.earnings || 0} sats`;
+                    document.getElementById('affiliate-referrals').textContent = data.referrals || 0;
+                    log(`✅ Affiliate data loaded for wallet ${wallet.slice(0, 8)}...`);
+                } else {
+                    log('No affiliate data found for this wallet');
+                }
+            } catch (e) {
+                log(`Error loading affiliate data: ${e.message}`);
+            }
+        }
+
+        // Copy affiliate code
+        function copyAffiliateCode() {
+            const code = document.getElementById('affiliate-code').textContent;
+            navigator.clipboard.writeText(code);
+            log(`📋 Copied: ${code}`);
+        }
+
+        // Run DSPy optimization
+        async function runOptimization() {
+            log('🧠 Running DSPy optimization...');
+            // Simulate optimization
+            setTimeout(() => {
+                document.getElementById('dspy-fidelity').textContent = (0.85 + Math.random() * 0.1).toFixed(2);
+                document.getElementById('dspy-fidelity-bar').style.width = `${parseFloat(document.getElementById('dspy-fidelity').textContent) * 100}%`;
+                log('✅ Optimization complete!');
+                loadAnalytics();
+            }, 2000);
+        }
+
+        // Create prompt
+        async function createPrompt() {
+            const prompt = {
+                title: `AI Agent Prompt #${Date.now()}`,
+                description: 'Self-optimizing prompt for AI agents',
+                content: 'You are a helpful AI assistant. Follow these guidelines: 1. Be precise 2. Be helpful 3. Be safe',
+                category: 'agent',
+                priceSats: 100,
+                wallet: document.getElementById('wallet-input').value || 'test_wallet'
+            };
+            
+            try {
+                const res = await fetch(`${API_URL}/api/prompts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(prompt)
+                });
+                
+                const data = await res.json();
+                log(`✅ Prompt created: ${data.prompt.id}`);
+                log(`🔗 Affiliate code: ${data.affiliateCode}`);
+                loadAnalytics();
+            } catch (e) {
+                log(`Error creating prompt: ${e.message}`);
+            }
+        }
+
+        // Log to console
+        function log(message) {
+            const consoleOutput = document.getElementById('console-output');
+            const entry = document.createElement('div');
+            entry.innerHTML = `<span class="text-orange-400">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+            consoleOutput.appendChild(entry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Initialize
+        loadAnalytics();
+        
+        // Auto-refresh
+        setInterval(loadAnalytics, 10000);
+    </script>
+</body>
+</html>
