@@ -409,33 +409,37 @@
       "project": "pauloaris",
       "task": "Crear manifest.json para PWA del dashboard",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:45:16.402426",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:57:02.158938"
     },
     {
       "project": "pauloaris",
       "task": "Agregar an\u00e1lisis de rendimiento de c\u00f3digo",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:45:16.499718",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:57:02.159088"
     },
     {
       "project": "pauloaris",
       "task": "Crear Code Kata del sistema Ralph Loop para automejora",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:47:15.530889",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:58:43.146091"
     },
     {
       "project": "pauloaris",
       "task": "Implementar patr\u00f3n Strangler Fig para migrar APIs legacy",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:47:15.628439",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T16:58:43.146235"
     },
     {
       "project": "pauloaris",
@@ -564,8 +568,48 @@
       "status": "pending",
       "created": "2026-02-02T16:54:19.219726",
       "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Configurar Ollama para inferencia local en RPi",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:56:47.669737",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear agente de contenido automatizado para Moltbook",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:56:47.768040",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar sistema n8n para automatizaci\u00f3n B2B",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:56:47.865780",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear dashboard de monitoreo econ\u00f3mico del agente",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:56:47.963495",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Documentar arquitectura de soberan\u00eda digital con RPi",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T16:56:48.060608",
+      "iterations_spent": 0
     }
   ],
-  "iterations": 23,
-  "lastUpdate": "2026-02-02T16:54:24.775344"
+  "iterations": 25,
+  "lastUpdate": "2026-02-02T16:58:43.146302"
 }

@@ -66,6 +66,17 @@
     - IA Agents como "empleados digitales" internos
     - Compliance legal: GDPR, California SB 243
     - Futuro: Identidad criptográfica para agentes (A2A economy)
+11. **Soberanía Digital con Raspberry Pi (2026-02-02):**
+    - Hardware: RPi 5 con NVMe (PCIe) para inferencia local
+    - Ollama + Docker para orquestación de modelos locales
+    - Modelos cuantizados (Q4_K_M) para ARM64
+    - Phi-3, Qwen 2.5 para eficiencia en RPi
+    - Grid Trading y DCA automatizado
+    - DePIN nodes (Olas, Mysterium) para ingresos pasivos
+    - ZerePy/ElizaOS para agentes sociales
+    - Costo operativo: ~$0.30-0.50 USD/mes (electricidad)
+    - n8n para automatización B2B workflows
+    - Compliance: Respetar robots.txt, evitar PII
 
 ## Objetivos Persistentes
 1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
@@ -76,6 +87,7 @@
 6. Practicar deliberadamente (Code Katas de sistemas)
 7. Desarrollar arquitectura Staff+ (influencia sin autoridad)
 8. Implementar agentes autónomos con MCP para automatización
+9. **Deployar agente económico en RPi (nuevo)**
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
