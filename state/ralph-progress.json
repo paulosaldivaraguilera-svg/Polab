@@ -4985,8 +4985,152 @@
       "created": "2026-02-02T20:34:24.661683",
       "iterations_spent": 1,
       "completed": "2026-02-02T20:34:32.474083"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Integrar content-reposter.js con backend",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.405183",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.601955"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear API endpoint para distribuci\u00f3n autom\u00e1tica",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.509932",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.602106"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Implementar scheduling de publicaciones",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.613308",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.741249"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Crear dashboard de contenido curado",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.717265",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.741400"
+    },
+    {
+      "project": "la_unidad",
+      "task": "Integrar con redes sociales (Twitter/WhatsApp)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.821736",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.876386"
+    },
+    {
+      "project": "comenzar",
+      "task": "A\u00f1adir secci\u00f3n de testimonios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:27.926147",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:35.876537"
+    },
+    {
+      "project": "comenzar",
+      "task": "Crear p\u00e1gina de pricing",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.029987",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.010825"
+    },
+    {
+      "project": "comenzar",
+      "task": "Implementar live chat",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.133528",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.010983"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "A\u00f1adir contenido de Lenin (10 art\u00edculos)",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.244552",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.142091"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "Crear m\u00f3dulo de historia del PC-Chile",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.358415",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.142241"
+    },
+    {
+      "project": "sistema-sur",
+      "task": "Implementar sistema de bookmarks por usuario",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.462196",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.285959"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Crear script de restart autom\u00e1tico de servicios",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.566639",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.286117"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Implementar alertas por email",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.670130",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.417699"
+    },
+    {
+      "project": "infrastructure",
+      "task": "Crear dashboard unificado de monitoring",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.774931",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.417856"
+    },
+    {
+      "project": "docs",
+      "task": "Documentar sistema legal de atribuci\u00f3n",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.879128",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.553787"
+    },
+    {
+      "project": "docs",
+      "task": "Crear manual de uso de La Unidad",
+      "priority": 1,
+      "status": "done",
+      "created": "2026-02-02T20:37:28.982776",
+      "iterations_spent": 1,
+      "completed": "2026-02-02T20:37:36.553954"
     }
   ],
-  "iterations": 286,
-  "lastUpdate": "2026-02-02T20:34:32.474148"
+  "iterations": 294,
+  "lastUpdate": "2026-02-02T20:37:36.554030"
 }
