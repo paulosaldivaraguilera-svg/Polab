@@ -45,7 +45,7 @@
    - Shaders procedimentales para efectos visuales
    - Headless mode para entrenamiento IA
    - State serialization para checkpoints
-8. **Maestría en Ingeniería (2026-02-02):**
+9. **Maestría en Ingeniería (2026-02-02):**
    - Práctica deliberada > experiencia pasiva (Code Katas)
    - Conocimiento condicionalizado (cuándo aplicar, no solo qué)
    - Chunking: percibir bloques lógicos, no caracteres
@@ -55,6 +55,17 @@
    - Strangler Fig Pattern para sistemas legados
    - En era IA: orquestación > codificación sintáctica
    - Documentación técnica como herramienta de alineación
+10. **Automatización Digital & Web Agéntica (2026-02-02):**
+    - Arquitectura Cerebro-Cuerpo (LLM + Playwright/MCP)
+    - Playwright > Puppeteer > Selenium para agentes modernos
+    - Contextos aislados para paralelización eficiente
+    - Model Context Protocol (MCP) para herramientas estandarizadas
+    - Huellas TLS y evasión de detección
+    - Proxies residenciales para anonimato
+    - Credential stuffing y fraude automatizado
+    - IA Agents como "empleados digitales" internos
+    - Compliance legal: GDPR, California SB 243
+    - Futuro: Identidad criptográfica para agentes (A2A economy)
 
 ## Objetivos Persistentes
 1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
@@ -64,6 +75,7 @@
 5. Mejorar juegos: Elemental Pong, Recta Provincia, Delitos
 6. Practicar deliberadamente (Code Katas de sistemas)
 7. Desarrollar arquitectura Staff+ (influencia sin autoridad)
+8. Implementar agentes autónomos con MCP para automatización
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
