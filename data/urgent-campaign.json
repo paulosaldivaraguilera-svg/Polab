@@ -1,0 +1,74 @@
+{
+  "start": "2026-02-02T20:51:31.896Z",
+  "end": "2026-02-04T20:51:31.896Z",
+  "prospects": [
+    {
+      "name": "Restaurante El Sazón",
+      "type": "restaurant",
+      "contact": "DM",
+      "price": 150
+    },
+    {
+      "name": "Tienda La Esquina",
+      "type": "retail",
+      "contact": "DM",
+      "price": 100
+    },
+    {
+      "name": "Farmacia Local",
+      "type": "health",
+      "contact": "DM",
+      "price": 150
+    },
+    {
+      "name": "Gimnasio Barrio",
+      "type": "fitness",
+      "contact": "DM",
+      "price": 100
+    },
+    {
+      "name": "Peluquería Central",
+      "type": "beauty",
+      "contact": "DM",
+      "price": 100
+    },
+    {
+      "name": "Panadería del Pueblo",
+      "type": "food",
+      "contact": "DM",
+      "price": 100
+    },
+    {
+      "name": "Consultorio Dental",
+      "type": "health",
+      "contact": "DM",
+      "price": 200
+    },
+    {
+      "name": "Agencia Local",
+      "type": "services",
+      "contact": "DM",
+      "price": 200
+    },
+    {
+      "name": "Hotel Boutique",
+      "type": "hospitality",
+      "contact": "DM",
+      "price": 200
+    },
+    {
+      "name": "Veterinaria 24h",
+      "type": "pets",
+      "contact": "DM",
+      "price": 150
+    }
+  ],
+  "message": "Hola! Somos PauloARIS - especialistas en automatización.\n\n🔥 OFERTA DE EMERGENCIA (válida solo 48 horas):\n\n🤖 WhatsApp Bot - Responde 24/7\n   Precio: $100 (normal $200)\n   \n🌐 Landing Page de Ventas\n   Precio: $150 (normal $300)\n   \n🔄 Automation Básica (n8n)\n   Precio: $150 (normal $300)\n\n💰 TOTAL PAQUETE COMPLETO: $300\n\n🚀 Incluido:\n- Setup en 24 horas\n- Capacitación básica\n- 1 mes soporte gratis\n\nEsto puede duplicar tus ventas automatizando atención al cliente.\n\n¿Te interesa? Responde URGENTE.\n\nSaludos,\nPauloARIS\n",
+  "targetRevenue": 1500,
+  "pricing": {
+    "whatsappBot": 100,
+    "landingPage": 150,
+    "automation": 150,
+    "package": 300
+  }
+}
