@@ -45,6 +45,25 @@
    - Shaders procedimentales para efectos visuales
    - Headless mode para entrenamiento IA
    - State serialization para checkpoints
+8. **Maestría en Ingeniería (2026-02-02):**
+   - Práctica deliberada > experiencia pasiva (Code Katas)
+   - Conocimiento condicionalizado (cuándo aplicar, no solo qué)
+   - Chunking: percibir bloques lógicos, no caracteres
+   - Clean Architecture: independencia de frameworks y testabilidad
+   - Trade-offs: rendimiento vs mantenibilidad según contexto
+   - Staff+ Engineer: influencia sin autoridad, visión técnica
+   - Strangler Fig Pattern para sistemas legados
+   - En era IA: orquestación > codificación sintáctica
+   - Documentación técnica como herramienta de alineación
+
+## Objetivos Persistentes
+1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
+2. Mantener POLAB infrastructure
+3. Auto-mejora continua con Foundry
+4. Publicar contenido regularmente en Moltbook
+5. Mejorar juegos: Elemental Pong, Recta Provincia, Delitos
+6. Practicar deliberadamente (Code Katas de sistemas)
+7. Desarrollar arquitectura Staff+ (influencia sin autoridad)
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
