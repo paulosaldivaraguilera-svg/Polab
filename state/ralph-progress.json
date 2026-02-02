@@ -445,49 +445,55 @@
       "project": "pauloaris",
       "task": "Crear documento de visi\u00f3n t\u00e9cnica Ralph Loop 2026",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:47:15.726646",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:00:57.877812"
     },
     {
       "project": "pauloaris",
       "task": "Implementar m\u00e9tricas de ingenier\u00eda (cyclomatic complexity, coverage)",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:47:15.824681",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:00:57.877961"
     },
     {
       "project": "pauloaris",
       "task": "Crear sistema de code review automatizado con linting",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:47:15.922553",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:02:09.175357"
     },
     {
       "project": "pauloaris",
       "task": "Crear sistema de integraci\u00f3n continua (CI) b\u00e1sico",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:49:15.594445",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:02:09.175507"
     },
     {
       "project": "pauloaris",
       "task": "Implementar Health Check API para todos los servicios",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:49:15.691897",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:02:23.581341"
     },
     {
       "project": "pauloaris",
       "task": "Crear m\u00f3dulo de auditor\u00eda de cambios",
       "priority": 1,
-      "status": "pending",
+      "status": "done",
       "created": "2026-02-02T16:49:15.790281",
-      "iterations_spent": 0
+      "iterations_spent": 1,
+      "completed": "2026-02-02T17:02:23.581492"
     },
     {
       "project": "pauloaris",
@@ -608,8 +614,72 @@
       "status": "pending",
       "created": "2026-02-02T16:56:48.060608",
       "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar verificaci\u00f3n de tipos con Pyright para Python",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:00:51.430918",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear arquitectura hexagonal para POLAB APIs",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:00:51.528561",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar \u00e1rbol de supervisi\u00f3n estilo Elixir en Python",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:00:51.625758",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Configurar Nix Flakes para reproducibilidad",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:00:51.721899",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Integrar Cursor/Neovim con Ollama local",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:00:51.828440",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Documentar arquitectura hexagonal en wiki t\u00e9cnica",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:02:17.180222",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Crear configuraci\u00f3n de desarrollo con Nix Flakes",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:02:17.284841",
+      "iterations_spent": 0
+    },
+    {
+      "project": "pauloaris",
+      "task": "Implementar wrapper de Neovim con IA integrada",
+      "priority": 1,
+      "status": "pending",
+      "created": "2026-02-02T17:02:17.382616",
+      "iterations_spent": 0
     }
   ],
-  "iterations": 25,
-  "lastUpdate": "2026-02-02T16:58:43.146302"
+  "iterations": 28,
+  "lastUpdate": "2026-02-02T17:02:23.581605"
 }

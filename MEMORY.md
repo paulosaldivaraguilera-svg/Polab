@@ -77,6 +77,16 @@
     - Costo operativo: ~$0.30-0.50 USD/mes (electricidad)
     - n8n para automatización B2B workflows
     - Compliance: Respetar robots.txt, evitar PII
+12. **Ingeniería de Software 2026 (2026-02-02):**
+    - Verificación Formal: Prusti/Creusot/Verus (Rust), Idris 2 (tipos dependientes)
+    - Programación Funcional: Gleam (BEAM), Roc (mutación oportunista)
+    - Arquitectura Explícita: Hexagonal + DDD + CQRS
+    - Actor Model: Elixir/Erlang OTP, árboles de supervisión
+    - Data-Oriented Design: Rendimiento sobre abstracción
+    - IDEs Nativos de IA: Cursor Composer, Windsurf Cascade, Zed
+    - Neovim + IA: Avante.nvim, CodeCompanion (modal editing)
+    - Platform Engineering: Nix Flakes (reproducibilidad), Pulumi (IaC como software)
+    - Edge Tech: Unison (código direccionable por contenido)
 
 ## Objetivos Persistentes
 1. Mejorar "La Unidad" (proyecto Marxist-Leninist news/analysis)
@@ -87,7 +97,7 @@
 6. Practicar deliberadamente (Code Katas de sistemas)
 7. Desarrollar arquitectura Staff+ (influencia sin autoridad)
 8. Implementar agentes autónomos con MCP para automatización
-9. **Deployar agente económico en RPi (nuevo)**
+9. Deployar agente económico en RPi
 
 ## Próximos Pasos
 - [ ] Configurar Foundry para self-modification
