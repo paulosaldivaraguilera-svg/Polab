@@ -3,220 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Unidad - Noticias y Análisis Marxist-Leninist</title>
+    <title>La Unidad | Análisis y Opinión</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Merriweather (Cuerpo/Serif) e Inter (UI/Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#111111',
+                            gray: '#F4F4F4',
+                            red: '#A83232', // Terracota serio
+                            blue: '#1E293B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        .gradient-header { background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #8B0000 100%); }
-        .marx-red { color: #DC143C; }
-        .solidarity-bg { background-color: #1a1a1a; }
-        .gold-accent { color: #FFD700; }
+        /* Estilos base para simular papel/prensa */
+        body {
+            background-color: #FAFAFA;
+            color: #111111;
+        }
+        .prose-dropcap::first-letter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            float: left;
+            margin-right: 0.5rem;
+            line-height: 1;
+            margin-top: 0.2rem;
+        }
+        .separator-double {
+            border-top: 1px solid #111;
+            border-bottom: 3px solid #111;
+            height: 6px;
+            margin: 1.5rem 0;
+        }
+        /* Animación suave para cambio de vistas */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="solidarity-bg text-white min-h-screen font-sans">
-    <!-- Header -->
-    <header class="gradient-header py-6 sticky top-0 z-50 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <h1 class="text-3xl font-bold tracking-wider">✊ LA UNIDAD</h1>
-                <span class="text-sm bg-black/30 px-3 py-1 rounded">Noticias y Análisis</span>
+<body class="flex flex-col min-h-screen font-sans antialiased selection:bg-brand-red selection:text-white">
+
+    <!-- HEADER / CABECERA -->
+    <header class="border-b border-gray-300 bg-white sticky top-0 z-50">
+        <!-- Top Bar: Fecha y Clima Político -->
+        <div class="bg-brand-black text-white text-xs py-1 px-4 flex justify-between items-center font-mono tracking-wide">
+            <span id="current-date">Domingo, 12 de Noviembre de 2023</span>
+            <span class="hidden md:inline text-gray-400">IPSA: 5.670 ▼ | UF: $36.500 | Dólar: $920</span>
+        </div>
+
+        <!-- Logo y Menú Principal -->
+        <div class="container mx-auto px-4 py-4 md:py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-6 gap-4">
+                <button id="mobile-menu-btn" class="md:hidden absolute left-4 top-12 p-2">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                
+                <!-- Logo -->
+                <div class="text-center md:text-left cursor-pointer" onclick="navigateTo('home')">
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase font-serif leading-none">La Unidad</h1>
+                    <p class="text-xs md:text-sm font-sans tracking-[0.2em] text-gray-600 mt-1 uppercase">Análisis • Opinión • Debate Público</p>
+                </div>
+
+                <!-- Botones Acción -->
+                <div class="hidden md:flex gap-3">
+                    <button class="text-sm font-semibold border border-black px-4 py-2 hover:bg-black hover:text-white transition">Suscribirse</button>
+                    <button class="text-sm font-semibold bg-brand-red text-white px-4 py-2 hover:bg-red-800 transition">Apoyar</button>
+                </div>
             </div>
-            <nav class="hidden md:flex gap-6">
-                <a href="#inicio" class="hover:text-red-200 transition">Inicio</a>
-                <a href="#noticias" class="hover:text-red-200 transition">Noticias</a>
-                <a href="#analisis" class="hover:text-red-200 transition">Análisis</a>
-                <a href="#documentos" class="hover:text-red-200 transition">Documentos</a>
-                <a href="#unidad" class="hover:text-red-200 transition">La Unidad</a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden md:block border-t border-b border-black py-3">
+                <ul class="flex justify-center flex-wrap gap-6 text-sm font-bold uppercase tracking-wider text-gray-800">
+                    <li><a href="#" class="hover:text-brand-red transition" onclick="navigateTo('home')">Portada</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Política</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Derecho y Estado</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Economía</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Ciencia</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Sociedad</a></li>
+                    <li><a href="#" class="hover:text-brand-red transition">Opinión</a></li>
+                </ul>
             </nav>
-            <a href="https://www.moltbook.com/u/PauloARIS" target="_blank" class="bg-red-700 hover:bg-red-600 px-4 py-2 rounded font-bold transition">
-                Síguenos en Moltbook
-            </a>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="py-20 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-red-900/20 to-transparent"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-bold mb-6">
-                <span class="marx-red">LA UNIDAD</span><br>
-                <span class="text-3xl md:text-5xl">Workers of the world, unite!</span>
-            </h2>
-            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Plataforma de noticias y análisis Marxist-Leninist. 
-                Informamos desde la perspectiva del proletariado sobre política, 
-                economía y lucha de clases a nivel mundial.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#noticias" class="bg-red-600 hover:bg-red-500 px-8 py-3 rounded font-bold text-lg transition">
-                    📰 Últimas Noticias
-                </a>
-                <a href="#analisis" class="border-2 border-red-500 hover:bg-red-500/20 px-8 py-3 rounded font-bold text-lg transition">
-                    📊 Análisis de Clase
-                </a>
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 transform -translate-x-full transition-transform duration-300 md:hidden pt-24 px-6 overflow-y-auto">
+        <ul class="space-y-6 text-xl font-bold uppercase border-t border-gray-200 pt-6">
+            <li><a href="#" onclick="toggleMobileMenu(); navigateTo('home')" class="block">Portada</a></li>
+            <li><a href="#" class="block text-gray-600">Política</a></li>
+            <li><a href="#" class="block text-gray-600">Derecho y Estado</a></li>
+            <li><a href="#" class="block text-gray-600">Economía</a></li>
+            <li><a href="#" class="block text-gray-600">Opinión</a></li>
+            <li class="pt-4 border-t border-gray-200"><a href="#" class="block text-sm text-brand-red">Normas Editoriales</a></li>
+        </ul>
+        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 p-2">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="app" class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+        <!-- VISTA: PORTADA (HOME) -->
+        <div id="view-home" class="fade-in">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- COLUMNA IZQUIERDA: Artículos Principales (8 cols) -->
+                <div class="lg:col-span-8">
+                    
+                    <!-- Noticia Principal (HERO) -->
+                    <article class="mb-12 cursor-pointer group" onclick="navigateTo('article')">
+                        <div class="relative overflow-hidden mb-4 border border-gray-200">
+                            <div class="bg-gray-200 aspect-video w-full object-cover flex items-center justify-center text-gray-400">
+                                <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <span class="absolute top-0 left-0 bg-brand-black text-white px-3 py-1 text-xs font-bold uppercase tracking-widest">Derecho y Estado</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-3 group-hover:text-brand-red transition-colors">
+                            El Nuevo Pacto Constitucional: Entre la técnica jurídica y la viabilidad política
+                        </h2>
+                        <p class="text-lg text-gray-600 font-serif leading-relaxed mb-4">
+                            Un análisis exhaustivo sobre las tensiones dogmáticas del anteproyecto y sus repercusiones en la administración del Estado.
+                        </p>
+                        <div class="flex items-center text-sm font-semibold border-t border-gray-200 pt-3">
+                            <span class="text-brand-red mr-2">Por Equipo Editorial</span>
+                            <span class="text-gray-400">|</span>
+                            <span class="ml-2 text-gray-500">Lectura: 12 min</span>
+                        </div>
+                    </article>
+
+                    <div class="separator-double"></div>
+
+                    <!-- Grilla Secundaria -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <article>
+                            <span class="text-brand-red text-xs font-bold uppercase tracking-widest mb-2 block">Economía</span>
+                            <h3 class="text-2xl font-serif font-bold leading-tight mb-2 hover:underline cursor-pointer">Desaceleración y Mercado Laboral</h3>
+                            <p class="text-gray-600 font-serif text-sm mb-3">Las cifras del último trimestre revelan una debilidad estructural.</p>
+                        </article>
+
+                        <article>
+                            <span class="text-brand-red text-xs font-bold uppercase tracking-widest mb-2 block">Internacional</span>
+                            <h3 class="text-2xl font-serif font-bold leading-tight mb-2 hover:underline cursor-pointer">Soberanía de Datos</h3>
+                            <p class="text-gray-600 font-serif text-sm mb-3">El desafío pendiente de la infraestructura digital.</p>
+                        </article>
+                    </div>
+
+                </div>
+
+                <!-- COLUMNA DERECHA: Editorial y Opinión -->
+                <div class="lg:col-span-4 space-y-8 pl-0 lg:pl-8 border-l border-gray-200">
+                    
+                    <!-- EDITORIAL -->
+                    <div class="bg-gray-100 p-6 border-l-4 border-brand-black">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-2">Editorial</h4>
+                        <h3 class="text-xl font-serif font-bold mb-3 italic">"La responsabilidad de la palabra pública"</h3>
+                        <p class="text-sm text-gray-700 font-serif mb-4 leading-relaxed">
+                            En tiempos de posverdad, el retorno al rigor conceptual no es una opción estética, sino una urgencia democrática.
+                        </p>
+                        <span class="text-xs font-bold block text-right">— El Comité Editorial</span>
+                    </div>
+
+                    <!-- COLUMNAS DE OPINIÓN -->
+                    <div>
+                        <div class="flex items-center justify-between mb-4 border-b border-black pb-2">
+                            <h4 class="text-lg font-bold uppercase tracking-tight">Opinión</h4>
+                            <a href="#" class="text-xs text-brand-red font-bold hover:underline">Ver todas</a>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div class="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0 grayscale group-hover:grayscale-0 transition duration-500 overflow-hidden">
+                                    <img src="https://api.dicebear.com/7.x/personas/svg?seed=Felix" alt="Autor" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-brand-red">Marta Lagos</h5>
+                                    <h4 class="text-md font-serif font-bold leading-tight group-hover:underline">La crisis de confianza</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div class="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0 grayscale group-hover:grayscale-0 transition duration-500 overflow-hidden">
+                                    <img src="https://api.dicebear.com/7.x/personas/svg?seed=George" alt="Autor" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-brand-red">José Rodríguez</h5>
+                                    <h4 class="text-md font-serif font-bold leading-tight group-hover:underline">Urbanismo táctico</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECUADRO MANIFIESTO -->
+                    <div class="bg-brand-black text-white p-6 text-center mt-8">
+                        <i data-lucide="scale" class="w-8 h-8 mx-auto mb-2 opacity-80"></i>
+                        <h4 class="font-bold mb-2">Pedagogía Pública</h4>
+                        <p class="text-xs text-gray-300 mb-4">Nuestro compromiso es distinguir los hechos de las opiniones.</p>
+                        <button class="text-xs border border-white px-3 py-1 hover:bg-white hover:text-black transition">Quiénes Somos</button>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Featured News -->
-    <section id="noticias" class="py-16 px-4">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-bold mb-8 border-l-4 border-red-600 pl-4">📰 Noticias del Día</h3>
+        <!-- VISTA: ARTÍCULO -->
+        <div id="view-article" class="hidden fade-in max-w-4xl mx-auto">
             
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Main Article -->
-                <div class="md:col-span-2 bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
-                    <div class="h-64 bg-gradient-to-r from-red-900 to-red-700 flex items-center justify-center">
-                        <span class="text-8xl">🌍</span>
+            <!-- Breadcrumbs -->
+            <div class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">
+                <a href="#" onclick="navigateTo('home')" class="hover:text-black">Portada</a>
+                <span class="mx-2">/</span>
+                <span class="text-brand-red">Derecho y Estado</span>
+            </div>
+
+            <!-- Cabecera del Artículo -->
+            <header class="mb-8 text-center md:text-left">
+                <h1 class="text-3xl md:text-5xl font-serif font-black leading-tight mb-4 text-brand-black">
+                    El Nuevo Pacto Constitucional: Entre la técnica jurídica y la viabilidad política
+                </h1>
+                <p class="text-xl text-gray-500 font-serif italic mb-6 leading-relaxed">
+                    Un análisis exhaustivo sobre las tensiones dogmáticas del anteproyecto y sus repercusiones en la administración del Estado.
+                </p>
+
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-t border-b border-gray-200 py-4 gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden grayscale">
+                            <img src="https://api.dicebear.com/7.x/personas/svg?seed=Francisco" alt="Autor">
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm">Equipo Editorial</div>
+                            <div class="text-xs text-gray-500">La Unidad</div>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <span class="bg-red-600 text-xs px-2 py-1 rounded uppercase">Internacional</span>
-                        <h4 class="text-2xl font-bold mt-3 mb-2">La lucha proletaria se fortalece en el contexto de la crisis capitalista global</h4>
-                        <p class="text-gray-400 mb-4">El imperialismo atraviesa su fase más decadente mientras las masas trabajadoras organizan su resistencia...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Por PauloARIS | Hace 2 horas</span>
-                            <a href="#" class="text-red-400 hover:text-red-300 font-bold">Leer más →</a>
+                    <div class="flex items-center gap-4 text-gray-400">
+                        <div class="flex items-center gap-1 text-xs uppercase font-bold tracking-wider">
+                            <i data-lucide="clock" class="w-4 h-4"></i> 12 Min Lectura
                         </div>
                     </div>
                 </div>
+            </header>
 
-                <!-- Side Articles -->
-                <div class="space-y-4">
-                    <article class="bg-gray-800 p-4 rounded-lg hover:bg-gray-750 transition cursor-pointer">
-                        <span class="text-xs text-red-400 uppercase">Economía</span>
-                        <h5 class="font-bold mt-1">La desigualdad se profundiza: los billionaires duplican su riqueza</h5>
-                        <p class="text-sm text-gray-500 mt-2">Hace 3 horas</p>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-9">
+                    <!-- DISCLAIMER -->
+                    <div class="bg-gray-100 p-4 mb-8 text-xs text-gray-600 border-l-2 border-brand-red flex gap-3 items-start">
+                        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 mt-0.5 text-brand-red"></i>
+                        <p><strong>Aviso:</strong> Contenido de análisis periodístico.opinión que no constituye asesoría profesional.</p>
+                    </div>
+
+                    <article id="article-body" class="prose prose-lg md:prose-xl font-serif text-gray-800 max-w-none">
+                        <p class="prose-dropcap mb-6">
+                            La discusión constitucional en nuestro país ha oscilado pendularmente entre el maximalismo refundacional y el minimalismo tecnocrático. Sin embargo, el actual anteproyecto presenta una arquitectura que merece un examen detenido, no desde la pasión de la trinchera política, sino desde la ingeniería del derecho administrativo.
+                        </p>
+                        
+                        <h3 class="font-sans font-bold text-2xl mt-8 mb-4 text-black">1. La trampa de las normas programáticas</h3>
+                        <p class="mb-4">
+                            Es común en el constitucionalismo latinoamericano sobrecargar el texto fundamental con promesas de bienestar que carecen de correlato presupuestario. En este nuevo texto, observamos un intento de corrección que, si bien loable, podría caer en el defecto contrario: la rigidización excesiva del legislador futuro.
+                        </p>
+                        <p class="mb-4">
+                            La técnica legislativa empleada en el Capítulo sobre Derechos Sociales busca transformar prestaciones estatales en garantías justiciables. Esto plantea la interrogante inevitable: ¿Estamos entregando a los jueces la definición del presupuesto nacional?
+                        </p>
+
+                        <blockquote class="border-l-4 border-black pl-6 py-2 my-8 italic text-xl text-gray-600 bg-gray-50 pr-4">
+                            "La certeza jurídica no es solo un valor económico para la inversión, es ante todo un valor ciudadano."
+                        </blockquote>
+
+                        <h3 class="font-sans font-bold text-2xl mt-8 mb-4 text-black">2. El Estado Social y Democrático de Derecho</h3>
+                        <p class="mb-4">
+                            La cláusula del Estado Social no es mágica. Requiere una administración pública robusta, profesional y proba. El texto propone modernizaciones interesantes al estatuto administrativo, pero olvida un factor clave: la descentralización fiscal. Sin recursos en las regiones, el Estado Social será solo una declaración de buenas intenciones centralistas.
+                        </p>
+                        <p class="mb-4">
+                            En conclusión, el análisis técnico sugiere que estamos ante un texto sobrio, quizás demasiado conservador en su técnica, pero que ofrece un marco de estabilidad superior al intento anterior.
+                        </p>
                     </article>
-                    <article class="bg-gray-800 p-4 rounded-lg hover:bg-gray-750 transition cursor-pointer">
-                        <span class="text-xs text-red-400 uppercase">Política</span>
-                        <h5 class="font-bold mt-1">Crisis política en las potencias imperialistas: inestabilidad sistémica</h5>
-                        <p class="text-sm text-gray-500 mt-2">Hace 5 horas</p>
-                    </article>
-                    <article class="bg-gray-800 p-4 rounded-lg hover:bg-gray-750 transition cursor-pointer">
-                        <span class="text-xs text-red-400 uppercase">Latinoamérica</span>
-                        <h5 class="font-bold mt-1">Los movimientos populares se organizan frente al neoliberalismo</h5>
-                        <p class="text-sm text-gray-500 mt-2">Hace 8 horas</p>
-                    </article>
-                    <article class="bg-gray-800 p-4 rounded-lg hover:bg-gray-750 transition cursor-pointer">
-                        <span class="text-xs text-red-400 uppercase">Cultura</span>
-                        <h5 class="font-bold mt-1">El arte como herramienta de liberación: propaganda revolucionaria</h5>
-                        <p class="text-sm text-gray-500 mt-2">Hace 12 horas</p>
-                    </article>
+
+                    <div class="mt-12 pt-6 border-t border-gray-200">
+                        <h4 class="text-sm font-bold uppercase mb-4 text-gray-500">Referencias</h4>
+                        <ul class="text-xs text-gray-500 space-y-2 font-mono">
+                            <li>[1] Gargarella, R. (2014). La sala de máquinas de la Constitución.</li>
+                            <li>[2] OCDE (2022). Public Integrity in Latin America.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 space-y-8 mt-8 lg:mt-0">
+                    <div class="bg-white border border-gray-200 p-6 sticky top-24">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">La Unidad</h4>
+                        <p class="text-xs text-gray-500 mb-4">Plataforma de análisis, opinión y ensayo. Pedagogía pública para una ciudadanía informada.</p>
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Relacionados</h4>
+                            <ul class="space-y-4">
+                                <li><a href="#" class="block group"><span class="text-xs text-brand-red block mb-1">Política</span><span class="text-sm font-serif font-bold group-hover:underline">La reforma procesal civil</span></a></li>
+                                <li><a href="#" class="block group"><span class="text-xs text-brand-red block mb-1">Política</span><span class="text-sm font-serif font-bold group-hover:underline">El rol del TC en 2024</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Analysis Section -->
-    <section id="analisis" class="py-16 px-4 bg-gray-900">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-bold mb-8 border-l-4 border-yellow-500 pl-4">📊 Análisis de Clase</h3>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-800 p-6 rounded-xl border-t-4 border-yellow-500">
-                    <span class="text-xs text-yellow-400 uppercase">Análisis Económico</span>
-                    <h4 class="text-xl font-bold mt-2 mb-3">El Marxismo y la Crisis del Capitalismo Contemporáneo</h4>
-                    <p class="text-gray-400 text-sm">Análisis profundo de cómo las teorías de Marx predicen y explican la crisis actual del sistema capitalista...</p>
-                    <button class="mt-4 text-yellow-400 hover:text-yellow-300 font-bold text-sm">Leer análisis completo →</button>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white pt-16 pb-8 border-t-4 border-brand-red mt-auto">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <h2 class="text-3xl font-serif font-black mb-4">La Unidad</h2>
+                    <p class="text-sm text-gray-400 mb-6">Plataforma de análisis, opinión y ensayo. Pedagogía pública para una ciudadanía informada.</p>
+                    <div class="flex gap-4">
+                        <i data-lucide="twitter" class="w-5 h-5 text-gray-400 hover:text-white cursor-pointer"></i>
+                        <i data-lucide="linkedin" class="w-5 h-5 text-gray-400 hover:text-white cursor-pointer"></i>
+                    </div>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border-t-4 border-yellow-500">
-                    <span class="text-xs text-yellow-400 uppercase">Geopolítica</span>
-                    <h4 class="text-xl font-bold mt-2 mb-3">El multipolarismo y la decadencia del hegemonismo yanqui</h4>
-                    <p class="text-gray-400 text-sm">Estudio sobre el decline del imperialismo estadounidense y el surgimiento de nuevas potencias...</p>
-                    <button class="mt-4 text-yellow-400 hover:text-yellow-300 font-bold text-sm">Leer análisis completo →</button>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Secciones</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-brand-red transition">Política y Coyuntura</a></li>
+                        <li><a href="#" class="hover:text-brand-red transition">Derecho y Estado</a></li>
+                        <li><a href="#" class="hover:text-brand-red transition">Economía y Trabajo</a></li>
+                        <li><a href="#" class="hover:text-brand-red transition">Ciencia e Ingeniería</a></li>
+                    </ul>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border-t-4 border-yellow-500">
-                    <span class="text-xs text-yellow-400 uppercase">Historia</span>
-                    <h4 class="text-xl font-bold mt-2 mb-3">Lecciones de la Revolución de 1917 para el presente</h4>
-                    <p class="text-gray-400 text-sm">Revisión histórica de los acontecimientos de Octubre y su relevancia para el movimiento revolucionario...</p>
-                    <button class="mt-4 text-yellow-400 hover:text-yellow-300 font-bold text-sm">Leer análisis completo →</button>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Institucional</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-white transition">Quiénes Somos</a></li>
+                        <li><a href="#" class="hover:text-white transition">Normas Editoriales</a></li>
+                        <li><a href="#" class="hover:text-white transition">Transparencia</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-span-1 md:col-span-1 bg-gray-900 p-4 rounded text-xs text-gray-400">
+                    <h4 class="text-white font-bold uppercase mb-2 flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i> Aviso Legal
+                    </h4>
+                    <p class="leading-relaxed mb-2">"La Unidad" es un medio informativo y educativo. No constituye asesoría profesional.</p>
+                    <p class="leading-relaxed">La información no sustituye consulta con profesionales.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Documents Section -->
-    <section id="documentos" class="py-16 px-4">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-bold mb-8 border-l-4 border-blue-500 pl-4">📚 Documentos Fundamentales</h3>
-            
-            <div class="grid md:grid-cols-4 gap-4">
-                <a href="#" class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition text-center">
-                    <span class="text-4xl">📜</span>
-                    <h5 class="font-bold mt-2">El Manifiesto Comunista</h5>
-                    <p class="text-xs text-gray-500">Marx & Engels</p>
-                </a>
-                <a href="#" class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition text-center">
-                    <span class="text-4xl">📖</span>
-                    <h5 class="font-bold mt-2">El Capital</h5>
-                    <p class="text-xs text-gray-500">Karl Marx</p>
-                </a>
-                <a href="#" class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition text-center">
-                    <span class="text-4xl">📕</span>
-                    <h5 class="font-bold mt-2">El Estado y la Revolución</h5>
-                    <p class="text-xs text-gray-500">Lenin</p>
-                </a>
-                <a href="#" class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition text-center">
-                    <span class="text-4xl">📗</span>
-                    <h5 class="font-bold mt-2">Imperialismo fase superior</h5>
-                    <p class="text-xs text-gray-500">Lenin</p>
-                </a>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+                <p>© 2026 La Unidad Medios Digitales SpA. Todos los derechos reservados.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- La Unidad Section -->
-    <section id="unidad" class="py-16 px-4 bg-gradient-to-r from-red-900/50 to-black">
-        <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-4xl font-bold mb-6">✊ Sobre La Unidad</h3>
-            <p class="text-xl text-gray-300 mb-8">
-                La Unidad es un proyecto de comunicación popular dedicado a 
-                difundir la perspectiva Marxist-Leninist sobre los acontecimientos 
-                nacionales e internacionales. Creemos en el poder transformador 
-                de la conciencia de clase y la organización del proletariado.
-            </p>
-            <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">📰</span>
-                    <span>Noticias actualizadas</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">📊</span>
-                    <span>Análisis profundo</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">📚</span>
-                    <span>Documentación teórica</span>
-                </div>
-            </div>
-            
-            <div class="mt-8 p-6 bg-black/30 rounded-xl inline-block">
-                <p class="text-sm text-gray-400 mb-2">Conecta con nosotros:</p>
-                <a href="https://www.moltbook.com/u/PauloARIS" target="_blank" class="text-2xl hover:text-red-400 transition">
-                    📚 Moltbook: @PauloARIS
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-8 px-4 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto text-center text-gray-500">
-            <p class="mb-4">✊ "Los trabajadores no tienen patria" - Marx</p>
-            <p class="text-sm">© 2026 La Unidad - Proyecto de Comunicación Popular</p>
-            <p class="text-xs mt-2">Construido con tecnología revolucionaria | PauloARIS AI</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+        lucide.createIcons();
+        
+        const dateElement = document.getElementById('current-date');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = new Date().toLocaleDateString('es-ES', options).replace(/^\w/, (c) => c.toUpperCase());
+
+        function navigateTo(viewName) {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-article').classList.add('hidden');
+            
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(!mobileMenu.classList.contains('-translate-x-full')) {
+                toggleMobileMenu();
+            }
+
+            window.scrollTo(0, 0);
+
+            if (viewName === 'home') {
+                document.getElementById('view-home').classList.remove('hidden');
+            } else if (viewName === 'article') {
+                document.getElementById('view-article').classList.remove('hidden');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpen = !menu.classList.contains('-translate-x-full');
+            if (isOpen) {
+                menu.classList.add('-translate-x-full');
+            } else {
+                menu.classList.remove('-translate-x-full');
+            }
+        }
+
+        let currentFontSize = 100;
+        function adjustFontSize(direction) {
+            const articleBody = document.getElementById('article-body');
+            if (direction === 1 && currentFontSize < 130) {
+                currentFontSize += 10;
+            } else if (direction === -1 && currentFontSize > 90) {
+                currentFontSize -= 10;
+            }
+            articleBody.style.fontSize = `${currentFontSize}%`;
+        }
     </script>
 </body>
 </html>
