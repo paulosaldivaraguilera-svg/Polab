@@ -1,7 +1,7 @@
 {
   "mode": "paper",
   "running": true,
-  "current_price": 45226.57562573038,
+  "current_price": 45112.336856480164,
   "balance_usdt": 10000.0,
   "balance_btc": 0.0,
   "portfolio_value": 10000.0,
@@ -9,5 +9,5 @@
   "pnl_pct": 0.0,
   "active_orders": 5,
   "filled_orders": 0,
-  "timestamp": "2026-02-06T12:22:13.102953"
+  "timestamp": "2026-02-07T15:05:28.149021"
 }

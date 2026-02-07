@@ -11,11 +11,11 @@ class MoltbookWrapper {
         this.name = 'Moltbook';
         this.config = config;
         this.apiKey = config.credentials?.apiKey || process.env.MOLTBOOK_API_KEY;
-        this.baseUrl = 'https://api.moltbook.com/v1';
-        
+        this.baseUrl = 'https://www.moltbook.com/api/v1';
+
         this.postCount = 0;
         this.lastPostTime = 0;
-        
+
         // Rate limits específicos de Moltbook
         this.rateLimits = {
             posts: { remaining: 48, per: 'day', reset: this.getDayReset() },
@@ -40,6 +40,15 @@ class MoltbookWrapper {
             'Content-Type': 'application/json'
         };
     }
+
+    generateTitle(content) {
+        // Extraer primera línea o primeras 50 caracteres como título
+        const firstLine = content.split('\n')[0].trim();
+        if (firstLine.length <= 60) {
+            return firstLine;
+        }
+        return firstLine.substring(0, 60) + '...';
+    }
     
     async checkRateLimit() {
         const now = Date.now();
@@ -49,56 +58,74 @@ class MoltbookWrapper {
     
     async post(content, options = {}) {
         const now = Date.now();
-        
+
         if (!await this.checkRateLimit()) {
             const waitTime = 30 * 60 * 1000 - (now - this.lastPostTime);
             console.log(`⏳ Moltbook: Esperando ${Math.ceil(waitTime / 60000)} minutos`);
             return { success: false, reason: 'Rate limit' };
         }
-        
+
         // Verificar longitud
         const maxChars = this.config.limits?.charsPerPost || 500;
         if (content.length > maxChars) {
             content = content.substring(0, maxChars - 3) + '...';
         }
-        
-        // Preparar payload
+
+        // Preparar payload - Moltbook API requiere title y submolt
         const payload = {
-            content: content,
-            visibility: 'public',
-            type: options.contentType || 'post'
+            submolt: options.submolt || 'general',
+            title: options.title || this.generateTitle(content),
+            content: content
         };
-        
-        // En producción, hacer POST real
-        if (this.apiKey && this.apiKey !== 'moltbook_sk_ON33XvdPjQEmjizLBQxqCejXYL2pYIyP') {
+
+        // Hacer POST real a la API de Moltbook
+        if (this.apiKey) {
             try {
+                console.log(`📚 Moltbook: Publicando post a API real...`);
                 const response = await fetch(`${this.baseUrl}/posts`, {
                     method: 'POST',
                     headers: this.getHeaders(),
                     body: JSON.stringify(payload)
                 });
-                
-                if (!response.ok) {
-                    console.warn(`Moltbook API error: ${response.status}`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(`✅ Moltbook: Post publicado exitosamente (ID: ${data.post?.id || data.id || 'N/A'})`);
+                    this.postCount++;
+                    this.lastPostTime = now;
+                    this.rateLimits.posts.remaining--;
+                    return {
+                        success: true,
+                        id: data.post?.id || data.id,
+                        platform: 'moltbook',
+                        content: content,
+                        timestamp: now,
+                        url: data.post?.url || `https://www.moltbook.com/posts/${data.post?.id || data.id}`
+                    };
+                } else {
+                    const errorText = await response.text();
+                    console.error(`❌ Moltbook API error: ${response.status} - ${errorText}`);
+                    return { success: false, reason: `API error: ${response.status}`, details: errorText };
                 }
             } catch (e) {
-                console.warn(`Moltbook API request failed: ${e.message}`);
+                console.error(`❌ Moltbook API request failed: ${e.message}`);
+                return { success: false, reason: 'Request failed', error: e.message };
             }
+        } else {
+            console.warn(`⚠️ Moltbook: Sin API key configurada - usando modo simulación`);
+            // Modo simulación (sin API key)
+            this.postCount++;
+            this.lastPostTime = now;
+            this.rateLimits.posts.remaining--;
+            return {
+                id: `moltbook_${Date.now()}`,
+                platform: 'moltbook',
+                content: content.substring(0, 100),
+                timestamp: now,
+                url: `https://www.moltbook.com/u/PauloARIS/post/${Date.now()}`,
+                simulated: true
+            };
         }
-        
-        this.postCount++;
-        this.lastPostTime = now;
-        this.rateLimits.posts.remaining--;
-        
-        console.log(`📚 Moltbook: Posted (${this.rateLimits.posts.remaining} remaining today)`);
-        
-        return {
-            id: `moltbook_${Date.now()}`,
-            platform: 'moltbook',
-            content: content.substring(0, 100),
-            timestamp: now,
-            url: `https://www.moltbook.com/u/PauloARIS/post/${Date.now()}`
-        };
     }
     
     async getMentions() {
