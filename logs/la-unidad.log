@@ -1,0 +1,27 @@
+📰 La Unidad - Aggregator iniciado
+📡 RSS Sources: 6
+
+============================================================
+🚀 LA UNIDAD - SERVER INICIADO
+============================================================
+📡 Port: 8085
+🌐 URL: http://localhost:8085
+
+
+============================================================
+📡 FETCHING RSS SOURCES
+============================================================
+
+❌ Error fetching https://espanol.cgtv.com/rss/news.xml: RSSParser.parseURL is not a function
+❌ Error fetching https://www.elsiglo.com.mx/rss/politica.xml: RSSParser.parseURL is not a function
+❌ Error fetching https://www.radiomundial.com/rss/: RSSParser.parseURL is not a function
+❌ Error fetching https://www.granma.cu/rss/: RSSParser.parseURL is not a function
+❌ Error fetching https://www.telesurtv.net/rss/: RSSParser.parseURL is not a function
+❌ Error fetching https://www.prensalatina.cu/feed.php: RSSParser.parseURL is not a function
+📈 Trending topics: 
+
+📊 Total artículos agregados: 0
+📈 Trending topics: 0
+
+👋 Apagando gracefully...
+✅ Server detenido

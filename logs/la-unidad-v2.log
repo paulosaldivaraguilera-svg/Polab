@@ -1,0 +1,45 @@
+📰 La Unidad v2 - Aggregator iniciado
+
+============================================================
+🚀 LA UNIDAD v2 - SERVER INICIADO
+============================================================
+📡 Port: 8085
+🌐 URL: http://localhost:8085
+
+
+============================================================
+📡 FETCHING RSS SOURCES
+============================================================
+
+📡 Fetching: CGTN Español...
+📡 Fetching: El Siglo...
+📡 Fetching: Granma...
+📡 Fetching: Telesur...
+❌ Error fetching CGTN Español: getaddrinfo ENOTFOUND espanol.cgtv.com
+❌ Error fetching Granma: Status code 404
+✅ Fetched: Telesur (30 items)
+❌ Error fetching El Siglo: Request timed out after 10000ms
+
+📊 Total artículos: 5
+📈 Trending topics: 0
+
+🔄 Auto-refreshing...
+
+============================================================
+📡 FETCHING RSS SOURCES
+============================================================
+
+📡 Fetching: CGTN Español...
+📡 Fetching: El Siglo...
+📡 Fetching: Granma...
+📡 Fetching: Telesur...
+❌ Error fetching CGTN Español: getaddrinfo ENOTFOUND espanol.cgtv.com
+❌ Error fetching Granma: Status code 404
+❌ Error fetching Telesur: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+❌ Error fetching El Siglo: Request timed out after 10000ms
+
+📊 Total artículos: 5
+📈 Trending topics: 0

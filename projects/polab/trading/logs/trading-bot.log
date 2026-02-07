@@ -1,0 +1,371 @@
+2026-02-06 11:52:22,850 - MarketMakerBot - INFO - Market Maker Bot initialized
+2026-02-06 11:52:22,850 - MarketMakerBot - INFO - Mode: paper
+2026-02-06 11:52:22,850 - MarketMakerBot - INFO - Exchange: binance
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - Trading Pair: BTC/USDT
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - Grid Levels: 10
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - Grid Spread: 1.0%
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - DCA Amount: $10.0 USDT
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - DCA Interval: 3600s
+2026-02-06 11:52:22,851 - MarketMakerBot - INFO - Starting Market Maker Bot...
+2026-02-06 11:52:22,853 - MarketMakerBot - INFO - Current price: $45033.46
+2026-02-06 11:52:22,853 - MarketMakerBot - INFO - Grid levels recalculated: 11 levels
+2026-02-06 11:52:22,854 - MarketMakerBot - INFO - Placed 5 grid orders
+2026-02-06 11:52:22,854 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:52:32,854 - MarketMakerBot - INFO - Current price: $45044.67
+2026-02-06 11:52:32,855 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:52:42,855 - MarketMakerBot - INFO - Current price: $45066.13
+2026-02-06 11:52:42,856 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:52:52,856 - MarketMakerBot - INFO - Current price: $45072.39
+2026-02-06 11:52:52,857 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:02,858 - MarketMakerBot - INFO - Current price: $45046.00
+2026-02-06 11:53:02,859 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:12,860 - MarketMakerBot - INFO - Current price: $45011.82
+2026-02-06 11:53:12,860 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:22,861 - MarketMakerBot - INFO - Current price: $44989.44
+2026-02-06 11:53:22,862 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:32,862 - MarketMakerBot - INFO - Current price: $44999.45
+2026-02-06 11:53:32,863 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:42,863 - MarketMakerBot - INFO - Current price: $45039.90
+2026-02-06 11:53:42,864 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:53:52,864 - MarketMakerBot - INFO - Current price: $45030.63
+2026-02-06 11:53:52,865 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:02,865 - MarketMakerBot - INFO - Current price: $44992.17
+2026-02-06 11:54:02,866 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:12,867 - MarketMakerBot - INFO - Current price: $44963.23
+2026-02-06 11:54:12,867 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:22,868 - MarketMakerBot - INFO - Current price: $45001.26
+2026-02-06 11:54:22,869 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:32,870 - MarketMakerBot - INFO - Current price: $44964.31
+2026-02-06 11:54:32,870 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:42,871 - MarketMakerBot - INFO - Current price: $44953.10
+2026-02-06 11:54:42,871 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:54:52,872 - MarketMakerBot - INFO - Current price: $44950.45
+2026-02-06 11:54:52,872 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:02,873 - MarketMakerBot - INFO - Current price: $44994.42
+2026-02-06 11:55:02,873 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:12,874 - MarketMakerBot - INFO - Current price: $45017.69
+2026-02-06 11:55:12,875 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:22,876 - MarketMakerBot - INFO - Current price: $44973.94
+2026-02-06 11:55:22,876 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:32,878 - MarketMakerBot - INFO - Current price: $44998.85
+2026-02-06 11:55:32,878 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:42,881 - MarketMakerBot - INFO - Current price: $44987.64
+2026-02-06 11:55:42,881 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:55:52,882 - MarketMakerBot - INFO - Current price: $45013.18
+2026-02-06 11:55:52,882 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:02,883 - MarketMakerBot - INFO - Current price: $45029.39
+2026-02-06 11:56:02,883 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:12,884 - MarketMakerBot - INFO - Current price: $45069.66
+2026-02-06 11:56:12,884 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:22,885 - MarketMakerBot - INFO - Current price: $45095.47
+2026-02-06 11:56:22,886 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:32,887 - MarketMakerBot - INFO - Current price: $45105.15
+2026-02-06 11:56:32,887 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:42,888 - MarketMakerBot - INFO - Current price: $45074.76
+2026-02-06 11:56:42,888 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:56:52,890 - MarketMakerBot - INFO - Current price: $45083.22
+2026-02-06 11:56:52,890 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:02,891 - MarketMakerBot - INFO - Current price: $45076.57
+2026-02-06 11:57:02,891 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:12,892 - MarketMakerBot - INFO - Current price: $45085.76
+2026-02-06 11:57:12,892 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:22,893 - MarketMakerBot - INFO - Current price: $45113.03
+2026-02-06 11:57:22,893 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:32,894 - MarketMakerBot - INFO - Current price: $45142.46
+2026-02-06 11:57:32,894 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:42,895 - MarketMakerBot - INFO - Current price: $45173.46
+2026-02-06 11:57:42,895 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:57:52,897 - MarketMakerBot - INFO - Current price: $45131.55
+2026-02-06 11:57:52,897 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:02,899 - MarketMakerBot - INFO - Current price: $45112.72
+2026-02-06 11:58:02,899 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:12,900 - MarketMakerBot - INFO - Current price: $45093.05
+2026-02-06 11:58:12,900 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:22,901 - MarketMakerBot - INFO - Current price: $45064.68
+2026-02-06 11:58:22,901 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:32,902 - MarketMakerBot - INFO - Current price: $45051.39
+2026-02-06 11:58:32,902 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:42,903 - MarketMakerBot - INFO - Current price: $45092.21
+2026-02-06 11:58:42,903 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:58:52,904 - MarketMakerBot - INFO - Current price: $45055.10
+2026-02-06 11:58:52,904 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:02,905 - MarketMakerBot - INFO - Current price: $45041.96
+2026-02-06 11:59:02,905 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:12,907 - MarketMakerBot - INFO - Current price: $45047.95
+2026-02-06 11:59:12,907 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:22,908 - MarketMakerBot - INFO - Current price: $45080.86
+2026-02-06 11:59:22,908 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:32,910 - MarketMakerBot - INFO - Current price: $45122.30
+2026-02-06 11:59:32,910 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:42,911 - MarketMakerBot - INFO - Current price: $45099.41
+2026-02-06 11:59:42,911 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 11:59:52,912 - MarketMakerBot - INFO - Current price: $45135.72
+2026-02-06 11:59:52,912 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:02,913 - MarketMakerBot - INFO - Current price: $45178.28
+2026-02-06 12:00:02,914 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:12,914 - MarketMakerBot - INFO - Current price: $45191.53
+2026-02-06 12:00:12,915 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:22,916 - MarketMakerBot - INFO - Current price: $45148.46
+2026-02-06 12:00:22,916 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:32,917 - MarketMakerBot - INFO - Current price: $45177.87
+2026-02-06 12:00:32,917 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:42,918 - MarketMakerBot - INFO - Current price: $45170.98
+2026-02-06 12:00:42,918 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:00:52,919 - MarketMakerBot - INFO - Current price: $45155.41
+2026-02-06 12:00:52,919 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:02,920 - MarketMakerBot - INFO - Current price: $45124.82
+2026-02-06 12:01:02,921 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:12,922 - MarketMakerBot - INFO - Current price: $45089.37
+2026-02-06 12:01:12,923 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:22,923 - MarketMakerBot - INFO - Current price: $45122.82
+2026-02-06 12:01:22,924 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:32,924 - MarketMakerBot - INFO - Current price: $45156.60
+2026-02-06 12:01:32,925 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:42,925 - MarketMakerBot - INFO - Current price: $45134.93
+2026-02-06 12:01:42,926 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:01:52,927 - MarketMakerBot - INFO - Current price: $45138.66
+2026-02-06 12:01:52,928 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:02,928 - MarketMakerBot - INFO - Current price: $45167.17
+2026-02-06 12:02:02,929 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:12,929 - MarketMakerBot - INFO - Current price: $45133.29
+2026-02-06 12:02:12,930 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:22,930 - MarketMakerBot - INFO - Current price: $45170.37
+2026-02-06 12:02:22,931 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:32,931 - MarketMakerBot - INFO - Current price: $45181.56
+2026-02-06 12:02:32,932 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:42,932 - MarketMakerBot - INFO - Current price: $45219.76
+2026-02-06 12:02:42,933 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:02:52,934 - MarketMakerBot - INFO - Current price: $45230.51
+2026-02-06 12:02:52,935 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:02,935 - MarketMakerBot - INFO - Current price: $45231.88
+2026-02-06 12:03:02,936 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:12,936 - MarketMakerBot - INFO - Current price: $45205.74
+2026-02-06 12:03:12,937 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:22,937 - MarketMakerBot - INFO - Current price: $45228.96
+2026-02-06 12:03:22,938 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:32,938 - MarketMakerBot - INFO - Current price: $45198.80
+2026-02-06 12:03:32,939 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:42,940 - MarketMakerBot - INFO - Current price: $45161.99
+2026-02-06 12:03:42,941 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:03:52,946 - MarketMakerBot - INFO - Current price: $45165.51
+2026-02-06 12:03:52,947 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:02,947 - MarketMakerBot - INFO - Current price: $45145.05
+2026-02-06 12:04:02,948 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:12,948 - MarketMakerBot - INFO - Current price: $45162.83
+2026-02-06 12:04:12,949 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:22,949 - MarketMakerBot - INFO - Current price: $45119.01
+2026-02-06 12:04:22,950 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:32,950 - MarketMakerBot - INFO - Current price: $45086.30
+2026-02-06 12:04:32,951 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:42,952 - MarketMakerBot - INFO - Current price: $45067.44
+2026-02-06 12:04:42,952 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:04:52,953 - MarketMakerBot - INFO - Current price: $45045.53
+2026-02-06 12:04:52,954 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:02,954 - MarketMakerBot - INFO - Current price: $45054.57
+2026-02-06 12:05:02,955 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:12,956 - MarketMakerBot - INFO - Current price: $45099.01
+2026-02-06 12:05:12,956 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:22,957 - MarketMakerBot - INFO - Current price: $45096.39
+2026-02-06 12:05:22,958 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:32,958 - MarketMakerBot - INFO - Current price: $45127.26
+2026-02-06 12:05:32,959 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:42,960 - MarketMakerBot - INFO - Current price: $45092.82
+2026-02-06 12:05:42,960 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:05:52,962 - MarketMakerBot - INFO - Current price: $45119.94
+2026-02-06 12:05:52,962 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:02,965 - MarketMakerBot - INFO - Current price: $45134.47
+2026-02-06 12:06:02,966 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:12,967 - MarketMakerBot - INFO - Current price: $45158.40
+2026-02-06 12:06:12,967 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:22,968 - MarketMakerBot - INFO - Current price: $45175.56
+2026-02-06 12:06:22,968 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:32,969 - MarketMakerBot - INFO - Current price: $45212.60
+2026-02-06 12:06:32,969 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:42,970 - MarketMakerBot - INFO - Current price: $45209.79
+2026-02-06 12:06:42,970 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:06:52,971 - MarketMakerBot - INFO - Current price: $45204.32
+2026-02-06 12:06:52,972 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:02,973 - MarketMakerBot - INFO - Current price: $45163.59
+2026-02-06 12:07:02,974 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:12,975 - MarketMakerBot - INFO - Current price: $45130.50
+2026-02-06 12:07:12,975 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:22,976 - MarketMakerBot - INFO - Current price: $45144.03
+2026-02-06 12:07:22,976 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:32,977 - MarketMakerBot - INFO - Current price: $45171.54
+2026-02-06 12:07:32,977 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:42,978 - MarketMakerBot - INFO - Current price: $45201.33
+2026-02-06 12:07:42,978 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:07:52,979 - MarketMakerBot - INFO - Current price: $45159.13
+2026-02-06 12:07:52,979 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:02,980 - MarketMakerBot - INFO - Current price: $45193.23
+2026-02-06 12:08:02,981 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:12,982 - MarketMakerBot - INFO - Current price: $45194.83
+2026-02-06 12:08:12,982 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:22,984 - MarketMakerBot - INFO - Current price: $45151.25
+2026-02-06 12:08:22,984 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:32,985 - MarketMakerBot - INFO - Current price: $45162.67
+2026-02-06 12:08:32,985 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:42,986 - MarketMakerBot - INFO - Current price: $45185.61
+2026-02-06 12:08:42,986 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:08:52,987 - MarketMakerBot - INFO - Current price: $45164.82
+2026-02-06 12:08:52,987 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:02,988 - MarketMakerBot - INFO - Current price: $45142.86
+2026-02-06 12:09:02,988 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:12,990 - MarketMakerBot - INFO - Current price: $45109.74
+2026-02-06 12:09:12,990 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:22,991 - MarketMakerBot - INFO - Current price: $45143.34
+2026-02-06 12:09:22,991 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:32,992 - MarketMakerBot - INFO - Current price: $45122.62
+2026-02-06 12:09:32,992 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:42,993 - MarketMakerBot - INFO - Current price: $45117.06
+2026-02-06 12:09:42,993 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:09:52,994 - MarketMakerBot - INFO - Current price: $45154.59
+2026-02-06 12:09:52,994 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:02,995 - MarketMakerBot - INFO - Current price: $45160.40
+2026-02-06 12:10:02,995 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:12,996 - MarketMakerBot - INFO - Current price: $45159.20
+2026-02-06 12:10:12,996 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:22,998 - MarketMakerBot - INFO - Current price: $45199.54
+2026-02-06 12:10:22,998 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:32,999 - MarketMakerBot - INFO - Current price: $45157.76
+2026-02-06 12:10:33,000 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:43,001 - MarketMakerBot - INFO - Current price: $45144.96
+2026-02-06 12:10:43,001 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:10:53,002 - MarketMakerBot - INFO - Current price: $45171.87
+2026-02-06 12:10:53,002 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:03,003 - MarketMakerBot - INFO - Current price: $45152.54
+2026-02-06 12:11:03,004 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:13,005 - MarketMakerBot - INFO - Current price: $45124.52
+2026-02-06 12:11:13,005 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:23,006 - MarketMakerBot - INFO - Current price: $45085.05
+2026-02-06 12:11:23,007 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:33,008 - MarketMakerBot - INFO - Current price: $45048.06
+2026-02-06 12:11:33,009 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:43,009 - MarketMakerBot - INFO - Current price: $45039.30
+2026-02-06 12:11:43,010 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:11:53,011 - MarketMakerBot - INFO - Current price: $45056.01
+2026-02-06 12:11:53,011 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:03,012 - MarketMakerBot - INFO - Current price: $45060.54
+2026-02-06 12:12:03,012 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:13,013 - MarketMakerBot - INFO - Current price: $45071.54
+2026-02-06 12:12:13,014 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:23,015 - MarketMakerBot - INFO - Current price: $45087.28
+2026-02-06 12:12:23,015 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:33,016 - MarketMakerBot - INFO - Current price: $45059.95
+2026-02-06 12:12:33,017 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:43,017 - MarketMakerBot - INFO - Current price: $45020.84
+2026-02-06 12:12:43,018 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:12:53,018 - MarketMakerBot - INFO - Current price: $44986.03
+2026-02-06 12:12:53,019 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:03,019 - MarketMakerBot - INFO - Current price: $45026.45
+2026-02-06 12:13:03,020 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:13,020 - MarketMakerBot - INFO - Current price: $45060.19
+2026-02-06 12:13:13,021 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:23,022 - MarketMakerBot - INFO - Current price: $45039.90
+2026-02-06 12:13:23,022 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:33,023 - MarketMakerBot - INFO - Current price: $45079.80
+2026-02-06 12:13:33,024 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:43,024 - MarketMakerBot - INFO - Current price: $45070.93
+2026-02-06 12:13:43,025 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:13:53,026 - MarketMakerBot - INFO - Current price: $45108.65
+2026-02-06 12:13:53,026 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:03,027 - MarketMakerBot - INFO - Current price: $45128.63
+2026-02-06 12:14:03,027 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:13,029 - MarketMakerBot - INFO - Current price: $45166.09
+2026-02-06 12:14:13,029 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:23,030 - MarketMakerBot - INFO - Current price: $45158.00
+2026-02-06 12:14:23,031 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:33,031 - MarketMakerBot - INFO - Current price: $45160.62
+2026-02-06 12:14:33,032 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:43,032 - MarketMakerBot - INFO - Current price: $45160.99
+2026-02-06 12:14:43,033 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:14:53,033 - MarketMakerBot - INFO - Current price: $45171.46
+2026-02-06 12:14:53,034 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:03,034 - MarketMakerBot - INFO - Current price: $45204.91
+2026-02-06 12:15:03,035 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:13,035 - MarketMakerBot - INFO - Current price: $45169.43
+2026-02-06 12:15:13,036 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:23,037 - MarketMakerBot - INFO - Current price: $45198.71
+2026-02-06 12:15:23,038 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:33,039 - MarketMakerBot - INFO - Current price: $45226.72
+2026-02-06 12:15:33,040 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:43,041 - MarketMakerBot - INFO - Current price: $45254.68
+2026-02-06 12:15:43,041 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:15:53,042 - MarketMakerBot - INFO - Current price: $45279.36
+2026-02-06 12:15:53,042 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:03,043 - MarketMakerBot - INFO - Current price: $45237.61
+2026-02-06 12:16:03,043 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:13,044 - MarketMakerBot - INFO - Current price: $45279.60
+2026-02-06 12:16:13,044 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:23,051 - MarketMakerBot - INFO - Current price: $45322.53
+2026-02-06 12:16:23,052 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:33,053 - MarketMakerBot - INFO - Current price: $45293.98
+2026-02-06 12:16:33,054 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:43,055 - MarketMakerBot - INFO - Current price: $45257.43
+2026-02-06 12:16:43,055 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:16:53,057 - MarketMakerBot - INFO - Current price: $45220.78
+2026-02-06 12:16:53,057 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:03,058 - MarketMakerBot - INFO - Current price: $45201.35
+2026-02-06 12:17:03,058 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:13,059 - MarketMakerBot - INFO - Current price: $45176.00
+2026-02-06 12:17:13,059 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:23,063 - MarketMakerBot - INFO - Current price: $45183.29
+2026-02-06 12:17:23,063 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:33,064 - MarketMakerBot - INFO - Current price: $45154.53
+2026-02-06 12:17:33,064 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:43,065 - MarketMakerBot - INFO - Current price: $45181.10
+2026-02-06 12:17:43,065 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:17:53,066 - MarketMakerBot - INFO - Current price: $45176.30
+2026-02-06 12:17:53,067 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:03,067 - MarketMakerBot - INFO - Current price: $45165.95
+2026-02-06 12:18:03,068 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:13,069 - MarketMakerBot - INFO - Current price: $45201.34
+2026-02-06 12:18:13,070 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:23,070 - MarketMakerBot - INFO - Current price: $45172.46
+2026-02-06 12:18:23,071 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:33,071 - MarketMakerBot - INFO - Current price: $45129.95
+2026-02-06 12:18:33,072 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:43,073 - MarketMakerBot - INFO - Current price: $45140.92
+2026-02-06 12:18:43,074 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:18:53,075 - MarketMakerBot - INFO - Current price: $45142.30
+2026-02-06 12:18:53,075 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:03,076 - MarketMakerBot - INFO - Current price: $45106.58
+2026-02-06 12:19:03,076 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:13,077 - MarketMakerBot - INFO - Current price: $45063.63
+2026-02-06 12:19:13,077 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:23,081 - MarketMakerBot - INFO - Current price: $45056.53
+2026-02-06 12:19:23,082 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:33,083 - MarketMakerBot - INFO - Current price: $45028.48
+2026-02-06 12:19:33,083 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:43,084 - MarketMakerBot - INFO - Current price: $45073.43
+2026-02-06 12:19:43,085 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:19:53,085 - MarketMakerBot - INFO - Current price: $45111.49
+2026-02-06 12:19:53,086 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:03,086 - MarketMakerBot - INFO - Current price: $45144.00
+2026-02-06 12:20:03,087 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:13,087 - MarketMakerBot - INFO - Current price: $45121.96
+2026-02-06 12:20:13,088 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:23,089 - MarketMakerBot - INFO - Current price: $45148.06
+2026-02-06 12:20:23,090 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:33,090 - MarketMakerBot - INFO - Current price: $45173.70
+2026-02-06 12:20:33,091 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:43,091 - MarketMakerBot - INFO - Current price: $45169.38
+2026-02-06 12:20:43,092 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:20:53,092 - MarketMakerBot - INFO - Current price: $45177.93
+2026-02-06 12:20:53,093 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:03,093 - MarketMakerBot - INFO - Current price: $45142.40
+2026-02-06 12:21:03,094 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:13,095 - MarketMakerBot - INFO - Current price: $45173.78
+2026-02-06 12:21:13,095 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:23,096 - MarketMakerBot - INFO - Current price: $45170.62
+2026-02-06 12:21:23,096 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:33,097 - MarketMakerBot - INFO - Current price: $45186.53
+2026-02-06 12:21:33,098 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:43,098 - MarketMakerBot - INFO - Current price: $45195.47
+2026-02-06 12:21:43,098 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:21:53,099 - MarketMakerBot - INFO - Current price: $45233.74
+2026-02-06 12:21:53,100 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:22:03,101 - MarketMakerBot - INFO - Current price: $45218.53
+2026-02-06 12:22:03,101 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%
+2026-02-06 12:22:13,102 - MarketMakerBot - INFO - Current price: $45226.58
+2026-02-06 12:22:13,102 - MarketMakerBot - INFO - Status: USDT=$10000.00, BTC=0.00000000, PnL=+0.00%

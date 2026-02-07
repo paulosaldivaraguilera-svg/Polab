@@ -3,139 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Polab Games - Portal de Juegos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <title>Juegos PauloARIS</title>
     <style>
-        * { font-family: 'Inter', sans-serif; }
-        .game-card { transition: all 0.3s ease; }
-        .game-card:hover { transform: translateY(-10px); }
-        .glow { box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); }
-        .cyber { background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e5e5e5;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: #00d9ff;
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .game-version {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            color: #000;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .game-description {
+            color: #a0a0a0;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .game-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 217, 255, 0.1);
+            color: #00d9ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .play-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .status.ready {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .status.pending {
+            background: rgba(255, 165, 0, 0.1);
+            color: #ffa500;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #a0a0a0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
-    <!-- Hero -->
-    <header class="cyber py-20 text-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full filter blur-3xl"></div>
-            <div class="absolute bottom-10 right-10 w-48 h-48 bg-purple-500 rounded-full filter blur-3xl"></div>
-        </div>
-        <div class="relative z-10 max-w-4xl mx-auto px-6">
-            <h1 class="text-5xl md:text-7xl font-black mb-4">
-                <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                    POLAB GAMES
-                </span>
-            </h1>
-            <p class="text-xl text-gray-300 mb-8">Colección de juegos experimentales</p>
-            <div class="flex justify-center gap-4">
-                <span class="bg-green-500 px-4 py-2 rounded-full text-sm font-bold">3 Juegos</span>
-                <span class="bg-blue-500 px-4 py-2 rounded-full text-sm font-bold">WebGPU Ready</span>
-                <span class="bg-purple-500 px-4 py-2 rounded-full text-sm font-bold">Open Source</span>
-            </div>
-        </div>
-    </header>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 PauloARIS Games</h1>
+            <p class="subtitle">Juegos con identidad cultural chilena y latinoamericana</p>
+        </header>
 
-    <!-- Games Grid -->
-    <main class="max-w-6xl mx-auto px-6 py-16">
-        <h2 class="text-3xl font-black mb-8">🎮 Nuestra Colección</h2>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="games-grid">
             <!-- Elemental Pong -->
-            <div class="game-card bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-6 glow cursor-pointer" onclick="openGame('elemental-pong/prototype_v2.1.html')">
-                <div class="text-6xl mb-4">🏓</div>
-                <h3 class="text-2xl font-black mb-2">Elemental Pong</h3>
-                <p class="text-gray-200 mb-4">Pong arcade con elementos, partículas WebGPU y control del tiempo.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">WebGPU</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Arcade</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">100K Partículas</span>
+            <div class="game-card" onclick="window.location.href='elemental-pong/prototype_v2.2.html'">
+                <div class="game-icon">⚡</div>
+                <h2 class="game-title">Elemental Pong</h2>
+                <span class="game-version">v2.2 WebGPU</span>
+                <span class="status ready">✅ Listo para jugar</span>
+                <p class="game-description">
+                    Pong arcade con sistema elemental y control del tiempo. ECS pattern, 100K partículas, audio procedural.
+                </p>
+                <div class="game-tech">
+                    <span class="tech-tag">WebGPU</span>
+                    <span class="tech-tag">Three.js</span>
+                    <span class="tech-tag">ECS</span>
+                    <span class="tech-tag">Audio API</span>
                 </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-300">🎯 Estrategia</span>
-                    <span class="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold">PROBAR →</span>
-                </div>
+                <a href="elemental-pong/prototype_v2.2.html" class="play-btn">▶ Jugar Ahora</a>
             </div>
 
             <!-- Recta Provincia -->
-            <div class="game-card bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-6 cursor-pointer" onclick="openGame('recta-provincia/prototype_v2.0.html')">
-                <div class="text-6xl mb-4">🌙</div>
-                <h3 class="text-2xl font-black mb-2">Recta Provincia</h3>
-                <p class="text-gray-200 mb-4">RPG táctico isométrico ambientado en el Chiloé mágico y oscuro.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">RPG</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Táctico</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Folklore</span>
+            <div class="game-card">
+                <div class="game-icon">🌲</div>
+                <h2 class="game-title">Recta Provincia</h2>
+                <span class="game-version">v2.2 Raylib</span>
+                <span class="status pending">⏳ Requiere compilación</span>
+                <p class="game-description">
+                    Aventura Mapuche procedural con combate de lanza bola. Recupera relatos, protege sitios sagrados.
+                </p>
+                <div class="game-tech">
+                    <span class="tech-tag">Raylib</span>
+                    <span class="tech-tag">C99</span>
+                    <span class="tech-tag">Mapuche</span>
+                    <span class="tech-tag">RPG</span>
                 </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-300">🌑 Misterio</span>
-                    <span class="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold">PROBAR →</span>
-                </div>
+                <p style="margin-top: 1rem; color: #ffa500;">
+                    📝 Ejecuta: <code>./scripts/build-raylib-games.sh</code>
+                </p>
             </div>
 
             <!-- Delitos -->
-            <div class="game-card bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl p-6 cursor-pointer" onclick="openGame('polab/videojuegos/delitos/index.html')">
-                <div class="text-6xl mb-4">🔍</div>
-                <h3 class="text-2xl font-black mb-2">Delitos</h3>
-                <p class="text-gray-200 mb-4">Investigative RPG cyberpunk. Resuelve crímenes que "no existen".</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Cyberpunk</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Misterio</span>
-                    <span class="bg-white/20 px-2 py-1 rounded text-xs">Santiago</span>
+            <div class="game-card">
+                <div class="game-icon">🏙️</div>
+                <h2 class="game-title">Delitos</h2>
+                <span class="game-version">v2.2 Raylib</span>
+                <span class="status pending">⏳ Requiere compilación</span>
+                <p class="game-description">
+                    GTA 2D chileno con sistema de notoriedad. 5 distritos urbanos, economía criminal, persecuciones.
+                </p>
+                <div class="game-tech">
+                    <span class="tech-tag">Raylib</span>
+                    <span class="tech-tag">C99</span>
+                    <span class="tech-tag">Open World</span>
+                    <span class="tech-tag">Action</span>
                 </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-300">🚔 Investigación</span>
-                    <span class="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold">PROBAR →</span>
-                </div>
+                <p style="margin-top: 1rem; color: #ffa500;">
+                    📝 Ejecuta: <code>./scripts/build-raylib-games.sh</code>
+                </p>
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="mt-16 bg-gray-800 rounded-2xl p-8">
-            <h3 class="text-xl font-bold mb-6">📊 Estadísticas</h3>
-            <div class="grid md:grid-cols-4 gap-6 text-center">
-                <div>
-                    <p class="text-4xl font-black text-purple-400">3</p>
-                    <p class="text-gray-400">Juegos</p>
-                </div>
-                <div>
-                    <p class="text-4xl font-black text-green-400">WebGPU</p>
-                    <p class="text-gray-400">Tecnología</p>
-                </div>
-                <div>
-                    <p class="text-4xl font-black text-blue-400">100K+</p>
-                    <p class="text-gray-400">Partículas</p>
-                </div>
-                <div>
-                    <p class="text-4xl font-black text-orange-400">100%</p>
-                    <p class="text-gray-400">Open Source</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tech Stack -->
-        <div class="mt-8 text-center">
-            <p class="text-gray-400 mb-4">Tecnologías utilizadas</p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <span class="bg-gray-700 px-4 py-2 rounded-lg">🎮 Three.js</span>
-                <span class="bg-gray-700 px-4 py-2 rounded-lg">🚀 WebGPU</span>
-                <span class="bg-gray-700 px-4 py-2 rounded-lg">🎵 Web Audio API</span>
-                <span class="bg-gray-700 px-4 py-2 rounded-lg">🎮 Gamepad API</span>
-                <span class="bg-gray-700 px-4 py-2 rounded-lg">📱 Canvas 2D</span>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 py-8 text-center text-gray-400">
-        <p>🎮 Polab Games - Desarrollados con ❤️ y ☕</p>
-        <p class="text-sm mt-2">Código abierto en GitHub</p>
-    </footer>
-
-    <script>
-        function openGame(path) {
-            window.open(path, '_blank');
-        }
-    </script>
+        <footer>
+            <p>Desarrollado por PauloARIS en Raspberry Pi 5 🇨🇱</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="ENLACES_JUEGOS.md" style="color: #00d9ff;">📚 Ver documentación completa</a>
+            </p>
+        </footer>
+    </div>
 </body>
 </html>
